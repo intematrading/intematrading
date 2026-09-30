@@ -1,0 +1,114 @@
+{
+  "Nav": {
+    "home": "ዋና ገጽ",
+    "about": "ስለ እኛ",
+    "services": "አገልግሎቶቻችን",
+    "team": "ቡድናችን",
+    "contact": "ያግኙን",
+    "primary": "ዋና ማውጫ",
+    "openMenu": "ማውጫውን ክፈት",
+    "closeMenu": "ማውጫውን ዝጋ"
+  },
+  "Common": {
+    "skipToContent": "ወደ ዋናው ይዘት ይለፉ",
+    "learnMore": "ተጨማሪ ይመልከቱ",
+    "contactUs": "ያግኙን",
+    "exploreServices": "አገልግሎቶቻችንን ይመልከቱ",
+    "home": "ዋና ገጽ"
+  },
+  "LanguageSwitcher": {
+    "label": "ቋንቋ",
+    "switchTo": "ወደ {language} ቀይር"
+  },
+  "Home": {
+    "snapshotHeading": "ኢንተማ በጨረፍታ",
+    "ourServices": "አገልግሎቶቻችን",
+    "whatWeDo": "የምንሠራው *ሥራ*",
+    "learnMoreAbout": "ስለ እኛ ተጨማሪ ይወቁ",
+    "aboutUs": "ስለ እኛ",
+    "ourTeam": "ቡድናችን",
+    "meetTeam": "*ቡድናችንን* ይተዋወቁ",
+    "viewTeam": "መላውን ቡድን ይተዋወቁ",
+    "getInTouch": "*ያግኙን*"
+  },
+  "Services": {
+    "sectionNav": "የአገልግሎቶቻችን ክፍሎች",
+    "import": "እናስመጣለን",
+    "produce": "እናመርታለን",
+    "export": "እንልካለን",
+    "nonFood": "ምግብ ነክ ያልሆኑ",
+    "food": "ምግብ",
+    "exportBrands": "የወጪ ንግድ ብራንዶቻችን",
+    "targetMarkets": "የምንልክባቸው ገበያዎች",
+    "ourProducts": "ምርቶቻችን",
+    "closePreview": "ቅድመ እይታውን ዝጋ",
+    "viewItem": "{name}ን ይመልከቱ"
+  },
+  "Footer": {
+    "contact": "አድራሻ",
+    "explore": "ገጾች",
+    "phone": "ስልክ",
+    "email": "ኢሜይል",
+    "rights": "መብቱ በሕግ የተጠበቀ ነው።"
+  },
+  "NotFound": {
+    "title": "ገጹ አልተገኘም",
+    "body": "የሚፈልጉት ገጽ የለም ወይም ተዛውሯል።",
+    "home": "ወደ ዋና ገጽ ተመለስ"
+  },
+  "Team": {
+    "salesTeamSize": "የሽያጭ ቡድናችን አባላት",
+    "atAGlance": "ቡድናችን *በጨረፍታ*",
+    "organised": "አደረጃጀታችን",
+    "applyCta": "ለአጋርነት ያመልክቱ",
+    "brandAmbassador": "የብራንድ አምባሳደር"
+  },
+  "Contact": {
+    "details": "የመገኛ አድራሻ",
+    "address": "አድራሻ",
+    "email": "ኢሜይል",
+    "phone": "ስልክ",
+    "form": {
+      "name": "ሙሉ ስም",
+      "company": "ድርጅት",
+      "email": "ኢሜይል",
+      "phone": "ስልክ",
+      "inquiryType": "እኔ…",
+      "message": "መልዕክት",
+      "optional": "አማራጭ",
+      "submit": "ጥያቄ ይላኩ",
+      "sending": "በመላክ ላይ…",
+      "types": {
+        "retail": "የችርቻሮ አጋር",
+        "buyer": "ገዢ / አከፋፋይ",
+        "brand": "የብራንድ ባለቤት",
+        "other": "ሌላ"
+      },
+      "success": "እናመሰግናለን — ጥያቄዎ ተልኳል። የሽያጭ ቡድናችን በቅርቡ ያገኝዎታል።",
+      "error": "ይቅርታ፣ ጥያቄዎ ሊላክ አልቻለም። እባክዎ እንደገና ይሞክሩ ወይም በቀጥታ ኢሜይል ይላኩልን።",
+      "invalid": "እባክዎ የተመለከቱትን መስኮች ያረጋግጡ።",
+      "required": "ይህ መስክ ያስፈልጋል።",
+      "invalidEmail": "ትክክለኛ የኢሜይል አድራሻ ያስገቡ።",
+      "tooShort": "እባክዎ ቢያንስ 10 ፊደላት ይጻፉ።"
+    },
+    "followUs": "ይከተሉን"
+  },
+  "About": {
+    "galleryHeading": "*ኢንተማ* ከውስጥ",
+    "galleryLabel": "የፎቶ ማዕከል",
+    "prev": "ቀዳሚ ፎቶ",
+    "next": "ቀጣይ ፎቶ",
+    "slide": "ፎቶ {current} ከ{total}",
+    "goTo": "ወደ ፎቶ {n} ይሂዱ",
+    "snapshot": "የኩባንያው ገጽታ",
+    "seeBrands": "የምናስመጣቸውን ይመልከቱ",
+    "partnerCta": "አጋር ይሁኑ",
+    "open": "ፎቶውን ክፈት፦ {caption}",
+    "close": "ቅድመ እይታውን ዝጋ",
+    "partnersLabel": "አጋሮቻችን"
+  },
+  "Testimonials": {
+    "eyebrow": "ምስክርነቶች",
+    "heading": "*አጋሮቻችን* ምን ይላሉ"
+  }
+}

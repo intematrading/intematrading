@@ -1,0 +1,114 @@
+{
+  "Nav": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Our Services",
+    "team": "Team",
+    "contact": "Contact",
+    "primary": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "Common": {
+    "skipToContent": "Skip to content",
+    "learnMore": "Learn more",
+    "contactUs": "Contact us",
+    "exploreServices": "Explore our services",
+    "home": "Home"
+  },
+  "LanguageSwitcher": {
+    "label": "Language",
+    "switchTo": "Switch to {language}"
+  },
+  "Home": {
+    "snapshotHeading": "INTEMA at a glance",
+    "ourServices": "Our services",
+    "whatWeDo": "What *we do*",
+    "learnMoreAbout": "Learn more about us",
+    "aboutUs": "About us",
+    "ourTeam": "Our team",
+    "meetTeam": "Meet *our team*",
+    "viewTeam": "Meet the whole team",
+    "getInTouch": "Get in *touch*"
+  },
+  "Services": {
+    "sectionNav": "Our Services sections",
+    "import": "We Import",
+    "produce": "We Produce",
+    "export": "We Export",
+    "nonFood": "Non-Food",
+    "food": "Food",
+    "exportBrands": "Our export brands",
+    "targetMarkets": "Target markets",
+    "ourProducts": "Our products",
+    "closePreview": "Close preview",
+    "viewItem": "View {name}"
+  },
+  "Footer": {
+    "contact": "Contact",
+    "explore": "Explore",
+    "phone": "Phone",
+    "email": "Email",
+    "rights": "All rights reserved."
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for doesn't exist or has moved.",
+    "home": "Back to home"
+  },
+  "Team": {
+    "salesTeamSize": "people in our sales team",
+    "atAGlance": "Team at a *glance*",
+    "organised": "How we're organised",
+    "applyCta": "Apply to partner",
+    "brandAmbassador": "Brand ambassador"
+  },
+  "Contact": {
+    "details": "Contact details",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone",
+    "form": {
+      "name": "Full name",
+      "company": "Company",
+      "email": "Email",
+      "phone": "Phone",
+      "inquiryType": "I am a…",
+      "message": "Message",
+      "optional": "optional",
+      "submit": "Send inquiry",
+      "sending": "Sending…",
+      "types": {
+        "retail": "Retail partner",
+        "buyer": "Buyer / distributor",
+        "brand": "Brand principal",
+        "other": "Other"
+      },
+      "success": "Thank you — your inquiry has been sent. Our sales team will be in touch soon.",
+      "error": "Sorry, your inquiry couldn't be sent. Please try again, or email us directly.",
+      "invalid": "Please check the highlighted fields.",
+      "required": "This field is required.",
+      "invalidEmail": "Enter a valid email address.",
+      "tooShort": "Please write at least 10 characters."
+    },
+    "followUs": "Follow us"
+  },
+  "About": {
+    "galleryHeading": "Inside *INTEMA*",
+    "galleryLabel": "Photo gallery",
+    "prev": "Previous photo",
+    "next": "Next photo",
+    "slide": "Photo {current} of {total}",
+    "goTo": "Go to photo {n}",
+    "snapshot": "Company snapshot",
+    "seeBrands": "See what we import",
+    "partnerCta": "Become a partner",
+    "open": "Open photo: {caption}",
+    "close": "Close preview",
+    "partnersLabel": "Our partners"
+  },
+  "Testimonials": {
+    "eyebrow": "Testimonials",
+    "heading": "What our *partners* say"
+  }
+}
