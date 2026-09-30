@@ -7,8 +7,10 @@ import { useEffect, useRef } from "react";
  * users can also swipe (touch), scroll sideways (trackpad / shift+wheel) or
  * drag with the mouse, in either direction. The track holds two identical
  * copies, so scrollLeft is wrapped by one copy width for a seamless loop.
- * Auto-scroll pauses on hover, focus and interaction, and is off entirely
- * under prefers-reduced-motion (manual scrolling still works).
+ * Auto-scroll pauses on hover and keyboard focus, stops for good once the
+ * user scrolls the row themselves (swipe, drag or sideways scroll), and is
+ * off entirely under prefers-reduced-motion (manual scrolling still works).
+ * That hand-over of control stands in for a pause button.
  *
  * A scroll container can't let overflow show on the other axis, so the
  * vertical padding (cancelled by an equal negative margin) gives card shadows
@@ -39,6 +41,8 @@ export function MarqueeScroller({
     let hovering = false;
     let focused = false;
     let resumeAt = 0;
+    // Set once the user moves the row themselves; auto-scroll never resumes.
+    let stopped = false;
     let last = performance.now();
     let frame = 0;
     const holdFor = (ms: number) => (resumeAt = performance.now() + ms);
@@ -62,6 +66,7 @@ export function MarqueeScroller({
     const onPointerUp = () => {
       if (!drag) return;
       suppressClick = drag.moved;
+      if (drag.moved) stopped = true;
       drag = null;
       holdFor(1500);
     };
@@ -73,16 +78,24 @@ export function MarqueeScroller({
       e.stopPropagation();
     };
     const onWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) holdFor(1500);
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) stopped = true;
     };
-    const onTouchStart = () => holdFor(2500);
+    // A tap only pauses briefly (it may open a card); a sideways swipe stops the row.
+    let touchX: number | null = null;
+    const onTouchStart = (e: TouchEvent) => {
+      touchX = e.touches[0]?.clientX ?? null;
+      holdFor(2500);
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (touchX !== null && Math.abs((e.touches[0]?.clientX ?? touchX) - touchX) > 10) stopped = true;
+    };
 
     const tick = (now: number) => {
       const dt = Math.min(0.1, (now - last) / 1000);
       last = now;
       const copy = copyWidth();
       if (copy > 0) {
-        const auto = !reduceMotion.matches && !hovering && !focused && !drag && now > resumeAt;
+        const auto = !stopped && !reduceMotion.matches && !hovering && !focused && !drag && now > resumeAt;
         if (auto) {
           pos += ((reverse ? -1 : 1) * copy * dt) / seconds;
           el.scrollLeft = pos;
@@ -118,6 +131,7 @@ export function MarqueeScroller({
     el.addEventListener("click", onClickCapture, true);
     el.addEventListener("wheel", onWheel, { passive: true });
     el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: true });
     el.addEventListener("mouseenter", enter);
     el.addEventListener("mouseleave", leave);
     el.addEventListener("focusin", focusIn);
@@ -130,6 +144,7 @@ export function MarqueeScroller({
       el.removeEventListener("click", onClickCapture, true);
       el.removeEventListener("wheel", onWheel);
       el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
       el.removeEventListener("mouseenter", enter);
       el.removeEventListener("mouseleave", leave);
       el.removeEventListener("focusin", focusIn);

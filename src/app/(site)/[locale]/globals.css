@@ -25,9 +25,9 @@
   --font-display: var(--font-anton), Impact, "Arial Narrow", var(--font-ethiopic), sans-serif;
   --font-title: "Arial Black", var(--font-archivo-black), "Arial", var(--font-ethiopic), sans-serif;
   --font-ethiopic-first: var(--font-ethiopic), "SF Pro Text", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  /* Amharic headings/titles: Adwa for Ethiopic, the Latin heading faces for the rest. */
-  --font-am-display: var(--font-adwa), var(--font-anton), var(--font-ethiopic), sans-serif;
-  --font-am-title: var(--font-adwa), "Arial Black", var(--font-archivo-black), var(--font-ethiopic), sans-serif;
+  /* Amharic headings/titles: Nokia Pure Headline for Ethiopic, the Latin heading faces for the rest. */
+  --font-am-display: var(--font-nokia), var(--font-anton), var(--font-ethiopic), sans-serif;
+  --font-am-title: var(--font-nokia), "Arial Black", var(--font-archivo-black), var(--font-ethiopic), sans-serif;
 
   /* Floating header: bar height, and the viewport offset content must clear
      (0.75rem top gap + bar + 0.75rem breathing room). The Services tab strip
@@ -63,7 +63,7 @@
     radial-gradient(ellipse at 20% 0%, #1c1c1c 0%, transparent 60%);
 }
 
-/* Headers: Anton; Amharic headers use Adwa Bold. font-synthesis is off so
+/* Headers: Anton; Amharic headers use Nokia Pure Headline Bold. font-synthesis is off so
    Latin fallbacks (single-weight Anton) don't get a smeared fake bold. */
 @utility font-display-heading {
   font-family: var(--font-display);
@@ -80,7 +80,7 @@
   }
 }
 
-/* Titles: Arial Black; Amharic titles use Adwa Bold. */
+/* Titles: Arial Black; Amharic titles use Nokia Pure Headline Bold. */
 @utility font-title-heading {
   font-family: var(--font-title);
   font-weight: 900;
@@ -96,7 +96,28 @@
   }
 }
 
+/* Small uppercase labels: eyebrows, footer headings, field labels, roles.
+   Ethiopic has no capitals and letter-spacing breaks up its syllables, so
+   Amharic labels drop both. */
+@utility label-caps {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  &:lang(am) {
+    letter-spacing: 0;
+  }
+}
+
 @layer base {
+  /* Ethiopic glyphs are denser than Latin at the same size, so the two
+     smallest steps are nudged up for Amharic pages. */
+  html:lang(am) {
+    --text-xs: 0.8125rem;
+    --text-sm: 0.9375rem;
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
@@ -115,7 +136,7 @@
 
   /* Amharic body text: Noto Sans Ethiopic first. Deliberately not :lang(am),
      which matches every descendant and would stop nested spans (e.g. accent
-     words) inheriting the Adwa heading font. */
+     words) inheriting the Amharic heading font. */
   [lang="am"],
   html:lang(am) body {
     font-family: var(--font-ethiopic-first);

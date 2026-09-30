@@ -8,6 +8,8 @@
 import type {
   AboutPage,
   Brand,
+  ExportItem,
+  ProducedItem,
   ContactPage,
   HomePage,
   ServicesPage,
@@ -129,6 +131,7 @@ export const homePage: HomePage = {
 
 export const servicesPage: ServicesPage = {
   title: { en: "Our Services", am: "አገልግሎቶቻችን" },
+  eyebrow: { en: "Import · Produce · Export", am: "እናስመጣለን · እናመርታለን · እንልካለን" },
   intro: {
     en: "INTEMA Trading PLC. is an FMCG importer, distributor, manufacturer and exporter serving wholesale and retail markets across Ethiopia, Djibouti and Sudan.",
     am: "ኢንተማ ትሬዲንግ ኃ.የተ.የግ.ማ. በኢትዮጵያ፣ በጅቡቲና በሱዳን የጅምላና የችርቻሮ ገበያዎችን የሚያገለግል የፍጆታ ምርቶች አስመጪ፣ አከፋፋይ፣ አምራችና ላኪ ነው።",
@@ -157,20 +160,6 @@ export const servicesPage: ServicesPage = {
     en: "Made in-house: our Abay candle brand and a legacy line of soap brands.",
     am: "በራሳችን የሚመረቱ፦ የአባይ ሻማ ብራንዳችንና ነባር የሳሙና ብራንዶቻችን።",
   },
-  produceItems: [
-    {
-      _key: "abay",
-      name: { en: "Abay", am: "አባይ ሻማ" },
-      category: { en: "Candles", am: "ሻማ" },
-      description: { en: "Our own candle brand, sold in 8-candle packs.", am: "የራሳችን የሻማ ብራንድ፤ በ8 ሻማ ጥቅል ይሸጣል።" },
-    },
-    ...(["Skor", "Cool", "Mama", "Abu", "Kanna", "Pass"] as const).map((name) => ({
-      _key: name.toLowerCase(),
-      name: { en: name },
-      category: { en: "Soap", am: "ሳሙና" },
-      description: { en: "Part of our legacy soap line.", am: "የነባር የሳሙና ምርቶቻችን አካል።" },
-    })),
-  ],
 
   exportHeading: { en: "We Export", am: "እንልካለን" },
   exportIntro: {
@@ -185,10 +174,6 @@ export const servicesPage: ServicesPage = {
     en: "Two registered export brands carrying Ethiopian coffee to the Middle East, Asia and Europe.",
     am: "የኢትዮጵያን ቡና ወደ መካከለኛው ምሥራቅ፣ እስያና አውሮፓ የሚወስዱ ሁለት የተመዘገቡ የወጪ ንግድ ብራንዶች።",
   },
-  exportBrands: [
-    { _key: "seedcup", name: "Seedcup", description: { en: "Registered export brand", am: "የተመዘገበ የወጪ ንግድ ብራንድ" } },
-    { _key: "bella", name: "Bella", description: { en: "Registered export brand", am: "የተመዘገበ የወጪ ንግድ ብራንድ" } },
-  ],
   exportMarkets: [
     { en: "Middle East", am: "መካከለኛው ምሥራቅ" },
     { en: "Asia", am: "እስያ" },
@@ -243,6 +228,7 @@ export const brands: Brand[] = [
 
 export const teamPage: TeamPage = {
   title: { en: "Our Team", am: "ቡድናችን" },
+  eyebrow: { en: "The people behind INTEMA", am: "ከኢንተማ ጀርባ ያሉ ሰዎች" },
   intro: {
     en: "INTEMA is led by principal owners Bedru Hussen Jemal and Eliyas Abrar Sh., whose combined experience brings upper office management skills, high levels of customer service, and over 10 years in distribution and sales management.",
     am: "ኢንተማ የሚመራው በዋና ባለቤቶቹ በድሩ ሁሴን ጀማል እና ኤልያስ አብራር ሸ. ሲሆን፣ ጥምር ልምዳቸው የከፍተኛ አመራር ክህሎትን፣ ከፍተኛ የደንበኞች አገልግሎትን እና በማከፋፈልና በሽያጭ አመራር ከ10 ዓመታት በላይ ልምድን ያካትታል።",
@@ -356,6 +342,7 @@ export const teamMembers: TeamMember[] = [
 
 export const contactPage: ContactPage = {
   title: { en: "Contact", am: "ያግኙን" },
+  eyebrow: { en: "Talk to our sales team", am: "የሽያጭ ቡድናችንን ያነጋግሩ" },
   intro: {
     en: "Retail partners, buyers and brand principals can reach our sales team directly.",
     am: "የችርቻሮ አጋሮች፣ ገዢዎችና የብራንድ ባለቤቶች የሽያጭ ቡድናችንን በቀጥታ ማግኘት ይችላሉ።",
@@ -376,6 +363,7 @@ export const contactPage: ContactPage = {
 
 export const aboutPage: AboutPage = {
   title: { en: "About Us", am: "ስለ እኛ" },
+  eyebrow: { en: "Since 2014", am: "ከ2014 ጀምሮ" },
   intro: {
     en: "The Quality Warehouse — a diversified FMCG importer, distributor, manufacturer and exporter serving Ethiopia, Djibouti and Sudan since 2014.",
     am: "የጥራት መጋዘን — ከ2014 ጀምሮ ኢትዮጵያን፣ ጅቡቲንና ሱዳንን የሚያገለግል ሁለገብ የፍጆታ ምርቶች አስመጪ፣ አከፋፋይ፣ አምራችና ላኪ።",
@@ -508,3 +496,23 @@ export const testimonials: Testimonial[] = [1, 2, 3].map((n) => ({
   role: { en: "Partner role", am: "የአጋር ሚና" },
   company: "Company name",
 }));
+
+export const producedItems: ProducedItem[] = [
+  {
+    _id: "produce-abay",
+    name: { en: "Abay", am: "አባይ ሻማ" },
+    category: { en: "Candles", am: "ሻማ" },
+    description: { en: "Our own candle brand, sold in 8-candle packs.", am: "የራሳችን የሻማ ብራንድ፤ በ8 ሻማ ጥቅል ይሸጣል።" },
+  },
+  ...(["Skor", "Cool", "Mama", "Abu", "Kanna", "Pass"] as const).map((name) => ({
+    _id: `produce-${name.toLowerCase()}`,
+    name: { en: name },
+    category: { en: "Soap", am: "ሳሙና" },
+    description: { en: "Part of our legacy soap line.", am: "የነባር የሳሙና ምርቶቻችን አካል።" },
+  })),
+];
+
+export const exportItems: ExportItem[] = [
+  { _id: "export-seedcup", name: "Seedcup", description: { en: "Registered export brand", am: "የተመዘገበ የወጪ ንግድ ብራንድ" } },
+  { _id: "export-bella", name: "Bella", description: { en: "Registered export brand", am: "የተመዘገበ የወጪ ንግድ ብራንድ" } },
+];

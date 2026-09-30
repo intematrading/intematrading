@@ -2,11 +2,12 @@ import { GraduationCap, Megaphone, Truck, UserRound, Users } from "lucide-react"
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Accent } from "@/components/Accent";
 import { Container } from "@/components/Container";
+import { IconBox } from "@/components/IconBox";
 import { PageHero } from "@/components/PageHero";
 import { PartnerCta } from "@/components/PartnerCta";
 import { PhotoFrame } from "@/components/PhotoFrame";
+import { SectionHeading } from "@/components/SectionHeading";
 import { TeamCard } from "@/components/TeamCard";
 import { heroPlaceholders, placeholders, teamSectionPlaceholders } from "@/content/placeholders";
 import type { Placeholder } from "@/content/placeholders";
@@ -29,17 +30,6 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/team">):
   });
 }
 
-function SectionTitle({ id, children }: { id: string; children: React.ReactNode }) {
-  return (
-    <>
-      <h2 id={id} className="font-display-heading text-4xl text-black sm:text-6xl">
-        {children}
-      </h2>
-      <span aria-hidden="true" className="mt-4 block h-1 w-14 bg-red" />
-    </>
-  );
-}
-
 /** Tall photo beside a team section, with the brand's slanted red edge. */
 function SidePhoto({ image, placeholder, locale }: { image?: SanityImage; placeholder: Placeholder; locale: AppLocale }) {
   return (
@@ -56,10 +46,9 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [page, members, settings, t] = await Promise.all([
+  const [page, members, t] = await Promise.all([
     getTeamPage(),
     getTeamMembers(),
-    getSiteSettings(),
     getTranslations("Team"),
   ]);
   const leadership = members.filter((m) => m.group === "leadership");
@@ -68,7 +57,7 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
   return (
     <>
       <PageHero
-        eyebrow={tr(settings.tagline, locale)}
+        eyebrow={tr(page.eyebrow, locale)}
         title={tr(page.title, locale)}
         intro={tr(page.intro, locale)}
         image={page.heroImage}
@@ -81,7 +70,7 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
         <section aria-labelledby="leadership-heading" className="py-16 sm:py-24">
           <Container className="grid gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
-              <SectionTitle id="leadership-heading">{tr(page.leadershipHeading, locale)}</SectionTitle>
+              <SectionHeading id="leadership-heading">{tr(page.leadershipHeading, locale)}</SectionHeading>
               {page.leadershipIntro && <p className="mt-6 max-w-2xl text-lg text-muted">{tr(page.leadershipIntro, locale)}</p>}
               <ul className="mt-10 grid gap-6 sm:grid-cols-2">
                 {leadership.map((m) => (
@@ -103,9 +92,9 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
         <section aria-labelledby="facts-heading" className="on-dark texture-dark relative overflow-hidden text-paper">
           <span aria-hidden="true" className="absolute inset-y-0 right-0 hidden w-[16%] bg-red [clip-path:polygon(55%_0,100%_0,100%_100%,0_100%)] md:block" />
           <Container className="relative py-14 sm:py-16">
-            <h2 id="facts-heading" className="font-display-heading text-4xl sm:text-5xl">
-              <Accent text={t("atAGlance")} />
-            </h2>
+            <SectionHeading id="facts-heading" size="band" onDark>
+              {t("atAGlance")}
+            </SectionHeading>
             <dl className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 md:pr-[10%]">
               {page.facts.map((fact) => (
                 <div key={fact._key} className="flex flex-col-reverse gap-1 border-l border-paper/25 pl-6">
@@ -113,7 +102,7 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
                     <span className="block font-semibold">{tr(fact.label, locale)}</span>
                     {fact.note && <span className="mt-1 block text-sm text-smoke">{tr(fact.note, locale)}</span>}
                   </dt>
-                  <dd className="font-display-heading text-6xl text-paper" lang="en">
+                  <dd className="font-display-heading text-5xl text-paper sm:text-6xl" lang="en">
                     {fact.value}
                   </dd>
                 </div>
@@ -128,15 +117,15 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
         <section aria-labelledby="sales-heading" className="texture-paper py-16 sm:py-24">
           <Container className="grid gap-12 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
-              <SectionTitle id="sales-heading">{tr(page.salesHeading, locale)}</SectionTitle>
+              <SectionHeading id="sales-heading">{tr(page.salesHeading, locale)}</SectionHeading>
               <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
                 {page.salesIntro && <p className="max-w-xl text-lg text-muted">{tr(page.salesIntro, locale)}</p>}
                 {page.salesTeamSize && (
                   <p className="flex shrink-0 items-end gap-3">
-                    <span className="font-display-heading text-8xl text-red" lang="en">
+                    <span className="font-display-heading text-5xl text-red sm:text-6xl" lang="en">
                       {page.salesTeamSize}
                     </span>
-                    <span className="max-w-28 pb-2 text-xs font-bold tracking-[0.14em] text-ink uppercase">{t("salesTeamSize")}</span>
+                    <span className="label-caps max-w-28 pb-1.5 text-ink">{t("salesTeamSize")}</span>
                   </p>
                 )}
               </div>
@@ -168,13 +157,9 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
               </div>
             </div>
             <div className="md:col-span-7 lg:col-span-7 lg:col-start-6">
-              <p className="flex items-center gap-3 text-xs font-bold tracking-[0.18em] uppercase">
-                <span aria-hidden="true" className="h-1 w-8 bg-red" />
-                {tr(page.ambassadorRole, locale) || t("brandAmbassador")}
-              </p>
-              <h2 id="ambassador-heading" className="font-display-heading mt-5 text-5xl sm:text-7xl">
+              <SectionHeading id="ambassador-heading" eyebrow={tr(page.ambassadorRole, locale) || t("brandAmbassador")} onDark>
                 {tr(page.ambassadorName, locale)}
-              </h2>
+              </SectionHeading>
               {page.ambassadorBio && <p className="mt-6 max-w-xl text-lg text-smoke">{tr(page.ambassadorBio, locale)}</p>}
             </div>
           </Container>
@@ -185,22 +170,22 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
       {page.departments?.length || page.training ? (
         <section aria-labelledby="organised-heading" className="py-16 sm:py-24">
           <Container>
-            <SectionTitle id="organised-heading">{t("organised")}</SectionTitle>
+            <SectionHeading id="organised-heading">{t("organised")}</SectionHeading>
             <ul className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {page.departments?.map((dept, i) => {
                 const Icon = departmentIcons[i % departmentIcons.length];
                 return (
                   <li key={dept._key} className="flex flex-col bg-paper p-7 shadow-sm ring-1 ring-line">
-                    <Icon aria-hidden="true" className="size-9 text-red" strokeWidth={1.5} />
-                    <h3 className="font-title-heading mt-5 text-base text-black">{tr(dept.title, locale)}</h3>
+                    <IconBox icon={Icon} />
+                    <h3 className="font-title-heading mt-6 text-lg text-black">{tr(dept.title, locale)}</h3>
                     {dept.body && <p className="mt-2 text-sm leading-relaxed text-muted">{tr(dept.body, locale)}</p>}
                   </li>
                 );
               })}
               {page.training && (
                 <li className="on-dark texture-dark flex flex-col p-7 text-paper">
-                  <GraduationCap aria-hidden="true" className="size-9 text-paper" strokeWidth={1.5} />
-                  <h3 className="font-title-heading mt-5 text-base">{tr(page.trainingHeading, locale)}</h3>
+                  <IconBox icon={GraduationCap} />
+                  <h3 className="font-title-heading mt-6 text-lg">{tr(page.trainingHeading, locale)}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-smoke">{tr(page.training, locale)}</p>
                 </li>
               )}

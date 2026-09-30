@@ -20,7 +20,7 @@ const exploreIcons: Record<string, LucideIcon> = {
 export async function SiteFooter({ settings, locale }: { settings: SiteSettings; locale: Locale }) {
   const [t, nav] = await Promise.all([getTranslations("Footer"), getTranslations("Nav")]);
   const companyName = tr(settings.companyName, locale);
-  const headingClass = "text-xs font-bold tracking-[0.18em] text-black uppercase";
+  const headingClass = "label-caps text-black";
 
   return (
     <footer className="relative border-t border-line bg-paper text-muted">
@@ -34,12 +34,12 @@ export async function SiteFooter({ settings, locale }: { settings: SiteSettings;
           <h2 id="footer-explore" className={headingClass}>
             {t("explore")}
           </h2>
-          <ul className="mt-5 space-y-2.5 text-sm">
+          <ul className="mt-4 space-y-1 text-sm">
             {navItems.map((item) => {
               const Icon = exploreIcons[item.key];
               return (
                 <li key={item.href}>
-                  <Link href={item.href} className="group inline-flex items-center gap-3 transition-colors hover:text-red-ink">
+                  <Link href={item.href} className="group inline-flex items-center gap-3 py-1 transition-colors hover:text-red-ink">
                     <Icon aria-hidden="true" className="size-4 text-red" />
                     {nav(item.key)}
                   </Link>
@@ -64,7 +64,7 @@ export async function SiteFooter({ settings, locale }: { settings: SiteSettings;
             <p className="flex gap-3">
               <Mail aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-red" />
               <span className="sr-only">{t("email")}: </span>
-              <a href={`mailto:${settings.email}`} className="transition-colors hover:text-red-ink">
+              <a href={`mailto:${settings.email}`} className="inline-block py-1 transition-colors hover:text-red-ink">
                 {settings.email}
               </a>
             </p>
@@ -76,7 +76,7 @@ export async function SiteFooter({ settings, locale }: { settings: SiteSettings;
                   {settings.phones.map((phone, i) => (
                     <span key={phone}>
                       {i > 0 && <span aria-hidden="true"> · </span>}
-                      <a href={`tel:${phone.replace(/\s+/g, "")}`} className="whitespace-nowrap transition-colors hover:text-red-ink">
+                      <a href={`tel:${phone.replace(/\s+/g, "")}`} className="inline-block py-1 whitespace-nowrap transition-colors hover:text-red-ink">
                         {phone}
                       </a>
                     </span>

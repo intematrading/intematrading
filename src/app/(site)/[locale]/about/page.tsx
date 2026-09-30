@@ -2,14 +2,15 @@ import { CheckCircle2, Eye, PhoneCall, Ship, Target, TrendingUp, Truck } from "l
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Accent } from "@/components/Accent";
 import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
 import { Gallery } from "@/components/Gallery";
+import { IconBox } from "@/components/IconBox";
 import { Marquee } from "@/components/Marquee";
 import { PageHero } from "@/components/PageHero";
 import { PartnerLogo } from "@/components/PartnerLogo";
 import { PhotoFrame } from "@/components/PhotoFrame";
+import { SectionHeading } from "@/components/SectionHeading";
 import { galleryPlaceholders, heroPlaceholders } from "@/content/placeholders";
 import { getAboutPage, getBrands, getSiteSettings, tr } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
@@ -28,32 +29,20 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/about">)
   });
 }
 
-function Heading({ id, children, onDark = false }: { id: string; children: React.ReactNode; onDark?: boolean }) {
-  return (
-    <>
-      <h2 id={id} className={`font-display-heading text-4xl sm:text-6xl ${onDark ? "text-paper" : "text-black"}`}>
-        {children}
-      </h2>
-      <span aria-hidden="true" className="mt-4 block h-1 w-14 bg-red" />
-    </>
-  );
-}
-
 export default async function AboutPage({ params }: PageProps<"/[locale]/about">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [page, brands, settings, t] = await Promise.all([
+  const [page, brands, t] = await Promise.all([
     getAboutPage(),
     getBrands(),
-    getSiteSettings(),
     getTranslations("About"),
   ]);
 
   return (
     <>
       <PageHero
-        eyebrow={tr(settings.tagline, locale)}
+        eyebrow={tr(page.eyebrow, locale)}
         title={tr(page.title, locale)}
         intro={tr(page.intro, locale)}
         image={page.heroImage}
@@ -65,15 +54,15 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
       <section aria-labelledby="who-heading" className="py-16 sm:py-24">
         <Container className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <Heading id="who-heading">{tr(page.whoWeAreHeading, locale)}</Heading>
-            <div className="mt-8 space-y-5 text-base leading-relaxed text-ink/85 sm:text-lg">
+            <SectionHeading id="who-heading">{tr(page.whoWeAreHeading, locale)}</SectionHeading>
+            <div className="mt-8 space-y-5 text-base leading-relaxed text-ink sm:text-lg">
               {page.whoWeAre?.map((para) => <p key={para.en}>{tr(para, locale)}</p>)}
             </div>
           </div>
           {page.stats?.length ? (
             <aside aria-labelledby="snapshot-heading" className="on-dark texture-dark relative self-start p-7 text-paper sm:p-9 lg:col-span-5">
               <span aria-hidden="true" className="absolute top-0 right-0 size-16 bg-red [clip-path:polygon(0_0,100%_0,100%_100%)]" />
-              <h3 id="snapshot-heading" className="text-xs font-bold tracking-[0.18em] uppercase">
+              <h3 id="snapshot-heading" className="label-caps">
                 {t("snapshot")}
               </h3>
               <dl className="mt-6 divide-y divide-paper/15">
@@ -98,9 +87,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
       {page.gallery?.length ? (
         <section aria-labelledby="gallery-heading" className="texture-paper py-16 sm:py-24">
           <Container>
-            <h2 id="gallery-heading" className="font-display-heading text-4xl text-black sm:text-6xl">
-              <Accent text={t("galleryHeading")} />
-            </h2>
+            <SectionHeading id="gallery-heading">{t("galleryHeading")}</SectionHeading>
             <div className="mt-10">
               <Gallery
                 label={t("galleryLabel")}
@@ -164,23 +151,16 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
         <section aria-labelledby="process-heading" className="texture-paper py-16 sm:py-24">
           <Container>
             <div className="max-w-3xl">
-              <Heading id="process-heading">{tr(page.processHeading, locale)}</Heading>
+              <SectionHeading id="process-heading">{tr(page.processHeading, locale)}</SectionHeading>
               {page.processIntro && <p className="mt-6 text-lg text-muted">{tr(page.processIntro, locale)}</p>}
             </div>
             <ol className="relative mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              <span aria-hidden="true" className="absolute top-8 right-[12%] left-[12%] hidden h-0.5 bg-black/15 lg:block" />
+              <span aria-hidden="true" className="absolute top-14 right-[12%] left-[12%] hidden h-0.5 bg-black/15 lg:block" />
               {page.processSteps.map((step, i) => {
                 const Icon = stepIcons[i % stepIcons.length];
                 return (
                   <li key={step._key} className="relative flex flex-col bg-paper p-7 shadow-sm ring-1 ring-line">
-                    <span className="flex items-center gap-4">
-                      <span aria-hidden="true" className="flex size-16 shrink-0 items-center justify-center bg-red text-paper">
-                        <Icon className="size-7" strokeWidth={1.75} />
-                      </span>
-                      <span aria-hidden="true" className="font-display-heading text-5xl text-black/15" lang="en">
-                        0{i + 1}
-                      </span>
-                    </span>
+                    <IconBox icon={Icon} size="lg" />
                     <h3 className="font-title-heading mt-6 text-lg text-black">{tr(step.title, locale)}</h3>
                     {step.body && <p className="mt-2 text-sm leading-relaxed text-muted">{tr(step.body, locale)}</p>}
                   </li>
@@ -196,7 +176,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
         <Container>
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-6">
-              <Heading id="partners-heading">{tr(page.partnersHeading, locale)}</Heading>
+              <SectionHeading id="partners-heading">{tr(page.partnersHeading, locale)}</SectionHeading>
               {page.partnersIntro && <p className="mt-6 text-lg text-muted">{tr(page.partnersIntro, locale)}</p>}
             </div>
             <div className="flex flex-wrap gap-4 ps-2 lg:col-span-6 lg:justify-end">
@@ -224,9 +204,9 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
         <section aria-labelledby="keys-heading" className="on-dark texture-dark relative overflow-hidden py-16 text-paper sm:py-24">
           <span aria-hidden="true" className="absolute top-0 right-0 size-32 bg-red [clip-path:polygon(0_0,100%_0,100%_100%)] sm:size-48" />
           <Container className="relative">
-            <Heading id="keys-heading" onDark>
+            <SectionHeading id="keys-heading" onDark>
               {tr(page.keysHeading, locale)}
-            </Heading>
+            </SectionHeading>
             <ul className="mt-12 grid gap-x-10 gap-y-6 md:grid-cols-2">
               {page.keysToSuccess.map((key) => (
                 <li key={key.en} className="flex gap-4 border-t border-paper/15 pt-6">

@@ -10,6 +10,12 @@ export const contactPage = defineType({
   description: "Contact details themselves live in Site settings.",
   fields: [
     defineField({ name: "title", type: "localeString", validation: (r) => r.required() }),
+    defineField({
+      name: "eyebrow",
+      title: "Header eyebrow",
+      type: "localeString",
+      description: "Short label above the page title. Leave empty to use the default.",
+    }),
     defineField({ name: "intro", type: "localeText" }),
     imageWithAlt("heroImage", "Header photo"),
     defineField({ name: "formHeading", type: "localeString" }),

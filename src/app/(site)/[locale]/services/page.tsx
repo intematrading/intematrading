@@ -4,14 +4,16 @@ import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/Container";
 import { GetInTouch } from "@/components/GetInTouch";
+import { IconBox } from "@/components/IconBox";
 import { Marquee } from "@/components/Marquee";
 import { PageHero } from "@/components/PageHero";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductPreviewProvider } from "@/components/ProductPreview";
+import { SectionHeading } from "@/components/SectionHeading";
 import { ServicesSubnav } from "@/components/ServicesSubnav";
 import { heroPlaceholders, productPlaceholders } from "@/content/placeholders";
 import type { ServiceSection } from "@/content/types";
-import { getBrands, getServicesPage, getSiteSettings, tr } from "@/lib/content";
+import { getBrands, getExportItems, getProducedItems, getServicesPage, getSiteSettings, tr } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/services">): Promise<Metadata> {
@@ -29,7 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/services
 // Offsets anchored sections so their heading clears the sticky header + tab bar.
 const sectionClass = "scroll-mt-[calc(var(--spacing-nav)+var(--spacing-subnav))] py-16 sm:py-24";
 
-function SectionHeading({
+function ServiceHeading({
   id,
   number,
   title,
@@ -44,14 +46,13 @@ function SectionHeading({
 }) {
   return (
     <header className="flex max-w-3xl gap-5 sm:gap-7">
-      <span aria-hidden="true" className={`font-display-heading text-5xl sm:text-7xl ${onDark ? "text-paper" : "text-red"}`} lang="en">
+      <span aria-hidden="true" className={`font-display-heading text-4xl sm:text-6xl ${onDark ? "text-paper" : "text-red"}`} lang="en">
         {number}
       </span>
       <div>
-        <h2 id={id} className={`font-display-heading text-4xl sm:text-6xl ${onDark ? "text-paper" : "text-black"}`}>
+        <SectionHeading id={id} onDark={onDark}>
           {title}
-        </h2>
-        <span aria-hidden="true" className="mt-4 block h-1 w-14 bg-red" />
+        </SectionHeading>
         {intro && <p className={`mt-4 text-lg ${onDark ? "text-smoke" : "text-muted"}`}>{intro}</p>}
       </div>
     </header>
@@ -60,7 +61,7 @@ function SectionHeading({
 
 function SubHeading({ children, onDark = false }: { children: React.ReactNode; onDark?: boolean }) {
   return (
-    <h3 className={`mb-5 flex items-center gap-3 text-sm font-bold tracking-[0.16em] uppercase ${onDark ? "text-paper" : "text-ink"}`}>
+    <h3 className={`label-caps mb-5 flex items-center gap-3 ${onDark ? "text-paper" : "text-ink"}`}>
       <span aria-hidden="true" className="h-1 w-6 bg-red" />
       {children}
     </h3>
@@ -104,13 +105,7 @@ function ProductRow({
     <div className={band ? "texture-paper mt-16 py-14 first:mt-0 sm:py-16" : "mt-16 first:mt-0"}>
       <Container className="mb-8 flex flex-col items-end text-right">
         <h3 className="flex items-center gap-4">
-          {/* Slanted icon box, echoing the buttons and tabs */}
-          <span
-            aria-hidden="true"
-            className="relative isolate flex size-11 shrink-0 items-center justify-center text-paper before:absolute before:inset-0 before:-z-10 before:-skew-x-[14deg] before:bg-red"
-          >
-            <Icon className="size-5" strokeWidth={2} />
-          </span>
+          <IconBox icon={Icon} />
           <span className={`font-display-heading text-2xl sm:text-3xl ${onDark ? "text-paper" : "text-black"}`}>{label}</span>
         </h3>
         {intro && <p className={`mt-3 max-w-xl text-base ${onDark ? "text-smoke" : "text-muted"}`}>{intro}</p>}
@@ -128,10 +123,11 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [page, brands, settings, t] = await Promise.all([
+  const [page, brands, producedItems, exportItems, t] = await Promise.all([
     getServicesPage(),
     getBrands(),
-    getSiteSettings(),
+    getProducedItems(),
+    getExportItems(),
     getTranslations("Services"),
   ]);
 
@@ -148,7 +144,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
   return (
     <>
       <PageHero
-        eyebrow={tr(settings.tagline, locale)}
+        eyebrow={tr(page.eyebrow, locale)}
         title={tr(page.title, locale)}
         intro={tr(page.intro, locale)}
         image={page.heroImage}
@@ -163,7 +159,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         {/* ── We Import ─────────────────────────────────────────────── */}
         <section id="import" aria-labelledby="import-heading" className={sectionClass}>
           <Container>
-            <SectionHeading id="import-heading" number="01" title={importSec.title} intro={tr(page.importIntro, locale)} />
+            <ServiceHeading id="import-heading" number="01" title={importSec.title} intro={tr(page.importIntro, locale)} />
           </Container>
           <div className="mt-12">
             {[
@@ -192,19 +188,19 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         <section id="produce" aria-labelledby="produce-heading" className={`${sectionClass} on-dark texture-dark relative overflow-hidden text-paper`}>
           <span aria-hidden="true" className="absolute top-0 right-0 size-24 bg-red [clip-path:polygon(0_0,100%_0,100%_100%)] sm:size-40" />
           <Container className="relative">
-            <SectionHeading id="produce-heading" number="02" title={produceSec.title} intro={tr(page.produceIntro, locale)} onDark />
+            <ServiceHeading id="produce-heading" number="02" title={produceSec.title} intro={tr(page.produceIntro, locale)} onDark />
           </Container>
           <div className="relative mt-12">
-            <ProductRow icon={Flame} label={t("ourProducts")} intro={tr(page.productsIntro, locale)} count={page.produceItems?.length ?? 0} onDark>
-              {page.produceItems?.map((item) => (
+            <ProductRow icon={Flame} label={t("ourProducts")} intro={tr(page.productsIntro, locale)} count={producedItems.length} onDark>
+              {producedItems.map((item) => (
                 <ProductCard
-                  key={item._key}
+                  key={item._id}
                   openLabel={t("viewItem", { name: tr(item.name, locale) })}
                   title={tr(item.name, locale)}
                   label={tr(item.category, locale)}
                   description={tr(item.description, locale)}
                   image={item.image}
-                  placeholder={productPlaceholders[item._key]}
+                  placeholder={productPlaceholders[item._id]}
                   locale={locale}
                   tone="dark"
                 />
@@ -216,23 +212,23 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         {/* ── We Export ─────────────────────────────────────────────── */}
         <section id="export" aria-labelledby="export-heading" className={sectionClass}>
           <Container>
-            <SectionHeading id="export-heading" number="03" title={exportSec.title} intro={tr(page.exportIntro, locale)} />
+            <ServiceHeading id="export-heading" number="03" title={exportSec.title} intro={tr(page.exportIntro, locale)} />
           </Container>
           <div className="mt-12">
             <ProductRow
               icon={Coffee}
               label={t("exportBrands")}
               intro={tr(page.exportBrandsIntro, locale)}
-              count={page.exportBrands?.length ?? 0}
+              count={exportItems.length}
             >
-              {page.exportBrands?.map((b) => (
+              {exportItems.map((b) => (
                 <ProductCard
-                  key={b._key}
+                  key={b._id}
                   openLabel={t("viewItem", { name: b.name })}
                   title={b.name}
                   description={tr(b.description, locale)}
                   image={b.image}
-                  placeholder={productPlaceholders[b._key]}
+                  placeholder={productPlaceholders[b._id]}
                   locale={locale}
                 />
               ))}

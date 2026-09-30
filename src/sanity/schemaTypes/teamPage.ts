@@ -17,6 +17,13 @@ export const teamPage = defineType({
   ],
   fields: [
     defineField({ name: "title", type: "localeString", group: "leadership", validation: (r) => r.required() }),
+    defineField({
+      name: "eyebrow",
+      title: "Header eyebrow",
+      type: "localeString",
+      group: "leadership",
+      description: "Short label above the page title. Leave empty to use the default.",
+    }),
     defineField({ name: "intro", type: "localeText", group: "leadership" }),
     imageWithAlt("heroImage", "Header photo", "leadership"),
     defineField({ name: "leadershipHeading", type: "localeString", group: "leadership" }),

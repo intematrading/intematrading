@@ -6,8 +6,10 @@ import type {
   AboutPage,
   Brand,
   ContactPage,
+  ExportItem,
   HomePage,
   LocaleString,
+  ProducedItem,
   ServicesPage,
   SiteSettings,
   TeamMember,
@@ -21,10 +23,15 @@ import { isSanityConfigured } from "@/sanity/env";
 /** Cache tag the Sanity webhook (/api/revalidate) invalidates on publish. */
 export const SANITY_TAG = "sanity";
 
+// Production caches CMS reads for up to an hour (the publish webhook refreshes
+// them immediately). In development, always read fresh so edits in the Studio
+// show up on the next page load.
+const REVALIDATE = process.env.NODE_ENV === "development" ? 0 : 3600;
+
 async function fetchOr<T>(query: string, fallbackValue: T): Promise<T> {
   if (!isSanityConfigured) return fallbackValue;
   const result = await client.fetch<T | null>(query, {}, {
-    next: { revalidate: 3600, tags: [SANITY_TAG] },
+    next: { revalidate: REVALIDATE, tags: [SANITY_TAG] },
   });
   // A singleton that hasn't been created in the Studio yet comes back null.
   if (result == null || (Array.isArray(result) && result.length === 0)) return fallbackValue;
@@ -42,19 +49,30 @@ const teamMembersQuery = defineQuery(
   `*[_type == "teamMember"] | order(coalesce(order, 999) asc, name.en asc){ _id, name, role, group, bio, photo }`,
 );
 const contactPageQuery = defineQuery(`*[_id == "contactPage"][0]`);
+const producedItemsQuery = defineQuery(
+  `*[_type == "producedItem"] | order(coalesce(order, 999) asc, name.en asc){ _id, name, category, description, image }`,
+);
+const exportItemsQuery = defineQuery(
+  `*[_type == "exportItem"] | order(coalesce(order, 999) asc, name asc){ _id, name, description, image }`,
+);
 const aboutPageQuery = defineQuery(`*[_id == "aboutPage"][0]`);
 const testimonialsQuery = defineQuery(
   `*[_type == "testimonial"] | order(coalesce(order, 999) asc, _createdAt desc){ _id, quote, name, role, company, photo }`,
 );
 
+// The header eyebrow falls back to the default copy while the CMS field is empty.
+const withEyebrow = <T extends { eyebrow?: LocaleString }>(page: T, defaults: T): T => ({ ...page, eyebrow: page.eyebrow ?? defaults.eyebrow });
+
 export const getSiteSettings = cache(() => fetchOr<SiteSettings>(settingsQuery, fallback.siteSettings));
 export const getHomePage = cache(() => fetchOr<HomePage>(homeQuery, fallback.homePage));
-export const getServicesPage = cache(() => fetchOr<ServicesPage>(servicesQuery, fallback.servicesPage));
+export const getServicesPage = cache(async () => withEyebrow(await fetchOr<ServicesPage>(servicesQuery, fallback.servicesPage), fallback.servicesPage));
 export const getBrands = cache(() => fetchOr<Brand[]>(brandsQuery, fallback.brands));
-export const getTeamPage = cache(() => fetchOr<TeamPage>(teamPageQuery, fallback.teamPage));
+export const getTeamPage = cache(async () => withEyebrow(await fetchOr<TeamPage>(teamPageQuery, fallback.teamPage), fallback.teamPage));
 export const getTeamMembers = cache(() => fetchOr<TeamMember[]>(teamMembersQuery, fallback.teamMembers));
-export const getContactPage = cache(() => fetchOr<ContactPage>(contactPageQuery, fallback.contactPage));
-export const getAboutPage = cache(() => fetchOr<AboutPage>(aboutPageQuery, fallback.aboutPage));
+export const getProducedItems = cache(() => fetchOr<ProducedItem[]>(producedItemsQuery, fallback.producedItems));
+export const getExportItems = cache(() => fetchOr<ExportItem[]>(exportItemsQuery, fallback.exportItems));
+export const getContactPage = cache(async () => withEyebrow(await fetchOr<ContactPage>(contactPageQuery, fallback.contactPage), fallback.contactPage));
+export const getAboutPage = cache(async () => withEyebrow(await fetchOr<AboutPage>(aboutPageQuery, fallback.aboutPage), fallback.aboutPage));
 
 /**
  * Real testimonials from Sanity. The labelled samples are shown only while
@@ -62,7 +80,7 @@ export const getAboutPage = cache(() => fetchOr<AboutPage>(aboutPageQuery, fallb
  */
 export const getTestimonials = cache(async (): Promise<Testimonial[]> => {
   if (!isSanityConfigured) return fallback.testimonials;
-  return client.fetch<Testimonial[]>(testimonialsQuery, {}, { next: { revalidate: 3600, tags: [SANITY_TAG] } });
+  return client.fetch<Testimonial[]>(testimonialsQuery, {}, { next: { revalidate: REVALIDATE, tags: [SANITY_TAG] } });
 });
 
 /** Picks the value for `locale`, falling back to English when a translation is missing. */

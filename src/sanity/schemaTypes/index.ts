@@ -1,9 +1,11 @@
 import { aboutPage } from "./aboutPage";
 import { brand } from "./brand";
 import { contactPage } from "./contactPage";
+import { exportItem } from "./exportItem";
 import { homePage } from "./homePage";
 import { inquiry } from "./inquiry";
 import { localeString, localeText } from "./locale";
+import { producedItem } from "./producedItem";
 import { seo } from "./seo";
 import { servicesPage } from "./servicesPage";
 import { siteSettings } from "./siteSettings";
@@ -22,6 +24,8 @@ export const schemaTypes = [
   teamPage,
   contactPage,
   brand,
+  producedItem,
+  exportItem,
   teamMember,
   testimonial,
   inquiry,

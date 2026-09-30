@@ -3,6 +3,7 @@
 import { CheckCircle2, LoaderCircle } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { ButtonArrow, buttonClass } from "./ButtonLink";
 import { inquiryTypes, validateInquiry, type InquiryErrors, type InquiryField } from "@/lib/inquiry";
 
 type Status = "idle" | "sending" | "success" | "error" | "invalid";
@@ -127,10 +128,10 @@ export function InquiryForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="group relative isolate inline-flex min-h-12 items-center gap-2.5 px-7 text-base font-bold text-paper transition-transform duration-300 ease-out before:absolute before:inset-0 before:-z-10 before:-skew-x-[14deg] before:bg-red before:transition-colors hover:-translate-y-1 hover:before:bg-black disabled:translate-y-0 disabled:opacity-70 motion-reduce:transition-none"
+          className={`${buttonClass("red")} ms-2 disabled:translate-y-0 disabled:opacity-70`}
         >
-          {status === "sending" && <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />}
           {status === "sending" ? t("sending") : t("submit")}
+          {status === "sending" ? <LoaderCircle aria-hidden="true" className="size-4 animate-spin" /> : <ButtonArrow />}
         </button>
         <p aria-live="polite" className="text-sm font-semibold text-red-ink">
           {status === "invalid" && t("invalid")}

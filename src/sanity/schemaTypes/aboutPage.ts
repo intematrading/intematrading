@@ -17,6 +17,13 @@ export const aboutPage = defineType({
   ],
   fields: [
     defineField({ name: "title", type: "localeString", group: "story", validation: (r) => r.required() }),
+    defineField({
+      name: "eyebrow",
+      title: "Header eyebrow",
+      type: "localeString",
+      group: "story",
+      description: "Short label above the page title. Leave empty to use the default.",
+    }),
     defineField({ name: "intro", type: "localeText", group: "story" }),
     imageWithAlt("heroImage", "Header photo", "story"),
     defineField({ name: "whoWeAreHeading", type: "localeString", group: "story" }),

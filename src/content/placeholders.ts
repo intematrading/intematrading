@@ -16,7 +16,7 @@ export const placeholders = {
 } satisfies Record<string, Placeholder>;
 
 // Product-card stand-ins: stock category shots, not the actual products.
-// Keyed by brand document id (imports) or item key (produce / export).
+// Keyed by document id.
 const product = (file: string, position?: string): Placeholder => ({ src: `/placeholders/products/${file}.jpg`, position });
 export const productPlaceholders: Record<string, Placeholder> = {
   "brand-reckitt": product("reckitt"),
@@ -30,15 +30,15 @@ export const productPlaceholders: Record<string, Placeholder> = {
   "brand-international-collection": product("international-collection"),
   "brand-power-horse": product("power-horse"),
   "brand-irn-bru": product("irn-bru"),
-  abay: { src: "/placeholders/abay-candles.jpg", position: "25% 100%" },
-  skor: product("soap-1"),
-  cool: product("soap-2"),
-  mama: product("soap-3"),
-  abu: product("soap-1", "30% 50%"),
-  kanna: product("soap-2", "70% 50%"),
-  pass: product("soap-3", "20% 60%"),
-  seedcup: { src: "/placeholders/about-coffee.jpg" },
-  bella: { src: "/placeholders/export-coffee.jpg" },
+  "produce-abay": { src: "/placeholders/abay-candles.jpg", position: "25% 100%" },
+  "produce-skor": product("soap-1"),
+  "produce-cool": product("soap-2"),
+  "produce-mama": product("soap-3"),
+  "produce-abu": product("soap-1", "30% 50%"),
+  "produce-kanna": product("soap-2", "70% 50%"),
+  "produce-pass": product("soap-3", "20% 60%"),
+  "export-seedcup": { src: "/placeholders/about-coffee.jpg" },
+  "export-bella": { src: "/placeholders/export-coffee.jpg" },
 };
 
 export const heroPlaceholders = {

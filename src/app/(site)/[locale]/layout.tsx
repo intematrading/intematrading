@@ -18,7 +18,7 @@ import "./globals.css";
 //   body    → SF Pro Text (system font on Apple devices; not licensed for web
 //             embedding, so other platforms get their own system UI font)
 // None of these cover Ethiopic: Amharic body text uses Noto Sans Ethiopic,
-// and Amharic headings/titles use Adwa (below).
+// and Amharic headings/titles use Nokia Pure Headline (below).
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton", display: "swap" });
 // Not preloaded: only downloaded on devices without Arial Black.
 const archivoBlack = Archivo_Black({
@@ -28,17 +28,15 @@ const archivoBlack = Archivo_Black({
   display: "swap",
   preload: false,
 });
-// Adwa (Abraham Abebe) for Amharic headings and titles. Limited to Ethiopic
-// code points, so Latin words and numbers in those headings keep Anton /
-// Arial Black, and English pages never download it.
-// LICENSE: the font files say "All Rights Reserved" and only allow
-// preview & print embedding; confirm web-font permission before deploying.
-const adwa = localFont({
-  src: [
-    { path: "../../../fonts/Adwa-Regular.ttf", weight: "400" },
-    { path: "../../../fonts/Adwa-Bold.ttf", weight: "700" },
-  ],
-  variable: "--font-adwa",
+// Nokia Pure Headline Bold (Dalton Maag for Nokia) for Amharic headings and
+// titles. The file is subset to Ethiopic code points, so Latin words and
+// numbers in those headings keep Anton / Arial Black, and English pages never
+// download it.
+// LICENSE: the font says "© 2011 Nokia. All rights reserved" with no licence
+// grant; confirm web-font permission before deploying.
+const nokia = localFont({
+  src: [{ path: "../../../fonts/NokiaPureHeadline-Bold-Ethiopic.woff2", weight: "700" }],
+  variable: "--font-nokia",
   display: "swap",
   preload: false,
   adjustFontFallback: false,
@@ -75,7 +73,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   const [settings, t] = await Promise.all([getSiteSettings(), getTranslations("Common")]);
 
   return (
-    <html lang={locale} className={`${anton.variable} ${archivoBlack.variable} ${adwa.variable} ${ethiopic.variable} antialiased`}>
+    <html lang={locale} className={`${anton.variable} ${archivoBlack.variable} ${nokia.variable} ${ethiopic.variable} antialiased`}>
       <body className="flex min-h-dvh flex-col">
         <NextIntlClientProvider>
           <a

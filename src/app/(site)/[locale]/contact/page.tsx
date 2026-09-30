@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/Container";
 import { InquiryForm } from "@/components/InquiryForm";
 import { PageHero } from "@/components/PageHero";
+import { SectionHeading } from "@/components/SectionHeading";
 import { SocialLinks } from "@/components/SocialLinks";
 import { heroPlaceholders } from "@/content/placeholders";
 import { Testimonials } from "@/components/Testimonials";
@@ -35,12 +36,12 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
   ]);
   const cardClass = "flex gap-4 bg-paper p-6 shadow-sm ring-1 ring-line";
   const iconClass = "mt-0.5 size-6 shrink-0 text-red";
-  const labelClass = "text-xs font-bold tracking-[0.16em] text-ink uppercase";
+  const labelClass = "label-caps text-ink";
 
   return (
     <>
       <PageHero
-        eyebrow={tr(settings.tagline, locale)}
+        eyebrow={tr(page.eyebrow, locale)}
         title={tr(page.title, locale)}
         intro={tr(page.intro, locale)}
         image={page.heroImage}
@@ -52,8 +53,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
         <Container className="grid gap-10 lg:grid-cols-12">
           {/* Contact details */}
           <div className="lg:col-span-4">
-            <h2 className="font-display-heading text-4xl text-black sm:text-5xl">{t("details")}</h2>
-            <span aria-hidden="true" className="mt-4 block h-1 w-14 bg-red" />
+            <SectionHeading size="band">{t("details")}</SectionHeading>
             <address className="mt-8 grid gap-4 not-italic">
               {(settings.address || settings.poBox) && (
                 <div className={cardClass}>
@@ -79,10 +79,10 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
                   <Phone aria-hidden="true" className={iconClass} />
                   <div>
                     <p className={labelClass}>{t("phone")}</p>
-                    <ul className="mt-2 space-y-1">
+                    <ul className="mt-1">
                       {settings.phones.map((phone) => (
                         <li key={phone}>
-                          <a href={`tel:${phone.replace(/\s+/g, "")}`} className="font-semibold whitespace-nowrap text-ink hover:text-red-ink hover:underline">
+                          <a href={`tel:${phone.replace(/\s+/g, "")}`} className="inline-block py-1 font-semibold whitespace-nowrap text-ink hover:text-red-ink hover:underline">
                             {phone}
                           </a>
                         </li>

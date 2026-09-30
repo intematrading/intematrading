@@ -7,7 +7,9 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
 import { Eyebrow } from "@/components/Eyebrow";
 import { GetInTouch } from "@/components/GetInTouch";
+import { IconBox } from "@/components/IconBox";
 import { PhotoFrame } from "@/components/PhotoFrame";
+import { SectionHeading } from "@/components/SectionHeading";
 import { TeamCard } from "@/components/TeamCard";
 import { Testimonials } from "@/components/Testimonials";
 import { placeholders } from "@/content/placeholders";
@@ -67,11 +69,10 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             <h1>
               {headline ? (
                 <>
-                  <span className="flex items-center gap-3 text-xs font-bold tracking-[0.18em] text-ink uppercase">
-                    <span aria-hidden="true" className="h-1 w-8 bg-red" />
+                  <Eyebrow as="span">
                     {brandLine}
                     <span className="sr-only"> — </span>
-                  </span>
+                  </Eyebrow>
                   <span className="font-display-heading mt-5 block text-[clamp(2.75rem,5.6vw,5.25rem)] text-black">
                     <Accent text={headline} />
                   </span>
@@ -84,7 +85,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </h1>
             <span aria-hidden="true" className="mt-6 block h-1 w-16 bg-red" />
             {home.heroSubheadline && (
-              <p className="mt-6 max-w-lg text-base text-ink/80 sm:text-lg">{tr(home.heroSubheadline, locale)}</p>
+              <p className="mt-6 max-w-lg text-base text-muted sm:text-lg">{tr(home.heroSubheadline, locale)}</p>
             )}
             <div className="mt-9 flex flex-wrap gap-4 ps-2">
               <ButtonLink href="/services" variant="red">
@@ -156,16 +157,15 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           <Container>
             <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
               <div className="lg:col-span-5">
-                <Eyebrow>{t("ourServices")}</Eyebrow>
-                <h2 id="what-we-do" className="font-display-heading mt-4 text-5xl text-black sm:text-6xl">
-                  <Accent text={t("whatWeDo")} />
-                </h2>
+                <SectionHeading id="what-we-do" eyebrow={t("ourServices")}>
+                  {t("whatWeDo")}
+                </SectionHeading>
               </div>
               {services.intro && (
                 <div className="border-line lg:col-span-7 lg:border-l lg:pl-10">
-                  <p className="max-w-2xl text-ink/80">{tr(services.intro, locale)}</p>
-                  <Link href="/about" className="group mt-4 inline-flex items-center gap-2 text-sm font-bold text-ink hover:text-red-ink">
-                    {t("learnMoreAbout")}
+                  <p className="max-w-2xl text-muted">{tr(services.intro, locale)}</p>
+                  <Link href="/services" className="group mt-3 inline-flex items-center gap-2 py-1 text-sm font-bold text-ink hover:text-red-ink">
+                    {common("exploreServices")}
                     <ArrowRight aria-hidden="true" className="size-4 text-red transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
@@ -173,7 +173,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </div>
 
             <ul className="mt-12 grid gap-6 lg:grid-cols-3">
-              {cards.map((card, i) => {
+              {cards.map((card) => {
                 const Icon = sectionIcons[card.section];
                 // We Produce is the red card; the other two are black.
                 const red = card.section === "produce";
@@ -187,18 +187,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                     >
                       <div className="relative z-10 flex w-[58%] flex-col p-6">
                         {/* Slanted icon box: red on black cards, black on the red one */}
-                        <span
-                          aria-hidden="true"
-                          className={`relative isolate flex size-12 items-center justify-center text-paper before:absolute before:inset-0 before:-z-10 before:-skew-x-[14deg] ${
-                            red ? "before:bg-black" : "before:bg-red"
-                          }`}
-                        >
-                          <Icon className="size-6" strokeWidth={1.75} />
-                        </span>
-                        <span aria-hidden="true" className="mt-3 text-sm font-bold text-paper/70" lang="en">
-                          0{i + 1}
-                        </span>
-                        <h3 className="font-title-heading mt-1 text-lg text-paper">{tr(card.title, locale)}</h3>
+                        <IconBox icon={Icon} tone={red ? "black" : "red"} />
+                        <h3 className="font-title-heading mt-5 text-lg text-paper">{tr(card.title, locale)}</h3>
                         {card.description && (
                           <p className={`mt-2 flex-1 text-sm ${red ? "text-paper" : "text-smoke"}`}>{tr(card.description, locale)}</p>
                         )}
@@ -238,10 +228,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         <section aria-labelledby="commitment-heading" className="on-dark texture-dark relative overflow-hidden text-paper">
           <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_minmax(0,0.9fr)]">
             <div className={`relative z-10 px-4 py-14 sm:px-6 lg:py-20 lg:pr-4 ${alignLeft}`}>
-              {home.commitmentEyebrow && <Eyebrow onDark>{tr(home.commitmentEyebrow, locale)}</Eyebrow>}
-              <h2 id="commitment-heading" className="font-display-heading mt-5 text-4xl text-paper sm:text-5xl">
-                <Accent text={tr(home.commitmentHeadline, locale)} />
-              </h2>
+              <SectionHeading id="commitment-heading" eyebrow={tr(home.commitmentEyebrow, locale)} size="band" onDark>
+                {tr(home.commitmentHeadline, locale)}
+              </SectionHeading>
               {home.commitmentBody && <p className="mt-6 max-w-sm text-smoke">{tr(home.commitmentBody, locale)}</p>}
               <ButtonLink href="/about" variant="redOnDark" className="mt-8 ms-2">
                 {t("aboutUs")}
@@ -285,13 +274,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           <Container>
             <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
               <div className="lg:col-span-5">
-                <Eyebrow>{t("ourTeam")}</Eyebrow>
-                <h2 id="team-heading" className="font-display-heading mt-4 text-5xl text-black sm:text-6xl">
-                  <Accent text={t("meetTeam")} />
-                </h2>
+                <SectionHeading id="team-heading" eyebrow={t("ourTeam")}>
+                  {t("meetTeam")}
+                </SectionHeading>
               </div>
               <div className="border-line lg:col-span-7 lg:border-l lg:pl-10">
-                {teamPage.intro && <p className="max-w-2xl text-ink/80">{tr(teamPage.intro, locale)}</p>}
+                {teamPage.intro && <p className="max-w-2xl text-muted">{tr(teamPage.intro, locale)}</p>}
                 <ButtonLink href="/team" variant="black" className="mt-6 ms-2">
                   {t("viewTeam")}
                 </ButtonLink>

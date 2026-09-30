@@ -23,7 +23,7 @@ export function TeamCard({ member, locale, showBio = false }: { member: TeamMemb
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <h3 className="font-title-heading text-lg text-black">{tr(member.name, locale)}</h3>
-        <p className="mt-1 text-xs font-bold tracking-[0.14em] text-red-ink uppercase">{tr(member.role, locale)}</p>
+        <p className="label-caps mt-1 text-red-ink">{tr(member.role, locale)}</p>
         {showBio && member.bio && <p className="mt-3 text-sm text-muted">{tr(member.bio, locale)}</p>}
       </div>
     </article>

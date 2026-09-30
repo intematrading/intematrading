@@ -19,5 +19,3 @@ export function Accent({ text, className = "text-red in-[.on-dark]:text-paper in
     </>
   );
 }
-
-export const stripAccent = (text: string) => text.replace(/\*(.+?)\*/g, "$1");

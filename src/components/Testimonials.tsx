@@ -5,11 +5,10 @@ import { testimonialPlaceholders } from "@/content/placeholders";
 import type { Testimonial } from "@/content/types";
 import type { Locale } from "@/i18n/routing";
 import { tr } from "@/lib/content";
-import { Accent } from "./Accent";
 import { CmsImage } from "./CmsImage";
 import { Container } from "./Container";
-import { Eyebrow } from "./Eyebrow";
 import { Marquee } from "./Marquee";
+import { SectionHeading } from "./SectionHeading";
 
 export async function Testimonials({
   items,
@@ -44,12 +43,12 @@ export async function Testimonials({
         >
           <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-red" />
           <Quote aria-hidden="true" className={`size-9 ${dark ? "fill-paper text-paper" : "fill-red text-red"}`} strokeWidth={0} />
-          <blockquote className={`mt-4 flex-1 text-lg leading-relaxed ${dark ? "text-paper/90" : "text-ink"}`}>
+          <blockquote className={`mt-4 flex-1 text-lg leading-relaxed ${dark ? "text-paper" : "text-ink"}`}>
             <p>{tr(item.quote, locale)}</p>
           </blockquote>
           <figcaption className={`mt-6 flex items-center gap-4 border-t pt-5 ${dark ? "border-paper/15" : "border-line"}`}>
             {item.photo?.asset ? (
-              <CmsImage image={item.photo} locale={locale} width={48} height={48} sizes="48px" fallbackAlt="" className="size-12 rounded-full object-cover" />
+              <CmsImage image={item.photo} locale={locale} width={48} height={48} sizes="48px" fallbackAlt="" className="size-12 shrink-0 rounded-full object-cover" />
             ) : testimonialPlaceholders[item._id] ? (
               <Image
                 src={testimonialPlaceholders[item._id].src}
@@ -86,13 +85,12 @@ export async function Testimonials({
     >
       {showHeading && (
         <Container>
-          <Eyebrow onDark={dark}>{t("eyebrow")}</Eyebrow>
-          <h2 id="testimonials-heading" className={`font-display-heading mt-4 text-5xl sm:text-6xl ${dark ? "text-paper" : "text-black"}`}>
-            <Accent text={t("heading")} />
-          </h2>
+          <SectionHeading id="testimonials-heading" eyebrow={t("eyebrow")} onDark={dark}>
+            {t("heading")}
+          </SectionHeading>
         </Container>
       )}
-      {/* Bleeds to the page edges; the pause button stays on the content column. */}
+      {/* Bleeds to the page edges. */}
       <div className={`px-4 sm:px-6 lg:px-8 ${showHeading ? "mt-12" : ""}`}>
         <Marquee label={t("eyebrow")} seconds={items.length * 14}>
           {cards}

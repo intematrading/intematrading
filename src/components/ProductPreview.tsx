@@ -55,7 +55,7 @@ export function ProductPreviewProvider({ children }: { children: React.ReactNode
                   {item.meta}
                 </p>
               )}
-              {item.description && <p className="mt-4 text-base leading-relaxed text-ink/85">{item.description}</p>}
+              {item.description && <p className="mt-4 text-base leading-relaxed text-ink">{item.description}</p>}
             </div>
             <button
               type="button"

@@ -56,6 +56,7 @@ export type HomePage = {
 
 export type ServicesPage = {
   title: LocaleString;
+  eyebrow?: LocaleString;
   intro?: LocaleString;
   heroImage?: SanityImage;
   importHeading?: LocaleString;
@@ -65,18 +66,10 @@ export type ServicesPage = {
   produceHeading?: LocaleString;
   produceIntro?: LocaleString;
   productsIntro?: LocaleString;
-  produceItems?: ProductItem[];
   exportHeading?: LocaleString;
   exportIntro?: LocaleString;
   exportBody?: LocaleString;
   exportBrandsIntro?: LocaleString;
-  exportBrands?: {
-    _key: string;
-    name: string;
-    description?: LocaleString;
-    image?: SanityImage;
-    logo?: SanityImage;
-  }[];
   exportMarkets?: LocaleString[];
   seo?: Seo;
 };
@@ -91,10 +84,17 @@ export type Brand = {
   logo?: SanityImage;
 };
 
-export type ProductItem = {
-  _key: string;
+export type ProducedItem = {
+  _id: string;
   name: LocaleString;
   category?: LocaleString;
+  description?: LocaleString;
+  image?: SanityImage;
+};
+
+export type ExportItem = {
+  _id: string;
+  name: string;
   description?: LocaleString;
   image?: SanityImage;
 };
@@ -108,12 +108,13 @@ export type TeamMember = {
   photo?: SanityImage;
 };
 
-export type Stat = { _key: string; value: string; label: LocaleString; note?: LocaleString };
-export type TitledText = { _key: string; title: LocaleString; body?: LocaleString };
-export type CaptionedImage = { _key: string; image?: SanityImage; caption: LocaleString };
+type Stat = { _key: string; value: string; label: LocaleString; note?: LocaleString };
+type TitledText = { _key: string; title: LocaleString; body?: LocaleString };
+type CaptionedImage = { _key: string; image?: SanityImage; caption: LocaleString };
 
 export type TeamPage = {
   title: LocaleString;
+  eyebrow?: LocaleString;
   intro?: LocaleString;
   heroImage?: SanityImage;
   leadershipHeading?: LocaleString;
@@ -139,6 +140,7 @@ export type TeamPage = {
 
 export type AboutPage = {
   title: LocaleString;
+  eyebrow?: LocaleString;
   intro?: LocaleString;
   heroImage?: SanityImage;
   whoWeAreHeading?: LocaleString;
@@ -172,6 +174,7 @@ export type Testimonial = {
 
 export type ContactPage = {
   title: LocaleString;
+  eyebrow?: LocaleString;
   intro?: LocaleString;
   heroImage?: SanityImage;
   formHeading?: LocaleString;

@@ -61,13 +61,13 @@ export function ProductCard({
           )}
         </div>
         <div className="flex flex-1 flex-col p-5">
-          <h4 className={`font-title-heading text-base ${dark ? "text-paper" : "text-black"}`}>{title}</h4>
+          <h4 className={`font-title-heading text-lg ${dark ? "text-paper" : "text-black"}`}>{title}</h4>
           {meta && (
             <p className={`mt-1 text-xs font-semibold ${dark ? "text-smoke" : "text-muted"}`} lang="en">
               {meta}
             </p>
           )}
-          {description && <p className={`mt-2 text-sm leading-relaxed ${dark ? "text-paper/85" : "text-muted"}`}>{description}</p>}
+          {description && <p className={`mt-2 text-sm leading-relaxed ${dark ? "text-smoke" : "text-muted"}`}>{description}</p>}
         </div>
         <ProductPreviewTrigger
           label={openLabel}

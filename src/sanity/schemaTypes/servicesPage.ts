@@ -15,6 +15,12 @@ export const servicesPage = defineType({
   ],
   fields: [
     defineField({ name: "title", type: "localeString", validation: (r) => r.required() }),
+    defineField({
+      name: "eyebrow",
+      title: "Header eyebrow",
+      type: "localeString",
+      description: "Short label above the page title. Leave empty to use the default.",
+    }),
     defineField({ name: "intro", type: "localeText" }),
     imageWithAlt("heroImage", "Header photo"),
 
@@ -27,51 +33,24 @@ export const servicesPage = defineType({
     // We Produce
     defineField({ name: "produceHeading", type: "localeString", group: "produce" }),
     defineField({ name: "produceIntro", type: "localeText", group: "produce" }),
-    defineField({ name: "productsIntro", title: "Products description", type: "localeText", group: "produce" }),
     defineField({
-      name: "produceItems",
-      title: "Products",
-      description: "Shown as scrolling cards: our own brands (Abay candles, the legacy soap line…).",
-      type: "array",
+      name: "productsIntro",
+      title: "Products description",
+      type: "localeText",
       group: "produce",
-      of: [
-        defineArrayMember({
-          type: "object",
-          name: "productItem",
-          fields: [
-            defineField({ name: "name", type: "localeString", validation: (r) => r.required() }),
-            defineField({ name: "category", type: "localeString", description: 'Small label, e.g. "Candles" or "Soap".' }),
-            defineField({ name: "description", type: "localeString" }),
-            imageWithAlt("image", "Product photo"),
-          ],
-          preview: { select: { title: "name.en", subtitle: "category.en", media: "image" } },
-        }),
-      ],
+      description: 'The products themselves are managed under "Produced products".',
     }),
 
     // We Export
     defineField({ name: "exportHeading", type: "localeString", group: "export" }),
     defineField({ name: "exportIntro", type: "localeText", group: "export" }),
     defineField({ name: "exportBody", type: "localeText", group: "export" }),
-    defineField({ name: "exportBrandsIntro", title: "Export brands description", type: "localeText", group: "export" }),
     defineField({
-      name: "exportBrands",
-      title: "Export brands",
-      type: "array",
+      name: "exportBrandsIntro",
+      title: "Export brands description",
+      type: "localeText",
       group: "export",
-      of: [
-        defineArrayMember({
-          type: "object",
-          name: "exportBrand",
-          fields: [
-            defineField({ name: "name", type: "string", validation: (r) => r.required() }),
-            defineField({ name: "description", type: "localeString" }),
-            imageWithAlt("image", "Product photo"),
-            imageWithAlt("logo"),
-          ],
-          preview: { select: { title: "name", media: "image" } },
-        }),
-      ],
+      description: 'The brands themselves are managed under "Export brands".',
     }),
     defineField({
       name: "exportMarkets",

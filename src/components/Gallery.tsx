@@ -18,7 +18,7 @@ function NavButton({ dir, label, onClick, className }: { dir: -1 | 1; label: str
 /**
  * Looping photo carousel: a CSS scroll-snap track (touch, trackpad and
  * keyboard scrolling work natively) with prev/next buttons that wrap around,
- * and dots. Clicking a photo opens a full-screen preview (native <dialog>:
+ * and dots. Clicking a photo opens a popup preview (native <dialog>:
  * focus is trapped, Esc closes) with its own looping prev/next and ←/→ keys.
  * Slides are rendered on the server and passed in.
  */
@@ -108,7 +108,7 @@ export function Gallery({ label, slides }: { label: string; slides: Slide[] }) {
               onClick={() => goTo(i)}
               aria-label={t("goTo", { n: i + 1 })}
               aria-current={i === index ? "true" : undefined}
-              className="h-1.5 w-6 bg-black/20 transition-all hover:bg-black/40 aria-[current=true]:w-10 aria-[current=true]:bg-red"
+              className="relative h-6 w-6 transition-all before:absolute before:inset-x-0 before:top-1/2 before:h-1.5 before:-translate-y-1/2 before:bg-black/20 before:transition-colors hover:before:bg-black/40 aria-[current=true]:w-10 aria-[current=true]:before:bg-red"
             />
           ))}
         </div>
@@ -118,35 +118,35 @@ export function Gallery({ label, slides }: { label: string; slides: Slide[] }) {
         </div>
       </div>
 
-      {/* Full-screen preview */}
+      {/* Popup preview over a blurred page, styled like the product preview */}
       <dialog
         ref={dialogRef}
         onClose={() => setPreview(null)}
         onClick={(e) => e.target === e.currentTarget && setPreview(null)}
         aria-label={preview === null ? undefined : slides[preview].caption}
-        className="on-dark m-0 h-dvh max-h-none w-screen max-w-none bg-black/95 p-0 text-paper backdrop:bg-black/80"
+        className="m-auto w-[min(64rem,calc(100vw-2rem))] max-w-none bg-transparent p-0 backdrop:bg-black/60 backdrop:backdrop-blur-md"
       >
         {preview !== null && (
-          <div className="flex h-full flex-col px-4 pt-4 pb-6 sm:px-8">
-            <div className="flex items-center justify-between gap-4">
-              <p className="text-sm font-bold tracking-wider text-smoke" lang="en">
+          <div className="relative overflow-hidden bg-paper shadow-2xl">
+            <div className="relative aspect-[16/10] max-h-[70dvh] w-full bg-black">{slides[preview].preview}</div>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t-4 border-red p-4 sm:px-6">
+              <p className="label-caps text-muted" lang="en">
                 {preview + 1} / {count}
               </p>
-              <button
-                type="button"
-                onClick={() => setPreview(null)}
-                aria-label={t("close")}
-                className="flex size-12 items-center justify-center text-paper transition-colors hover:bg-paper hover:text-black"
-              >
-                <X aria-hidden="true" className="size-6" />
-              </button>
+              <p className="min-w-0 flex-1 basis-48 text-base font-semibold text-ink">{slides[preview].caption}</p>
+              <div className="ms-auto flex gap-2">
+                <NavButton dir={-1} label={t("prev")} onClick={() => setPreview(wrap(preview - 1))} className="flex size-11 items-center justify-center bg-black text-paper transition-colors hover:bg-red" />
+                <NavButton dir={1} label={t("next")} onClick={() => setPreview(wrap(preview + 1))} className="flex size-11 items-center justify-center bg-black text-paper transition-colors hover:bg-red" />
+              </div>
             </div>
-            <div className="relative mt-4 flex min-h-0 flex-1 items-center justify-center">
-              <div className="relative h-full w-full max-w-6xl">{slides[preview].preview}</div>
-              <NavButton dir={-1} label={t("prev")} onClick={() => setPreview(wrap(preview - 1))} className="absolute top-1/2 left-0 flex size-12 -translate-y-1/2 items-center justify-center bg-paper/10 text-paper transition-colors hover:bg-paper hover:text-black sm:size-14" />
-              <NavButton dir={1} label={t("next")} onClick={() => setPreview(wrap(preview + 1))} className="absolute top-1/2 right-0 flex size-12 -translate-y-1/2 items-center justify-center bg-paper/10 text-paper transition-colors hover:bg-paper hover:text-black sm:size-14" />
-            </div>
-            <p className="mx-auto mt-5 max-w-3xl text-center text-base font-semibold sm:text-lg">{slides[preview].caption}</p>
+            <button
+              type="button"
+              onClick={() => setPreview(null)}
+              aria-label={t("close")}
+              className="absolute top-3 right-3 flex size-10 items-center justify-center bg-black/70 text-paper transition-colors hover:bg-red"
+            >
+              <X aria-hidden="true" className="size-5" />
+            </button>
           </div>
         )}
       </dialog>
