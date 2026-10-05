@@ -18,6 +18,14 @@ with INTEMA's own photography via Sanity.
 | about-coffee.jpg | Tina Guina | https://unsplash.com/photos/obV_LM0KjxY |
 | about-training.jpg | René Porter | https://unsplash.com/photos/5j6YBI45TI4 |
 | hero-about.jpg | Gift Habeshaw | https://unsplash.com/photos/SpLQSi6CajQ |
+| hero-team.jpg | Cytonn Photography | https://unsplash.com/photos/n95VMLxqM2I |
+| team-leadership.jpg | Christina @ wocintechchat.com | https://unsplash.com/photos/faEfWCdOKIg |
+| team-sales.jpg | Reproductive Health Supplies Coalition | https://unsplash.com/photos/1Bsqy0meA88 |
+| team-1.jpg | kevin Clonee | https://unsplash.com/photos/TlsyyWh3Oa0 |
+| team-2.jpg | Fortune Vieyra | https://unsplash.com/photos/QIMjYJSFoXM |
+| team-3.jpg | Olawale Munna | https://unsplash.com/photos/qpyR0WKV_Cs |
+| team-4.jpg | tekimax | https://unsplash.com/photos/0OczC2-oFsA |
+| partner-cta.jpg | Amina Atar | https://unsplash.com/photos/4mEyvORkbN0 |
 | testimonial-1.jpg | alex starnes | https://unsplash.com/photos/PK_t0Lrh7MM |
 | testimonial-2.jpg | Nigel Msipa | https://unsplash.com/photos/vZbWlXzZtAY |
 | testimonial-3.jpg | Christina @ wocintechchat.com | https://unsplash.com/photos/3ok_-Wvny2Q |
@@ -39,3 +47,5 @@ with INTEMA's own photography via Sanity.
 | products/soap-3.jpg | Nathan Powers | https://unsplash.com/photos/nu1LXI_zOGA |
 
 The products/*.jpg images are stock category shots, not the actual products.
+
+The team-*.jpg portraits are stock models, not INTEMA staff.

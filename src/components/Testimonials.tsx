@@ -89,8 +89,9 @@ export async function Testimonials({
     >
       {showHeading && (
         <Container>
+          {/* All steel gradient: the starred red accent is dropped */}
           <SectionHeading id="testimonials-heading" eyebrow={t("eyebrow")} onDark={dark}>
-            {t("heading")}
+            {t("heading").replace(/\*/g, "")}
           </SectionHeading>
         </Container>
       )}

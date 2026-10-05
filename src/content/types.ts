@@ -137,6 +137,41 @@ export type Testimonial = {
   sample?: boolean;
 };
 
+export type TeamMember = {
+  _id: string;
+  name: LocaleString;
+  role: LocaleString;
+  group: "leadership" | "sales";
+  bio?: LocaleString;
+  photo?: SanityImage;
+};
+
+export type TeamPage = {
+  title: LocaleString;
+  eyebrow?: LocaleString;
+  intro?: LocaleString;
+  heroImage?: SanityImage;
+  leadershipHeading?: LocaleString;
+  leadershipIntro?: LocaleString;
+  leadershipImage?: SanityImage;
+  salesHeading?: LocaleString;
+  salesIntro?: LocaleString;
+  salesTeamSize?: string;
+  salesImage?: SanityImage;
+  ambassadorName?: LocaleString;
+  ambassadorRole?: LocaleString;
+  ambassadorBio?: LocaleString;
+  ambassadorImage?: SanityImage;
+  facts?: Stat[];
+  departments?: TitledText[];
+  trainingHeading?: LocaleString;
+  training?: LocaleString;
+  partnerHeading?: LocaleString;
+  partnerBody?: LocaleString;
+  partnerImage?: SanityImage;
+  seo?: Seo;
+};
+
 export type ContactPage = {
   title: LocaleString;
   eyebrow?: LocaleString;

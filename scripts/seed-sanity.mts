@@ -25,9 +25,11 @@ const client = createClient({ projectId, dataset, token, apiVersion: "2025-10-01
 // Sanity needs a _type on inline objects in arrays, and a _key on every array item.
 const arrayItemType: Record<string, string> = {
   stats: "stat",
+  facts: "stat",
   entryCards: "entryCard",
   gallery: "galleryImage",
   processSteps: "titledText",
+  departments: "titledText",
   socialLinks: "socialLink",
   commitmentPoints: "commitmentPoint",
   keysToSuccess: "localeString",
@@ -60,12 +62,14 @@ const singletons: [string, object][] = [
   ["homePage", fallback.homePage],
   ["aboutPage", fallback.aboutPage],
   ["servicesPage", fallback.servicesPage],
+  ["teamPage", fallback.teamPage],
   ["contactPage", fallback.contactPage],
 ];
 
 const docs = [
   ...singletons.map(([type, data]) => ({ _id: type, _type: type, ...data })),
   ...fallback.brands.map((b, i) => ({ ...b, _type: "brand", order: i + 1 })),
+  ...fallback.teamMembers.map((m, i) => ({ ...m, _type: "teamMember", order: i + 1 })),
   ...fallback.producedItems.map((p, i) => ({ ...p, _type: "producedItem", order: i + 1 })),
   ...fallback.exportItems.map((e, i) => ({ ...e, _type: "exportItem", order: i + 1 })),
   ...fallback.testimonials.map(({ sample: _sample, _id, ...t }, i) => ({

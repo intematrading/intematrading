@@ -8,7 +8,8 @@ import { useEffect, useRef } from "react";
  * travel. Keyboard focus on an off-screen panel scrolls the page to it.
  * While the section scrolls up into view, its entrance progress (0 → 1) is
  * written to --enter for children to animate with.
- * Under prefers-reduced-motion the row becomes a normal swipeable strip.
+ * Under prefers-reduced-motion the row becomes a normal swipeable strip; on
+ * phones and tablets (below lg) the panels stack vertically instead.
  */
 export function HorizontalScroll({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const outerRef = useRef<HTMLDivElement>(null);
@@ -18,7 +19,10 @@ export function HorizontalScroll({ children, className = "" }: { children: React
     const outer = outerRef.current;
     const track = trackRef.current;
     if (!outer || !track) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    // Either way the row isn't driven by scroll.
+    const reduce = { get matches() { return reduceMotion.matches || !desktop.matches; } };
     let travel = 0;
     let frame = 0;
 
@@ -71,22 +75,24 @@ export function HorizontalScroll({ children, className = "" }: { children: React
     observer.observe(track);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", onResize);
-    reduce.addEventListener("change", onResize);
+    reduceMotion.addEventListener("change", onResize);
+    desktop.addEventListener("change", onResize);
     outer.addEventListener("focusin", onFocusIn);
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", onResize);
-      reduce.removeEventListener("change", onResize);
+      reduceMotion.removeEventListener("change", onResize);
+      desktop.removeEventListener("change", onResize);
       outer.removeEventListener("focusin", onFocusIn);
     };
   }, []);
 
   return (
     <div ref={outerRef} className={`relative ${className}`} style={{ "--enter": 0 } as React.CSSProperties}>
-      <div className="sticky top-0 flex h-svh items-center overflow-hidden motion-reduce:static motion-reduce:h-auto motion-reduce:overflow-x-auto motion-reduce:py-4">
-        <div ref={trackRef} className="flex w-max items-stretch gap-3 px-3 will-change-transform sm:gap-4 sm:px-4 lg:pr-24 lg:pl-52">
+      <div className="sticky top-0 flex h-svh items-center overflow-hidden motion-reduce:static motion-reduce:h-auto motion-reduce:overflow-x-auto motion-reduce:py-4 max-lg:static max-lg:h-auto max-lg:overflow-visible max-lg:py-16">
+        <div ref={trackRef} className="flex w-max items-stretch gap-3 px-3 will-change-transform sm:gap-4 sm:px-4 lg:pr-24 lg:pl-52 max-lg:w-full max-lg:flex-col max-lg:gap-6">
           {children}
         </div>
       </div>

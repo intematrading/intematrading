@@ -3,7 +3,7 @@ import { routing } from "@/i18n/routing";
 import { languageAlternates, localizedPath, SITE_URL } from "@/lib/metadata";
 
 // Add each page here as it's built.
-const pages = ["/", "/about", "/services"];
+const pages = ["/", "/about", "/services", "/team"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return pages.flatMap((path) =>

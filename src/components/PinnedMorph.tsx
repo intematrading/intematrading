@@ -7,8 +7,10 @@ import { useEffect, useRef } from "react";
  * of scrolling, writing the progress 0 → 1 to --p. Children read --p in
  * calc(), e.g. to grow margins and rounded corners. The natural height of
  * the element marked [data-natural] is written to --nat, so a section can
- * start at full-screen height (--full) and shrink to its content. Under
- * prefers-reduced-motion nothing is held and --p stays at 1.
+ * start at full-screen height (--full) and shrink to its content. Nothing is
+ * held under prefers-reduced-motion (--p stays at 1: the final state) or on
+ * phones and tablets, below lg (--p stays at 0: the initial state, edge to
+ * edge and at least a screen tall).
  */
 export function PinnedMorph({ children, pin = 0.5 }: { children: React.ReactNode; pin?: number }) {
   const stageRef = useRef<HTMLDivElement>(null);
@@ -20,20 +22,25 @@ export function PinnedMorph({ children, pin = 0.5 }: { children: React.ReactNode
     const sticky = stickyRef.current;
     const content = contentRef.current;
     if (!stage || !sticky || !content) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const reduce = { get matches() { return reduceMotion.matches || !desktop.matches; } };
+    // Phones and tablets keep the initial state; reduced motion the final one.
+    const restingP = () => (reduceMotion.matches ? 1 : 0);
     let stickTop = 0;
     let frame = 0;
 
     const measure = () => {
+      const vh = window.innerHeight;
+      const h = (content.querySelector<HTMLElement>("[data-natural]") ?? content).offsetHeight;
       if (reduce.matches) {
         stage.style.height = sticky.style.height = sticky.style.top = "";
-        stage.style.removeProperty("--nat");
-        stage.style.removeProperty("--full");
+        stage.style.setProperty("--nat", `${h}px`);
+        // svh: doesn't jump as a phone's address bar shows and hides
+        stage.style.setProperty("--full", `max(100svh, ${h}px)`);
         sticky.style.position = "static";
         return;
       }
-      const vh = window.innerHeight;
-      const h = (content.querySelector<HTMLElement>("[data-natural]") ?? content).offsetHeight;
       const box = Math.max(vh, h);
       stage.style.setProperty("--nat", `${h}px`);
       stage.style.setProperty("--full", `${box}px`);
@@ -45,7 +52,7 @@ export function PinnedMorph({ children, pin = 0.5 }: { children: React.ReactNode
     };
     const update = () => {
       frame = 0;
-      const p = reduce.matches ? 1 : Math.min(1, Math.max(0, (stickTop - stage.getBoundingClientRect().top) / (pin * window.innerHeight)));
+      const p = reduce.matches ? restingP() : Math.min(1, Math.max(0, (stickTop - stage.getBoundingClientRect().top) / (pin * window.innerHeight)));
       stage.style.setProperty("--p", p.toFixed(4));
     };
     const schedule = () => {
@@ -62,13 +69,15 @@ export function PinnedMorph({ children, pin = 0.5 }: { children: React.ReactNode
     observer.observe(content);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", onResize);
-    reduce.addEventListener("change", onResize);
+    reduceMotion.addEventListener("change", onResize);
+    desktop.addEventListener("change", onResize);
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", onResize);
-      reduce.removeEventListener("change", onResize);
+      reduceMotion.removeEventListener("change", onResize);
+      desktop.removeEventListener("change", onResize);
     };
   }, [pin]);
 

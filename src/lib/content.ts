@@ -12,6 +12,8 @@ import type {
   ProducedItem,
   ServicesPage,
   SiteSettings,
+  TeamMember,
+  TeamPage,
   Testimonial,
 } from "@/content/types";
 import type { Locale } from "@/i18n/routing";
@@ -50,6 +52,10 @@ const servicesQuery = defineQuery(`*[_id == "servicesPage"][0]`);
 const brandsQuery = defineQuery(
   `*[_type == "brand"] | order(coalesce(order, 999) asc, name asc){ _id, name, category, subBrands, description, image, logo }`,
 );
+const teamPageQuery = defineQuery(`*[_id == "teamPage"][0]`);
+const teamMembersQuery = defineQuery(
+  `*[_type == "teamMember"] | order(coalesce(order, 999) asc, name.en asc){ _id, name, role, group, bio, photo }`,
+);
 const contactPageQuery = defineQuery(`*[_id == "contactPage"][0]`);
 const producedItemsQuery = defineQuery(
   `*[_type == "producedItem"] | order(coalesce(order, 999) asc, name.en asc){ _id, name, category, description, image }`,
@@ -69,6 +75,8 @@ export const getSiteSettings = cache(() => fetchOr<SiteSettings>(settingsQuery, 
 export const getHomePage = cache(() => fetchOr<HomePage>(homeQuery, fallback.homePage));
 export const getServicesPage = cache(async () => withEyebrow(await fetchOr<ServicesPage>(servicesQuery, fallback.servicesPage), fallback.servicesPage));
 export const getBrands = cache(() => fetchOr<Brand[]>(brandsQuery, fallback.brands));
+export const getTeamPage = cache(async () => withEyebrow(await fetchOr<TeamPage>(teamPageQuery, fallback.teamPage), fallback.teamPage));
+export const getTeamMembers = cache(() => fetchOr<TeamMember[]>(teamMembersQuery, fallback.teamMembers));
 export const getProducedItems = cache(() => fetchOr<ProducedItem[]>(producedItemsQuery, fallback.producedItems));
 export const getExportItems = cache(() => fetchOr<ExportItem[]>(exportItemsQuery, fallback.exportItems));
 export const getContactPage = cache(async () => withEyebrow(await fetchOr<ContactPage>(contactPageQuery, fallback.contactPage), fallback.contactPage));

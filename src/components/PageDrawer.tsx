@@ -7,7 +7,7 @@ import { isDrawerPath, usePathname, useRouter } from "@/i18n/navigation";
 
 /**
  * Drawer that slides in from the right over the home page while the URL is
- * one of the drawer pages (/about, /services). The page behind
+ * one of the drawer pages (/about, /services, /team). The page behind
  * stays where it was and can't scroll; the drawer scrolls on its own. Esc,
  * the close button, a click on the shaded page or a link to a place on the
  * home page (via the "drawer:close" event, see lib/home-nav) slide it out,

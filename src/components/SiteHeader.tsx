@@ -138,7 +138,7 @@ export function SiteHeader() {
           {navItems.map(({ href, section, key, icon: Icon }) => (
             <li key={href}>
               <Link
-                href={section ? `/#${section}` : "/"}
+                href={section ? `/#${section}` : href}
                 aria-current={href === current ? (drawerOpen ? "page" : "location") : undefined}
                 data-active={href === current || undefined}
                 className="group relative flex items-center py-1.5 text-xs font-semibold tracking-wider text-ink uppercase transition-colors duration-300 data-dark:text-paper data-dark:[text-shadow:0_1px_10px_rgb(0_0_0/0.45)]"
@@ -191,7 +191,7 @@ export function SiteHeader() {
           {navItems.map(({ href, section, key }) => (
             <li key={href}>
               <Link
-                href={section ? `/#${section}` : "/"}
+                href={section ? `/#${section}` : href}
                 aria-current={href === current ? (drawerOpen ? "page" : "location") : undefined}
                 data-active={href === current || undefined}
                 // Link scrolls the home page to the section; close the menu.

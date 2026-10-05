@@ -8,12 +8,14 @@
 import type {
   AboutPage,
   Brand,
-  ExportItem,
-  ProducedItem,
   ContactPage,
+  ExportItem,
   HomePage,
+  ProducedItem,
   ServicesPage,
   SiteSettings,
+  TeamMember,
+  TeamPage,
   Testimonial,
 } from "./types";
 
@@ -258,6 +260,120 @@ export const brands: Brand[] = [
   { _id: "brand-international-collection", name: "International Collection", category: "food" },
   { _id: "brand-power-horse", name: "Power Horse", category: "food", description: { en: "Energy drink", am: "የኃይል መጠጥ" } },
   { _id: "brand-irn-bru", name: "Irn Bru", category: "food", description: { en: "Soft drink", am: "ለስላሳ መጠጥ" } },
+];
+
+export const teamPage: TeamPage = {
+  title: { en: "Our Team", am: "ቡድናችን" },
+  eyebrow: { en: "The people behind INTEMA", am: "ከኢንተማ ጀርባ ያሉ ሰዎች" },
+  intro: {
+    en: "INTEMA is led by principal owners Bedru Hussen Jemal and Eliyas Abrar Sh., whose combined experience brings upper office management skills, high levels of customer service, and over 10 years in distribution and sales management.",
+    am: "ኢንተማ የሚመራው በዋና ባለቤቶቹ በድሩ ሁሴን ጀማል እና ኤልያስ አብራር ሸ. ሲሆን፣ ጥምር ልምዳቸው የከፍተኛ አመራር ክህሎትን፣ ከፍተኛ የደንበኞች አገልግሎትን እና በማከፋፈልና በሽያጭ አመራር ከ10 ዓመታት በላይ ልምድን ያካትታል።",
+  },
+  leadershipHeading: { en: "Leadership", am: "አመራር" },
+  leadershipIntro: {
+    en: "Relationships are the key to success in distribution, and personal selling is led from the top — Bedru with his skill and experience in sales and distribution, and Eliyas in customer service and relations.",
+    am: "በማከፋፈል ሥራ የስኬት ቁልፉ ግንኙነት ነው፤ በአካል የሚደረግ ሽያጭም ከላይ ይመራል — በድሩ በሽያጭና በማከፋፈል ክህሎቱና ልምዱ፣ ኤልያስ ደግሞ በደንበኞች አገልግሎትና ግንኙነት።",
+  },
+  salesHeading: { en: "Sales & marketing", am: "ሽያጭና ማርኬቲንግ" },
+  salesIntro: {
+    en: "Sales operations are handled by an 8-person team under Head of Sales Tesfaye Hassen and Marketing Manager Kalid Hussen.",
+    am: "የሽያጭ ሥራዎች በሽያጭ ኃላፊ ተስፋዬ ሐሰን እና በማርኬቲንግ ሥራ አስኪያጅ ካሊድ ሁሴን የሚመራ ባለ 8 አባላት ቡድን ይከናወናሉ።",
+  },
+  salesTeamSize: "8",
+  ambassadorName: { en: "Netsanet Workneh", am: "ነፃነት ወርቅነህ" },
+  ambassadorRole: { en: "Brand ambassador", am: "የብራንድ አምባሳደር" },
+  ambassadorBio: {
+    en: "Brand ambassador for Abay, INTEMA's own candle brand.",
+    am: "የኢንተማ የራሱ የሻማ ብራንድ የሆነው የአባይ አምባሳደር።",
+  },
+  facts: [
+    { _key: "reps", value: "8", label: { en: "Sales representatives", am: "የሽያጭ ተወካዮች" }, note: { en: "Up from 2 at founding", am: "ሲመሠረት ከነበሩት 2 አድጎ" } },
+    { _key: "fleet", value: "2→4", label: { en: "Delivery fleet", am: "የማከፋፈያ ተሽከርካሪዎች" }, note: { en: "Doubled within a year", am: "በአንድ ዓመት ውስጥ በእጥፍ አድጓል" } },
+    { _key: "accounts", value: "20–30", label: { en: "Accounts serviced daily", am: "በየቀኑ የሚስተናገዱ ደንበኞች" }, note: { en: "Deliveries twice weekly", am: "በሳምንት ሁለት ጊዜ ማድረስ" } },
+    {
+      _key: "experience",
+      value: "10+",
+      label: { en: "Years in distribution & sales management", am: "ዓመታት በማከፋፈልና በሽያጭ አመራር" },
+      note: { en: "Beiersdorf, L'Oréal Professional, L'Oréal Consumer Products", am: "ቤየርስዶርፍ፣ ሎሬያል ፕሮፌሽናል፣ ሎሬያል ኮንሲውመር ፕሮዳክትስ" },
+    },
+  ],
+  departments: [
+    {
+      _key: "sales",
+      title: { en: "Sales & delivery", am: "ሽያጭና ማድረስ" },
+      body: {
+        en: "8 delivery/sales representatives provide full service and delivery to current customers and make sales calls for new business.",
+        am: "8 የማድረስ/የሽያጭ ተወካዮች ለነባር ደንበኞች ሙሉ አገልግሎትና ማድረስ ይሰጣሉ፤ ለአዲስ ሥራም የሽያጭ ጉብኝት ያደርጋሉ።",
+      },
+    },
+    {
+      _key: "marketing",
+      title: { en: "Marketing", am: "ማርኬቲንግ" },
+      body: {
+        en: "Marketing and sales are closely integrated around the name “The Quality Warehouse”, including in-store campaigns such as the Clere shampoo campaign.",
+        am: "ማርኬቲንግና ሽያጭ “የጥራት መጋዘን” በሚለው ስም ዙሪያ በቅርበት የተሳሰሩ ናቸው፤ እንደ ክሌር ሻምፑ ዘመቻ ያሉ የሱቅ ውስጥ ዘመቻዎችንም ያካትታሉ።",
+      },
+    },
+    {
+      _key: "logistics",
+      title: { en: "Logistics & distribution", am: "ሎጂስቲክስና ማከፋፈል" },
+      body: {
+        en: "Delivery fleet, warehouse and merchandising teams, with deliveries Monday to Friday on routes planned to save time and fuel.",
+        am: "የማከፋፈያ ተሽከርካሪዎች፣ የመጋዘንና የምርት አቀራረብ ቡድኖች፤ ጊዜና ነዳጅ በሚቆጥቡ መስመሮች ከሰኞ እስከ ዓርብ ማድረስ።",
+      },
+    },
+  ],
+  trainingHeading: { en: "Training", am: "ሥልጠና" },
+  training: {
+    en: "INTEMA has invested in coffee training and education so its team is knowledgeable and well prepared — including an Ethiopian/Saudi coffee exchange (“Coffee Talk” with Saudi coffee expert Ali Al Diwani) and international trade shows such as Gulfood.",
+    am: "ኢንተማ ቡድኑ ዕውቀት ያለውና በሚገባ የተዘጋጀ እንዲሆን በቡና ሥልጠናና ትምህርት ላይ ኢንቨስት አድርጓል — በኢትዮጵያ–ሳዑዲ የቡና ልውውጥ (ከሳዑዲው የቡና ባለሙያ አሊ አል ዲዋኒ ጋር “ኮፊ ቶክ”) እና እንደ ጋልፉድ ባሉ ዓለም አቀፍ የንግድ ትርዒቶች መሳተፍን ጨምሮ።",
+  },
+  partnerHeading: { en: "Partner *with us*", am: "*ከእኛ ጋር* ይሥሩ" },
+  partnerBody: {
+    en: "Brand principals looking for distribution in Ethiopia, Djibouti and Sudan, retailers and wholesalers, and collaborators — tell us about your business and our team will get back to you.",
+    am: "በኢትዮጵያ፣ በጅቡቲና በሱዳን አከፋፋይ የሚፈልጉ የብራንድ ባለቤቶች፣ ቸርቻሪዎችና ጅምላ ሻጮች እንዲሁም ተባባሪዎች — ስለ ሥራዎ ይንገሩን፤ ቡድናችን ምላሽ ይሰጥዎታል።",
+  },
+  seo: {
+    title: { en: "Our Team — Leadership & Sales", am: "ቡድናችን — አመራርና ሽያጭ" },
+    description: {
+      en: "Meet the leadership and sales team behind INTEMA Trading PLC., with over 10 years in distribution and sales management.",
+      am: "ከ10 ዓመታት በላይ የማከፋፈልና የሽያጭ አመራር ልምድ ያላቸውን የኢንተማ ትሬዲንግ አመራርና የሽያጭ ቡድን ይተዋወቁ።",
+    },
+  },
+};
+
+export const teamMembers: TeamMember[] = [
+  {
+    _id: "team-bedru",
+    name: { en: "Bedru Hussen Jemal", am: "በድሩ ሁሴን ጀማል" },
+    role: { en: "Principal owner", am: "ዋና ባለቤት" },
+    group: "leadership",
+    bio: {
+      en: "Leads sales and distribution, personally calling on potential customers to review our product line and services.",
+      am: "ሽያጭንና ማከፋፈልን ይመራል፤ የምርትና የአገልግሎት ዝርዝራችንን ለማቅረብ ደንበኞችን በአካል ይጎበኛል።",
+    },
+  },
+  {
+    _id: "team-eliyas",
+    name: { en: "Eliyas Abrar Sh.", am: "ኤልያስ አብራር ሸ." },
+    role: { en: "Principal owner", am: "ዋና ባለቤት" },
+    group: "leadership",
+    bio: { en: "Leads customer service and relations.", am: "የደንበኞች አገልግሎትንና ግንኙነትን ይመራል።" },
+  },
+  {
+    _id: "team-tesfaye",
+    name: { en: "Tesfaye Hassen", am: "ተስፋዬ ሐሰን" },
+    role: { en: "Head of Sales", am: "የሽያጭ ኃላፊ" },
+    group: "sales",
+    bio: { en: "Works in close connection with our 8 delivery/sales representatives.", am: "ከ8ቱ የማድረስ/የሽያጭ ተወካዮቻችን ጋር በቅርበት ይሠራል።" },
+  },
+  {
+    _id: "team-kalid",
+    name: { en: "Kalid Hussen", am: "ካሊድ ሁሴን" },
+    role: { en: "Marketing Manager", am: "የማርኬቲንግ ሥራ አስኪያጅ" },
+    group: "sales",
+    bio: { en: "Works in close connection with our 8 delivery/sales representatives.", am: "ከ8ቱ የማድረስ/የሽያጭ ተወካዮቻችን ጋር በቅርበት ይሠራል።" },
+  },
 ];
 
 export const contactPage: ContactPage = {

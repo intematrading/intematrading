@@ -9,6 +9,8 @@ import { producedItem } from "./producedItem";
 import { seo } from "./seo";
 import { servicesPage } from "./servicesPage";
 import { siteSettings } from "./siteSettings";
+import { teamMember } from "./teamMember";
+import { teamPage } from "./teamPage";
 import { testimonial } from "./testimonial";
 
 export const schemaTypes = [
@@ -19,10 +21,12 @@ export const schemaTypes = [
   homePage,
   aboutPage,
   servicesPage,
+  teamPage,
   contactPage,
   brand,
   producedItem,
   exportItem,
+  teamMember,
   testimonial,
   inquiry,
 ];
@@ -33,5 +37,6 @@ export const singletonTypes = new Set([
   "homePage",
   "aboutPage",
   "servicesPage",
+  "teamPage",
   "contactPage",
 ]);

@@ -14,6 +14,8 @@ import { PhotoFrame } from "@/components/PhotoFrame";
 import { PinnedMorph } from "@/components/PinnedMorph";
 import { ScrollStage } from "@/components/ScrollStage";
 import { SectionHeading } from "@/components/SectionHeading";
+import { Reveal } from "@/components/Reveal";
+import { TeamCard } from "@/components/TeamCard";
 import { Testimonials } from "@/components/Testimonials";
 import { placeholders } from "@/content/placeholders";
 import type { ServiceSection } from "@/content/types";
@@ -25,6 +27,8 @@ import {
   getProducedItems,
   getServicesPage,
   getSiteSettings,
+  getTeamMembers,
+  getTeamPage,
   getTestimonials,
   tr,
 } from "@/lib/content";
@@ -46,9 +50,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [home, services, testimonials, brands, producedItems, exportItems, t, common, svc] = await Promise.all([
+  const [home, services, teamPage, teamMembers, testimonials, brands, producedItems, exportItems, t, common, svc] = await Promise.all([
     getHomePage(),
     getServicesPage(),
+    getTeamPage(),
+    getTeamMembers(),
     getTestimonials(),
     getBrands(),
     getProducedItems(),
@@ -77,9 +83,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {/* ── Hero: pinned while it grows from an inset rounded panel to the
           full screen (margins and corners shrink with scroll), then it
           scrolls away. Logo top-left, content centred. ───────────────── */}
-      <ScrollStage reducedValue={0} className="relative h-[175svh] motion-reduce:h-auto">
+      {/* Phones and tablets: no pinning or growing, the hero starts full
+          screen (with no scroll run the stage's progress is 1: no inset, no
+          corners). */}
+      <ScrollStage reducedValue={0} className="relative h-[175svh] motion-reduce:h-auto max-lg:h-auto">
         <div
-          className="sticky top-0 h-svh [--gap:0.75rem] sm:[--gap:1rem] motion-reduce:static"
+          className="sticky top-0 h-svh [--gap:0.75rem] sm:[--gap:1rem] motion-reduce:static max-lg:static"
           style={{ padding: "calc(var(--gap) * (1 - var(--p)))" }}
         >
           <section
@@ -154,8 +163,10 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {/* ── Snapshot: slides up, then pins while the stats animate in one
           by one (driven by scroll), then scrolls on. ────────────────── */}
       {stats.length ? (
-        <ScrollStage className="relative h-[260svh] motion-reduce:h-auto">
-          <section aria-labelledby="snapshot-heading" className="sticky top-0 flex h-svh items-center overflow-hidden py-[max(3rem,8svh)] text-ink motion-reduce:static motion-reduce:h-auto motion-reduce:py-16">
+        // Phones and tablets: a normal section sized to its content, the
+        // stats shown as they are (no pinning or scroll-driven reveal).
+        <ScrollStage className="relative h-[260svh] motion-reduce:h-auto max-lg:h-auto">
+          <section aria-labelledby="snapshot-heading" className="sticky top-0 flex h-svh items-center overflow-hidden py-[max(3rem,8svh)] text-ink motion-reduce:static motion-reduce:h-auto motion-reduce:py-16 max-lg:static max-lg:h-auto max-lg:py-16 sm:max-lg:py-20">
             {/* Container on a crane line, hanging from the top-left. Hidden
                 above the section at first and lowered in while the section
                 slides up, settling as it reaches the top. */}
@@ -180,7 +191,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                   return (
                     <div
                       key={stat._key}
-                      className="scroll-reveal flex items-start gap-5 py-7 first:pt-0 last:pb-0 sm:gap-8 sm:py-[clamp(1rem,4.5svh,2.5rem)]"
+                      className="scroll-reveal flex items-start gap-5 py-7 first:pt-0 last:pb-0 sm:gap-8 sm:py-[clamp(1rem,4.5svh,2.5rem)] max-lg:!opacity-100 max-lg:![transform:none] sm:max-lg:py-8"
                       style={{ "--start": 0.05 + (i / stats.length) * 0.6, "--span": 0.18 } as React.CSSProperties}
                     >
                       <IconBox icon={Icon} size="lg" className="mt-1" />
@@ -284,7 +295,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           <HorizontalScroll>
             <div
               data-panel
-              className="flex w-[min(28rem,85vw)] shrink-0 flex-col justify-center px-1 sm:px-6 lg:w-[30rem] lg:px-10"
+              className="flex w-[min(28rem,85vw)] shrink-0 flex-col justify-center px-1 sm:px-6 lg:w-[30rem] lg:px-10 max-lg:w-full max-lg:max-w-2xl"
               // Slides in from the left as the section scrolls up
               style={{ transform: "translateX(calc(-40vw * (1 - var(--enter))))", opacity: "var(--enter)" }}
             >
@@ -315,7 +326,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                   data-panel
                   href="/services"
                   style={{ transform: `translateX(calc(${30 + i * 15}vw * (1 - var(--enter))))` }}
-                  className="group on-dark relative isolate flex h-[calc(100svh-6rem)] max-h-[40rem] w-[84vw] shrink-0 flex-col overflow-hidden rounded-[1.75rem] p-7 text-paper shadow-lg transition-shadow hover:shadow-2xl sm:rounded-[2rem] sm:p-10 lg:w-[58vw] lg:p-12"
+                  className="group on-dark relative isolate flex h-[calc(100svh-6rem)] max-h-[40rem] w-[84vw] shrink-0 max-lg:h-[min(34rem,80svh)] max-lg:w-full flex-col overflow-hidden rounded-[1.75rem] p-7 text-paper shadow-lg transition-shadow hover:shadow-2xl sm:rounded-[2rem] sm:p-10 lg:w-[58vw] lg:p-12"
                 >
                   <div className="absolute inset-0 -z-20">
                     <PhotoFrame
@@ -372,7 +383,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             })}
             {/* Closing panel: "more services" note, right-aligned, with a
                 vertical line and label echoing the hero's scroll cue */}
-            <div data-panel className="flex w-[min(34rem,90vw)] shrink-0 items-center justify-end gap-14 px-4 sm:px-10 lg:w-[48rem] lg:gap-28 lg:px-20">
+            <div data-panel className="flex w-[min(34rem,90vw)] shrink-0 items-center justify-end gap-14 px-4 sm:px-10 lg:w-[48rem] lg:gap-28 lg:px-20 max-lg:w-full max-lg:pt-6">
               <div className="flex flex-col items-end text-right">
                 <SectionHeading id="what-we-do-outro" eyebrow={t("outroEyebrow")}>
                   {t("outroHeading")}
@@ -392,6 +403,38 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               </div>
             </div>
           </HorizontalScroll>
+        </section>
+      ) : null}
+
+      {/* ── Meet our team: heading, intro and a link to the Team drawer,
+          then the people ("Team" in the side nav) ────────────────── */}
+      {teamMembers.length ? (
+        <section id="team" data-nav-section="/team" aria-labelledby="team-heading" className="pt-20 pb-4 sm:pt-28">
+          <Container>
+            <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-5">
+                {/* All steel gradient: the starred red accent is dropped */}
+                <SectionHeading id="team-heading" eyebrow={t("ourTeam")}>
+                  {t("meetTeam").replace(/\*/g, "")}
+                </SectionHeading>
+              </div>
+              <div className="lg:col-span-6 lg:col-start-7">
+                {teamPage.intro && <p className="max-w-2xl text-muted sm:text-lg">{tr(teamPage.intro, locale)}</p>}
+                <ButtonLink href="/team" variant="red" className="mt-6">
+                  {t("viewTeam")}
+                </ButtonLink>
+              </div>
+            </Reveal>
+            <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+              {teamMembers.slice(0, 4).map((m) => (
+                <li key={m._id}>
+                  <Reveal className="h-full">
+                    <TeamCard member={m} locale={locale} />
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </Container>
         </section>
       ) : null}
 

@@ -3,6 +3,7 @@
     "home": "ዋና ገጽ",
     "about": "ስለ እኛ",
     "services": "አገልግሎቶች",
+    "team": "ቡድናችን",
     "contact": "ያግኙን",
     "primary": "ዋና ማውጫ",
     "openMenu": "ማውጫውን ክፈት",
@@ -36,7 +37,10 @@
     "outroHeading": "ሌላ ነገር ይፈልጋሉ?",
     "outroCta": "አገልግሎቶቻችንን ይመልከቱ",
     "outroBody": "አገልግሎቶቻችን እዚህ ከተዘረዘሩት በላይ ናቸው። የሚፈልጉትን ይንገሩን፤ ቡድናችን የሚረዳበትን መንገድ ያገኛል።",
-    "outroSide": "እንነጋገር"
+    "outroSide": "እንነጋገር",
+    "ourTeam": "ቡድናችን",
+    "meetTeam": "*ቡድናችንን* ይተዋወቁ",
+    "viewTeam": "መላውን ቡድን ይተዋወቁ"
   },
   "Services": {
     "import": "እናስመጣለን",
@@ -105,7 +109,19 @@
     "partnersEyebrow": "የታመኑ ብራንዶች",
     "keysEyebrow": "ለምን ኢንተማ",
     "step": "ደረጃ {n}",
-    "galleryIntro": "ምርቶች በሦስት አገሮች እንዲንቀሳቀሱ የሚያደርጉት ሰዎችና ቦታዎች — መጋዘኖቻችን፣ የማከፋፈያ ተሽከርካሪዎቻችንና የአጋር መደብሮቻችን።"
+    "galleryIntro": "ምርቶች በሦስት አገሮች እንዲንቀሳቀሱ የሚያደርጉት ሰዎችና ቦታዎች — መጋዘኖቻችን፣ የማከፋፈያ ተሽከርካሪዎቻችንና የአጋር መደብሮቻችን።",
+    "teamCta": "ቡድናችንን ይተዋወቁ"
+  },
+  "Team": {
+    "salesTeamSize": "የሽያጭ ቡድናችን አባላት",
+    "atAGlance": "ቡድናችን *በጨረፍታ*",
+    "organised": "አደረጃጀታችን",
+    "applyCta": "ለአጋርነት ያመልክቱ",
+    "brandAmbassador": "የብራንድ አምባሳደር",
+    "leadershipEyebrow": "የሚመሩን",
+    "salesEyebrow": "በመስክ ላይ",
+    "organisedEyebrow": "ክፍሎች",
+    "partnerEyebrow": "ከኢንተማ ጋር ይሥሩ"
   },
   "Testimonials": {
     "eyebrow": "ምስክርነቶች",

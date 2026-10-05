@@ -90,6 +90,9 @@ export default async function AboutPage({
                 <p key={para.en}>{tr(para, locale)}</p>
               ))}
             </div>
+            <ButtonLink href="/team" variant="steel" className="mt-8">
+              {t("teamCta")}
+            </ButtonLink>
           </Reveal>
           {page.stats?.length ? (
             <Reveal className="lg:col-span-5 lg:col-start-8">
