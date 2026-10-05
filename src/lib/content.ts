@@ -79,7 +79,7 @@ export const getTeamPage = cache(async () => withEyebrow(await fetchOr<TeamPage>
 export const getTeamMembers = cache(() => fetchOr<TeamMember[]>(teamMembersQuery, fallback.teamMembers));
 export const getProducedItems = cache(() => fetchOr<ProducedItem[]>(producedItemsQuery, fallback.producedItems));
 export const getExportItems = cache(() => fetchOr<ExportItem[]>(exportItemsQuery, fallback.exportItems));
-export const getContactPage = cache(async () => withEyebrow(await fetchOr<ContactPage>(contactPageQuery, fallback.contactPage), fallback.contactPage));
+export const getContactPage = cache(() => fetchOr<ContactPage>(contactPageQuery, fallback.contactPage));
 export const getAboutPage = cache(async () => withEyebrow(await fetchOr<AboutPage>(aboutPageQuery, fallback.aboutPage), fallback.aboutPage));
 
 /**

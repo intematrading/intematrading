@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 /*
  * Brand tokens, taken from the logo. Every component reads colour and type
  * from these only.
@@ -20,8 +19,6 @@
   --color-muted: #555555;
   --color-line: #e2e2e3;
   --color-paper: #ffffff;
-  --color-mist: #f4f4f4;
-  --color-smoke: #bdbdbd;
 
   /* Steel ramp: 400 and 700 are the logo gradient's two stops. */
   --color-steel-50: #f6f6f6;
@@ -40,11 +37,6 @@
   --font-display: var(--font-anton), Impact, "Arial Narrow", var(--font-ethiopic), sans-serif;
   --font-title: var(--font-poppins), var(--font-ethiopic), sans-serif;
 
-  /* Header: bar height, and the top offset a page's first section must clear
-     (1.75rem inset + bar + breathing room). */
-  --spacing-header: 4.5rem;
-  --spacing-nav: 6.5rem;
-
   /* Dot travelling down the hero's scroll line */
   --animate-scroll-dot: scroll-dot 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
   @keyframes scroll-dot {
@@ -53,32 +45,6 @@
     80% { opacity: 1; }
     100% { top: 100%; opacity: 0; }
   }
-}
-
-/* Frosted glass for the floating header and tab bar. */
-@utility glass {
-  background-color: rgb(255 255 255 / 0.72);
-  border: 1px solid rgb(255 255 255 / 0.6);
-  box-shadow:
-    0 10px 30px -8px rgb(0 0 0 / 0.18),
-    inset 0 1px 0 rgb(255 255 255 / 0.7);
-  -webkit-backdrop-filter: blur(18px) saturate(170%);
-  backdrop-filter: blur(18px) saturate(170%);
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    background-color: rgb(255 255 255 / 0.96);
-  }
-}
-
-/* Fine paper grain, light and dark. */
-@utility texture-paper {
-  background-color: var(--color-mist);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-@utility texture-dark {
-  background-color: var(--color-black);
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse at 20% 0%, #1c1c1c 0%, transparent 60%);
 }
 
 /*
@@ -181,8 +147,7 @@
     outline: 3px solid var(--color-red);
     outline-offset: 3px;
   }
-  .on-dark :focus-visible,
-  .on-red :focus-visible {
+  .on-dark :focus-visible {
     outline-color: var(--color-paper);
   }
 }

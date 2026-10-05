@@ -1,4 +1,4 @@
-import { ArrowRight, BadgeCheck, Boxes, Flame, Globe, Handshake, Plane, ShieldCheck, Ship, Users } from "lucide-react";
+import { ArrowRight, BadgeCheck, Flame, Handshake, Plane, ShieldCheck, Ship } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import type { Locale } from "next-intl";
@@ -11,10 +11,12 @@ import { Eyebrow } from "@/components/Eyebrow";
 import { HorizontalScroll } from "@/components/HorizontalScroll";
 import { IconBox } from "@/components/IconBox";
 import { Logo } from "@/components/Logo";
+import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
 import { PinnedMorph } from "@/components/PinnedMorph";
 import { ScrollStage } from "@/components/ScrollStage";
 import { SectionHeading } from "@/components/SectionHeading";
+import { statIcon } from "@/components/stat-icons";
 import { Reveal } from "@/components/Reveal";
 import { TeamCard } from "@/components/TeamCard";
 import { Testimonials } from "@/components/Testimonials";
@@ -35,7 +37,6 @@ import {
 } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
-const statIcons = [Globe, Boxes, Users];
 const sectionIcons: Record<ServiceSection, typeof Ship> = { import: Ship, produce: Flame, export: Plane };
 const pointIcons = [ShieldCheck, BadgeCheck, Handshake];
 
@@ -189,11 +190,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                   {common("learnMore")}
                 </ButtonLink>
               </div>
-              <dl className="divide-y divide-steel-300 lg:col-span-6 lg:col-start-7">
+              <ul className="divide-y divide-steel-300 lg:col-span-6 lg:col-start-7">
                 {stats.map((stat, i) => {
-                  const Icon = statIcons[i % statIcons.length];
+                  const Icon = statIcon(stat._key);
                   return (
-                    <div
+                    <li
                       key={stat._key}
                       className="scroll-reveal flex items-start gap-5 py-7 first:pt-0 last:pb-0 sm:gap-8 sm:py-[clamp(1rem,4.5svh,2.5rem)] max-lg:!opacity-100 max-lg:![transform:none] sm:max-lg:py-8"
                       style={{ "--start": 0.05 + (i / stats.length) * 0.6, "--span": 0.18 } as React.CSSProperties}
@@ -201,18 +202,18 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                       <IconBox icon={Icon} size="lg" className="mt-1" />
                       {/* Number, then its label and description underneath */}
                       <div className="flex flex-col-reverse">
-                        <dt className="mt-2">
+                        <p className="mt-2">
                           <span className="block text-lg font-semibold text-ink">{tr(stat.label, locale)}</span>
                           {stat.note && <span className="mt-1.5 block max-w-md text-muted">{tr(stat.note, locale)}</span>}
-                        </dt>
-                        <dd className="font-display-heading text-steel-gradient text-5xl leading-none sm:text-[clamp(2.5rem,7svh,3.75rem)]" lang="en">
+                        </p>
+                        <p className="font-display-heading text-steel-gradient text-5xl leading-none sm:text-[clamp(2.5rem,7svh,3.75rem)]" lang="en">
                           {stat.value}
-                        </dd>
+                        </p>
                       </div>
-                    </div>
+                    </li>
                   );
                 })}
-              </dl>
+              </ul>
             </Container>
           </section>
         </ScrollStage>
@@ -235,22 +236,15 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 minHeight: "calc(var(--full, 0px) - (var(--full, 0px) - var(--nat, 0px)) * var(--p))",
               }}
             >
-              <div className="absolute inset-0 -z-20">
-                <PhotoFrame
-                  image={home.commitmentImage}
-                  placeholder={placeholders.commitment}
-                  locale={locale}
-                  width={1920}
-                  height={1080}
-                  sizes="100vw"
-                  icon={Handshake}
-                />
-              </div>
               {/* Even near-black tint on phones (stacked text over the photo); a fade
                   from the left on desktop, leaving the right side clear. */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 -z-10 bg-black/55 lg:bg-transparent lg:bg-linear-to-r lg:from-black/75 lg:from-25% lg:via-black/45 lg:via-50% lg:to-black/5"
+              <PhotoBackdrop
+                image={home.commitmentImage}
+                placeholder={placeholders.commitment}
+                locale={locale}
+                sizes="100vw"
+                icon={Handshake}
+                overlay="bg-black/55 lg:bg-transparent lg:bg-linear-to-r lg:from-black/75 lg:from-25% lg:via-black/45 lg:via-50% lg:to-black/5"
               />
               <div data-natural className="w-full">
               <Container className="grid gap-10 py-12 sm:py-14 lg:grid-cols-12 lg:items-center lg:gap-8">
@@ -303,9 +297,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               // Slides in from the left as the section scrolls up
               style={{ transform: "translateX(calc(-40vw * (1 - var(--enter))))", opacity: "var(--enter)" }}
             >
-              {/* All steel gradient here: the starred red accent is dropped */}
               <SectionHeading id="what-we-do" eyebrow={t("ourServices")}>
-                {t("whatWeDo").replace(/\*/g, "")}
+                {t("whatWeDo")}
               </SectionHeading>
               {services.intro && <p className="mt-6 text-muted">{tr(services.intro, locale)}</p>}
               {/* The three main services: icon, name and a short description */}
@@ -401,7 +394,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 <span className="relative h-32 w-px bg-steel-400/40">
                   <span className="animate-scroll-dot absolute top-0 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-steel-500 motion-reduce:hidden" />
                 </span>
-                <span className="text-[0.625rem] font-semibold tracking-[0.25em] text-steel-500 uppercase [writing-mode:vertical-rl]">
+                <span className="text-[0.625rem] font-semibold tracking-[0.25em] text-steel-600 uppercase [writing-mode:vertical-rl]">
                   {t("outroSide")}
                 </span>
               </div>
@@ -413,13 +406,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {/* ── Meet our team: heading, intro and a link to the Team drawer,
           then the people ("Team" in the side nav) ────────────────── */}
       {teamMembers.length ? (
-        <section id="team" data-nav-section="/team" aria-labelledby="team-heading" className="pt-20 pb-4 sm:pt-28">
+        <section id="team" data-nav-section="/team" aria-labelledby="team-heading" className="pt-16 pb-4 sm:pt-24">
           <Container>
             <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-end">
               <div className="lg:col-span-5">
-                {/* All steel gradient: the starred red accent is dropped */}
                 <SectionHeading id="team-heading" eyebrow={t("ourTeam")}>
-                  {t("meetTeam").replace(/\*/g, "")}
+                  {t("meetTeam")}
                 </SectionHeading>
               </div>
               <div className="lg:col-span-6 lg:col-start-7">

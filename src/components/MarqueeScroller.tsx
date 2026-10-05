@@ -38,7 +38,11 @@ export function MarqueeScroller({
     const el = ref.current;
     const track = el?.firstElementChild as HTMLElement | null;
     if (!el || !track) return;
-    const copyWidth = () => (track.children[1] as HTMLElement | undefined)?.offsetLeft ?? 0;
+    // One copy's width, re-measured only when the row resizes (not per frame).
+    const measureCopy = () => (track.children[1] as HTMLElement | undefined)?.offsetLeft ?? 0;
+    let copy = measureCopy();
+    const resize = new ResizeObserver(() => (copy = measureCopy()));
+    resize.observe(track);
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     let pos = el.scrollLeft; // fractional accumulator; scrollLeft may round
@@ -94,10 +98,15 @@ export function MarqueeScroller({
       if (touchX !== null && Math.abs((e.touches[0]?.clientX ?? touchX) - touchX) > 10) stopped = true;
     };
 
+    // Only animate while the row is on screen.
+    let visible = false;
     const tick = (now: number) => {
+      if (!visible) {
+        frame = 0;
+        return;
+      }
       const dt = Math.min(0.1, (now - last) / 1000);
       last = now;
-      const copy = copyWidth();
       if (copy > 0) {
         const auto = !stopped && !reduceMotion.matches && !hovering && !focused && !drag && now > resumeAt;
         if (auto) {
@@ -119,7 +128,14 @@ export function MarqueeScroller({
       }
       frame = requestAnimationFrame(tick);
     };
-    frame = requestAnimationFrame(tick);
+    const onScreen = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !frame) {
+        last = performance.now();
+        frame = requestAnimationFrame(tick);
+      }
+    });
+    onScreen.observe(el);
 
     const enter = () => (hovering = true);
     const leave = () => (hovering = false);
@@ -142,6 +158,8 @@ export function MarqueeScroller({
     el.addEventListener("focusout", focusOut);
     return () => {
       cancelAnimationFrame(frame);
+      resize.disconnect();
+      onScreen.disconnect();
       el.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
@@ -161,9 +179,13 @@ export function MarqueeScroller({
       ref={ref}
       role="region"
       aria-label={label}
+      // Focusable, so keyboard users can scroll the row with the arrow keys.
+      tabIndex={0}
       onDragStart={(e) => e.preventDefault()}
-      style={{ maskImage: `linear-gradient(to right, transparent, black ${fadeLeft}%, black ${100 - fadeRight}%, transparent)` }}
-      className="-my-10 cursor-grab overflow-x-auto overscroll-x-contain py-10 [scrollbar-width:none] select-none active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
+      // Faded edges: the given widths, but a slim 8% on phones, where wide
+      // fades would hide most of a card.
+      style={{ "--fade-l": `${fadeLeft}%`, "--fade-r": `${fadeRight}%` } as React.CSSProperties}
+      className="-my-10 [mask-image:linear-gradient(to_right,transparent,black_var(--fade-l),black_calc(100%-var(--fade-r)),transparent)] max-sm:[--fade-l:8%]! max-sm:[--fade-r:8%]! cursor-grab overflow-x-auto focus-visible:outline-offset-[-3px] overscroll-x-contain py-10 [scrollbar-width:none] select-none active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
     >
       {children}
     </div>

@@ -52,11 +52,10 @@
     "targetMarkets": "Target markets",
     "ourProducts": "Our products",
     "closePreview": "Close preview",
-    "viewItem": "View {name}",
-    "marketsEyebrow": "Where we export"
+    "viewItem": "View {name}"
   },
   "Footer": {
-    "contact": "Contact",
+    "contact": "Contact details",
     "phone": "Phone",
     "email": "Email",
     "rights": "All rights reserved.",
@@ -101,7 +100,7 @@
     "partnerCta": "Become a partner",
     "open": "Open photo: {caption}",
     "close": "Close preview",
-    "partnersLabel": "Our partners",
+    "partnersLabel": "Partner logos",
     "whoEyebrow": "Our story",
     "galleryEyebrow": "Gallery",
     "visionEyebrow": "What drives us",

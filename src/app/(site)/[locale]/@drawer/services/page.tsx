@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/Container";
-import { PhotoFrame } from "@/components/PhotoFrame";
+import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { panel } from "@/components/panel";
 import { Reveal } from "@/components/Reveal";
 import { GetInTouch } from "@/components/GetInTouch";
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/services
 }
 
 // Sections are linked to by #id (e.g. from the home page's service cards).
-const sectionClass = "scroll-mt-4 py-20 sm:py-28";
+const sectionClass = "scroll-mt-4 py-16 sm:py-24";
 
 function ServiceHeading({
   id,
@@ -190,19 +190,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         <section id="produce" aria-labelledby="produce-heading" className={`${sectionClass} on-dark relative isolate text-paper ${panel}`}>
           {/* Background: a stocked supermarket aisle under a heavy near-black
               shade, so the text and product cards stay readable */}
-          <div className="absolute inset-0 -z-20">
-            <PhotoFrame
-              image={undefined}
-              placeholder={placeholders.produceBand}
-              locale={locale}
-              width={1600}
-              height={1000}
-              sizes="(min-width: 1024px) 84rem, 100vw"
-              icon={Flame}
-            />
-          </div>
-          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/75" />
-          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgb(0_0_0/0.6)_100%)]" />
+          <PhotoBackdrop image={page.produceImage} placeholder={placeholders.produceBand} locale={locale} icon={Flame} overlay="bg-black/75" vignette />
           <Container>
             <ServiceHeading id="produce-heading" number="02" title={produceSec.title} intro={tr(page.produceIntro, locale)} onDark />
           </Container>

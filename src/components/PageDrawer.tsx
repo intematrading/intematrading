@@ -39,7 +39,9 @@ export function PageDrawer({ children }: { children: React.ReactNode }) {
     if (closing) return;
     setClosing(true);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setTimeout(() => router.push("/"), reduce ? 0 : SLIDE_MS);
+    // No scroll reset: the home page stays where it is (or where a link
+    // asked to go, see lib/home-nav).
+    setTimeout(() => router.push("/", { scroll: false }), reduce ? 0 : SLIDE_MS);
   }, [closing, router]);
 
   // Lock the page behind and close on Esc (unless a popup inside the
@@ -82,11 +84,12 @@ export function PageDrawer({ children }: { children: React.ReactNode }) {
       <div
         aria-hidden="true"
         onClick={close}
-        className={`on-dark absolute inset-0 bg-black/45 backdrop-blur-sm transition-opacity duration-500 motion-reduce:transition-none ${shown ? "pointer-events-auto opacity-100" : "opacity-0"}`}
+        className={`on-dark absolute inset-0 bg-black/55 backdrop-blur-sm transition-opacity duration-500 motion-reduce:transition-none ${shown ? "pointer-events-auto opacity-100" : "opacity-0"}`}
       />
       <div
         role="dialog"
         aria-modal="true"
+        aria-labelledby={open ? "drawer-title" : undefined}
         className={`absolute inset-y-0 right-0 w-full transition-[translate,visibility] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:w-[92vw] lg:w-[min(84rem,calc(100vw-11rem))] motion-reduce:transition-none ${
           shown ? "pointer-events-auto translate-x-0" : "invisible translate-x-full"
         }`}
@@ -94,6 +97,7 @@ export function PageDrawer({ children }: { children: React.ReactNode }) {
         <div
           ref={scrollRef}
           tabIndex={-1}
+          data-drawer-scroll
           // Content padding (Container reads --rail-pad): the side nav is
           // outside the drawer, so just even margins.
           className="h-full scroll-smooth overflow-y-auto overscroll-contain bg-steel-100 shadow-2xl outline-none [--rail-pad:3rem] xl:[--rail-pad:4rem] motion-reduce:scroll-auto"

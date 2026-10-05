@@ -1,7 +1,7 @@
 // Shared by the inquiry form (client) and /api/contact (server).
 
 export const inquiryTypes = ["retail", "buyer", "brand", "other"] as const;
-export type InquiryType = (typeof inquiryTypes)[number];
+type InquiryType = (typeof inquiryTypes)[number];
 
 export type InquiryInput = {
   name: string;

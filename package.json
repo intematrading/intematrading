@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS=--no-experimental-webstorage next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "NODE_OPTIONS=--no-experimental-webstorage next build",
+    "start": "NODE_OPTIONS=--no-experimental-webstorage next start",
     "lint": "eslint",
     "seed": "node --env-file=.env.local --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/seed-sanity.mts"
   },

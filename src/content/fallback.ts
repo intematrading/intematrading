@@ -167,7 +167,7 @@ export const homePage: HomePage = {
 
 export const servicesPage: ServicesPage = {
   title: { en: "Our Services", am: "አገልግሎቶቻችን" },
-  eyebrow: { en: "Import · Produce · Export", am: "እናስመጣለን · እናመርታለን · እንልካለን" },
+  eyebrow: { en: "Import · Produce · Export", fr: "Importer · Produire · Exporter", am: "እናስመጣለን · እናመርታለን · እንልካለን" },
   intro: {
     en: "INTEMA Trading PLC. is an FMCG importer, distributor, manufacturer and exporter serving wholesale and retail markets across Ethiopia, Djibouti and Sudan.",
     am: "ኢንተማ ትሬዲንግ ኃ.የተ.የግ.ማ. በኢትዮጵያ፣ በጅቡቲና በሱዳን የጅምላና የችርቻሮ ገበያዎችን የሚያገለግል የፍጆታ ምርቶች አስመጪ፣ አከፋፋይ፣ አምራችና ላኪ ነው።",
@@ -264,7 +264,7 @@ export const brands: Brand[] = [
 
 export const teamPage: TeamPage = {
   title: { en: "Our Team", am: "ቡድናችን" },
-  eyebrow: { en: "The people behind INTEMA", am: "ከኢንተማ ጀርባ ያሉ ሰዎች" },
+  eyebrow: { en: "The people behind INTEMA", fr: "L’équipe derrière INTEMA", am: "ከኢንተማ ጀርባ ያሉ ሰዎች" },
   intro: {
     en: "INTEMA is led by principal owners Bedru Hussen Jemal and Eliyas Abrar Sh., whose combined experience brings upper office management skills, high levels of customer service, and over 10 years in distribution and sales management.",
     am: "ኢንተማ የሚመራው በዋና ባለቤቶቹ በድሩ ሁሴን ጀማል እና ኤልያስ አብራር ሸ. ሲሆን፣ ጥምር ልምዳቸው የከፍተኛ አመራር ክህሎትን፣ ከፍተኛ የደንበኞች አገልግሎትን እና በማከፋፈልና በሽያጭ አመራር ከ10 ዓመታት በላይ ልምድን ያካትታል።",
@@ -377,8 +377,6 @@ export const teamMembers: TeamMember[] = [
 ];
 
 export const contactPage: ContactPage = {
-  title: { en: "Contact", am: "ያግኙን" },
-  eyebrow: { en: "Talk to our sales team", am: "የሽያጭ ቡድናችንን ያነጋግሩ" },
   intro: {
     en: "Retail partners, buyers and brand principals can reach our sales team directly.",
     am: "የችርቻሮ አጋሮች፣ ገዢዎችና የብራንድ ባለቤቶች የሽያጭ ቡድናችንን በቀጥታ ማግኘት ይችላሉ።",
@@ -388,18 +386,11 @@ export const contactPage: ContactPage = {
     en: "Tell us who you are and what you're looking for — our sales team will get back to you.",
     am: "ማን እንደሆኑና ምን እንደሚፈልጉ ይንገሩን — የሽያጭ ቡድናችን ምላሽ ይሰጥዎታል።",
   },
-  seo: {
-    title: { en: "Contact INTEMA Trading PLC.", am: "ኢንተማ ትሬዲንግን ያግኙ" },
-    description: {
-      en: "Contact INTEMA Trading PLC. in Addis Ababa — phone, email and an inquiry form for retail partners, buyers and brand principals.",
-      am: "በአዲስ አበባ የሚገኘውን ኢንተማ ትሬዲንግን ያግኙ — ስልክ፣ ኢሜይልና ለችርቻሮ አጋሮች፣ ለገዢዎችና ለብራንድ ባለቤቶች የጥያቄ ቅጽ።",
-    },
-  },
 };
 
 export const aboutPage: AboutPage = {
   title: { en: "About Us", am: "ስለ እኛ" },
-  eyebrow: { en: "Since 2014", am: "ከ2014 ጀምሮ" },
+  eyebrow: { en: "Since 2014", fr: "Depuis 2014", am: "ከ2014 ጀምሮ" },
   intro: {
     en: "The Quality Warehouse — a diversified FMCG importer, distributor, manufacturer and exporter serving Ethiopia, Djibouti and Sudan since 2014.",
     am: "የጥራት መጋዘን — ከ2014 ጀምሮ ኢትዮጵያን፣ ጅቡቲንና ሱዳንን የሚያገለግል ሁለገብ የፍጆታ ምርቶች አስመጪ፣ አከፋፋይ፣ አምራችና ላኪ።",

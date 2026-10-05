@@ -4,6 +4,9 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  // This folder is the project root (a stray package-lock.json higher up
+  // would otherwise make Turbopack guess).
+  turbopack: { root: __dirname },
   // Development-only "N" badge: off the bottom-left corner, where the
   // language switch sits.
   devIndicators: { position: "bottom-right" },

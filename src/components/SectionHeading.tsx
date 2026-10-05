@@ -1,4 +1,3 @@
-import { Accent } from "./Accent";
 import { Eyebrow } from "./Eyebrow";
 
 const sizes = {
@@ -10,8 +9,9 @@ const sizes = {
 
 /**
  * The one section-heading pattern, styled after the logo: optional eyebrow,
- * then the heading with *starred* words in red and the rest in the logo's
- * steel gradient (plain white on dark bands).
+ * then the heading in the logo's steel gradient (plain white on dark bands).
+ * Section headings carry no red accent: *stars* in the copy (a CMS
+ * convention for accenting words elsewhere) are dropped here.
  */
 export function SectionHeading({
   id,
@@ -24,14 +24,15 @@ export function SectionHeading({
   eyebrow?: string;
   onDark?: boolean;
   size?: keyof typeof sizes;
-  /** Plain text; wrap words in *stars* to accent them. */
+  /** Plain text (any *stars* are dropped). */
   children: string;
 }) {
+  const text = children.replace(/\*/g, "");
   return (
     <>
       {eyebrow && <Eyebrow onDark={onDark}>{eyebrow}</Eyebrow>}
       <h2 id={id} className={`font-display-heading ${sizes[size]} ${onDark ? "text-paper" : "text-steel-700"} ${eyebrow ? "mt-4" : ""}`}>
-        <Accent text={children} base={onDark ? undefined : "text-steel-gradient"} />
+        {onDark ? text : <span className="text-steel-gradient">{text}</span>}
       </h2>
     </>
   );

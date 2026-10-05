@@ -26,7 +26,7 @@ export function PageHero({
   locale: Locale;
 }) {
   return (
-    <header className="on-dark relative isolate flex min-h-[clamp(22rem,56svh,34rem)] items-end overflow-hidden text-paper">
+    <div className="on-dark relative isolate flex min-h-[clamp(22rem,56svh,34rem)] items-end overflow-hidden text-paper">
       <div className="absolute inset-0 -z-20">
         <PhotoFrame
           image={image}
@@ -44,7 +44,8 @@ export function PageHero({
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgb(0_0_0/0.55)_100%)]" />
 
       <Container className="pt-28 pb-10 sm:pb-14">
-        <h1>
+        {/* Names the drawer dialog (see PageDrawer) */}
+        <h1 id="drawer-title">
           {eyebrow && (
             <Eyebrow as="span" onDark>
               {eyebrow}
@@ -55,6 +56,6 @@ export function PageHero({
         </h1>
         {intro && <p className="mt-5 max-w-2xl text-base text-paper/90 sm:text-lg">{intro}</p>}
       </Container>
-    </header>
+    </div>
   );
 }

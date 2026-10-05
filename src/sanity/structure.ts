@@ -17,7 +17,7 @@ export const structure: StructureResolver = (S) =>
               singleton(S, "aboutPage", "About Us"),
               singleton(S, "servicesPage", "Our Services"),
               singleton(S, "teamPage", "Team"),
-              singleton(S, "contactPage", "Contact"),
+              singleton(S, "contactPage", "Contact form"),
             ]),
         ),
       S.divider(),

@@ -25,7 +25,7 @@ function NavButton({ dir, label, onClick, className }: { dir: -1 | 1; label: str
  */
 export function Gallery({ label, slides }: { label: string; slides: Slide[] }) {
   const t = useTranslations("About");
-  const trackRef = useRef<HTMLUListElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [index, setIndex] = useState(0);
   const [preview, setPreview] = useState<number | null>(null);
@@ -63,7 +63,7 @@ export function Gallery({ label, slides }: { label: string; slides: Slide[] }) {
 
   return (
     <div role="region" aria-roledescription="carousel" aria-label={label}>
-      <ul
+      <div
         ref={trackRef}
         onScroll={(e) => {
           const s = step();
@@ -75,7 +75,7 @@ export function Gallery({ label, slides }: { label: string; slides: Slide[] }) {
         className="flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto scroll-smooth px-4 pb-2 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] [scrollbar-width:none] sm:scroll-px-6 sm:gap-6 sm:px-6 lg:scroll-px-[calc(max(0px,(100%-80rem)/2)+var(--rail-pad))] lg:px-[calc(max(0px,(100%-80rem)/2)+var(--rail-pad))] motion-reduce:scroll-auto [&::-webkit-scrollbar]:hidden"
       >
         {slides.map((slide, i) => (
-          <li
+          <div
             key={slide.key}
             role="group"
             aria-roledescription="slide"
@@ -96,11 +96,11 @@ export function Gallery({ label, slides }: { label: string; slides: Slide[] }) {
                 {slide.caption}
               </span>
             </button>
-          </li>
+          </div>
         ))}
         {/* Lets the last slide snap to the start on wide screens. */}
-        <li aria-hidden="true" className="w-px shrink-0 lg:w-[38%]" />
-      </ul>
+        <div aria-hidden="true" className="w-px shrink-0 lg:w-[38%]" />
+      </div>
 
       <Container className="mt-6 flex items-center justify-between gap-4">
         <div className="flex flex-wrap gap-2">

@@ -1,15 +1,11 @@
 import {
-  CalendarDays,
   CheckCircle2,
   Eye,
-  Globe,
   PhoneCall,
   Ship,
-  Store,
   Target,
   TrendingUp,
   Truck,
-  Users,
 } from "lucide-react";
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
@@ -23,9 +19,11 @@ import { Marquee } from "@/components/Marquee";
 import { PageHero } from "@/components/PageHero";
 import { panel } from "@/components/panel";
 import { PartnerLogo } from "@/components/PartnerLogo";
+import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
+import { statIcon } from "@/components/stat-icons";
 import {
   galleryPlaceholders,
   heroPlaceholders,
@@ -34,7 +32,6 @@ import {
 import { getAboutPage, getBrands, getSiteSettings, tr } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
-const statIcons = [CalendarDays, Globe, Users, Store, Truck];
 const stepIcons = [Ship, PhoneCall, Truck, TrendingUp];
 
 export async function generateMetadata({
@@ -103,17 +100,17 @@ export default async function AboutPage({
                 <h3 id="snapshot-heading" className="label-caps text-red-ink">
                   {t("snapshot")}
                 </h3>
-                <dl className="mt-6 divide-y divide-steel-200">
-                  {page.stats.map((stat, i) => {
-                    const Icon = statIcons[i % statIcons.length];
+                <ul className="mt-6 divide-y divide-steel-200">
+                  {page.stats.map((stat) => {
+                    const Icon = statIcon(stat._key);
                     return (
-                      <div
+                      <li
                         key={stat._key}
                         className="flex items-start gap-5 py-6 first:pt-0 last:pb-0"
                       >
                         <IconBox icon={Icon} className="mt-1" />
                         <div className="flex flex-col-reverse">
-                          <dt className="mt-1.5">
+                          <p className="mt-1.5">
                             <span className="block font-semibold text-ink">
                               {tr(stat.label, locale)}
                             </span>
@@ -122,18 +119,18 @@ export default async function AboutPage({
                                 {tr(stat.note, locale)}
                               </span>
                             )}
-                          </dt>
-                          <dd
+                          </p>
+                          <p
                             className="font-display-heading text-steel-gradient text-5xl leading-none"
                             lang="en"
                           >
                             {stat.value}
-                          </dd>
+                          </p>
                         </div>
-                      </div>
+                      </li>
                     );
                   })}
-                </dl>
+                </ul>
               </aside>
             </Reveal>
           ) : null}
@@ -147,25 +144,7 @@ export default async function AboutPage({
             aria-labelledby="vision-heading"
             className={`on-dark relative isolate text-paper ${panel}`}
           >
-            <div className="absolute inset-0 -z-20">
-              <PhotoFrame
-                image={undefined}
-                placeholder={placeholders.vision}
-                locale={locale}
-                width={1600}
-                height={900}
-                sizes="(min-width: 1024px) 84rem, 100vw"
-                icon={Eye}
-              />
-            </div>
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 -z-10 bg-black/60"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgb(0_0_0/0.6)_100%)]"
-            />
+            <PhotoBackdrop image={page.visionImage} placeholder={placeholders.vision} locale={locale} icon={Eye} overlay="bg-black/60" vignette />
             <Container className="py-14 sm:py-20">
               <h2 id="vision-heading" className="sr-only">
                 {`${tr(page.visionHeading, locale)} & ${tr(page.missionHeading, locale)}`}
@@ -211,7 +190,7 @@ export default async function AboutPage({
 
       {/* ── Our process: intro, then the steps as numbered cards ────── */}
       {steps.length ? (
-        <section aria-labelledby="process-heading" className="pt-20 sm:pt-28">
+        <section aria-labelledby="process-heading" className="pt-16 sm:pt-24">
           <Container>
             <Reveal className="max-w-2xl">
               <SectionHeading
@@ -269,7 +248,7 @@ export default async function AboutPage({
 
       {/* ── Gallery ──────────────────────────────────────────────── */}
       {page.gallery?.length ? (
-        <section aria-labelledby="gallery-heading" className="py-20 sm:py-28">
+        <section aria-labelledby="gallery-heading" className="py-16 sm:py-24">
           <Container>
             <Reveal>
               <SectionHeading
@@ -318,7 +297,7 @@ export default async function AboutPage({
       ) : null}
 
       {/* ── Partners: heading and CTA, then a looping logo strip ────── */}
-      <section aria-labelledby="partners-heading" className="pb-20 sm:pb-28">
+      <section aria-labelledby="partners-heading" className="pb-16 sm:pb-24">
         <Container>
           <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-6">
@@ -362,21 +341,13 @@ export default async function AboutPage({
               aria-labelledby="keys-heading"
               className={`on-dark relative isolate text-paper ${panel}`}
             >
-              <div className="absolute inset-0 -z-20">
-                <PhotoFrame
-                  image={undefined}
-                  placeholder={placeholders.keys}
-                  locale={locale}
-                  width={1600}
-                  height={900}
-                  sizes="(min-width: 1024px) 84rem, 100vw"
-                  icon={CheckCircle2}
-                />
-              </div>
               {/* Near-black shade, heaviest on the left behind the heading */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 -z-10 bg-black/65 lg:bg-transparent lg:bg-linear-to-r lg:from-black/80 lg:via-black/65 lg:to-black/50"
+              <PhotoBackdrop
+                image={page.keysImage}
+                placeholder={placeholders.keys}
+                locale={locale}
+                icon={CheckCircle2}
+                overlay="bg-black/65 lg:bg-transparent lg:bg-linear-to-r lg:from-black/80 lg:via-black/65 lg:to-black/50"
               />
               <Container className="grid gap-10 py-14 sm:py-20 lg:grid-cols-12 lg:gap-12">
                 <div className="lg:col-span-4">

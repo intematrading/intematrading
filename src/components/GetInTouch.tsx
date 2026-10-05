@@ -5,7 +5,7 @@ import type { Locale } from "@/i18n/routing";
 import { getContactPage, getHomePage, tr } from "@/lib/content";
 import { ButtonLink } from "./ButtonLink";
 import { Container } from "./Container";
-import { PhotoFrame } from "./PhotoFrame";
+import { PhotoBackdrop } from "./PhotoBackdrop";
 import { SectionHeading } from "./SectionHeading";
 
 /**
@@ -23,24 +23,17 @@ export async function GetInTouch({ locale, className = "" }: { locale: Locale; c
 
   return (
     <section aria-labelledby="contact-heading" className={`on-dark relative isolate overflow-hidden text-paper ${className}`}>
-      {/* Full-bleed background photo */}
-      <div className="absolute inset-0 -z-20">
-        <PhotoFrame
-          image={home.contactImage}
-          placeholder={placeholders.contactBand}
-          locale={locale}
-          width={1920}
-          height={1080}
-          sizes="100vw"
-          icon={Handshake}
-          quality={90}
-        />
-      </div>
-      {/* Even near-black tint on phones; a fade from the left on desktop that
-          keeps the text readable and leaves the right side of the photo clear. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-black/55 lg:bg-transparent lg:bg-linear-to-r lg:from-black/75 lg:from-30% lg:via-black/45 lg:via-55% lg:to-black/0"
+      {/* Full-bleed photo: an even near-black tint on phones; a fade from the
+          left on desktop that keeps the text readable and leaves the right
+          side of the photo clear. */}
+      <PhotoBackdrop
+        image={home.contactImage}
+        placeholder={placeholders.contactBand}
+        locale={locale}
+        sizes="100vw"
+        icon={Handshake}
+        quality={90}
+        overlay="bg-black/55 lg:bg-transparent lg:bg-linear-to-r lg:from-black/75 lg:from-30% lg:via-black/45 lg:via-55% lg:to-black/0"
       />
       <Container className="py-12 sm:py-16">
         <div className="lg:max-w-[45%]">

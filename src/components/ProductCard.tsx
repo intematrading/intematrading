@@ -38,7 +38,7 @@ export function ProductCard({
   return (
     <li {...liProps} className="w-72 shrink-0 sm:w-80">
       <article
-        className={`group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] transition-shadow ${
+        className={`group relative flex h-full flex-col overflow-hidden rounded-3xl transition-shadow ${
           dark ? "bg-white/8 ring-1 ring-white/15 ring-inset hover:ring-white/30" : "bg-paper shadow-sm ring-1 ring-black/5 hover:shadow-xl"
         }`}
       >
@@ -60,13 +60,13 @@ export function ProductCard({
           )}
         </div>
         <div className="flex flex-1 flex-col p-5 sm:p-6">
-          <h4 className={`font-title-heading text-lg ${dark ? "text-paper" : "text-black"}`}>{title}</h4>
+          <h4 className={`font-title-heading text-lg ${dark ? "text-paper" : "text-ink"}`}>{title}</h4>
           {meta && (
-            <p className={`mt-1 text-xs font-semibold ${dark ? "text-smoke" : "text-muted"}`} lang="en">
+            <p className={`mt-1 text-xs font-semibold ${dark ? "text-paper/75" : "text-muted"}`} lang="en">
               {meta}
             </p>
           )}
-          {description && <p className={`mt-2 text-sm leading-relaxed ${dark ? "text-smoke" : "text-muted"}`}>{description}</p>}
+          {description && <p className={`mt-2 text-sm leading-relaxed ${dark ? "text-paper/75" : "text-muted"}`}>{description}</p>}
         </div>
         <ProductPreviewTrigger
           label={openLabel}

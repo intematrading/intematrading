@@ -7,6 +7,7 @@ import { Container } from "@/components/Container";
 import { IconBox } from "@/components/IconBox";
 import { PageHero } from "@/components/PageHero";
 import { panel } from "@/components/panel";
+import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -38,19 +39,6 @@ function SidePhoto({ image, placeholder, locale }: { image?: SanityImage; placeh
     <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-sm ring-1 ring-black/5 sm:rounded-[2rem] lg:sticky lg:top-6 lg:aspect-[3/4]">
       <PhotoFrame image={image} placeholder={placeholder} locale={locale} width={640} height={800} sizes="(min-width: 1024px) 34rem, 100vw" icon={Users} />
     </div>
-  );
-}
-
-/** Background photo for a dark panel, under a near-black shade so its text stays readable. */
-function PanelPhoto({ placeholder, locale }: { placeholder: Placeholder; locale: AppLocale }) {
-  return (
-    <>
-      <div className="absolute inset-0 -z-20">
-        <PhotoFrame image={undefined} placeholder={placeholder} locale={locale} width={1600} height={900} sizes="(min-width: 1024px) 84rem, 100vw" icon={Users} />
-      </div>
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/70" />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgb(0_0_0/0.55)_100%)]" />
-    </>
   );
 }
 
@@ -144,8 +132,8 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
       {page.facts?.length ? (
         <Reveal className="px-3 sm:px-4">
           <section aria-labelledby="facts-heading" className={`on-dark relative isolate text-paper ${panel}`}>
-            <PanelPhoto placeholder={placeholders.teamFacts} locale={locale} />
-            <Container className="py-14 sm:py-16">
+            <PhotoBackdrop image={page.factsImage} placeholder={placeholders.teamFacts} locale={locale} icon={Users} overlay="bg-black/70" vignette />
+            <Container className="py-14 sm:py-20">
               <SectionHeading id="facts-heading" size="band" onDark>
                 {t("atAGlance")}
               </SectionHeading>
@@ -195,7 +183,7 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
       {page.ambassadorName && (
         <Reveal className="px-3 sm:px-4">
           <section aria-labelledby="ambassador-heading" className={`on-dark relative isolate text-paper ${panel}`}>
-            <PanelPhoto placeholder={placeholders.ambassador} locale={locale} />
+            <PhotoBackdrop image={page.ambassadorBackground} placeholder={placeholders.ambassador} locale={locale} icon={Users} overlay="bg-black/70" vignette />
             <Container className="grid items-center gap-10 py-14 sm:py-20 md:grid-cols-12">
               <div className="md:col-span-5 lg:col-span-4">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-black/30 ring-1 ring-white/20 backdrop-blur-md">
@@ -227,7 +215,7 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
               {page.departments?.map((dept, i) => {
                 const Icon = departmentIcons[i % departmentIcons.length];
                 return (
-                  <li key={dept._key} className="flex flex-col rounded-[1.5rem] bg-paper p-7 shadow-sm ring-1 ring-black/5">
+                  <li key={dept._key} className="flex flex-col rounded-3xl bg-paper p-7 shadow-sm ring-1 ring-black/5">
                     <IconBox icon={Icon} />
                     <h3 className="font-title-heading mt-6 text-lg text-ink">{tr(dept.title, locale)}</h3>
                     {dept.body && <p className="mt-2 text-sm leading-relaxed text-muted">{tr(dept.body, locale)}</p>}
@@ -235,7 +223,7 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
                 );
               })}
               {page.training && (
-                <li className="on-dark steel-gradient-deep flex flex-col rounded-[1.5rem] p-7 text-paper shadow-sm">
+                <li className="on-dark steel-gradient-deep flex flex-col rounded-3xl p-7 text-paper shadow-sm">
                   <IconBox icon={GraduationCap} />
                   <h3 className="font-title-heading mt-6 text-lg">{tr(page.trainingHeading, locale)}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-paper/80">{tr(page.training, locale)}</p>
@@ -250,20 +238,12 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
       {page.partnerHeading && (
         <Reveal className="px-3 pb-3 sm:px-4 sm:pb-4">
           <section aria-labelledby="partner-heading" className={`on-dark relative isolate text-paper ${panel}`}>
-            <div className="absolute inset-0 -z-20">
-              <PhotoFrame
-                image={page.partnerImage}
-                placeholder={placeholders.partnerCta}
-                locale={locale}
-                width={1600}
-                height={900}
-                sizes="(min-width: 1024px) 84rem, 100vw"
-                icon={Users}
-              />
-            </div>
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 -z-10 bg-black/60 lg:bg-transparent lg:bg-linear-to-r lg:from-black/80 lg:from-30% lg:via-black/50 lg:via-55% lg:to-black/10"
+            <PhotoBackdrop
+              image={page.partnerImage}
+              placeholder={placeholders.partnerCta}
+              locale={locale}
+              icon={Users}
+              overlay="bg-black/60 lg:bg-transparent lg:bg-linear-to-r lg:from-black/80 lg:from-30% lg:via-black/50 lg:via-55% lg:to-black/10"
             />
             <Container className="py-14 sm:py-20">
               <div className="lg:max-w-[50%]">

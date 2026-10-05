@@ -35,10 +35,10 @@ export function PartnerLogo({
           <>
             {/* Shared placeholder mark until the brand's logo is uploaded */}
             <svg viewBox="0 0 48 32" aria-hidden="true" className="h-9 w-auto">
-              <path d="M10 2h20l-8 28H2z" fill="#f20000" />
-              <path d="M30 2h16l-8 28H22z" fill="#000" />
+              <path d="M10 2h20l-8 28H2z" fill="#fe0001" />
+              <path d="M30 2h16l-8 28H22z" fill="#3b3b3b" />
             </svg>
-            <span className="text-sm leading-tight font-extrabold text-black" lang="en">
+            <span className="text-sm leading-tight font-extrabold text-ink" lang="en">
               {brand.name}
             </span>
           </>

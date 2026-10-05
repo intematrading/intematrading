@@ -33,6 +33,7 @@ export const servicesPage = defineType({
     // We Produce
     defineField({ name: "produceHeading", type: "localeString", group: "produce" }),
     defineField({ name: "produceIntro", type: "localeText", group: "produce" }),
+    imageWithAlt("produceImage", "Background photo", "produce"),
     defineField({
       name: "productsIntro",
       title: "Products description",

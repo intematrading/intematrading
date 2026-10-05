@@ -52,11 +52,10 @@
     "targetMarkets": "Marchés cibles",
     "ourProducts": "Nos produits",
     "closePreview": "Fermer l'aperçu",
-    "viewItem": "Voir {name}",
-    "marketsEyebrow": "Où nous exportons"
+    "viewItem": "Voir {name}"
   },
   "Footer": {
-    "contact": "Contact",
+    "contact": "Coordonnées",
     "phone": "Téléphone",
     "email": "E-mail",
     "rights": "Tous droits réservés.",
@@ -101,7 +100,7 @@
     "partnerCta": "Devenir partenaire",
     "open": "Ouvrir la photo : {caption}",
     "close": "Fermer l'aperçu",
-    "partnersLabel": "Nos partenaires",
+    "partnersLabel": "Logos de nos partenaires",
     "whoEyebrow": "Notre histoire",
     "galleryEyebrow": "Galerie",
     "visionEyebrow": "Ce qui nous anime",

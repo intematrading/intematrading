@@ -61,10 +61,12 @@ export const aboutPage = defineType({
     defineField({ name: "vision", type: "localeText", group: "vision" }),
     defineField({ name: "missionHeading", type: "localeString", group: "vision" }),
     defineField({ name: "mission", type: "localeText", group: "vision" }),
+    imageWithAlt("visionImage", "Background photo", "vision"),
     defineField({ name: "processHeading", type: "localeString", group: "process" }),
     defineField({ name: "processIntro", type: "localeText", group: "process" }),
     titledTextList("processSteps", "Process steps", "process"),
     defineField({ name: "keysHeading", title: "Keys to success heading", type: "localeString", group: "process" }),
+    imageWithAlt("keysImage", "Keys to success background photo", "process"),
     defineField({
       name: "keysToSuccess",
       title: "Keys to success",

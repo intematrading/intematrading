@@ -66,6 +66,7 @@ export type ServicesPage = {
   foodIntro?: LocaleString;
   produceHeading?: LocaleString;
   produceIntro?: LocaleString;
+  produceImage?: SanityImage;
   productsIntro?: LocaleString;
   exportHeading?: LocaleString;
   exportIntro?: LocaleString;
@@ -117,10 +118,12 @@ export type AboutPage = {
   vision?: LocaleString;
   missionHeading?: LocaleString;
   mission?: LocaleString;
+  visionImage?: SanityImage;
   processHeading?: LocaleString;
   processIntro?: LocaleString;
   processSteps?: TitledText[];
   keysHeading?: LocaleString;
+  keysImage?: SanityImage;
   keysToSuccess?: LocaleString[];
   partnersHeading?: LocaleString;
   partnersIntro?: LocaleString;
@@ -163,7 +166,9 @@ export type TeamPage = {
   ambassadorRole?: LocaleString;
   ambassadorBio?: LocaleString;
   ambassadorImage?: SanityImage;
+  ambassadorBackground?: SanityImage;
   facts?: Stat[];
+  factsImage?: SanityImage;
   departments?: TitledText[];
   trainingHeading?: LocaleString;
   training?: LocaleString;
@@ -174,11 +179,7 @@ export type TeamPage = {
 };
 
 export type ContactPage = {
-  title: LocaleString;
-  eyebrow?: LocaleString;
   intro?: LocaleString;
-  heroImage?: SanityImage;
   formHeading?: LocaleString;
   formIntro?: LocaleString;
-  seo?: Seo;
 };

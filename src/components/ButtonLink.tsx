@@ -8,8 +8,6 @@ const variants = {
   redOnDark: "red-gradient text-paper hover:bg-paper hover:bg-none hover:text-ink",
   // The logo's grey gradient.
   steel: "steel-gradient text-paper hover:bg-red hover:bg-none",
-  // For red backgrounds, where a red hover would disappear.
-  steelOnRed: "bg-steel-800 text-paper hover:bg-paper hover:text-ink",
   outline: "text-paper ring-2 ring-paper ring-inset hover:bg-paper hover:text-ink",
 } as const;
 

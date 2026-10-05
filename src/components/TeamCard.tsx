@@ -8,7 +8,7 @@ import { PhotoFrame } from "./PhotoFrame";
 /** Rounded card for one person: portrait, name, role and (optionally) a short bio. */
 export function TeamCard({ member, locale, showBio = false }: { member: TeamMember; locale: Locale; showBio?: boolean }) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] bg-paper shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-xl">
+    <article className="group flex h-full flex-col overflow-hidden rounded-3xl bg-paper shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-xl">
       <div className="relative aspect-[4/5] overflow-hidden">
         <PhotoFrame
           image={member.photo}

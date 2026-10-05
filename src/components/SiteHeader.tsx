@@ -90,16 +90,20 @@ export function SiteHeader({ companyName }: { companyName: string }) {
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(check);
     };
+    // Captured, so scrolling inside the drawer counts too; other scrolling
+    // elements (e.g. auto-scrolling rows, which move every frame) don't.
+    const onScroll = (e: Event) => {
+      if (e.target === document || (e.target as Element).hasAttribute?.("data-drawer-scroll")) schedule();
+    };
     check();
-    // Captured, so scrolling inside the drawer counts too.
-    window.addEventListener("scroll", schedule, { passive: true, capture: true });
+    window.addEventListener("scroll", onScroll, { passive: true, capture: true });
     window.addEventListener("resize", schedule);
     // Re-check once the drawer has finished sliding in or out.
     const settle = setTimeout(schedule, 600);
     return () => {
       cancelAnimationFrame(frame);
       clearTimeout(settle);
-      window.removeEventListener("scroll", schedule, { capture: true });
+      window.removeEventListener("scroll", onScroll, { capture: true });
       window.removeEventListener("resize", schedule);
     };
   }, [pathname]);
@@ -158,7 +162,7 @@ export function SiteHeader({ companyName }: { companyName: string }) {
                     />
                   </span>
                 </span>
-                <span className="absolute top-1/2 left-full ml-3 -translate-y-1/2 whitespace-nowrap opacity-70 transition-[opacity,visibility] duration-200 group-hover:opacity-100 group-data-active:text-red-ink group-data-active:opacity-100 group-data-dark:group-data-active:text-red-glow group-data-collapsed/nav:invisible group-data-collapsed/nav:opacity-0 motion-reduce:transition-none">
+                <span className="absolute top-1/2 left-full ml-3 -translate-y-1/2 whitespace-nowrap opacity-70 transition-[opacity,visibility] group-data-dark:opacity-100 duration-200 group-hover:opacity-100 group-data-active:text-red-ink group-data-active:opacity-100 group-data-dark:group-data-active:text-red-glow group-data-collapsed/nav:invisible group-data-collapsed/nav:opacity-0 motion-reduce:transition-none">
                   {t(key)}
                 </span>
               </Link>

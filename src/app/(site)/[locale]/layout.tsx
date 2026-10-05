@@ -20,10 +20,12 @@ import "./globals.css";
 // for the occasional Amharic word in the copy (e.g. "Abay (አባይ ሻማ)").
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton", display: "swap" });
 const poppins = Poppins({ weight: "700", subsets: ["latin"], variable: "--font-poppins", display: "swap" });
+// Not preloaded: only fetched (by unicode-range) on a page that has Ethiopic text.
 const ethiopic = Noto_Sans_Ethiopic({
   subsets: ["ethiopic"],
   variable: "--font-ethiopic",
   display: "swap",
+  preload: false,
 });
 
 export function generateStaticParams() {
@@ -58,7 +60,7 @@ export default async function LocaleLayout({ children, drawer, params }: LayoutP
         <NextIntlClientProvider>
           <a
             href="#main"
-            className="sr-only z-50 bg-paper px-4 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2 font-semibold text-black"
+            className="sr-only z-50 rounded-xl bg-paper px-4 py-2 font-semibold text-ink shadow-lg focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
           >
             {t("skipToContent")}
           </a>
