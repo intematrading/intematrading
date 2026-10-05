@@ -1,4 +1,5 @@
-import { createNavigation } from "next-intl/navigation";
-import { routing } from "./routing";
+import { base } from "./navigation-base";
 
-export const { Link, usePathname, useRouter } = createNavigation(routing);
+export const { usePathname, useRouter } = base;
+export { drawerRoutes, isDrawerPath } from "./navigation-base";
+export { Link } from "./Link";

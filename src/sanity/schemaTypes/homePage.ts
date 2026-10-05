@@ -25,6 +25,14 @@ export const homePage = defineType({
     defineField({ name: "heroImage", type: "image", group: "hero", options: { hotspot: true },
       fields: [defineField({ name: "alt", title: "Alt text", type: "localeString" })] }),
     defineField({
+      name: "statsImage",
+      title: "Snapshot background photo",
+      type: "image",
+      group: "stats",
+      options: { hotspot: true },
+      description: "Shown very faded, in greyscale, behind the stats. Decorative, so no alt text needed.",
+    }),
+    defineField({
       name: "stats",
       title: "Snapshot stats",
       type: "array",
@@ -37,6 +45,7 @@ export const homePage = defineType({
           fields: [
             defineField({ name: "value", type: "string", description: 'e.g. "2014", "170M"', validation: (r) => r.required() }),
             defineField({ name: "label", type: "localeString", validation: (r) => r.required() }),
+            defineField({ name: "note", title: "Short description", type: "localeString" }),
           ],
           preview: { select: { title: "value", subtitle: "label.en" } },
         }),
@@ -86,11 +95,21 @@ export const homePage = defineType({
     }),
     defineField({
       name: "commitmentPoints",
-      title: "Points (red panel)",
+      title: "Points (glass panel)",
       type: "array",
       group: "commitment",
       validation: (r) => r.max(3),
-      of: [defineArrayMember({ type: "localeString" })],
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "commitmentPoint",
+          fields: [
+            defineField({ name: "title", type: "localeString", validation: (r) => r.required() }),
+            defineField({ name: "description", title: "Short description", type: "localeText" }),
+          ],
+          preview: { select: { title: "title.en", subtitle: "description.en" } },
+        }),
+      ],
     }),
     defineField({
       name: "contactImage",

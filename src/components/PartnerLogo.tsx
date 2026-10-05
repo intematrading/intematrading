@@ -21,7 +21,7 @@ export function PartnerLogo({
 }) {
   return (
     <li {...liProps} className="w-56 shrink-0">
-      <div className="group flex h-32 flex-col items-center justify-center gap-3 bg-paper px-5 text-center shadow-sm ring-1 ring-line grayscale transition-[filter,box-shadow,opacity] duration-300 hover:shadow-lg hover:grayscale-0 [&:not(:hover)]:opacity-75">
+      <div className="group flex h-32 flex-col items-center justify-center gap-3 rounded-2xl bg-paper px-5 text-center shadow-sm ring-1 ring-black/5 grayscale transition-[filter,box-shadow,opacity] duration-300 hover:shadow-lg hover:grayscale-0 [&:not(:hover)]:opacity-75">
         {brand.logo?.asset ? (
           <Image
             src={urlFor(brand.logo).width(320).height(160).fit("max").url()}

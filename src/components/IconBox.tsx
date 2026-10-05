@@ -5,15 +5,27 @@ const sizes = {
   lg: { box: "size-14", icon: "size-7" },
 } as const;
 
-/** Slanted icon tile, echoing the buttons and tabs. Red by default; black on red surfaces. */
-export function IconBox({ icon: Icon, tone = "red", size = "md" }: { icon: LucideIcon; tone?: "red" | "black"; size?: keyof typeof sizes }) {
+const tones = {
+  red: "red-gradient",
+  steel: "steel-gradient",
+  /** For red surfaces. */
+  dark: "bg-steel-800",
+} as const;
+
+/** Rounded icon tile. Red by default; steel gradient or dark steel for variety and red surfaces. */
+export function IconBox({
+  icon: Icon,
+  tone = "red",
+  size = "md",
+  className = "",
+}: {
+  icon: LucideIcon;
+  tone?: keyof typeof tones;
+  size?: keyof typeof sizes;
+  className?: string;
+}) {
   return (
-    <span
-      aria-hidden="true"
-      className={`relative isolate flex shrink-0 items-center justify-center text-paper before:absolute before:inset-0 before:-z-10 before:-skew-x-[14deg] ${sizes[size].box} ${
-        tone === "red" ? "before:bg-red" : "before:bg-black"
-      }`}
-    >
+    <span aria-hidden="true" className={`flex shrink-0 items-center justify-center rounded-xl text-paper ${tones[tone]} ${sizes[size].box} ${className}`}>
       <Icon className={sizes[size].icon} strokeWidth={1.75} />
     </span>
   );

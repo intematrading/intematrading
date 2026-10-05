@@ -1,26 +1,30 @@
 import { ArrowRight, BadgeCheck, Boxes, Flame, Globe, Handshake, Plane, ShieldCheck, Ship, Users } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Accent } from "@/components/Accent";
 import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
+import { CursorSway } from "@/components/CursorSway";
 import { Eyebrow } from "@/components/Eyebrow";
-import { GetInTouch } from "@/components/GetInTouch";
+import { HorizontalScroll } from "@/components/HorizontalScroll";
 import { IconBox } from "@/components/IconBox";
 import { PhotoFrame } from "@/components/PhotoFrame";
+import { PinnedMorph } from "@/components/PinnedMorph";
+import { ScrollStage } from "@/components/ScrollStage";
 import { SectionHeading } from "@/components/SectionHeading";
-import { TeamCard } from "@/components/TeamCard";
 import { Testimonials } from "@/components/Testimonials";
 import { placeholders } from "@/content/placeholders";
 import type { ServiceSection } from "@/content/types";
 import { Link } from "@/i18n/navigation";
 import {
+  getBrands,
+  getExportItems,
   getHomePage,
+  getProducedItems,
   getServicesPage,
   getSiteSettings,
-  getTeamMembers,
-  getTeamPage,
   getTestimonials,
   tr,
 } from "@/lib/content";
@@ -30,8 +34,6 @@ const statIcons = [Globe, Boxes, Users];
 const sectionIcons: Record<ServiceSection, typeof Ship> = { import: Ship, produce: Flame, export: Plane };
 const pointIcons = [ShieldCheck, BadgeCheck, Handshake];
 
-// Aligns bleed layouts with the 80rem content column.
-const alignLeft = "lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))]";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
   const locale = (await params).locale as Locale;
@@ -44,14 +46,16 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [home, services, teamPage, members, testimonials, t, common] = await Promise.all([
+  const [home, services, testimonials, brands, producedItems, exportItems, t, common, svc] = await Promise.all([
     getHomePage(),
     getServicesPage(),
-    getTeamPage(),
-    getTeamMembers(),
     getTestimonials(),
+    getBrands(),
+    getProducedItems(),
+    getExportItems(),
     getTranslations("Home"),
     getTranslations("Common"),
+    getTranslations("Services"),
   ]);
 
   // "The Quality Warehouse — Importing, …": the part before the dash is the
@@ -60,245 +64,338 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const headline = rest.join(" — ");
   const cards = home.entryCards ?? [];
 
-  return (
-    <>
-      {/* ── Hero ─────────────────────────────────────────────────── */}
-      <section className="texture-paper relative overflow-hidden">
-        <div className="lg:grid lg:min-h-[36rem] lg:grid-cols-12">
-          <div className={`relative z-10 px-4 pt-[calc(var(--spacing-nav)+2.5rem)] pb-14 sm:px-6 sm:pb-20 lg:col-span-6 lg:pt-[calc(var(--spacing-nav)+4rem)] lg:pb-24 lg:pr-6 ${alignLeft}`}>
-            <h1>
-              {headline ? (
-                <>
-                  <Eyebrow as="span">
-                    {brandLine}
-                    <span className="sr-only"> — </span>
-                  </Eyebrow>
-                  <span className="font-display-heading mt-5 block text-[clamp(2.75rem,5.6vw,5.25rem)] text-black">
-                    <Accent text={headline} />
-                  </span>
-                </>
-              ) : (
-                <span className="font-display-heading block text-5xl">
-                  <Accent text={brandLine} />
-                </span>
-              )}
-            </h1>
-            <span aria-hidden="true" className="mt-6 block h-1 w-16 bg-red" />
-            {home.heroSubheadline && (
-              <p className="mt-6 max-w-lg text-base text-muted sm:text-lg">{tr(home.heroSubheadline, locale)}</p>
-            )}
-            <div className="mt-9 flex flex-wrap gap-4 ps-2">
-              <ButtonLink href="/services" variant="red">
-                {common("exploreServices")}
-              </ButtonLink>
-              <ButtonLink href="/contact" variant="black">
-                {common("contactUs")}
-              </ButtonLink>
-            </div>
-          </div>
+  const stats = home.stats ?? [];
+  // Real brands/products shown as chips on each What we do panel.
+  const itemsFor: Record<ServiceSection, { label: string; names: string[] }> = {
+    import: { label: t("importedBrands"), names: brands.map((b) => b.name) },
+    produce: { label: svc("ourProducts"), names: producedItems.map((p) => tr(p.name, locale)) },
+    export: { label: svc("exportBrands"), names: exportItems.map((e) => e.name) },
+  };
 
-          <div className="relative lg:col-span-6">
-            <div className="aspect-[4/3] w-full sm:aspect-[16/9] lg:absolute lg:inset-0 lg:aspect-auto lg:[clip-path:polygon(22%_0,100%_0,100%_100%,0_100%)]">
+  return (
+    <div className="flex flex-col bg-steel-100">
+      {/* ── Hero: pinned while it grows from an inset rounded panel to the
+          full screen (margins and corners shrink with scroll), then it
+          scrolls away. Logo top-left, content centred. ───────────────── */}
+      <ScrollStage reducedValue={0} className="relative h-[175svh] motion-reduce:h-auto">
+        <div
+          className="sticky top-0 h-svh [--gap:0.75rem] sm:[--gap:1rem] motion-reduce:static"
+          style={{ padding: "calc(var(--gap) * (1 - var(--p)))" }}
+        >
+          <section
+            className="on-dark relative isolate flex h-full min-h-[36rem] flex-col overflow-hidden text-paper"
+            style={{ borderRadius: "calc(2rem * (1 - var(--p)))" }}
+          >
+            <div className="absolute inset-0 -z-20">
               <PhotoFrame
                 image={home.heroImage}
                 placeholder={placeholders.hero}
                 locale={locale}
-                width={1100}
-                height={760}
-                sizes="(min-width: 1024px) 50vw, 100vw"
+                width={1920}
+                height={1080}
+                sizes="100vw"
                 icon={Ship}
                 priority
               />
             </div>
-          </div>
-        </div>
-      </section>
+            {/* Heavier overall shade, a dark vignette at the edges and a darker
+                centre behind the text, so the photo stays in the background */}
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/55" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgb(0_0_0/0.75)_100%)]" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgb(0_0_0/0.3)_0%,transparent_60%)]" />
+            <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-44 bg-linear-to-b from-black/50 to-black/0" />
 
-      {/* ── Snapshot strip ───────────────────────────────────────── */}
-      {home.stats?.length ? (
-        <section aria-labelledby="snapshot-heading" className="on-dark texture-dark relative overflow-hidden text-paper">
-          {/* Mirrored red cutouts, left and right */}
-          <span
-            aria-hidden="true"
-            className="absolute inset-y-0 left-0 hidden w-[9%] bg-red [clip-path:polygon(0_0,100%_0,45%_100%,0_100%)] md:block"
-          />
-          <span
-            aria-hidden="true"
-            className="absolute inset-y-0 right-0 hidden w-[9%] bg-red [clip-path:polygon(55%_0,100%_0,100%_100%,0_100%)] md:block"
-          />
-          <Container className="relative">
-            <h2 id="snapshot-heading" className="sr-only">
-              {t("snapshotHeading")}
-            </h2>
-            <dl className="grid gap-px py-6 sm:grid-cols-3 sm:py-12 md:px-[5%]">
-              {home.stats.map((stat, i) => {
-                const Icon = statIcons[i % statIcons.length];
-                return (
-                  <div
-                    key={stat._key}
-                    className="flex flex-col-reverse gap-1 border-paper/25 py-6 sm:border-l sm:px-8 sm:py-2 sm:first:border-l-0"
-                  >
-                    <dt className="text-sm text-smoke">{tr(stat.label, locale)}</dt>
-                    <dd className="font-display-heading text-5xl text-paper sm:text-6xl" lang="en">
-                      {stat.value}
-                    </dd>
-                    <Icon aria-hidden="true" className="mb-4 size-10 text-paper" strokeWidth={1.5} />
-                  </div>
-                );
-              })}
-            </dl>
-          </Container>
-        </section>
-      ) : null}
-
-      {/* ── What we do → Our Services anchors ───────────────────── */}
-      {cards.length ? (
-        <section aria-labelledby="what-we-do" className="py-16 sm:py-24">
-          <Container>
-            <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
-              <div className="lg:col-span-5">
-                <SectionHeading id="what-we-do" eyebrow={t("ourServices")}>
-                  {t("whatWeDo")}
-                </SectionHeading>
-              </div>
-              {services.intro && (
-                <div className="border-line lg:col-span-7 lg:border-l lg:pl-10">
-                  <p className="max-w-2xl text-muted">{tr(services.intro, locale)}</p>
-                  <Link href="/services" className="group mt-3 inline-flex items-center gap-2 py-1 text-sm font-bold text-ink hover:text-red-ink">
+            <Container className="flex flex-1 flex-col pt-6 pb-8 sm:pt-7 sm:pb-12">
+              {/* Centred content */}
+              <div className="flex flex-1 flex-col items-center justify-center py-10 text-center">
+                <h1 className="max-w-4xl">
+                  {headline ? (
+                    <>
+                      <Eyebrow as="span" onDark>
+                        {brandLine}
+                        <span className="sr-only"> — </span>
+                      </Eyebrow>
+                      <span className="font-display-heading mt-4 block text-[clamp(2.5rem,5.5vw,5.5rem)] leading-[0.95] text-balance">
+                        <Accent text={headline} />
+                      </span>
+                    </>
+                  ) : (
+                    <span className="font-display-heading block text-[clamp(2.5rem,5.5vw,5.5rem)] leading-[0.95]">
+                      <Accent text={brandLine} />
+                    </span>
+                  )}
+                </h1>
+                {home.heroSubheadline && <p className="mt-6 max-w-xl text-base text-paper/90 sm:text-lg">{tr(home.heroSubheadline, locale)}</p>}
+                <div className="mt-8 flex flex-wrap justify-center gap-3">
+                  <ButtonLink href="/services" variant="redOnDark">
                     {common("exploreServices")}
-                    <ArrowRight aria-hidden="true" className="size-4 text-red transition-transform group-hover:translate-x-1" />
-                  </Link>
+                  </ButtonLink>
+                  <ButtonLink href="/#contact" variant="outline">
+                    {common("contactUs")}
+                  </ButtonLink>
                 </div>
-              )}
-            </div>
-
-            <ul className="mt-12 grid gap-6 lg:grid-cols-3">
-              {cards.map((card) => {
-                const Icon = sectionIcons[card.section];
-                // We Produce is the red card; the other two are black.
-                const red = card.section === "produce";
-                return (
-                  <li key={card._key}>
-                    <Link
-                      href={`/services#${card.section}`}
-                      className={`group relative flex min-h-60 overflow-hidden text-paper shadow-md transition-shadow hover:shadow-xl ${
-                        red ? "on-red bg-red" : "on-dark texture-dark"
-                      }`}
-                    >
-                      <div className="relative z-10 flex w-[58%] flex-col p-6">
-                        {/* Slanted icon box: red on black cards, black on the red one */}
-                        <IconBox icon={Icon} tone={red ? "black" : "red"} />
-                        <h3 className="font-title-heading mt-5 text-lg text-paper">{tr(card.title, locale)}</h3>
-                        {card.description && (
-                          <p className={`mt-2 flex-1 text-sm ${red ? "text-paper" : "text-smoke"}`}>{tr(card.description, locale)}</p>
-                        )}
-                        <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold text-paper">
-                          {common("learnMore")}
-                          <ArrowRight aria-hidden="true" className="size-4 text-paper transition-transform group-hover:translate-x-1" />
-                        </span>
-                      </div>
-                      {/* Slanted edge beside the photo: red on black cards, black on the red one */}
-                      <span
-                        aria-hidden="true"
-                        className={`absolute inset-y-0 right-0 w-[47%] [clip-path:polygon(28%_0,100%_0,100%_100%,0_100%)] ${red ? "bg-black" : "bg-red"}`}
-                      />
-                      <div className="absolute inset-y-0 right-0 w-[45%] [clip-path:polygon(30%_0,100%_0,100%_100%,0_100%)]">
-                        <PhotoFrame
-                          image={card.image}
-                          placeholder={placeholders[card.section]}
-                          locale={locale}
-                          width={320}
-                          height={320}
-                          sizes="(min-width: 1024px) 15vw, 45vw"
-                          icon={Icon}
-                          className="transition-transform duration-500 group-hover:scale-105"
-                        />
-                      </div>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </Container>
-        </section>
-      ) : null}
-
-      {/* ── Commitment band ──────────────────────────────────────── */}
-      {home.commitmentHeadline && (
-        <section aria-labelledby="commitment-heading" className="on-dark texture-dark relative overflow-hidden text-paper">
-          <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_minmax(0,0.9fr)]">
-            <div className={`relative z-10 px-4 py-14 sm:px-6 lg:py-20 lg:pr-4 ${alignLeft}`}>
-              <SectionHeading id="commitment-heading" eyebrow={tr(home.commitmentEyebrow, locale)} size="band" onDark>
-                {tr(home.commitmentHeadline, locale)}
-              </SectionHeading>
-              {home.commitmentBody && <p className="mt-6 max-w-sm text-smoke">{tr(home.commitmentBody, locale)}</p>}
-              <ButtonLink href="/about" variant="redOnDark" className="mt-8 ms-2">
-                {t("aboutUs")}
-              </ButtonLink>
-            </div>
-
-            <div className="relative aspect-video lg:-mx-10 lg:aspect-auto lg:[clip-path:polygon(16%_0,100%_0,84%_100%,0_100%)]">
-              <PhotoFrame
-                image={home.commitmentImage}
-                placeholder={placeholders.commitment}
-                locale={locale}
-                width={900}
-                height={600}
-                sizes="(min-width: 1024px) 40vw, 100vw"
-                icon={Handshake}
-              />
-            </div>
-
-            {home.commitmentPoints?.length ? (
-              <div className="on-red relative bg-red px-6 py-10 sm:px-10 lg:flex lg:items-center lg:pl-20 lg:[clip-path:polygon(18%_0,100%_0,100%_100%,0_100%)]">
-                <ul className="w-full divide-y divide-paper/35">
-                  {home.commitmentPoints.map((point, i) => {
-                    const Icon = pointIcons[i % pointIcons.length];
-                    return (
-                      <li key={point.en} className="flex items-center gap-4 py-5 first:pt-0 last:pb-0">
-                        <Icon aria-hidden="true" className="size-9 shrink-0 text-paper" strokeWidth={1.5} />
-                        <span className="text-[1.1875rem] leading-snug font-bold text-paper">{tr(point, locale)}</span>
-                      </li>
-                    );
-                  })}
-                </ul>
               </div>
-            ) : null}
-          </div>
-        </section>
-      )}
+            </Container>
 
-      {/* ── Team intro → /team ───────────────────────────────────── */}
-      {members.length > 0 && (
-        <section aria-labelledby="team-heading" className="py-16 sm:py-24">
-          <Container>
-            <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
-              <div className="lg:col-span-5">
-                <SectionHeading id="team-heading" eyebrow={t("ourTeam")}>
-                  {t("meetTeam")}
+            {/* Right edge: a thin vertical line mirroring the side nav's, with a
+                dot travelling down it and "Scroll down" beneath */}
+            <div aria-hidden="true" className="absolute top-1/2 right-[2.125rem] hidden -translate-y-1/2 flex-col items-center gap-4 lg:flex xl:right-[2.625rem]">
+              <span className="relative h-32 w-px bg-paper/15">
+                <span className="animate-scroll-dot absolute top-0 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-paper/60 motion-reduce:hidden" />
+              </span>
+              <span className="text-[0.625rem] font-semibold tracking-[0.25em] text-paper/50 uppercase [writing-mode:vertical-rl]">
+                {t("scrollDown")}
+              </span>
+            </div>
+          </section>
+        </div>
+      </ScrollStage>
+
+      {/* ── Snapshot: slides up, then pins while the stats animate in one
+          by one (driven by scroll), then scrolls on. ────────────────── */}
+      {stats.length ? (
+        <ScrollStage className="relative h-[260svh] motion-reduce:h-auto">
+          <section aria-labelledby="snapshot-heading" className="sticky top-0 flex h-svh items-center overflow-hidden py-[max(3rem,8svh)] text-ink motion-reduce:static motion-reduce:h-auto motion-reduce:py-16">
+            {/* Container on a crane line, hanging from the top-left. Hidden
+                above the section at first and lowered in while the section
+                slides up, settling as it reaches the top. */}
+            <div className="pointer-events-none absolute top-0 left-[max(0rem,calc((100vw-80rem)/2))] hidden w-[min(30rem,36vw)] lg:block" style={{ transform: "translateY(calc(-12% - 88% * (1 - var(--enter))))" }}>
+              <CursorSway>
+                <Image src="/img1.png" alt="" width={2000} height={2000} sizes="(min-width: 1024px) 30rem, 0px" className="w-full" />
+              </CursorSway>
+            </div>
+            <Container className="grid w-full gap-12 lg:grid-cols-12 lg:items-center lg:gap-24">
+              <div className="lg:col-span-5 lg:self-end lg:pb-4">
+                <SectionHeading id="snapshot-heading" eyebrow={brandLine}>
+                  {t("snapshotHeading")}
                 </SectionHeading>
-              </div>
-              <div className="border-line lg:col-span-7 lg:border-l lg:pl-10">
-                {teamPage.intro && <p className="max-w-2xl text-muted">{tr(teamPage.intro, locale)}</p>}
-                <ButtonLink href="/team" variant="black" className="mt-6 ms-2">
-                  {t("viewTeam")}
+                <p className="mt-5 max-w-md text-muted sm:text-lg">{t("snapshotIntro")}</p>
+                <ButtonLink href="/about" variant="red" className="mt-8">
+                  {common("learnMore")}
                 </ButtonLink>
               </div>
-            </div>
-            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {members.slice(0, 4).map((m) => (
-                <li key={m._id}>
-                  <TeamCard member={m} locale={locale} />
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </section>
+              <dl className="divide-y divide-steel-300 lg:col-span-6 lg:col-start-7">
+                {stats.map((stat, i) => {
+                  const Icon = statIcons[i % statIcons.length];
+                  return (
+                    <div
+                      key={stat._key}
+                      className="scroll-reveal flex items-start gap-5 py-7 first:pt-0 last:pb-0 sm:gap-8 sm:py-[clamp(1rem,4.5svh,2.5rem)]"
+                      style={{ "--start": 0.05 + (i / stats.length) * 0.6, "--span": 0.18 } as React.CSSProperties}
+                    >
+                      <IconBox icon={Icon} size="lg" className="mt-1" />
+                      {/* Number, then its label and description underneath */}
+                      <div className="flex flex-col-reverse">
+                        <dt className="mt-2">
+                          <span className="block text-lg font-semibold text-ink">{tr(stat.label, locale)}</span>
+                          {stat.note && <span className="mt-1.5 block max-w-md text-muted">{tr(stat.note, locale)}</span>}
+                        </dt>
+                        <dd className="font-display-heading text-steel-gradient text-5xl leading-none sm:text-[clamp(2.5rem,7svh,3.75rem)]" lang="en">
+                          {stat.value}
+                        </dd>
+                      </div>
+                    </div>
+                  );
+                })}
+              </dl>
+            </Container>
+          </section>
+        </ScrollStage>
+      ) : null}
+
+      {/* ── Commitment band: arrives as a plain full-width rectangle; once
+          it fills the screen (edge to edge, full height) it holds while it
+          shrinks to its content height and side margins and rounded corners
+          grow in — the hero's expansion in reverse — then scrolls on. ─── */}
+      {home.commitmentHeadline && (
+        // "About" in the side nav
+        <div id="about" data-nav-section="/about">
+        <PinnedMorph>
+          <div className="[--gap:0.75rem] sm:[--gap:1rem]" style={{ paddingInline: "calc(var(--gap) * var(--p))" }}>
+            <section
+              aria-labelledby="commitment-heading"
+              className="on-dark relative isolate flex items-center overflow-hidden text-paper"
+              style={{
+                borderRadius: "calc(2rem * var(--p))",
+                minHeight: "calc(var(--full, 0px) - (var(--full, 0px) - var(--nat, 0px)) * var(--p))",
+              }}
+            >
+              <div className="absolute inset-0 -z-20">
+                <PhotoFrame
+                  image={home.commitmentImage}
+                  placeholder={placeholders.commitment}
+                  locale={locale}
+                  width={1920}
+                  height={1080}
+                  sizes="100vw"
+                  icon={Handshake}
+                />
+              </div>
+              {/* Even near-black tint on phones (stacked text over the photo); a fade
+                  from the left on desktop, leaving the right side clear. */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 -z-10 bg-black/55 lg:bg-transparent lg:bg-linear-to-r lg:from-black/75 lg:from-25% lg:via-black/45 lg:via-50% lg:to-black/5"
+              />
+              <div data-natural className="w-full">
+              <Container className="grid gap-10 py-12 sm:py-14 lg:grid-cols-12 lg:items-center lg:gap-8">
+                <div className="lg:col-span-5">
+                  <SectionHeading id="commitment-heading" eyebrow={tr(home.commitmentEyebrow, locale)} size="band" onDark>
+                    {tr(home.commitmentHeadline, locale)}
+                  </SectionHeading>
+                  {home.commitmentBody && <p className="mt-6 max-w-sm text-paper/90">{tr(home.commitmentBody, locale)}</p>}
+                  <ButtonLink href="/about" variant="redOnDark" className="mt-8">
+                    {t("aboutUs")}
+                  </ButtonLink>
+                </div>
+
+                {home.commitmentPoints?.length ? (
+                  <div className="rounded-3xl bg-white/12 p-6 shadow-2xl ring-1 ring-white/30 backdrop-blur-xl backdrop-saturate-150 ring-inset sm:p-8 lg:col-span-6 lg:col-start-7 xl:p-10">
+                    <ul className="w-full divide-y divide-white/20">
+                      {home.commitmentPoints.map((point, i) => {
+                        const Icon = pointIcons[i % pointIcons.length];
+                        return (
+                          <li key={point._key ?? point.title.en} className="flex items-start gap-5 py-5 first:pt-0 last:pb-0">
+                            <IconBox icon={Icon} />
+                            <div>
+                              <h3 className="text-lg leading-snug font-bold text-paper">{tr(point.title, locale)}</h3>
+                              {point.description && <p className="mt-1 text-sm text-paper/85 sm:text-base">{tr(point.description, locale)}</p>}
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ) : null}
+              </Container>
+              </div>
+            </section>
+          </div>
+        </PinnedMorph>
+        </div>
       )}
 
-      <Testimonials items={testimonials} locale={locale} showHeading={false} className="texture-paper" />
+      {/* ── What we do: pinned, and scrolling down moves a row of large
+          photo cards (shaded steel-to-black, real brands as chips)
+          sideways, after an intro. ──────────────────────────────────── */}
+      {cards.length ? (
+        // "Services" in the side nav
+        <section id="services" data-nav-section="/services" aria-labelledby="what-we-do">
+          <HorizontalScroll>
+            <div
+              data-panel
+              className="flex w-[min(28rem,85vw)] shrink-0 flex-col justify-center px-1 sm:px-6 lg:w-[30rem] lg:px-10"
+              // Slides in from the left as the section scrolls up
+              style={{ transform: "translateX(calc(-40vw * (1 - var(--enter))))", opacity: "var(--enter)" }}
+            >
+              {/* All steel gradient here: the starred red accent is dropped */}
+              <SectionHeading id="what-we-do" eyebrow={t("ourServices")}>
+                {t("whatWeDo").replace(/\*/g, "")}
+              </SectionHeading>
+              {services.intro && <p className="mt-6 text-muted">{tr(services.intro, locale)}</p>}
+              {/* The three main services: icon, name and a short description */}
+              <ul className="mt-8 space-y-5">
+                {cards.map((card) => (
+                  <li key={card._key} className="flex items-start gap-4">
+                    <IconBox icon={sectionIcons[card.section]} />
+                    <div>
+                      <p className="text-lg leading-snug font-semibold text-ink">{tr(card.title, locale)}</p>
+                      {card.description && <p className="mt-1 text-sm text-muted">{tr(card.description, locale)}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {cards.map((card, i) => {
+              const Icon = sectionIcons[card.section];
+              const items = itemsFor[card.section];
+              return (
+                <Link
+                  key={card._key}
+                  data-panel
+                  href="/services"
+                  style={{ transform: `translateX(calc(${30 + i * 15}vw * (1 - var(--enter))))` }}
+                  className="group on-dark relative isolate flex h-[calc(100svh-6rem)] max-h-[40rem] w-[84vw] shrink-0 flex-col overflow-hidden rounded-[1.75rem] p-7 text-paper shadow-lg transition-shadow hover:shadow-2xl sm:rounded-[2rem] sm:p-10 lg:w-[58vw] lg:p-12"
+                >
+                  <div className="absolute inset-0 -z-20">
+                    <PhotoFrame
+                      image={card.image}
+                      placeholder={placeholders[card.section]}
+                      locale={locale}
+                      width={1400}
+                      height={1000}
+                      sizes="(min-width: 1024px) 58vw, 84vw"
+                      icon={Icon}
+                      className="transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
+                    />
+                  </div>
+                  {/* Steel-to-black shade rising from the bottom, where the text sits */}
+                  <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-black/90 via-steel-800/55 via-50% to-steel-700/45" />
+                  {/* Darker edges all round */}
+                  <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgb(0_0_0/0.75)_100%)]" />
 
-      <GetInTouch locale={locale} />
-    </>
+                  <span aria-hidden="true" className="font-display-heading self-end text-5xl text-paper/80 drop-shadow-lg sm:text-7xl" lang="en">
+                    0{i + 1}
+                  </span>
+
+                  <div className="mt-auto grid gap-8 lg:grid-cols-2 lg:items-end lg:gap-12">
+                    <div>
+                      <h3 className="font-display-heading text-5xl text-paper sm:text-6xl xl:text-7xl">
+                        {tr(card.title, locale)}
+                      </h3>
+                      {card.description && <p className="mt-4 max-w-sm text-lg text-paper/85">{tr(card.description, locale)}</p>}
+                      <span className="mt-7 inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-bold text-ink transition-colors group-hover:bg-steel-200 sm:text-base">
+                        {common("learnMore")}
+                        <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-0.5" />
+                      </span>
+                    </div>
+                    {items.names.length ? (
+                      <div className="hidden sm:block">
+                        <p className="label-caps text-paper/75">{items.label}</p>
+                        <ul className="mt-4 flex flex-wrap gap-2">
+                          {items.names.slice(0, 8).map((name) => (
+                            <li key={name} className="rounded-full bg-white/12 px-4 py-2 text-sm font-semibold text-paper ring-1 ring-white/25 backdrop-blur-md">
+                              {name}
+                            </li>
+                          ))}
+                          {items.names.length > 8 && (
+                            <li className="rounded-full bg-white/12 px-4 py-2 text-sm font-semibold text-paper ring-1 ring-white/25 backdrop-blur-md">
+                              {t("moreItems", { count: items.names.length - 8 })}
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    ) : null}
+                  </div>
+                </Link>
+              );
+            })}
+            {/* Closing panel: "more services" note, right-aligned, with a
+                vertical line and label echoing the hero's scroll cue */}
+            <div data-panel className="flex w-[min(34rem,90vw)] shrink-0 items-center justify-end gap-14 px-4 sm:px-10 lg:w-[48rem] lg:gap-28 lg:px-20">
+              <div className="flex flex-col items-end text-right">
+                <SectionHeading id="what-we-do-outro" eyebrow={t("outroEyebrow")}>
+                  {t("outroHeading")}
+                </SectionHeading>
+                <p className="mt-6 max-w-sm text-muted sm:text-lg">{t("outroBody")}</p>
+                <ButtonLink href="/services" variant="red" className="mt-8">
+                  {t("outroCta")}
+                </ButtonLink>
+              </div>
+              <div aria-hidden="true" className="hidden flex-col items-center gap-4 sm:flex">
+                <span className="relative h-32 w-px bg-steel-400/40">
+                  <span className="animate-scroll-dot absolute top-0 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-steel-500 motion-reduce:hidden" />
+                </span>
+                <span className="text-[0.625rem] font-semibold tracking-[0.25em] text-steel-500 uppercase [writing-mode:vertical-rl]">
+                  {t("outroSide")}
+                </span>
+              </div>
+            </div>
+          </HorizontalScroll>
+        </section>
+      ) : null}
+
+      <Testimonials items={testimonials} locale={locale} />
+    </div>
   );
 }

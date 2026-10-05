@@ -2,8 +2,7 @@
   "Nav": {
     "home": "ዋና ገጽ",
     "about": "ስለ እኛ",
-    "services": "አገልግሎቶቻችን",
-    "team": "ቡድናችን",
+    "services": "አገልግሎቶች",
     "contact": "ያግኙን",
     "primary": "ዋና ማውጫ",
     "openMenu": "ማውጫውን ክፈት",
@@ -14,24 +13,32 @@
     "learnMore": "ተጨማሪ ይመልከቱ",
     "contactUs": "ያግኙን",
     "exploreServices": "አገልግሎቶቻችንን ይመልከቱ",
-    "home": "ዋና ገጽ"
+    "home": "ዋና ገጽ",
+    "close": "ዝጋ",
+    "loadError": "ይህ ገጽ ሊጫን አልቻለም",
+    "retry": "እንደገና ይሞክሩ"
   },
   "LanguageSwitcher": {
     "label": "ቋንቋ",
     "switchTo": "ወደ {language} ቀይር"
   },
   "Home": {
-    "snapshotHeading": "ኢንተማ በጨረፍታ",
+    "snapshotHeading": "በቁጥሮች",
+    "snapshotIntro": "ከአዲስ አበባ ማዕከላችን ሆነን በሦስት አገሮች የጅምላና የችርቻሮ ገበያዎችን የምናገለግል የፍጆታ ምርቶች አስመጪ፣ አከፋፋይ፣ አምራችና ላኪ ነን።",
+    "importedBrands": "የምናስመጣቸው ብራንዶች",
+    "moreItems": "+{count} ተጨማሪ",
     "ourServices": "አገልግሎቶቻችን",
     "whatWeDo": "የምንሠራው *ሥራ*",
     "aboutUs": "ስለ እኛ",
-    "ourTeam": "ቡድናችን",
-    "meetTeam": "*ቡድናችንን* ይተዋወቁ",
-    "viewTeam": "መላውን ቡድን ይተዋወቁ",
-    "getInTouch": "*ያግኙን*"
+    "getInTouch": "*ያግኙን*",
+    "scrollDown": "ወደ ታች ይሸብልሉ",
+    "outroEyebrow": "ተጨማሪ አገልግሎቶች",
+    "outroHeading": "ሌላ ነገር ይፈልጋሉ?",
+    "outroCta": "አገልግሎቶቻችንን ይመልከቱ",
+    "outroBody": "አገልግሎቶቻችን እዚህ ከተዘረዘሩት በላይ ናቸው። የሚፈልጉትን ይንገሩን፤ ቡድናችን የሚረዳበትን መንገድ ያገኛል።",
+    "outroSide": "እንነጋገር"
   },
   "Services": {
-    "sectionNav": "የአገልግሎቶቻችን ክፍሎች",
     "import": "እናስመጣለን",
     "produce": "እናመርታለን",
     "export": "እንልካለን",
@@ -41,41 +48,28 @@
     "targetMarkets": "የምንልክባቸው ገበያዎች",
     "ourProducts": "ምርቶቻችን",
     "closePreview": "ቅድመ እይታውን ዝጋ",
-    "viewItem": "{name}ን ይመልከቱ"
+    "viewItem": "{name}ን ይመልከቱ",
+    "marketsEyebrow": "የምንልክባቸው"
   },
   "Footer": {
     "contact": "አድራሻ",
-    "explore": "ገጾች",
     "phone": "ስልክ",
     "email": "ኢሜይል",
-    "rights": "መብቱ በሕግ የተጠበቀ ነው።"
+    "rights": "መብቱ በሕግ የተጠበቀ ነው።",
+    "follow": "ይከተሉን"
   },
   "NotFound": {
     "title": "ገጹ አልተገኘም",
     "body": "የሚፈልጉት ገጽ የለም ወይም ተዛውሯል።",
     "home": "ወደ ዋና ገጽ ተመለስ"
   },
-  "Team": {
-    "salesTeamSize": "የሽያጭ ቡድናችን አባላት",
-    "atAGlance": "ቡድናችን *በጨረፍታ*",
-    "organised": "አደረጃጀታችን",
-    "applyCta": "ለአጋርነት ያመልክቱ",
-    "brandAmbassador": "የብራንድ አምባሳደር"
-  },
   "Contact": {
-    "details": "የመገኛ አድራሻ",
-    "address": "አድራሻ",
-    "email": "ኢሜይል",
-    "phone": "ስልክ",
     "form": {
       "name": "ሙሉ ስም",
-      "company": "ድርጅት",
       "email": "ኢሜይል",
-      "phone": "ስልክ",
       "inquiryType": "እኔ…",
       "message": "መልዕክት",
-      "optional": "አማራጭ",
-      "submit": "ጥያቄ ይላኩ",
+      "submit": "መልዕክት ይላኩ",
       "sending": "በመላክ ላይ…",
       "types": {
         "retail": "የችርቻሮ አጋር",
@@ -90,7 +84,7 @@
       "invalidEmail": "ትክክለኛ የኢሜይል አድራሻ ያስገቡ።",
       "tooShort": "እባክዎ ቢያንስ 10 ፊደላት ይጻፉ።"
     },
-    "followUs": "ይከተሉን"
+    "formEyebrow": "ያግኙን"
   },
   "About": {
     "galleryHeading": "*ኢንተማ* ከውስጥ",
@@ -100,11 +94,18 @@
     "slide": "ፎቶ {current} ከ{total}",
     "goTo": "ወደ ፎቶ {n} ይሂዱ",
     "snapshot": "የኩባንያው ገጽታ",
-    "seeBrands": "የምናስመጣቸውን ይመልከቱ",
     "partnerCta": "አጋር ይሁኑ",
     "open": "ፎቶውን ክፈት፦ {caption}",
     "close": "ቅድመ እይታውን ዝጋ",
-    "partnersLabel": "አጋሮቻችን"
+    "partnersLabel": "አጋሮቻችን",
+    "whoEyebrow": "ታሪካችን",
+    "galleryEyebrow": "የፎቶ ማዕከል",
+    "visionEyebrow": "የሚያነሳሳን",
+    "processEyebrow": "እንዴት እንሠራለን",
+    "partnersEyebrow": "የታመኑ ብራንዶች",
+    "keysEyebrow": "ለምን ኢንተማ",
+    "step": "ደረጃ {n}",
+    "galleryIntro": "ምርቶች በሦስት አገሮች እንዲንቀሳቀሱ የሚያደርጉት ሰዎችና ቦታዎች — መጋዘኖቻችን፣ የማከፋፈያ ተሽከርካሪዎቻችንና የአጋር መደብሮቻችን።"
   },
   "Testimonials": {
     "eyebrow": "ምስክርነቶች",

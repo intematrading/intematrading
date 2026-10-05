@@ -27,7 +27,11 @@ export async function Testimonials({
   const t = await getTranslations("Testimonials");
   const dark = tone === "dark";
 
-  const cards = items.slice(0, 8).map((item) => {
+  const cardCount = Math.min(items.length, 8);
+  // Card (26rem) + gap (1.5rem) = 440px; repeat until one pass covers 2600px.
+  const repeat = Math.max(1, Math.ceil(2600 / (cardCount * 440)));
+  const cards = items.slice(0, 8).map((item, i) => {
+    const avatar = testimonialPlaceholders[i % testimonialPlaceholders.length];
     const initials = item.name
       .split(/\s+/)
       .map((w) => w[0])
@@ -35,41 +39,41 @@ export async function Testimonials({
       .slice(0, 2);
     const meta = [tr(item.role, locale), item.company].filter(Boolean).join(", ");
     return (
-      <li key={item._id} className="w-[85vw] max-w-[34rem] shrink-0 snap-start sm:w-[34rem]">
+      <li key={item._id} className="w-[80vw] max-w-[26rem] shrink-0 snap-start sm:w-[26rem]">
         <figure
-          className={`relative flex h-full flex-col p-7 sm:p-9 ${
+          className={`relative isolate flex h-full flex-col overflow-hidden rounded-2xl p-6 sm:p-7 ${
             dark ? "bg-paper/[0.06] text-paper ring-1 ring-paper/15" : "bg-paper text-ink shadow-sm ring-1 ring-line"
           }`}
         >
-          <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-red" />
-          <Quote aria-hidden="true" className={`size-9 ${dark ? "fill-paper text-paper" : "fill-red text-red"}`} strokeWidth={0} />
-          <blockquote className={`mt-4 flex-1 text-lg leading-relaxed ${dark ? "text-paper" : "text-ink"}`}>
+          {/* Large faint quote mark in the background, top-right */}
+          <Quote aria-hidden="true" className={`pointer-events-none absolute -top-3 -right-2 -z-10 size-32 opacity-[0.07] ${dark ? "fill-paper text-paper" : "fill-red text-red"}`} strokeWidth={0} />
+          <blockquote className={`flex-1 text-base leading-relaxed ${dark ? "text-paper" : "text-ink"}`}>
             <p>{tr(item.quote, locale)}</p>
           </blockquote>
-          <figcaption className={`mt-6 flex items-center gap-4 border-t pt-5 ${dark ? "border-paper/15" : "border-line"}`}>
+          <figcaption className={`mt-5 flex items-center gap-3 border-t pt-4 ${dark ? "border-paper/15" : "border-line"}`}>
             {item.photo?.asset ? (
-              <CmsImage image={item.photo} locale={locale} width={48} height={48} sizes="48px" fallbackAlt="" className="size-12 shrink-0 rounded-full object-cover" />
-            ) : testimonialPlaceholders[item._id] ? (
+              <CmsImage image={item.photo} locale={locale} width={48} height={48} sizes="48px" fallbackAlt="" className="size-10 shrink-0 rounded-full object-cover" />
+            ) : avatar ? (
               <Image
-                src={testimonialPlaceholders[item._id].src}
+                src={avatar.src}
                 alt=""
                 width={48}
                 height={48}
-                className={`size-12 shrink-0 rounded-full object-cover ring-2 ${dark ? "ring-paper/80" : "ring-paper"}`}
+                className={`size-10 shrink-0 rounded-full object-cover ring-2 ${dark ? "ring-paper/80" : "ring-paper"}`}
               />
             ) : (
               <span
                 aria-hidden="true"
-                className={`flex size-12 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                  dark ? "bg-paper text-black" : "bg-black text-paper"
+                className={`flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
+                  dark ? "bg-paper text-black" : "steel-gradient text-paper"
                 }`}
               >
                 {initials}
               </span>
             )}
             <span>
-              <span className={`block font-bold ${dark ? "text-paper" : "text-black"}`}>{item.name}</span>
-              {meta && <span className={`block text-sm ${dark ? "text-smoke" : "text-muted"}`}>{meta}</span>}
+              <span className={`block text-sm font-bold ${dark ? "text-paper" : "text-black"}`}>{item.name}</span>
+              {meta && <span className={`block text-xs ${dark ? "text-smoke" : "text-muted"}`}>{meta}</span>}
             </span>
           </figcaption>
         </figure>
@@ -91,8 +95,11 @@ export async function Testimonials({
         </Container>
       )}
       {/* Bleeds to the page edges. */}
-      <div className={`px-4 sm:px-6 lg:px-8 ${showHeading ? "mt-12" : ""}`}>
-        <Marquee label={t("eyebrow")} seconds={items.length * 14}>
+      {/* Full width with soft, wide faded edges. Short lists are repeated so
+          one pass is wider than any screen and the first card always follows
+          the last with no gap. */}
+      <div className={showHeading ? "mt-12" : ""}>
+        <Marquee label={t("eyebrow")} seconds={cardCount * repeat * 14} repeat={repeat} feather={[35, 25]}>
           {cards}
         </Marquee>
       </div>

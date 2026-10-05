@@ -20,15 +20,19 @@ export function MarqueeScroller({
   label,
   seconds,
   reverse = false,
+  feather = 4,
   children,
 }: {
   label: string;
   seconds: number;
   /** Auto-scroll towards the right instead of the left. */
   reverse?: boolean;
+  /** Width of the faded edges, as a percentage of the row: one value, or [left, right]. */
+  feather?: number | [number, number];
   children: React.ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [fadeLeft, fadeRight] = Array.isArray(feather) ? feather : [feather, feather];
 
   useEffect(() => {
     const el = ref.current;
@@ -158,7 +162,8 @@ export function MarqueeScroller({
       role="region"
       aria-label={label}
       onDragStart={(e) => e.preventDefault()}
-      className="-my-10 cursor-grab overflow-x-auto overscroll-x-contain py-10 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] [scrollbar-width:none] select-none active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
+      style={{ maskImage: `linear-gradient(to right, transparent, black ${fadeLeft}%, black ${100 - fadeRight}%, transparent)` }}
+      className="-my-10 cursor-grab overflow-x-auto overscroll-x-contain py-10 [scrollbar-width:none] select-none active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
     >
       {children}
     </div>

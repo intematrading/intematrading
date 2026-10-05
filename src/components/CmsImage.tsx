@@ -14,6 +14,7 @@ export function CmsImage({
   className,
   fallbackAlt = "",
   priority,
+  quality,
 }: {
   image: SanityImage | undefined;
   locale: Locale;
@@ -23,6 +24,8 @@ export function CmsImage({
   className?: string;
   fallbackAlt?: string;
   priority?: boolean;
+  /** Must be listed in images.qualities in next.config.ts. */
+  quality?: number;
 }) {
   if (!image?.asset) return null;
   return (
@@ -34,6 +37,7 @@ export function CmsImage({
       sizes={sizes}
       className={className}
       priority={priority}
+      quality={quality}
     />
   );
 }

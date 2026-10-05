@@ -1,9 +1,8 @@
 {
   "Nav": {
     "home": "Home",
-    "about": "About Us",
-    "services": "Our Services",
-    "team": "Team",
+    "about": "About",
+    "services": "Services",
     "contact": "Contact",
     "primary": "Main navigation",
     "openMenu": "Open menu",
@@ -14,24 +13,32 @@
     "learnMore": "Learn more",
     "contactUs": "Contact us",
     "exploreServices": "Explore our services",
-    "home": "Home"
+    "home": "Home",
+    "close": "Close",
+    "loadError": "This page couldn't load",
+    "retry": "Try again"
   },
   "LanguageSwitcher": {
     "label": "Language",
     "switchTo": "Switch to {language}"
   },
   "Home": {
-    "snapshotHeading": "INTEMA at a glance",
+    "snapshotHeading": "By the numbers",
+    "snapshotIntro": "A diversified FMCG importer, distributor, manufacturer and exporter, serving wholesale and retail markets across three countries from our base in Addis Ababa.",
+    "importedBrands": "Brands we import",
+    "moreItems": "+{count} more",
     "ourServices": "Our services",
     "whatWeDo": "What *we do*",
     "aboutUs": "About us",
-    "ourTeam": "Our team",
-    "meetTeam": "Meet *our team*",
-    "viewTeam": "Meet the whole team",
-    "getInTouch": "Get in *touch*"
+    "getInTouch": "Get in *touch*",
+    "scrollDown": "Scroll down",
+    "outroEyebrow": "More services",
+    "outroHeading": "Need something else?",
+    "outroCta": "Explore services",
+    "outroBody": "Our services go beyond what's listed here. Tell us what you need and our team will find a way to help.",
+    "outroSide": "Let's talk"
   },
   "Services": {
-    "sectionNav": "Our Services sections",
     "import": "We Import",
     "produce": "We Produce",
     "export": "We Export",
@@ -41,41 +48,28 @@
     "targetMarkets": "Target markets",
     "ourProducts": "Our products",
     "closePreview": "Close preview",
-    "viewItem": "View {name}"
+    "viewItem": "View {name}",
+    "marketsEyebrow": "Where we export"
   },
   "Footer": {
     "contact": "Contact",
-    "explore": "Explore",
     "phone": "Phone",
     "email": "Email",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "follow": "Follow us"
   },
   "NotFound": {
     "title": "Page not found",
     "body": "The page you're looking for doesn't exist or has moved.",
     "home": "Back to home"
   },
-  "Team": {
-    "salesTeamSize": "people in our sales team",
-    "atAGlance": "Team at a *glance*",
-    "organised": "How we're organised",
-    "applyCta": "Apply to partner",
-    "brandAmbassador": "Brand ambassador"
-  },
   "Contact": {
-    "details": "Contact details",
-    "address": "Address",
-    "email": "Email",
-    "phone": "Phone",
     "form": {
       "name": "Full name",
-      "company": "Company",
       "email": "Email",
-      "phone": "Phone",
       "inquiryType": "I am a…",
       "message": "Message",
-      "optional": "optional",
-      "submit": "Send inquiry",
+      "submit": "Send message",
       "sending": "Sending…",
       "types": {
         "retail": "Retail partner",
@@ -90,7 +84,7 @@
       "invalidEmail": "Enter a valid email address.",
       "tooShort": "Please write at least 10 characters."
     },
-    "followUs": "Follow us"
+    "formEyebrow": "Contact"
   },
   "About": {
     "galleryHeading": "Inside *INTEMA*",
@@ -100,11 +94,18 @@
     "slide": "Photo {current} of {total}",
     "goTo": "Go to photo {n}",
     "snapshot": "Company snapshot",
-    "seeBrands": "See what we import",
     "partnerCta": "Become a partner",
     "open": "Open photo: {caption}",
     "close": "Close preview",
-    "partnersLabel": "Our partners"
+    "partnersLabel": "Our partners",
+    "whoEyebrow": "Our story",
+    "galleryEyebrow": "Gallery",
+    "visionEyebrow": "What drives us",
+    "processEyebrow": "How we work",
+    "partnersEyebrow": "Trusted brands",
+    "keysEyebrow": "Why INTEMA",
+    "step": "Step {n}",
+    "galleryIntro": "A look inside our warehouses, delivery fleet and partner stores — the people and places that keep products moving across three countries."
   },
   "Testimonials": {
     "eyebrow": "Testimonials",

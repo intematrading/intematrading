@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Anton, Archivo_Black, Noto_Sans_Ethiopic } from "next/font/google";
+import { Anton, Noto_Sans_Ethiopic, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -14,23 +14,16 @@ import "./globals.css";
 
 // Type roles (see globals.css):
 //   headers → Anton
-//   titles  → Arial Black (system font; Archivo Black stands in where it's missing)
+//   titles  → Poppins Bold
 //   body    → SF Pro Text (system font on Apple devices; not licensed for web
 //             embedding, so other platforms get their own system UI font)
 // None of these cover Ethiopic: Amharic body text uses Noto Sans Ethiopic,
 // and Amharic headings/titles use Nokia Pure Headline (below).
 const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton", display: "swap" });
-// Not preloaded: only downloaded on devices without Arial Black.
-const archivoBlack = Archivo_Black({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-archivo-black",
-  display: "swap",
-  preload: false,
-});
+const poppins = Poppins({ weight: "700", subsets: ["latin"], variable: "--font-poppins", display: "swap" });
 // Nokia Pure Headline Bold (Dalton Maag for Nokia) for Amharic headings and
 // titles. The file is subset to Ethiopic code points, so Latin words and
-// numbers in those headings keep Anton / Arial Black, and English pages never
+// numbers in those headings keep Anton / Poppins, and English pages never
 // download it.
 // LICENSE: the font says "© 2011 Nokia. All rights reserved" with no licence
 // grant; confirm web-font permission before deploying.
@@ -65,7 +58,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   };
 }
 
-export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
+export default async function LocaleLayout({ children, drawer, params }: LayoutProps<"/[locale]">) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
@@ -73,7 +66,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   const [settings, t] = await Promise.all([getSiteSettings(), getTranslations("Common")]);
 
   return (
-    <html lang={locale} className={`${anton.variable} ${archivoBlack.variable} ${nokia.variable} ${ethiopic.variable} antialiased`}>
+    <html lang={locale} data-scroll-behavior="smooth" className={`${anton.variable} ${poppins.variable} ${nokia.variable} ${ethiopic.variable} antialiased`}>
       <body className="flex min-h-dvh flex-col">
         <NextIntlClientProvider>
           <a
@@ -82,11 +75,13 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           >
             {t("skipToContent")}
           </a>
-          <SiteHeader companyName={tr(settings.companyName, locale)} />
+          <SiteHeader />
           <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
             {children}
           </main>
           <SiteFooter settings={settings} locale={locale} />
+          {/* About, Our Services and Contact open in a drawer over the home page */}
+          {drawer}
           <TawkChat />
         </NextIntlClientProvider>
       </body>

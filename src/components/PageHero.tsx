@@ -7,8 +7,8 @@ import { Eyebrow } from "./Eyebrow";
 import { PhotoFrame } from "./PhotoFrame";
 
 /**
- * Black page-header band for every inner page, with a slanted photo on the
- * right (a strip under the title on phones) edged in brand red.
+ * Header at the top of each drawer page: a shaded photo across the top with
+ * the eyebrow, title and intro over its lower part.
  */
 export function PageHero({
   eyebrow,
@@ -26,35 +26,35 @@ export function PageHero({
   locale: Locale;
 }) {
   return (
-    <section className="on-dark texture-dark relative overflow-hidden text-paper">
-      {/* Desktop: red leading edge behind the slanted photo */}
-      <div aria-hidden="true" className="absolute inset-y-0 right-0 hidden w-[40%] bg-red [clip-path:polygon(30%_0,100%_0,100%_100%,0_100%)] md:block" />
-
-      <Container className="relative pt-[calc(var(--spacing-nav)+3rem)] pb-12 sm:pb-20">
-        <div className="md:max-w-[56%]">
-          {eyebrow && <Eyebrow onDark>{eyebrow}</Eyebrow>}
-          <h1 className="font-display-heading mt-5 text-5xl sm:text-7xl">{title}</h1>
-          {intro && <p className="mt-6 max-w-2xl text-base text-smoke sm:text-lg">{intro}</p>}
-        </div>
-      </Container>
-
-      {/* One photo, rendered once: a strip under the title on phones, the
-          slanted right-hand panel from md up. */}
-      <div className="relative h-44 md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-[39%]">
-        <div aria-hidden="true" className="absolute inset-0 bg-red [clip-path:polygon(0_22%,100%_0,100%_100%,0_100%)] md:hidden" />
-        <div className="absolute inset-0 [clip-path:polygon(0_26%,100%_4%,100%_100%,0_100%)] md:[clip-path:polygon(31%_0,100%_0,100%_100%,1.5%_100%)]">
-          <PhotoFrame
-            image={image}
-            placeholder={placeholder}
-            locale={locale}
-            width={900}
-            height={600}
-            sizes="(min-width: 768px) 40vw, 100vw"
-            icon={ImageIcon}
-            priority
-          />
-        </div>
+    <header className="on-dark relative isolate flex min-h-[clamp(22rem,56svh,34rem)] items-end overflow-hidden text-paper">
+      <div className="absolute inset-0 -z-20">
+        <PhotoFrame
+          image={image}
+          placeholder={placeholder}
+          locale={locale}
+          width={1600}
+          height={900}
+          sizes="(min-width: 1024px) 84rem, 100vw"
+          icon={ImageIcon}
+          priority
+        />
       </div>
-    </section>
+      {/* Darkest at the bottom where the text sits, plus darker edges */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-black/85 via-black/45 to-black/25" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgb(0_0_0/0.55)_100%)]" />
+
+      <Container className="pt-28 pb-10 sm:pb-14">
+        <h1>
+          {eyebrow && (
+            <Eyebrow as="span" onDark>
+              {eyebrow}
+              <span className="sr-only"> — </span>
+            </Eyebrow>
+          )}
+          <span className={`font-display-heading block text-[clamp(2.75rem,6vw,5rem)] leading-[0.95] ${eyebrow ? "mt-4" : ""}`}>{title}</span>
+        </h1>
+        {intro && <p className="mt-5 max-w-2xl text-base text-paper/90 sm:text-lg">{intro}</p>}
+      </Container>
+    </header>
   );
 }

@@ -38,8 +38,8 @@ export function ProductCard({
   return (
     <li {...liProps} className="w-72 shrink-0 sm:w-80">
       <article
-        className={`group relative flex h-full flex-col overflow-hidden transition-shadow ${
-          dark ? "bg-paper/[0.06] ring-1 ring-paper/15 hover:ring-paper/30" : "bg-paper shadow-sm ring-1 ring-line hover:shadow-xl"
+        className={`group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] transition-shadow ${
+          dark ? "bg-white/8 ring-1 ring-white/15 ring-inset hover:ring-white/30" : "bg-paper shadow-sm ring-1 ring-black/5 hover:shadow-xl"
         }`}
       >
         <div className="relative aspect-[4/3] overflow-hidden">
@@ -53,14 +53,13 @@ export function ProductCard({
             icon={Package}
             className="transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
           />
-          <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-7 bg-red [clip-path:polygon(0_75%,100%_0,100%_100%,0_100%)]" />
           {label && (
-            <span className="absolute top-3 left-3 bg-black px-2 py-1 text-[0.6875rem] font-bold tracking-wider text-paper uppercase">
+            <span className="absolute top-3 left-3 rounded-full bg-black/45 px-3 py-1 text-[0.6875rem] font-bold tracking-wider text-paper uppercase ring-1 ring-white/25 backdrop-blur-md">
               {label}
             </span>
           )}
         </div>
-        <div className="flex flex-1 flex-col p-5">
+        <div className="flex flex-1 flex-col p-5 sm:p-6">
           <h4 className={`font-title-heading text-lg ${dark ? "text-paper" : "text-black"}`}>{title}</h4>
           {meta && (
             <p className={`mt-1 text-xs font-semibold ${dark ? "text-smoke" : "text-muted"}`} lang="en">

@@ -12,8 +12,6 @@ import type {
   ProducedItem,
   ServicesPage,
   SiteSettings,
-  TeamMember,
-  TeamPage,
   Testimonial,
 } from "@/content/types";
 import type { Locale } from "@/i18n/routing";
@@ -30,9 +28,17 @@ const REVALIDATE = process.env.NODE_ENV === "development" ? 0 : 3600;
 
 async function fetchOr<T>(query: string, fallbackValue: T): Promise<T> {
   if (!isSanityConfigured) return fallbackValue;
-  const result = await client.fetch<T | null>(query, {}, {
-    next: { revalidate: REVALIDATE, tags: [SANITY_TAG] },
-  });
+  let result: T | null;
+  try {
+    result = await client.fetch<T | null>(query, {}, {
+      next: { revalidate: REVALIDATE, tags: [SANITY_TAG] },
+    });
+  } catch (error) {
+    // Sanity unreachable (network blip, outage): show the built-in content
+    // rather than failing the whole page.
+    console.error("[content] Sanity fetch failed; using fallback content.", error);
+    return fallbackValue;
+  }
   // A singleton that hasn't been created in the Studio yet comes back null.
   if (result == null || (Array.isArray(result) && result.length === 0)) return fallbackValue;
   return result;
@@ -43,10 +49,6 @@ const homeQuery = defineQuery(`*[_id == "homePage"][0]`);
 const servicesQuery = defineQuery(`*[_id == "servicesPage"][0]`);
 const brandsQuery = defineQuery(
   `*[_type == "brand"] | order(coalesce(order, 999) asc, name asc){ _id, name, category, subBrands, description, image, logo }`,
-);
-const teamPageQuery = defineQuery(`*[_id == "teamPage"][0]`);
-const teamMembersQuery = defineQuery(
-  `*[_type == "teamMember"] | order(coalesce(order, 999) asc, name.en asc){ _id, name, role, group, bio, photo }`,
 );
 const contactPageQuery = defineQuery(`*[_id == "contactPage"][0]`);
 const producedItemsQuery = defineQuery(
@@ -67,8 +69,6 @@ export const getSiteSettings = cache(() => fetchOr<SiteSettings>(settingsQuery, 
 export const getHomePage = cache(() => fetchOr<HomePage>(homeQuery, fallback.homePage));
 export const getServicesPage = cache(async () => withEyebrow(await fetchOr<ServicesPage>(servicesQuery, fallback.servicesPage), fallback.servicesPage));
 export const getBrands = cache(() => fetchOr<Brand[]>(brandsQuery, fallback.brands));
-export const getTeamPage = cache(async () => withEyebrow(await fetchOr<TeamPage>(teamPageQuery, fallback.teamPage), fallback.teamPage));
-export const getTeamMembers = cache(() => fetchOr<TeamMember[]>(teamMembersQuery, fallback.teamMembers));
 export const getProducedItems = cache(() => fetchOr<ProducedItem[]>(producedItemsQuery, fallback.producedItems));
 export const getExportItems = cache(() => fetchOr<ExportItem[]>(exportItemsQuery, fallback.exportItems));
 export const getContactPage = cache(async () => withEyebrow(await fetchOr<ContactPage>(contactPageQuery, fallback.contactPage), fallback.contactPage));
@@ -80,7 +80,13 @@ export const getAboutPage = cache(async () => withEyebrow(await fetchOr<AboutPag
  */
 export const getTestimonials = cache(async (): Promise<Testimonial[]> => {
   if (!isSanityConfigured) return fallback.testimonials;
-  return client.fetch<Testimonial[]>(testimonialsQuery, {}, { next: { revalidate: REVALIDATE, tags: [SANITY_TAG] } });
+  try {
+    return await client.fetch<Testimonial[]>(testimonialsQuery, {}, { next: { revalidate: REVALIDATE, tags: [SANITY_TAG] } });
+  } catch (error) {
+    // Never the samples here: just no testimonials section this time.
+    console.error("[content] Sanity fetch failed; hiding testimonials.", error);
+    return [];
+  }
 });
 
 /** Picks the value for `locale`, falling back to English when a translation is missing. */

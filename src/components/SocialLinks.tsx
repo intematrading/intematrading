@@ -51,7 +51,7 @@ export function SocialLinks({ links, className = "" }: { links: SiteSettings["so
             target="_blank"
             rel="noopener noreferrer"
             aria-label={glyphs[platform].label}
-            className="flex size-10 items-center justify-center bg-black text-paper transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-red motion-reduce:transition-none"
+            className="steel-gradient flex size-10 items-center rounded-xl justify-center text-paper transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-red hover:bg-none motion-reduce:transition-none"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="size-[1.125rem] fill-current">
               {glyphs[platform].svg}
@@ -60,5 +60,41 @@ export function SocialLinks({ links, className = "" }: { links: SiteSettings["so
         </li>
       ))}
     </ul>
+  );
+}
+
+/**
+ * The social links as a vertical rail mirroring the left side nav: each
+ * network's icon in a small circle, on a line joining them all.
+ */
+export function SocialRail({ links, label, className = "" }: { links: SiteSettings["socialLinks"]; label: string; className?: string }) {
+  const valid = links?.filter((l) => glyphs[l.platform] && l.url);
+  if (!valid?.length) return null;
+  return (
+    <nav aria-label={label} className={className}>
+      <ul className="relative flex flex-col items-end gap-4">
+        {/* Line through the icon centres (first to last) */}
+        <span aria-hidden="true" className="absolute top-[1.5rem] right-[1.125rem] bottom-[1.5rem] w-px translate-x-1/2 bg-steel-300" />
+        {valid.map((link) => {
+          const g = glyphs[link.platform];
+          return (
+            <li key={link.platform}>
+              <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={g.label} className="group flex items-center py-1.5">
+                <span className="relative flex size-9 shrink-0 items-center justify-center">
+                  <span
+                    aria-hidden="true"
+                    className="steel-gradient flex size-7 items-center justify-center rounded-full text-paper transition-transform duration-200 group-hover:scale-110 group-hover:bg-red group-hover:bg-none motion-reduce:transition-none"
+                  >
+                    <svg viewBox="0 0 24 24" className="size-3.5 fill-current">
+                      {g.svg}
+                    </svg>
+                  </span>
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }

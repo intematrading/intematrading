@@ -22,7 +22,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
     <div
       role="group"
       aria-label={t("label")}
-      className={`relative isolate flex text-sm leading-none before:absolute before:inset-0 before:-z-10 before:-skew-x-[14deg] before:border before:border-line ${isPending ? "opacity-60" : ""} ${className}`}
+      className={`flex gap-0.5 rounded-xl p-1 text-sm leading-none ring-1 ring-line ring-inset ${isPending ? "opacity-60" : ""} ${className}`}
     >
       {routing.locales.map((l) => {
         const active = l === locale;
@@ -47,8 +47,8 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
                 startTransition(() => router.replace(`${pathname}${hash}`, { locale: l }));
               }
             }}
-            className={`relative isolate flex min-h-10 min-w-12 items-center justify-center px-3 font-bold transition-colors before:absolute before:inset-0 before:-z-10 before:-skew-x-[14deg] ${
-              active ? "text-paper before:bg-red" : "text-ink hover:text-red-ink"
+            className={`flex min-h-9 min-w-11 items-center justify-center rounded-lg px-3 font-bold transition-colors ${
+              active ? "bg-red text-paper" : "text-ink hover:text-red-ink"
             }`}
           >
             {labels[l].short}

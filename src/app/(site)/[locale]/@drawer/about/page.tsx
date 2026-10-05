@@ -1,25 +1,50 @@
-import { CheckCircle2, Eye, PhoneCall, Ship, Target, TrendingUp, Truck } from "lucide-react";
+import {
+  CalendarDays,
+  CheckCircle2,
+  Eye,
+  Globe,
+  PhoneCall,
+  Ship,
+  Store,
+  Target,
+  TrendingUp,
+  Truck,
+  Users,
+} from "lucide-react";
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
 import { Gallery } from "@/components/Gallery";
+import { GetInTouch } from "@/components/GetInTouch";
 import { IconBox } from "@/components/IconBox";
 import { Marquee } from "@/components/Marquee";
 import { PageHero } from "@/components/PageHero";
+import { panel } from "@/components/panel";
 import { PartnerLogo } from "@/components/PartnerLogo";
 import { PhotoFrame } from "@/components/PhotoFrame";
+import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
-import { galleryPlaceholders, heroPlaceholders } from "@/content/placeholders";
+import {
+  galleryPlaceholders,
+  heroPlaceholders,
+  placeholders,
+} from "@/content/placeholders";
 import { getAboutPage, getBrands, getSiteSettings, tr } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
+const statIcons = [CalendarDays, Globe, Users, Store, Truck];
 const stepIcons = [Ship, PhoneCall, Truck, TrendingUp];
 
-export async function generateMetadata({ params }: PageProps<"/[locale]/about">): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]/about">): Promise<Metadata> {
   const locale = (await params).locale as Locale;
-  const [page, settings] = await Promise.all([getAboutPage(), getSiteSettings()]);
+  const [page, settings] = await Promise.all([
+    getAboutPage(),
+    getSiteSettings(),
+  ]);
   return buildMetadata({
     locale,
     path: "/about",
@@ -29,7 +54,9 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/about">)
   });
 }
 
-export default async function AboutPage({ params }: PageProps<"/[locale]/about">) {
+export default async function AboutPage({
+  params,
+}: PageProps<"/[locale]/about">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
@@ -38,9 +65,10 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
     getBrands(),
     getTranslations("About"),
   ]);
+  const steps = page.processSteps ?? [];
 
   return (
-    <>
+    <div className="flex flex-col bg-steel-100">
       <PageHero
         eyebrow={tr(page.eyebrow, locale)}
         title={tr(page.title, locale)}
@@ -50,45 +78,208 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
         locale={locale}
       />
 
-      {/* ── Who we are + snapshot ────────────────────────────────── */}
+      {/* ── Who we are, with the company snapshot beside it ─────────── */}
       <section aria-labelledby="who-heading" className="py-16 sm:py-24">
-        <Container className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <SectionHeading id="who-heading">{tr(page.whoWeAreHeading, locale)}</SectionHeading>
-            <div className="mt-8 space-y-5 text-base leading-relaxed text-ink sm:text-lg">
-              {page.whoWeAre?.map((para) => <p key={para.en}>{tr(para, locale)}</p>)}
+        <Container className="grid gap-14 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="lg:col-span-6">
+            <SectionHeading id="who-heading" eyebrow={t("whoEyebrow")}>
+              {tr(page.whoWeAreHeading, locale)}
+            </SectionHeading>
+            <div className="mt-8 space-y-5 text-base leading-relaxed text-muted sm:text-lg">
+              {page.whoWeAre?.map((para) => (
+                <p key={para.en}>{tr(para, locale)}</p>
+              ))}
             </div>
-          </div>
+          </Reveal>
           {page.stats?.length ? (
-            <aside aria-labelledby="snapshot-heading" className="on-dark texture-dark relative self-start p-7 text-paper sm:p-9 lg:col-span-5">
-              <span aria-hidden="true" className="absolute top-0 right-0 size-16 bg-red [clip-path:polygon(0_0,100%_0,100%_100%)]" />
-              <h3 id="snapshot-heading" className="label-caps">
-                {t("snapshot")}
-              </h3>
-              <dl className="mt-6 divide-y divide-paper/15">
-                {page.stats.map((stat) => (
-                  <div key={stat._key} className="flex flex-col-reverse gap-1 py-4 first:pt-0 last:pb-0 sm:flex-row-reverse sm:items-center sm:justify-end sm:gap-6">
-                    <dt>
-                      <span className="block font-semibold">{tr(stat.label, locale)}</span>
-                      {stat.note && <span className="block text-sm text-smoke">{tr(stat.note, locale)}</span>}
-                    </dt>
-                    <dd className="font-display-heading w-28 shrink-0 text-5xl text-paper" lang="en">
-                      {stat.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </aside>
+            <Reveal className="lg:col-span-5 lg:col-start-8">
+              <aside
+                aria-labelledby="snapshot-heading"
+                className="rounded-[1.75rem] bg-paper p-7 shadow-sm ring-1 ring-black/5 sm:rounded-[2rem] sm:p-9"
+              >
+                <h3 id="snapshot-heading" className="label-caps text-red-ink">
+                  {t("snapshot")}
+                </h3>
+                <dl className="mt-6 divide-y divide-steel-200">
+                  {page.stats.map((stat, i) => {
+                    const Icon = statIcons[i % statIcons.length];
+                    return (
+                      <div
+                        key={stat._key}
+                        className="flex items-start gap-5 py-6 first:pt-0 last:pb-0"
+                      >
+                        <IconBox icon={Icon} className="mt-1" />
+                        <div className="flex flex-col-reverse">
+                          <dt className="mt-1.5">
+                            <span className="block font-semibold text-ink">
+                              {tr(stat.label, locale)}
+                            </span>
+                            {stat.note && (
+                              <span className="mt-1 block text-sm text-muted">
+                                {tr(stat.note, locale)}
+                              </span>
+                            )}
+                          </dt>
+                          <dd
+                            className="font-display-heading text-steel-gradient text-5xl leading-none"
+                            lang="en"
+                          >
+                            {stat.value}
+                          </dd>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </dl>
+              </aside>
+            </Reveal>
           ) : null}
         </Container>
       </section>
 
-      {/* ── Image carousel ───────────────────────────────────────── */}
-      {page.gallery?.length ? (
-        <section aria-labelledby="gallery-heading" className="texture-paper py-16 sm:py-24">
+      {/* ── Vision & mission: two glass cards on a shaded photo panel ─── */}
+      {(page.vision || page.mission) && (
+        <Reveal className="px-3 sm:px-4">
+          <section
+            aria-labelledby="vision-heading"
+            className={`on-dark relative isolate text-paper ${panel}`}
+          >
+            <div className="absolute inset-0 -z-20">
+              <PhotoFrame
+                image={undefined}
+                placeholder={placeholders.vision}
+                locale={locale}
+                width={1600}
+                height={900}
+                sizes="(min-width: 1024px) 84rem, 100vw"
+                icon={Eye}
+              />
+            </div>
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 -z-10 bg-black/60"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgb(0_0_0/0.6)_100%)]"
+            />
+            <Container className="py-14 sm:py-20">
+              <h2 id="vision-heading" className="sr-only">
+                {`${tr(page.visionHeading, locale)} & ${tr(page.missionHeading, locale)}`}
+              </h2>
+              <p className="label-caps text-center text-paper">
+                {t("visionEyebrow")}
+              </p>
+              <div className="mt-8 grid gap-4 sm:gap-6 md:grid-cols-2">
+                {[
+                  {
+                    key: "vision",
+                    icon: Eye,
+                    heading: page.visionHeading,
+                    body: page.vision,
+                  },
+                  {
+                    key: "mission",
+                    icon: Target,
+                    heading: page.missionHeading,
+                    body: page.mission,
+                  },
+                ].map(({ key, icon, heading, body }) =>
+                  body ? (
+                    <article
+                      key={key}
+                      className="flex flex-col rounded-3xl bg-white/12 p-7 shadow-2xl ring-1 ring-white/30 backdrop-blur-xl backdrop-saturate-150 ring-inset sm:p-10"
+                    >
+                      <IconBox icon={icon} size="lg" />
+                      <h3 className="font-display-heading mt-6 text-4xl sm:text-5xl">
+                        {tr(heading, locale)}
+                      </h3>
+                      <p className="mt-4 text-base leading-relaxed text-paper/90 sm:text-lg">
+                        {tr(body, locale)}
+                      </p>
+                    </article>
+                  ) : null,
+                )}
+              </div>
+            </Container>
+          </section>
+        </Reveal>
+      )}
+
+      {/* ── Our process: intro, then the steps as numbered cards ────── */}
+      {steps.length ? (
+        <section aria-labelledby="process-heading" className="pt-20 sm:pt-28">
           <Container>
-            <SectionHeading id="gallery-heading">{t("galleryHeading")}</SectionHeading>
-            <div className="mt-10">
+            <Reveal className="max-w-2xl">
+              <SectionHeading
+                id="process-heading"
+                eyebrow={t("processEyebrow")}
+              >
+                {tr(page.processHeading, locale)}
+              </SectionHeading>
+              {page.processIntro && (
+                <p className="mt-6 text-muted sm:text-lg">
+                  {tr(page.processIntro, locale)}
+                </p>
+              )}
+            </Reveal>
+            <Reveal>
+              <ol className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4">
+                {steps.map((step, i) => {
+                  const Icon = stepIcons[i % stepIcons.length];
+                  return (
+                    <li
+                      key={step._key}
+                      className="flex h-full min-h-[19rem] flex-col rounded-[1.75rem] bg-paper p-7 shadow-sm ring-1 ring-black/5 sm:rounded-[2rem] sm:p-9"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <IconBox icon={Icon} size="lg" />
+                        <span
+                          aria-hidden="true"
+                          className="font-display-heading text-steel-gradient text-7xl leading-none"
+                          lang="en"
+                        >
+                          0{i + 1}
+                        </span>
+                      </div>
+                      <div className="mt-auto pt-8">
+                        <p className="label-caps text-red-ink">
+                          {t("step", { n: i + 1 })}
+                        </p>
+                        <h3 className="font-display-heading text-steel-gradient mt-3 text-4xl">
+                          {tr(step.title, locale)}
+                        </h3>
+                        {step.body && (
+                          <p className="mt-3 leading-relaxed text-muted">
+                            {tr(step.body, locale)}
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+            </Reveal>
+          </Container>
+        </section>
+      ) : null}
+
+      {/* ── Gallery ──────────────────────────────────────────────── */}
+      {page.gallery?.length ? (
+        <section aria-labelledby="gallery-heading" className="py-20 sm:py-28">
+          <Container>
+            <Reveal>
+              <SectionHeading
+                id="gallery-heading"
+                eyebrow={t("galleryEyebrow")}
+              >
+                {t("galleryHeading")}
+              </SectionHeading>
+              <p className="mt-6 max-w-2xl text-muted sm:text-lg">{t("galleryIntro")}</p>
+            </Reveal>
+          </Container>
+          {/* Full drawer width, edges feathered (see Gallery) */}
+          <div className="mt-10 sm:mt-12">
               <Gallery
                 label={t("galleryLabel")}
                 slides={page.gallery.map((g) => ({
@@ -119,79 +310,40 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
                   ),
                 }))}
               />
-            </div>
-          </Container>
+          </div>
         </section>
       ) : null}
 
-      {/* ── Vision & mission ─────────────────────────────────────── */}
-      {(page.vision || page.mission) && (
-        <section aria-label={`${tr(page.visionHeading, locale)} & ${tr(page.missionHeading, locale)}`} className="py-16 sm:py-24">
-          <Container className="grid gap-6 md:grid-cols-2">
-            {page.vision && (
-              <article className="on-dark texture-dark flex flex-col p-8 text-paper sm:p-10">
-                <Eye aria-hidden="true" className="size-10 text-paper" strokeWidth={1.5} />
-                <h2 className="font-display-heading mt-6 text-4xl sm:text-5xl">{tr(page.visionHeading, locale)}</h2>
-                <p className="mt-5 text-lg leading-relaxed text-smoke">{tr(page.vision, locale)}</p>
-              </article>
-            )}
-            {page.mission && (
-              <article className="on-red flex flex-col bg-red p-8 text-paper sm:p-10">
-                <Target aria-hidden="true" className="size-10 text-paper" strokeWidth={1.5} />
-                <h2 className="font-display-heading mt-6 text-4xl sm:text-5xl">{tr(page.missionHeading, locale)}</h2>
-                <p className="mt-5 text-lg leading-relaxed font-medium text-paper">{tr(page.mission, locale)}</p>
-              </article>
-            )}
-          </Container>
-        </section>
-      )}
-
-      {/* ── Our process ──────────────────────────────────────────── */}
-      {page.processSteps?.length ? (
-        <section aria-labelledby="process-heading" className="texture-paper py-16 sm:py-24">
-          <Container>
-            <div className="max-w-3xl">
-              <SectionHeading id="process-heading">{tr(page.processHeading, locale)}</SectionHeading>
-              {page.processIntro && <p className="mt-6 text-lg text-muted">{tr(page.processIntro, locale)}</p>}
-            </div>
-            <ol className="relative mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              <span aria-hidden="true" className="absolute top-14 right-[12%] left-[12%] hidden h-0.5 bg-black/15 lg:block" />
-              {page.processSteps.map((step, i) => {
-                const Icon = stepIcons[i % stepIcons.length];
-                return (
-                  <li key={step._key} className="relative flex flex-col bg-paper p-7 shadow-sm ring-1 ring-line">
-                    <IconBox icon={Icon} size="lg" />
-                    <h3 className="font-title-heading mt-6 text-lg text-black">{tr(step.title, locale)}</h3>
-                    {step.body && <p className="mt-2 text-sm leading-relaxed text-muted">{tr(step.body, locale)}</p>}
-                  </li>
-                );
-              })}
-            </ol>
-          </Container>
-        </section>
-      ) : null}
-
-      {/* ── Partners ─────────────────────────────────────────────── */}
-      <section aria-labelledby="partners-heading" className="py-16 sm:py-24">
+      {/* ── Partners: heading and CTA, then a looping logo strip ────── */}
+      <section aria-labelledby="partners-heading" className="pb-20 sm:pb-28">
         <Container>
-          <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-center">
             <div className="lg:col-span-6">
-              <SectionHeading id="partners-heading">{tr(page.partnersHeading, locale)}</SectionHeading>
-              {page.partnersIntro && <p className="mt-6 text-lg text-muted">{tr(page.partnersIntro, locale)}</p>}
+              <SectionHeading
+                id="partners-heading"
+                eyebrow={t("partnersEyebrow")}
+              >
+                {tr(page.partnersHeading, locale)}
+              </SectionHeading>
+              {page.partnersIntro && (
+                <p className="mt-6 text-muted sm:text-lg">
+                  {tr(page.partnersIntro, locale)}
+                </p>
+              )}
             </div>
-            <div className="flex flex-wrap gap-4 ps-2 lg:col-span-6 lg:justify-end">
-              <ButtonLink href="/services#import" variant="black">
-                {t("seeBrands")}
-              </ButtonLink>
-              <ButtonLink href="/contact?type=brand#inquiry" variant="red">
+            <div className="flex flex-wrap gap-3 lg:col-span-6 lg:justify-end">
+              <ButtonLink href="/?type=brand#contact" variant="red">
                 {t("partnerCta")}
               </ButtonLink>
             </div>
-          </div>
+          </Reveal>
         </Container>
-        {/* Full-bleed looping logo strip */}
-        <div className="mt-12 px-4 sm:px-6 lg:px-8">
-          <Marquee label={t("partnersLabel")} seconds={brands.length * 3.5}>
+        <div className="mt-12">
+          <Marquee
+            label={t("partnersLabel")}
+            seconds={brands.length * 3.5}
+            feather={12}
+          >
             {brands.map((brand) => (
               <PartnerLogo key={brand._id} brand={brand} locale={locale} />
             ))}
@@ -199,25 +351,64 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
         </div>
       </section>
 
-      {/* ── Keys to success ──────────────────────────────────────── */}
-      {page.keysToSuccess?.length ? (
-        <section aria-labelledby="keys-heading" className="on-dark texture-dark relative overflow-hidden py-16 text-paper sm:py-24">
-          <span aria-hidden="true" className="absolute top-0 right-0 size-32 bg-red [clip-path:polygon(0_0,100%_0,100%_100%)] sm:size-48" />
-          <Container className="relative">
-            <SectionHeading id="keys-heading" onDark>
-              {tr(page.keysHeading, locale)}
-            </SectionHeading>
-            <ul className="mt-12 grid gap-x-10 gap-y-6 md:grid-cols-2">
-              {page.keysToSuccess.map((key) => (
-                <li key={key.en} className="flex gap-4 border-t border-paper/15 pt-6">
-                  <CheckCircle2 aria-hidden="true" className="size-6 shrink-0 text-paper" />
-                  <span className="text-base leading-relaxed sm:text-lg">{tr(key, locale)}</span>
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </section>
-      ) : null}
-    </>
+      {/* ── Keys to success, then Get in touch: two floating panels ─── */}
+      <div className="flex flex-col gap-3 px-3 pb-3 sm:gap-4 sm:px-4 sm:pb-4">
+        {page.keysToSuccess?.length ? (
+          <Reveal>
+            <section
+              aria-labelledby="keys-heading"
+              className={`on-dark relative isolate text-paper ${panel}`}
+            >
+              <div className="absolute inset-0 -z-20">
+                <PhotoFrame
+                  image={undefined}
+                  placeholder={placeholders.keys}
+                  locale={locale}
+                  width={1600}
+                  height={900}
+                  sizes="(min-width: 1024px) 84rem, 100vw"
+                  icon={CheckCircle2}
+                />
+              </div>
+              {/* Near-black shade, heaviest on the left behind the heading */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 -z-10 bg-black/65 lg:bg-transparent lg:bg-linear-to-r lg:from-black/80 lg:via-black/65 lg:to-black/50"
+              />
+              <Container className="grid gap-10 py-14 sm:py-20 lg:grid-cols-12 lg:gap-12">
+                <div className="lg:col-span-4">
+                  <SectionHeading
+                    id="keys-heading"
+                    eyebrow={t("keysEyebrow")}
+                    onDark
+                  >
+                    {tr(page.keysHeading, locale)}
+                  </SectionHeading>
+                </div>
+                <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:col-span-8">
+                  {page.keysToSuccess.map((key) => (
+                    <li
+                      key={key.en}
+                      className="flex gap-4 rounded-2xl bg-white/10 p-5 ring-1 ring-white/25 backdrop-blur-md ring-inset sm:p-6"
+                    >
+                      <CheckCircle2
+                        aria-hidden="true"
+                        className="mt-0.5 size-6 shrink-0 text-paper"
+                      />
+                      <span className="text-base leading-relaxed text-paper/90">
+                        {tr(key, locale)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </Container>
+            </section>
+          </Reveal>
+        ) : null}
+        <Reveal>
+          <GetInTouch locale={locale} className={panel} />
+        </Reveal>
+      </div>
+    </div>
   );
 }

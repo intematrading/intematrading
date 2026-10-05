@@ -1,15 +1,28 @@
 /**
  * Renders text with *starred* parts in brand red, e.g. "What *we do*".
- * Editors use the same convention in CMS headline fields. Inside black or red
- * sections (.on-dark / .on-red) the accent turns white.
+ * Editors use the same convention in CMS headline fields. Inside dark or red
+ * sections (.on-dark / .on-red) the accent turns white. `base` styles the
+ * unstarred parts, e.g. the logo's steel gradient.
  */
-export function Accent({ text, className = "text-red in-[.on-dark]:text-paper in-[.on-red]:text-paper" }: { text: string; className?: string }) {
+export function Accent({
+  text,
+  className = "text-red in-[.on-dark]:text-paper in-[.on-red]:text-paper",
+  base,
+}: {
+  text: string;
+  className?: string;
+  base?: string;
+}) {
   const parts = text.split(/\*(.+?)\*/g);
   return (
     <>
       {parts.map((part, i) =>
         i % 2 === 1 ? (
           <span key={i} className={className}>
+            {part}
+          </span>
+        ) : base && part ? (
+          <span key={i} className={base}>
             {part}
           </span>
         ) : (

@@ -37,7 +37,7 @@ export type HomePage = {
   heroHeadline: LocaleString;
   heroSubheadline?: LocaleString;
   heroImage?: SanityImage;
-  stats?: { _key: string; value: string; label: LocaleString }[];
+  stats?: { _key: string; value: string; label: LocaleString; note?: LocaleString }[];
   entryCards?: {
     _key: string;
     section: ServiceSection;
@@ -49,7 +49,7 @@ export type HomePage = {
   commitmentHeadline?: LocaleString;
   commitmentBody?: LocaleString;
   commitmentImage?: SanityImage;
-  commitmentPoints?: LocaleString[];
+  commitmentPoints?: { _key?: string; title: LocaleString; description?: LocaleString }[];
   contactImage?: SanityImage;
   seo?: Seo;
 };
@@ -99,44 +99,9 @@ export type ExportItem = {
   image?: SanityImage;
 };
 
-export type TeamMember = {
-  _id: string;
-  name: LocaleString;
-  role: LocaleString;
-  group: "leadership" | "sales";
-  bio?: LocaleString;
-  photo?: SanityImage;
-};
-
 type Stat = { _key: string; value: string; label: LocaleString; note?: LocaleString };
 type TitledText = { _key: string; title: LocaleString; body?: LocaleString };
 type CaptionedImage = { _key: string; image?: SanityImage; caption: LocaleString };
-
-export type TeamPage = {
-  title: LocaleString;
-  eyebrow?: LocaleString;
-  intro?: LocaleString;
-  heroImage?: SanityImage;
-  leadershipHeading?: LocaleString;
-  leadershipIntro?: LocaleString;
-  leadershipImage?: SanityImage;
-  salesHeading?: LocaleString;
-  salesIntro?: LocaleString;
-  salesTeamSize?: string;
-  salesImage?: SanityImage;
-  ambassadorName?: LocaleString;
-  ambassadorRole?: LocaleString;
-  ambassadorBio?: LocaleString;
-  ambassadorImage?: SanityImage;
-  facts?: Stat[];
-  departments?: TitledText[];
-  trainingHeading?: LocaleString;
-  training?: LocaleString;
-  partnerHeading?: LocaleString;
-  partnerBody?: LocaleString;
-  partnerImage?: SanityImage;
-  seo?: Seo;
-};
 
 export type AboutPage = {
   title: LocaleString;

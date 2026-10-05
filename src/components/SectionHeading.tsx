@@ -9,9 +9,9 @@ const sizes = {
 } as const;
 
 /**
- * The one section-heading pattern: optional eyebrow, the heading (with
- * *starred* words in red), and a short red rule when there's no eyebrow,
- * so every heading carries exactly one red marker.
+ * The one section-heading pattern, styled after the logo: optional eyebrow,
+ * then the heading with *starred* words in red and the rest in the logo's
+ * steel gradient (plain white on dark bands).
  */
 export function SectionHeading({
   id,
@@ -30,10 +30,9 @@ export function SectionHeading({
   return (
     <>
       {eyebrow && <Eyebrow onDark={onDark}>{eyebrow}</Eyebrow>}
-      <h2 id={id} className={`font-display-heading ${sizes[size]} ${onDark ? "text-paper" : "text-black"} ${eyebrow ? "mt-4" : ""}`}>
-        <Accent text={children} />
+      <h2 id={id} className={`font-display-heading ${sizes[size]} ${onDark ? "text-paper" : "text-steel-700"} ${eyebrow ? "mt-4" : ""}`}>
+        <Accent text={children} base={onDark ? undefined : "text-steel-gradient"} />
       </h2>
-      {!eyebrow && <span aria-hidden="true" className="mt-4 block h-1 w-14 bg-red in-[.on-red]:bg-black" />}
     </>
   );
 }

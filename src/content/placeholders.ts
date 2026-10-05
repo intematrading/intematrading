@@ -8,11 +8,14 @@ export type Placeholder = { src: string; position?: string };
 export const placeholders = {
   hero: { src: "/placeholders/hero-port.jpg", position: "50% 60%" },
   import: { src: "/placeholders/import-ship.jpg" },
-  produce: { src: "/placeholders/produce-candles.jpg", position: "70% 100%" },
+  produce: { src: "/placeholders/produce-stick-candles.jpg", position: "50% 100%" },
   export: { src: "/placeholders/export-coffee.jpg" },
+  stats: { src: "/placeholders/about-fleet.jpg" },
   commitment: { src: "/placeholders/commitment-truck.jpg", position: "60% 50%" },
-  contactBand: { src: "/placeholders/contact-band.jpg", position: "65% 40%" },
-  partnerCta: { src: "/placeholders/partner-cta.jpg" },
+  contactBand: { src: "/placeholders/contact-handshake.jpg", position: "60% 45%" },
+  vision: { src: "/placeholders/about-warehouse.jpg" },
+  keys: { src: "/placeholders/about-retail.jpg" },
+  produceBand: { src: "/placeholders/produce-shelves.jpg" },
 } satisfies Record<string, Placeholder>;
 
 // Product-card stand-ins: stock category shots, not the actual products.
@@ -44,16 +47,15 @@ export const productPlaceholders: Record<string, Placeholder> = {
 export const heroPlaceholders = {
   about: { src: "/placeholders/hero-about.jpg", position: "60% 50%" },
   services: { src: "/placeholders/import-ship.jpg" },
-  team: { src: "/placeholders/hero-team.jpg" },
-  contact: { src: "/placeholders/hero-contact.jpg", position: "80% 50%" },
 } satisfies Record<string, Placeholder>;
 
 // Avatars for the labelled sample testimonials only (keyed by sample id).
-export const testimonialPlaceholders: Record<string, Placeholder> = {
-  "sample-1": { src: "/placeholders/testimonial-1.jpg" },
-  "sample-2": { src: "/placeholders/testimonial-2.jpg" },
-  "sample-3": { src: "/placeholders/testimonial-3.jpg" },
-};
+// Stand-in avatars for testimonials without a photo, used in rotation.
+export const testimonialPlaceholders: Placeholder[] = [
+  { src: "/placeholders/testimonial-1.jpg" },
+  { src: "/placeholders/testimonial-2.jpg" },
+  { src: "/placeholders/testimonial-3.jpg" },
+];
 
 export const galleryPlaceholders: Record<string, Placeholder> = {
   warehouse: { src: "/placeholders/about-warehouse.jpg" },
@@ -63,19 +65,4 @@ export const galleryPlaceholders: Record<string, Placeholder> = {
   candles: { src: "/placeholders/produce-candles.jpg", position: "70% 100%" },
   coffee: { src: "/placeholders/about-coffee.jpg" },
   training: { src: "/placeholders/about-training.jpg" },
-};
-
-export const teamSectionPlaceholders = {
-  leadership: { src: "/placeholders/team-leadership.jpg" },
-  sales: { src: "/placeholders/team-sales.jpg", position: "50% 35%" },
-} satisfies Record<string, Placeholder>;
-
-// Stock portraits standing in for named team members, keyed by the fallback
-// document ids. These are NOT photos of the people named — replace every one
-// with a real photo in the Studio before launch.
-export const teamPlaceholders: Record<string, Placeholder> = {
-  "team-bedru": { src: "/placeholders/team-1.jpg", position: "50% 20%" },
-  "team-eliyas": { src: "/placeholders/team-2.jpg", position: "50% 20%" },
-  "team-tesfaye": { src: "/placeholders/team-3.jpg", position: "50% 20%" },
-  "team-kalid": { src: "/placeholders/team-4.jpg", position: "50% 20%" },
 };

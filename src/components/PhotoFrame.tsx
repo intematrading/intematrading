@@ -7,7 +7,7 @@ import { CmsImage } from "./CmsImage";
 
 /**
  * A CMS photo; failing that, a temporary stock placeholder; failing that, a
- * branded black/red panel with an icon — so layouts always hold their shape.
+ * branded steel panel with an icon — so layouts always hold their shape.
  */
 export function PhotoFrame({
   image,
@@ -20,6 +20,7 @@ export function PhotoFrame({
   className = "",
   priority,
   fit = "cover",
+  quality,
 }: {
   image: SanityImage | undefined;
   placeholder?: Placeholder;
@@ -32,6 +33,8 @@ export function PhotoFrame({
   priority?: boolean;
   /** "contain" shows the whole image (used by the gallery preview). */
   fit?: "cover" | "contain";
+  /** Must be listed in images.qualities in next.config.ts. */
+  quality?: number;
 }) {
   if (image?.asset) {
     return (
@@ -42,6 +45,7 @@ export function PhotoFrame({
         height={height}
         sizes={sizes}
         priority={priority}
+        quality={quality}
         className={`h-full w-full ${fit === "contain" ? "object-contain" : "object-cover"} ${className}`}
       />
     );
@@ -56,6 +60,7 @@ export function PhotoFrame({
           fill
           sizes={sizes}
           priority={priority}
+          quality={quality}
           className={`${fit === "contain" ? "object-contain" : "object-cover"} ${className}`}
           style={placeholder.position ? { objectPosition: placeholder.position } : undefined}
         />
@@ -63,10 +68,8 @@ export function PhotoFrame({
     );
   }
   return (
-    <div aria-hidden="true" className={`texture-dark relative flex h-full w-full items-center justify-center overflow-hidden ${className}`}>
-      <div className="absolute -right-1/4 -bottom-1/4 size-3/4 rotate-12 bg-red/90" />
-      <div className="absolute inset-0 opacity-20 [background-image:repeating-linear-gradient(120deg,#fff_0_1px,transparent_1px_22px)]" />
-      <Icon className="relative size-1/3 max-h-40 max-w-40 text-paper" strokeWidth={1.25} />
+    <div aria-hidden="true" className={`steel-gradient-deep relative flex h-full w-full items-center justify-center overflow-hidden ${className}`}>
+      <Icon className="relative size-1/3 max-h-40 max-w-40 text-paper/90" strokeWidth={1.25} />
     </div>
   );
 }

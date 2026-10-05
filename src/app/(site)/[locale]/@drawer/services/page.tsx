@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/Container";
+import { PhotoFrame } from "@/components/PhotoFrame";
+import { panel } from "@/components/panel";
+import { Reveal } from "@/components/Reveal";
 import { GetInTouch } from "@/components/GetInTouch";
 import { IconBox } from "@/components/IconBox";
 import { Marquee } from "@/components/Marquee";
@@ -10,8 +13,7 @@ import { PageHero } from "@/components/PageHero";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductPreviewProvider } from "@/components/ProductPreview";
 import { SectionHeading } from "@/components/SectionHeading";
-import { ServicesSubnav } from "@/components/ServicesSubnav";
-import { heroPlaceholders, productPlaceholders } from "@/content/placeholders";
+import { heroPlaceholders, placeholders, productPlaceholders } from "@/content/placeholders";
 import type { ServiceSection } from "@/content/types";
 import { getBrands, getExportItems, getProducedItems, getServicesPage, getSiteSettings, tr } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
@@ -28,8 +30,8 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/services
   });
 }
 
-// Offsets anchored sections so their heading clears the sticky header + tab bar.
-const sectionClass = "scroll-mt-[calc(var(--spacing-nav)+var(--spacing-subnav))] py-16 sm:py-24";
+// Sections are linked to by #id (e.g. from the home page's service cards).
+const sectionClass = "scroll-mt-4 py-20 sm:py-28";
 
 function ServiceHeading({
   id,
@@ -45,24 +47,30 @@ function ServiceHeading({
   onDark?: boolean;
 }) {
   return (
-    <header className="flex max-w-3xl gap-5 sm:gap-7">
-      <span aria-hidden="true" className={`font-display-heading text-4xl sm:text-6xl ${onDark ? "text-paper" : "text-red"}`} lang="en">
-        {number}
-      </span>
-      <div>
-        <SectionHeading id={id} onDark={onDark}>
-          {title}
-        </SectionHeading>
-        {intro && <p className={`mt-4 text-lg ${onDark ? "text-smoke" : "text-muted"}`}>{intro}</p>}
-      </div>
-    </header>
+    <Reveal>
+      <header className="flex max-w-3xl gap-5 sm:gap-8">
+        <span
+          aria-hidden="true"
+          className={`font-display-heading text-6xl leading-none sm:text-8xl ${onDark ? "text-paper/30" : "text-steel-gradient"}`}
+          lang="en"
+        >
+          {number}
+        </span>
+        <div>
+          <SectionHeading id={id} onDark={onDark}>
+            {title}
+          </SectionHeading>
+          {intro && <p className={`mt-4 sm:text-lg ${onDark ? "text-paper/80" : "text-muted"}`}>{intro}</p>}
+        </div>
+      </header>
+    </Reveal>
   );
 }
 
 function SubHeading({ children, onDark = false }: { children: React.ReactNode; onDark?: boolean }) {
   return (
     <h3 className={`label-caps mb-5 flex items-center gap-3 ${onDark ? "text-paper" : "text-ink"}`}>
-      <span aria-hidden="true" className="h-1 w-6 bg-red" />
+      <span aria-hidden="true" className="red-gradient size-2 rounded-full" />
       {children}
     </h3>
   );
@@ -84,7 +92,6 @@ function ProductRow({
   intro,
   count,
   onDark = false,
-  band = false,
   reverse = false,
   children,
 }: {
@@ -93,8 +100,6 @@ function ProductRow({
   intro?: string;
   count: number;
   onDark?: boolean;
-  /** Full-width grey background behind the whole category. */
-  band?: boolean;
   /** Scroll this row towards the right. */
   reverse?: boolean;
   children: React.ReactNode;
@@ -102,19 +107,17 @@ function ProductRow({
   if (!count) return null;
   const repeat = Math.max(1, Math.ceil(MIN_COPY_WIDTH / (count * CARD_STEP)));
   return (
-    <div className={band ? "texture-paper mt-16 py-14 first:mt-0 sm:py-16" : "mt-16 first:mt-0"}>
+    <div className="mt-16 first:mt-0 sm:mt-20">
       <Container className="mb-8 flex flex-col items-end text-right">
         <h3 className="flex items-center gap-4">
           <IconBox icon={Icon} />
-          <span className={`font-display-heading text-2xl sm:text-3xl ${onDark ? "text-paper" : "text-black"}`}>{label}</span>
+          <span className={`font-display-heading text-2xl sm:text-3xl ${onDark ? "text-paper" : "text-steel-gradient"}`}>{label}</span>
         </h3>
-        {intro && <p className={`mt-3 max-w-xl text-base ${onDark ? "text-smoke" : "text-muted"}`}>{intro}</p>}
+        {intro && <p className={`mt-3 max-w-xl text-base ${onDark ? "text-paper/75" : "text-muted"}`}>{intro}</p>}
       </Container>
-      <div className="px-4 sm:px-6 lg:px-8">
-        <Marquee label={label} seconds={count * repeat * 6} repeat={repeat} reverse={reverse}>
-          {children}
-        </Marquee>
-      </div>
+      <Marquee label={label} seconds={count * repeat * 6} repeat={repeat} reverse={reverse} feather={8}>
+        {children}
+      </Marquee>
     </div>
   );
 }
@@ -142,7 +145,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
   const [importSec, produceSec, exportSec] = sections;
 
   return (
-    <>
+    <div className="flex flex-col bg-steel-100">
       <PageHero
         eyebrow={tr(page.eyebrow, locale)}
         title={tr(page.title, locale)}
@@ -151,8 +154,6 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         placeholder={heroPlaceholders.services}
         locale={locale}
       />
-
-      <ServicesSubnav label={t("sectionNav")} sections={sections} />
 
       <ProductPreviewProvider>
 
@@ -163,10 +164,10 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
           </Container>
           <div className="mt-12">
             {[
-              { key: "nonFood", label: t("nonFood"), intro: page.nonFoodIntro, list: nonFood, icon: Sparkles, band: true, reverse: false },
-              { key: "food", label: t("food"), intro: page.foodIntro, list: food, icon: ShoppingBasket, band: false, reverse: true },
-            ].map(({ key, label, intro, list, icon, band, reverse }) => (
-              <ProductRow key={key} icon={icon} band={band} reverse={reverse} label={label} intro={tr(intro, locale)} count={list.length}>
+              { key: "nonFood", label: t("nonFood"), intro: page.nonFoodIntro, list: nonFood, icon: Sparkles, reverse: false },
+              { key: "food", label: t("food"), intro: page.foodIntro, list: food, icon: ShoppingBasket, reverse: true },
+            ].map(({ key, label, intro, list, icon, reverse }) => (
+              <ProductRow key={key} icon={icon} reverse={reverse} label={label} intro={tr(intro, locale)} count={list.length}>
                 {list.map((brand) => (
                   <ProductCard
                     key={brand._id}
@@ -185,12 +186,27 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         </section>
 
         {/* ── We Produce ────────────────────────────────────────────── */}
-        <section id="produce" aria-labelledby="produce-heading" className={`${sectionClass} on-dark texture-dark relative overflow-hidden text-paper`}>
-          <span aria-hidden="true" className="absolute top-0 right-0 size-24 bg-red [clip-path:polygon(0_0,100%_0,100%_100%)] sm:size-40" />
-          <Container className="relative">
+        <div className="px-3 sm:px-4">
+        <section id="produce" aria-labelledby="produce-heading" className={`${sectionClass} on-dark relative isolate text-paper ${panel}`}>
+          {/* Background: a stocked supermarket aisle under a heavy near-black
+              shade, so the text and product cards stay readable */}
+          <div className="absolute inset-0 -z-20">
+            <PhotoFrame
+              image={undefined}
+              placeholder={placeholders.produceBand}
+              locale={locale}
+              width={1600}
+              height={1000}
+              sizes="(min-width: 1024px) 84rem, 100vw"
+              icon={Flame}
+            />
+          </div>
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/75" />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgb(0_0_0/0.6)_100%)]" />
+          <Container>
             <ServiceHeading id="produce-heading" number="02" title={produceSec.title} intro={tr(page.produceIntro, locale)} onDark />
           </Container>
-          <div className="relative mt-12">
+          <div className="mt-12">
             <ProductRow icon={Flame} label={t("ourProducts")} intro={tr(page.productsIntro, locale)} count={producedItems.length} onDark>
               {producedItems.map((item) => (
                 <ProductCard
@@ -208,6 +224,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
             </ProductRow>
           </div>
         </section>
+        </div>
 
         {/* ── We Export ─────────────────────────────────────────────── */}
         <section id="export" aria-labelledby="export-heading" className={sectionClass}>
@@ -234,26 +251,34 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
               ))}
             </ProductRow>
           </div>
-          <Container className="mt-14 grid gap-12 lg:grid-cols-5 lg:gap-14">
-            {page.exportBody && <p className="text-base leading-relaxed text-muted sm:text-lg lg:col-span-3">{tr(page.exportBody, locale)}</p>}
+          <Container className="mt-16 grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14 sm:mt-20">
+            {page.exportBody && (
+              <Reveal className="lg:col-span-6">
+                <p className="text-base leading-relaxed text-muted sm:text-lg">{tr(page.exportBody, locale)}</p>
+              </Reveal>
+            )}
             {page.exportMarkets?.length ? (
-              <div className="lg:col-span-2">
-                <SubHeading>{t("targetMarkets")}</SubHeading>
-                <ul className="divide-y divide-line border-y border-line">
-                  {page.exportMarkets.map((m) => (
-                    <li key={m.en} className="flex items-center gap-4 py-4 text-lg font-bold text-black">
-                      <Plane aria-hidden="true" className="size-5 text-red" />
-                      {tr(m, locale)}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <Reveal className="lg:col-span-5 lg:col-start-8">
+                <div className="rounded-[1.75rem] bg-paper p-7 shadow-sm ring-1 ring-black/5 sm:rounded-[2rem] sm:p-9">
+                  <SubHeading>{t("targetMarkets")}</SubHeading>
+                  <ul className="divide-y divide-steel-200">
+                    {page.exportMarkets.map((m) => (
+                      <li key={m.en} className="flex items-center gap-4 py-4 text-lg font-bold text-ink first:pt-0 last:pb-0">
+                        <IconBox icon={Plane} />
+                        {tr(m, locale)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
             ) : null}
           </Container>
         </section>
       </ProductPreviewProvider>
 
-      <GetInTouch locale={locale} />
-    </>
+      <Reveal className="px-3 pb-3 sm:px-4 sm:pb-4">
+        <GetInTouch locale={locale} className={panel} />
+      </Reveal>
+    </div>
   );
 }

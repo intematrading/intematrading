@@ -16,6 +16,7 @@ export function Marquee({
   seconds,
   repeat = 1,
   reverse = false,
+  feather,
 }: {
   children: React.ReactNode;
   label: string;
@@ -25,6 +26,8 @@ export function Marquee({
   repeat?: number;
   /** Auto-scroll towards the right. */
   reverse?: boolean;
+  /** Width of the faded edges, as a percentage of the row: one value, or [left, right]. */
+  feather?: number | [number, number];
 }) {
   const listClass = "flex shrink-0 gap-6";
   const items = Children.toArray(children).filter(isValidElement) as ReactElement<Record<string, unknown>>[];
@@ -39,7 +42,7 @@ export function Marquee({
   );
 
   return (
-    <MarqueeScroller label={label} seconds={seconds} reverse={reverse}>
+    <MarqueeScroller label={label} seconds={seconds} reverse={reverse} feather={feather}>
       <div className="flex w-max gap-6">
         <ul className={listClass}>{copies}</ul>
         <ul className={listClass} aria-hidden="true">

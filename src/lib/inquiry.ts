@@ -5,9 +5,7 @@ export type InquiryType = (typeof inquiryTypes)[number];
 
 export type InquiryInput = {
   name: string;
-  company: string;
   email: string;
-  phone: string;
   inquiryType: InquiryType;
   message: string;
 };
@@ -16,7 +14,7 @@ export type InquiryField = keyof InquiryInput;
 export type InquiryErrors = Partial<Record<InquiryField, "required" | "invalidEmail" | "tooShort">>;
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const MAX: Record<InquiryField, number> = { name: 120, company: 160, email: 200, phone: 40, inquiryType: 20, message: 5000 };
+const MAX: Record<InquiryField, number> = { name: 120, email: 200, inquiryType: 20, message: 5000 };
 
 /** Trims and bounds every field; returns per-field error codes (empty when valid). */
 export function validateInquiry(raw: Record<string, unknown>): { data: InquiryInput; errors: InquiryErrors } {
@@ -24,9 +22,7 @@ export function validateInquiry(raw: Record<string, unknown>): { data: InquiryIn
   const type = str("inquiryType");
   const data: InquiryInput = {
     name: str("name"),
-    company: str("company"),
     email: str("email"),
-    phone: str("phone"),
     inquiryType: (inquiryTypes as readonly string[]).includes(type) ? (type as InquiryType) : "other",
     message: str("message"),
   };

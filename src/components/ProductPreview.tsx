@@ -37,19 +37,18 @@ export function ProductPreviewProvider({ children }: { children: React.ReactNode
         onClose={() => setItem(null)}
         onClick={(e) => e.target === e.currentTarget && setItem(null)}
         aria-label={item?.title}
-        className="m-auto w-[min(56rem,calc(100vw-2rem))] max-w-none bg-transparent p-0 backdrop:bg-black/75 backdrop:backdrop-blur-sm"
+        className="m-auto w-[min(56rem,calc(100vw-2rem))] max-w-none bg-transparent p-0 backdrop:bg-black/60 backdrop:backdrop-blur-md"
       >
         {item && (
-          <div className="relative grid overflow-hidden bg-paper shadow-2xl md:grid-cols-2">
+          <div className="relative grid overflow-hidden rounded-[1.75rem] bg-paper shadow-2xl sm:rounded-[2rem] md:grid-cols-2">
             <div className="relative aspect-[4/3] md:aspect-auto md:min-h-96">
               {item.media}
-              <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-8 bg-red [clip-path:polygon(0_75%,100%_0,100%_100%,0_100%)] md:hidden" />
             </div>
-            <div className="flex flex-col border-t-4 border-red p-6 sm:p-8 md:border-t-0 md:border-l-4">
+            <div className="flex flex-col p-6 sm:p-8 md:p-10">
               {item.label && (
-                <span className="w-fit bg-black px-2 py-1 text-[0.6875rem] font-bold tracking-wider text-paper uppercase">{item.label}</span>
+                <span className="w-fit rounded-full bg-steel-100 px-3 py-1 text-[0.6875rem] font-bold tracking-wider text-ink uppercase">{item.label}</span>
               )}
-              <h3 className="font-title-heading mt-4 text-2xl text-black">{item.title}</h3>
+              <h3 className="font-title-heading mt-4 text-2xl text-ink">{item.title}</h3>
               {item.meta && (
                 <p className="mt-2 text-sm font-semibold text-muted" lang="en">
                   {item.meta}
@@ -61,7 +60,7 @@ export function ProductPreviewProvider({ children }: { children: React.ReactNode
               type="button"
               onClick={() => setItem(null)}
               aria-label={t("closePreview")}
-              className="absolute top-3 right-3 flex size-10 items-center justify-center bg-black/70 text-paper transition-colors hover:bg-red"
+              className="absolute top-4 right-4 flex size-10 items-center justify-center rounded-full bg-black/40 text-paper ring-1 ring-white/30 backdrop-blur-md transition-colors hover:bg-red"
             >
               <X aria-hidden="true" className="size-5" />
             </button>

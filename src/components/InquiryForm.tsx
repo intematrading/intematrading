@@ -9,7 +9,7 @@ import { inquiryTypes, validateInquiry, type InquiryErrors, type InquiryField } 
 type Status = "idle" | "sending" | "success" | "error" | "invalid";
 
 const inputClass =
-  "mt-2 block w-full border-0 bg-paper px-4 py-3 text-base text-ink ring-1 ring-line transition-shadow placeholder:text-muted/70 focus:ring-2 focus:ring-black focus:outline-none aria-[invalid=true]:ring-2 aria-[invalid=true]:ring-red";
+  "mt-2 block w-full rounded-xl border-0 bg-steel-50 px-4 py-3 text-base text-ink ring-1 ring-steel-200 transition-[box-shadow,background-color] placeholder:text-muted/70 focus:bg-paper focus:ring-2 focus:ring-steel-700 focus:outline-none aria-[invalid=true]:ring-2 aria-[invalid=true]:ring-red";
 
 export function InquiryForm() {
   const t = useTranslations("Contact.form");
@@ -20,9 +20,15 @@ export function InquiryForm() {
   const typeRef = useRef<HTMLSelectElement>(null);
   useEffect(() => {
     startedAt.current = Date.now();
-    // Links like /contact?type=brand#inquiry arrive with the type chosen.
-    const type = new URLSearchParams(window.location.search).get("type");
-    if (typeRef.current && type && (inquiryTypes as readonly string[]).includes(type)) typeRef.current.value = type;
+    // Links like /?type=brand#contact preselect the type: on arrival from
+    // the URL, or on the page already via the event from lib/home-nav.
+    const select = (type: string | null) => {
+      if (typeRef.current && type && (inquiryTypes as readonly string[]).includes(type)) typeRef.current.value = type;
+    };
+    select(new URLSearchParams(window.location.search).get("type"));
+    const onType = (e: Event) => select((e as CustomEvent<string>).detail);
+    window.addEventListener("inquiry:type", onType);
+    return () => window.removeEventListener("inquiry:type", onType);
   }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -55,7 +61,7 @@ export function InquiryForm() {
 
   if (status === "success") {
     return (
-      <div role="status" className="flex items-start gap-4 bg-paper p-6 ring-1 ring-line">
+      <div role="status" className="flex items-start gap-4 rounded-2xl bg-steel-50 p-6 ring-1 ring-steel-200">
         <CheckCircle2 aria-hidden="true" className="size-7 shrink-0 text-red" />
         <p className="text-base font-semibold text-ink">{t("success")}</p>
       </div>
@@ -75,32 +81,24 @@ export function InquiryForm() {
         {t(errors[name])}
       </p>
     ) : null;
-  const label = (name: InquiryField, text: string, optional = false) => (
+  const label = (name: InquiryField, text: string) => (
     <label htmlFor={`inquiry-${name}`} className="text-sm font-bold text-ink">
       {text}
-      {optional ? <span className="font-normal text-muted"> ({t("optional")})</span> : <span aria-hidden="true" className="text-red-ink"> *</span>}
+      <span aria-hidden="true" className="text-red-ink"> *</span>
     </label>
   );
 
   return (
-    <form onSubmit={onSubmit} noValidate className="grid gap-5 sm:grid-cols-2">
+    <form onSubmit={onSubmit} noValidate className="grid gap-4 sm:grid-cols-2">
       <div>
         {label("name", t("name"))}
         <input {...field("name")} type="text" autoComplete="name" required maxLength={120} />
         {errorText("name")}
       </div>
       <div>
-        {label("company", t("company"), true)}
-        <input {...field("company")} type="text" autoComplete="organization" maxLength={160} />
-      </div>
-      <div>
         {label("email", t("email"))}
         <input {...field("email")} type="email" autoComplete="email" required maxLength={200} />
         {errorText("email")}
-      </div>
-      <div>
-        {label("phone", t("phone"), true)}
-        <input {...field("phone")} type="tel" autoComplete="tel" maxLength={40} />
       </div>
       <div className="sm:col-span-2">
         {label("inquiryType", t("inquiryType"))}
@@ -114,7 +112,7 @@ export function InquiryForm() {
       </div>
       <div className="sm:col-span-2">
         {label("message", t("message"))}
-        <textarea {...field("message")} rows={6} required minLength={10} maxLength={5000} />
+        <textarea {...field("message")} rows={3} required minLength={10} maxLength={5000} />
         {errorText("message")}
       </div>
 
@@ -124,19 +122,20 @@ export function InquiryForm() {
         <input id="inquiry-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
+      {/* Status message, then the submit button on the right */}
+      <div className="flex flex-wrap items-center justify-end gap-4 sm:col-span-2">
+        <p aria-live="polite" className="me-auto text-sm font-semibold text-red-ink">
+          {status === "invalid" && t("invalid")}
+          {status === "error" && t("error")}
+        </p>
         <button
           type="submit"
           disabled={status === "sending"}
-          className={`${buttonClass("red")} ms-2 disabled:translate-y-0 disabled:opacity-70`}
+          className={`${buttonClass("red")} disabled:translate-y-0 disabled:opacity-70`}
         >
           {status === "sending" ? t("sending") : t("submit")}
           {status === "sending" ? <LoaderCircle aria-hidden="true" className="size-4 animate-spin" /> : <ButtonArrow />}
         </button>
-        <p aria-live="polite" className="text-sm font-semibold text-red-ink">
-          {status === "invalid" && t("invalid")}
-          {status === "error" && t("error")}
-        </p>
       </div>
     </form>
   );

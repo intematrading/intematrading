@@ -38,9 +38,7 @@ export async function POST(req: NextRequest) {
     const to = settings.inquiryRecipient || settings.email;
     const text = [
       `Name: ${data.name}`,
-      `Company: ${data.company || "—"}`,
       `Email: ${data.email}`,
-      `Phone: ${data.phone || "—"}`,
       `Type: ${typeLabels[data.inquiryType]}`,
       `Site language: ${locale === "am" ? "Amharic" : "English"}`,
       "",
