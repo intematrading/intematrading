@@ -21,7 +21,8 @@ export function Link({ onClick, ...props }: ComponentProps<typeof base.Link>) {
       {...props}
       onClick={(e) => {
         onClick?.(e);
-        const match = typeof props.href === "string" ? homeHref.exec(props.href) : null;
+        // Language switches (a `locale` prop) always navigate.
+        const match = typeof props.href === "string" && !props.locale ? homeHref.exec(props.href) : null;
         const drawerOpen = isDrawerPath(pathname);
         if (!match || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         if (pathname !== "/" && !drawerOpen) return; // e.g. the 404 page: just navigate

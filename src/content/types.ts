@@ -1,7 +1,8 @@
 // Shapes of the Sanity documents as the site reads them. Every translatable
 // field is a LocaleString: one object holding both languages.
 
-export type LocaleString = { en: string; am?: string };
+// `am` is legacy Amharic copy, kept in the data but no longer shown.
+export type LocaleString = { en: string; fr?: string; am?: string };
 
 export type SanityImage = {
   _type?: "image";

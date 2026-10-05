@@ -5,13 +5,13 @@ import { useTransition } from "react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 
-// Each language is labelled in its own script, and never translated.
+// Each language is labelled in its own language, and never translated.
 const labels: Record<Locale, { short: string; name: string }> = {
   en: { short: "EN", name: "English" },
-  am: { short: "አማ", name: "አማርኛ" },
+  fr: { short: "FR", name: "Français" },
 };
 
-export function LanguageSwitcher({ className = "" }: { className?: string }) {
+export function LanguageSwitcher({ vertical = false, className = "" }: { vertical?: boolean; className?: string }) {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
@@ -22,7 +22,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
     <div
       role="group"
       aria-label={t("label")}
-      className={`flex gap-0.5 rounded-xl p-1 text-sm leading-none ring-1 ring-line ring-inset ${isPending ? "opacity-60" : ""} ${className}`}
+      className={`flex ${vertical ? "flex-col" : ""} gap-0.5 rounded-xl border border-white/50 bg-white/70 p-1 text-[0.6875rem] leading-none shadow-lg backdrop-blur-xl ${isPending ? "opacity-60" : ""} ${className}`}
     >
       {routing.locales.map((l) => {
         const active = l === locale;
@@ -47,8 +47,8 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
                 startTransition(() => router.replace(`${pathname}${hash}`, { locale: l }));
               }
             }}
-            className={`flex min-h-9 min-w-11 items-center justify-center rounded-lg px-3 font-bold transition-colors ${
-              active ? "bg-red text-paper" : "text-ink hover:text-red-ink"
+            className={`flex size-8 items-center justify-center rounded-lg font-bold tracking-wider transition-colors ${
+              active ? "red-gradient text-paper" : "text-ink hover:text-red-ink"
             }`}
           >
             {labels[l].short}

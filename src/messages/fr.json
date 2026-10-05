@@ -1,0 +1,130 @@
+{
+  "Nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "services": "Services",
+    "team": "Équipe",
+    "contact": "Contact",
+    "primary": "Navigation principale",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "Common": {
+    "skipToContent": "Aller au contenu",
+    "learnMore": "En savoir plus",
+    "contactUs": "Nous contacter",
+    "exploreServices": "Découvrir nos services",
+    "home": "Accueil",
+    "close": "Fermer",
+    "loadError": "Cette page n'a pas pu se charger",
+    "retry": "Réessayer"
+  },
+  "LanguageSwitcher": {
+    "label": "Langue",
+    "switchTo": "Passer en {language}"
+  },
+  "Home": {
+    "snapshotHeading": "En chiffres",
+    "snapshotIntro": "Importateur, distributeur, fabricant et exportateur de produits de grande consommation, au service des marchés de gros et de détail dans trois pays depuis notre base d'Addis-Abeba.",
+    "importedBrands": "Marques que nous importons",
+    "moreItems": "+{count} de plus",
+    "ourServices": "Nos services",
+    "whatWeDo": "Ce que *nous faisons*",
+    "aboutUs": "À propos de nous",
+    "getInTouch": "Prenons *contact*",
+    "scrollDown": "Faire défiler",
+    "outroEyebrow": "Autres services",
+    "outroHeading": "Besoin d'autre chose ?",
+    "outroCta": "Découvrir nos services",
+    "outroBody": "Nos services vont au-delà de ce qui est présenté ici. Dites-nous ce dont vous avez besoin et notre équipe trouvera une solution.",
+    "outroSide": "Parlons-en",
+    "ourTeam": "Notre équipe",
+    "meetTeam": "Découvrez *notre équipe*",
+    "viewTeam": "Rencontrer toute l'équipe"
+  },
+  "Services": {
+    "import": "Nous importons",
+    "produce": "Nous produisons",
+    "export": "Nous exportons",
+    "nonFood": "Non alimentaire",
+    "food": "Alimentaire",
+    "exportBrands": "Nos marques à l'export",
+    "targetMarkets": "Marchés cibles",
+    "ourProducts": "Nos produits",
+    "closePreview": "Fermer l'aperçu",
+    "viewItem": "Voir {name}",
+    "marketsEyebrow": "Où nous exportons"
+  },
+  "Footer": {
+    "contact": "Contact",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "rights": "Tous droits réservés.",
+    "follow": "Suivez-nous"
+  },
+  "NotFound": {
+    "title": "Page introuvable",
+    "body": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "home": "Retour à l'accueil"
+  },
+  "Contact": {
+    "form": {
+      "name": "Nom complet",
+      "email": "E-mail",
+      "inquiryType": "Je suis…",
+      "message": "Message",
+      "submit": "Envoyer le message",
+      "sending": "Envoi…",
+      "types": {
+        "retail": "Partenaire détaillant",
+        "buyer": "Acheteur / distributeur",
+        "brand": "Propriétaire de marque",
+        "other": "Autre"
+      },
+      "success": "Merci — votre demande a bien été envoyée. Notre équipe commerciale vous contactera rapidement.",
+      "error": "Désolé, votre demande n'a pas pu être envoyée. Veuillez réessayer ou nous écrire directement par e-mail.",
+      "invalid": "Veuillez vérifier les champs signalés.",
+      "required": "Ce champ est obligatoire.",
+      "invalidEmail": "Saisissez une adresse e-mail valide.",
+      "tooShort": "Veuillez écrire au moins 10 caractères."
+    },
+    "formEyebrow": "Contact"
+  },
+  "About": {
+    "galleryHeading": "Au cœur d'*INTEMA*",
+    "galleryLabel": "Galerie photo",
+    "prev": "Photo précédente",
+    "next": "Photo suivante",
+    "slide": "Photo {current} sur {total}",
+    "goTo": "Aller à la photo {n}",
+    "snapshot": "L'entreprise en bref",
+    "partnerCta": "Devenir partenaire",
+    "open": "Ouvrir la photo : {caption}",
+    "close": "Fermer l'aperçu",
+    "partnersLabel": "Nos partenaires",
+    "whoEyebrow": "Notre histoire",
+    "galleryEyebrow": "Galerie",
+    "visionEyebrow": "Ce qui nous anime",
+    "processEyebrow": "Notre méthode",
+    "partnersEyebrow": "Des marques de confiance",
+    "keysEyebrow": "Pourquoi INTEMA",
+    "step": "Étape {n}",
+    "galleryIntro": "Un aperçu de nos entrepôts, de notre flotte de livraison et des magasins partenaires — les personnes et les lieux qui font circuler les produits dans trois pays.",
+    "teamCta": "Rencontrer l'équipe"
+  },
+  "Team": {
+    "salesTeamSize": "personnes dans notre équipe commerciale",
+    "atAGlance": "L'équipe en *bref*",
+    "organised": "Notre organisation",
+    "applyCta": "Devenir partenaire",
+    "brandAmbassador": "Ambassadrice de marque",
+    "leadershipEyebrow": "Notre direction",
+    "salesEyebrow": "Sur le terrain",
+    "organisedEyebrow": "Services",
+    "partnerEyebrow": "Travailler avec INTEMA"
+  },
+  "Testimonials": {
+    "eyebrow": "Témoignages",
+    "heading": "Ce que disent nos *partenaires*"
+  }
+}

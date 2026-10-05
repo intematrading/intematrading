@@ -10,6 +10,7 @@ import { CursorSway } from "@/components/CursorSway";
 import { Eyebrow } from "@/components/Eyebrow";
 import { HorizontalScroll } from "@/components/HorizontalScroll";
 import { IconBox } from "@/components/IconBox";
+import { Logo } from "@/components/Logo";
 import { PhotoFrame } from "@/components/PhotoFrame";
 import { PinnedMorph } from "@/components/PinnedMorph";
 import { ScrollStage } from "@/components/ScrollStage";
@@ -50,8 +51,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [home, services, teamPage, teamMembers, testimonials, brands, producedItems, exportItems, t, common, svc] = await Promise.all([
+  const [home, settings, services, teamPage, teamMembers, testimonials, brands, producedItems, exportItems, t, common, svc] = await Promise.all([
     getHomePage(),
+    getSiteSettings(),
     getServicesPage(),
     getTeamPage(),
     getTeamMembers(),
@@ -117,6 +119,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             <Container className="flex flex-1 flex-col pt-6 pb-8 sm:pt-7 sm:pb-12">
               {/* Centred content */}
               <div className="flex flex-1 flex-col items-center justify-center py-10 text-center">
+                {/* White logo above the headline */}
+                <Logo alt={tr(settings.companyName, locale)} tone="white" className="mb-8 h-20 w-auto sm:mb-10 sm:h-24" priority />
                 <h1 className="max-w-4xl">
                   {headline ? (
                     <>

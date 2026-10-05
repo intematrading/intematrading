@@ -39,10 +39,6 @@
     var(--font-ethiopic), sans-serif;
   --font-display: var(--font-anton), Impact, "Arial Narrow", var(--font-ethiopic), sans-serif;
   --font-title: var(--font-poppins), var(--font-ethiopic), sans-serif;
-  --font-ethiopic-first: var(--font-ethiopic), "SF Pro Text", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  /* Amharic headings/titles: Nokia Pure Headline for Ethiopic, the Latin heading faces for the rest. */
-  --font-am-display: var(--font-nokia), var(--font-anton), var(--font-ethiopic), sans-serif;
-  --font-am-title: var(--font-nokia), var(--font-poppins), var(--font-ethiopic), sans-serif;
 
   /* Header: bar height, and the top offset a page's first section must clear
      (1.75rem inset + bar + breathing room). */
@@ -119,37 +115,22 @@
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
-/* Headers: Anton; Amharic headers use Nokia Pure Headline Bold. font-synthesis is off so
-   Latin fallbacks (single-weight Anton) don't get a smeared fake bold. */
+/* Headers: Anton. */
 @utility font-display-heading {
   font-family: var(--font-display);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.005em;
   line-height: 0.95;
-  &:lang(am) {
-    font-family: var(--font-am-display);
-    font-weight: 700;
-    font-synthesis-weight: none;
-    letter-spacing: 0;
-    line-height: 1.2;
-  }
 }
 
-/* Titles: Poppins Bold; Amharic titles use Nokia Pure Headline Bold. */
+/* Titles: Poppins Bold. */
 @utility font-title-heading {
   font-family: var(--font-title);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.01em;
   line-height: 1.1;
-  &:lang(am) {
-    font-family: var(--font-am-title);
-    font-weight: 700;
-    font-synthesis-weight: none;
-    letter-spacing: 0;
-    line-height: 1.3;
-  }
 }
 
 /* Scroll-driven entrance inside a ScrollStage: fades and lifts in as the
@@ -160,18 +141,13 @@
   transform: translateY(calc((1 - var(--q)) * 3rem));
 }
 
-/* Small uppercase labels: eyebrows, footer headings, field labels, roles.
-   Ethiopic has no capitals and letter-spacing breaks up its syllables, so
-   Amharic labels drop both. */
+/* Small uppercase labels: eyebrows, footer headings, field labels, roles. */
 @utility label-caps {
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  &:lang(am) {
-    letter-spacing: 0;
-  }
 }
 
 @layer base {
@@ -182,13 +158,6 @@
   :root {
     --rail-pad: max(2rem, calc(13rem - max(0px, (100vw - 80rem) / 2)));
   }
-  /* Ethiopic glyphs are denser than Latin at the same size, so the two
-     smallest steps are nudged up for Amharic pages. */
-  html:lang(am) {
-    --text-xs: 0.8125rem;
-    --text-sm: 0.9375rem;
-  }
-
   html {
     scroll-behavior: smooth;
     /* Keep the scrollbar's space while a drawer locks the page, so the
@@ -206,17 +175,6 @@
     background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-  }
-
-  /* Amharic body text: Noto Sans Ethiopic first. Deliberately not :lang(am),
-     which matches every descendant and would stop nested spans (e.g. accent
-     words) inheriting the Amharic heading font. */
-  [lang="am"],
-  html:lang(am) body {
-    font-family: var(--font-ethiopic-first);
-  }
-  html:lang(am) body {
-    line-height: 1.75;
   }
 
   :focus-visible {

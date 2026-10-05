@@ -100,5 +100,5 @@ export const getTestimonials = cache(async (): Promise<Testimonial[]> => {
 /** Picks the value for `locale`, falling back to English when a translation is missing. */
 export function tr(value: LocaleString | undefined | null, locale: Locale): string {
   if (!value) return "";
-  return (locale === "am" && value.am?.trim()) || value.en;
+  return (locale === "fr" && value.fr?.trim()) || value.en;
 }

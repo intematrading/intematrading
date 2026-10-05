@@ -4,6 +4,8 @@ import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useId, useRef, useState } from "react";
 import { isDrawerPath, Link, usePathname } from "@/i18n/navigation";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { Logo } from "./Logo";
 import { navItems } from "./nav-items";
 import { scrollToHomeSection } from "@/lib/home-nav";
 
@@ -14,7 +16,7 @@ import { scrollToHomeSection } from "@/lib/home-nav";
  * the section in view is highlighted as the page scrolls, or the drawer page
  * while one is open. No logo in the header (it appears in the footer).
  */
-export function SiteHeader() {
+export function SiteHeader({ companyName }: { companyName: string }) {
   const t = useTranslations("Nav");
   const pathname = usePathname();
   // The drawer remembers the page it was opened on, so navigating anywhere
@@ -165,7 +167,14 @@ export function SiteHeader() {
         </ul>
       </nav>
 
-      {/* Small screens: menu button and a drawer from the right */}
+      {/* Desktop: language switch, stacked, top-right (over a drawer page
+          too), clear of the screen edges */}
+      <div className="fixed top-6 right-6 z-40 hidden lg:block">
+        <LanguageSwitcher vertical />
+      </div>
+
+      {/* Small screens: menu button and a drawer from the right, with the
+          language switch at its foot */}
       <button
         type="button"
         className="fixed top-6 right-4 z-50 inline-flex size-12 items-center justify-center rounded-2xl border border-white/50 bg-white/70 text-ink shadow-lg backdrop-blur-xl sm:top-7 sm:right-6 lg:hidden"
@@ -185,8 +194,9 @@ export function SiteHeader() {
         id={drawerId}
         aria-label={t("primary")}
         hidden={!open}
-        className="fixed inset-y-3 right-3 z-40 w-[min(18rem,calc(100vw-1.5rem))] rounded-3xl bg-paper p-4 pt-24 shadow-2xl lg:hidden"
+        className="fixed inset-y-3 right-3 z-40 flex w-[min(18rem,calc(100vw-1.5rem))] flex-col rounded-3xl bg-paper p-4 pt-6 shadow-2xl lg:hidden"
       >
+        <Logo alt={companyName} className="mb-8 ml-4 h-14 w-auto self-start" />
         <ul className="flex flex-col gap-1">
           {navItems.map(({ href, section, key }) => (
             <li key={href}>
@@ -204,6 +214,7 @@ export function SiteHeader() {
             </li>
           ))}
         </ul>
+        <LanguageSwitcher className="mt-auto self-start" />
       </nav>
     </header>
   );

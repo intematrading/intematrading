@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   const { data, errors } = validateInquiry(body);
   if (Object.keys(errors).length) return NextResponse.json({ errors }, { status: 422 });
-  const locale = body.locale === "am" ? "am" : "en";
+  const locale = body.locale === "fr" ? "fr" : "en";
 
   const resendKey = process.env.RESEND_API_KEY;
   const sanityToken = process.env.SANITY_API_WRITE_TOKEN;
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
       `Name: ${data.name}`,
       `Email: ${data.email}`,
       `Type: ${typeLabels[data.inquiryType]}`,
-      `Site language: ${locale === "am" ? "Amharic" : "English"}`,
+      `Site language: ${locale === "fr" ? "French" : "English"}`,
       "",
       data.message,
     ].join("\n");

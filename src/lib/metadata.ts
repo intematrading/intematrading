@@ -11,7 +11,7 @@ export const SITE_URL = (
     : "https://intematrading.com")
 ).replace(/\/$/, "");
 
-const ogLocale: Record<Locale, string> = { en: "en_US", am: "am_ET" };
+const ogLocale: Record<Locale, string> = { en: "en_US", fr: "fr_FR" };
 
 /** `path` is locale-less and starts with "/" ("/" for home, "/services", …). */
 export function localizedPath(locale: Locale, path: string) {

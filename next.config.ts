@@ -4,6 +4,9 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  // Development-only "N" badge: off the bottom-left corner, where the
+  // language switch sits.
+  devIndicators: { position: "bottom-right" },
   images: {
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
     // 90 for large full-bleed background photos.
@@ -11,7 +14,12 @@ const nextConfig: NextConfig = {
   },
   // Contact is no longer its own page: the inquiry form is in the footer.
   async redirects() {
-    return [{ source: "/:locale(en|am)/contact", destination: "/:locale#contact", permanent: false }];
+    return [
+      { source: "/:locale(en|fr)/contact", destination: "/:locale#contact", permanent: false },
+      // The site was English/Amharic before French replaced Amharic.
+      { source: "/am", destination: "/fr", permanent: false },
+      { source: "/am/:path*", destination: "/fr/:path*", permanent: false },
+    ];
   },
 };
 
