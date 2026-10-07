@@ -1,4 +1,4 @@
-import { Coffee, Flame, Plane, ShoppingBasket, Sparkles, type LucideIcon } from "lucide-react";
+import { Coffee, Flame, Globe2, Plane, ShoppingBasket, Sparkles } from "lucide-react";
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -8,12 +8,13 @@ import { panel } from "@/components/panel";
 import { Reveal } from "@/components/Reveal";
 import { GetInTouch } from "@/components/GetInTouch";
 import { IconBox } from "@/components/IconBox";
-import { Marquee } from "@/components/Marquee";
 import { PageHero } from "@/components/PageHero";
-import { ProductCard } from "@/components/ProductCard";
+import { BrandGrid, ExportGrid, ProducedGrid } from "@/components/ProductGrid";
+import { RouteSteps } from "@/components/RouteSteps";
 import { ProductPreviewProvider } from "@/components/ProductPreview";
 import { SectionHeading } from "@/components/SectionHeading";
-import { heroPlaceholders, placeholders, productPlaceholders } from "@/content/placeholders";
+import { statIcon } from "@/components/stat-icons";
+import { heroPlaceholders, placeholders } from "@/content/placeholders";
 import type { ServiceSection } from "@/content/types";
 import { getBrands, getExportItems, getProducedItems, getServicesPage, getSiteSettings, tr } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
@@ -76,52 +77,6 @@ function SubHeading({ children, onDark = false }: { children: React.ReactNode; o
   );
 }
 
-// Card width (w-80) + gap, and the widest screen a single copy must cover.
-const CARD_STEP = 344;
-const MIN_COPY_WIDTH = 2000;
-
-/**
- * A category: icon, title and description aligned to the right (so it reads
- * as a sub-level, clear of the left-hand section heading), then a full-bleed
- * row of auto-scrolling product cards. Short rows are repeated so the loop
- * never shows a gap; speed stays ~constant per card.
- */
-function ProductRow({
-  icon: Icon,
-  label,
-  intro,
-  count,
-  onDark = false,
-  reverse = false,
-  children,
-}: {
-  icon: LucideIcon;
-  label: string;
-  intro?: string;
-  count: number;
-  onDark?: boolean;
-  /** Scroll this row towards the right. */
-  reverse?: boolean;
-  children: React.ReactNode;
-}) {
-  if (!count) return null;
-  const repeat = Math.max(1, Math.ceil(MIN_COPY_WIDTH / (count * CARD_STEP)));
-  return (
-    <div className="mt-16 first:mt-0 sm:mt-20">
-      <Container className="mb-8 flex flex-col items-end text-right">
-        <h3 className="flex items-center gap-4">
-          <IconBox icon={Icon} />
-          <span className={`font-display-heading text-2xl sm:text-3xl ${onDark ? "text-paper" : "text-steel-gradient"}`}>{label}</span>
-        </h3>
-        {intro && <p className={`mt-3 max-w-xl text-base ${onDark ? "text-paper/75" : "text-muted"}`}>{intro}</p>}
-      </Container>
-      <Marquee label={label} seconds={count * repeat * 6} repeat={repeat} reverse={reverse} feather={8}>
-        {children}
-      </Marquee>
-    </div>
-  );
-}
-
 export default async function ServicesPage({ params }: PageProps<"/[locale]/services">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
@@ -155,33 +110,67 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         locale={locale}
       />
 
+      {/* ── Why Ethiopia? Market figures, with sources ─────────────── */}
+      {page.marketStats?.length ? (
+        <section aria-labelledby="market-heading" className="py-16 sm:py-24">
+          <Container>
+            <Reveal className="max-w-3xl">
+              <SectionHeading id="market-heading" eyebrow={t("marketEyebrow")}>
+                {tr(page.marketHeading, locale)}
+              </SectionHeading>
+              {page.marketIntro && <p className="mt-6 text-muted sm:text-lg">{tr(page.marketIntro, locale)}</p>}
+            </Reveal>
+            <ul className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+              {page.marketStats.map((stat) => {
+                const Icon = statIcon(stat._key);
+                return (
+                  <li key={stat._key}>
+                    <Reveal className="h-full">
+                      <div className="flex h-full flex-col rounded-3xl bg-paper p-6 shadow-sm ring-1 ring-black/5 sm:p-7">
+                        <IconBox icon={Icon} />
+                        <p className="font-display-heading text-steel-gradient mt-6 text-5xl leading-none" lang="en">
+                          {stat.value}
+                        </p>
+                        <p className="mt-3 font-semibold text-ink">{tr(stat.label, locale)}</p>
+                        {stat.note && <p className="mt-1 text-sm text-muted">{tr(stat.note, locale)}</p>}
+                      </div>
+                    </Reveal>
+                  </li>
+                );
+              })}
+            </ul>
+            {page.marketSource && <p className="mt-6 text-xs text-muted">{tr(page.marketSource, locale)}</p>}
+          </Container>
+        </section>
+      ) : null}
+
       <ProductPreviewProvider>
 
         {/* ── We Import ─────────────────────────────────────────────── */}
         <section id="import" aria-labelledby="import-heading" className={sectionClass}>
           <Container>
             <ServiceHeading id="import-heading" number="01" title={importSec.title} intro={tr(page.importIntro, locale)} />
+            {/* Where we source: the regions brands are imported from */}
+            {page.sourcingRegions?.length ? (
+              <Reveal className="mt-10">
+                <SubHeading>{t("sourcingHeading")}</SubHeading>
+                <ul className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+                  {page.sourcingRegions.map((region) => (
+                    <li key={region._key} className="flex items-start gap-4 rounded-3xl bg-paper p-5 shadow-sm ring-1 ring-black/5 sm:p-6">
+                      <IconBox icon={Globe2} />
+                      <div>
+                        <p className="font-title-heading text-lg text-ink">{tr(region.title, locale)}</p>
+                        {region.body && <p className="mt-1 text-sm text-muted">{tr(region.body, locale)}</p>}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            ) : null}
           </Container>
           <div className="mt-12">
-            {[
-              { key: "nonFood", label: t("nonFood"), intro: page.nonFoodIntro, list: nonFood, icon: Sparkles, reverse: false },
-              { key: "food", label: t("food"), intro: page.foodIntro, list: food, icon: ShoppingBasket, reverse: true },
-            ].map(({ key, label, intro, list, icon, reverse }) => (
-              <ProductRow key={key} icon={icon} reverse={reverse} label={label} intro={tr(intro, locale)} count={list.length}>
-                {list.map((brand) => (
-                  <ProductCard
-                    key={brand._id}
-                    openLabel={t("viewItem", { name: brand.name })}
-                    title={brand.name}
-                    meta={brand.subBrands?.join(" · ")}
-                    description={tr(brand.description, locale)}
-                    image={brand.image}
-                    placeholder={productPlaceholders[brand._id]}
-                    locale={locale}
-                  />
-                ))}
-              </ProductRow>
-            ))}
+            <BrandGrid brands={nonFood} icon={Sparkles} label={t("nonFood")} intro={tr(page.nonFoodIntro, locale)} locale={locale} />
+            <BrandGrid brands={food} icon={ShoppingBasket} label={t("food")} intro={tr(page.foodIntro, locale)} reverse locale={locale} />
           </div>
         </section>
 
@@ -195,21 +184,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
             <ServiceHeading id="produce-heading" number="02" title={produceSec.title} intro={tr(page.produceIntro, locale)} onDark />
           </Container>
           <div className="mt-12">
-            <ProductRow icon={Flame} label={t("ourProducts")} intro={tr(page.productsIntro, locale)} count={producedItems.length} onDark>
-              {producedItems.map((item) => (
-                <ProductCard
-                  key={item._id}
-                  openLabel={t("viewItem", { name: tr(item.name, locale) })}
-                  title={tr(item.name, locale)}
-                  label={tr(item.category, locale)}
-                  description={tr(item.description, locale)}
-                  image={item.image}
-                  placeholder={productPlaceholders[item._id]}
-                  locale={locale}
-                  tone="dark"
-                />
-              ))}
-            </ProductRow>
+            <ProducedGrid products={producedItems} icon={Flame} label={t("ourProducts")} intro={tr(page.productsIntro, locale)} onDark locale={locale} />
           </div>
         </section>
         </div>
@@ -220,24 +195,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
             <ServiceHeading id="export-heading" number="03" title={exportSec.title} intro={tr(page.exportIntro, locale)} />
           </Container>
           <div className="mt-12">
-            <ProductRow
-              icon={Coffee}
-              label={t("exportBrands")}
-              intro={tr(page.exportBrandsIntro, locale)}
-              count={exportItems.length}
-            >
-              {exportItems.map((b) => (
-                <ProductCard
-                  key={b._id}
-                  openLabel={t("viewItem", { name: b.name })}
-                  title={b.name}
-                  description={tr(b.description, locale)}
-                  image={b.image}
-                  placeholder={productPlaceholders[b._id]}
-                  locale={locale}
-                />
-              ))}
-            </ProductRow>
+            <ExportGrid brands={exportItems} icon={Coffee} label={t("exportBrands")} intro={tr(page.exportBrandsIntro, locale)} locale={locale} />
           </div>
           <Container className="mt-16 grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14 sm:mt-20">
             {page.exportBody && (
@@ -263,6 +221,9 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
           </Container>
         </section>
       </ProductPreviewProvider>
+
+      {/* ── The other services: the route from port to shelf ────────── */}
+      <RouteSteps locale={locale} className="pt-0 sm:pt-0" />
 
       <Reveal className="px-3 pb-3 sm:px-4 sm:pb-4">
         <GetInTouch locale={locale} className={panel} />

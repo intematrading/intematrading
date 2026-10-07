@@ -18,6 +18,8 @@ export type Seo = {
 };
 
 export type ServiceSection = "import" | "produce" | "export";
+/** What a home "What we do" card stands for: the two import platforms, or produce / export. */
+export type CardKind = ServiceSection | "food" | "nonFood";
 
 export type SocialPlatform = "linkedin" | "facebook" | "instagram" | "whatsapp" | "tiktok";
 
@@ -41,14 +43,21 @@ export type HomePage = {
   stats?: { _key: string; value: string; label: LocaleString; note?: LocaleString }[];
   entryCards?: {
     _key: string;
-    section: ServiceSection;
+    section: CardKind;
     title: LocaleString;
     description?: LocaleString;
+    categories?: LocaleString[];
     image?: SanityImage;
   }[];
+  whatWeDoIntro?: LocaleString;
+  routeHeading?: LocaleString;
+  routeIntro?: LocaleString;
+  routeSteps?: TitledText[];
   commitmentEyebrow?: LocaleString;
   commitmentHeadline?: LocaleString;
   commitmentBody?: LocaleString;
+  mission?: LocaleString;
+  vision?: LocaleString;
   commitmentImage?: SanityImage;
   commitmentPoints?: { _key?: string; title: LocaleString; description?: LocaleString }[];
   contactImage?: SanityImage;
@@ -60,6 +69,11 @@ export type ServicesPage = {
   eyebrow?: LocaleString;
   intro?: LocaleString;
   heroImage?: SanityImage;
+  marketHeading?: LocaleString;
+  marketIntro?: LocaleString;
+  marketStats?: Stat[];
+  marketSource?: LocaleString;
+  sourcingRegions?: TitledText[];
   importHeading?: LocaleString;
   importIntro?: LocaleString;
   nonFoodIntro?: LocaleString;
@@ -84,6 +98,8 @@ export type Brand = {
   description?: LocaleString;
   image?: SanityImage;
   logo?: SanityImage;
+  /** Named in the home page's "main importer of …" highlight. */
+  featured?: boolean;
 };
 
 export type ProducedItem = {

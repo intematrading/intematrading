@@ -38,8 +38,8 @@ const glyphs: Record<SocialPlatform, { label: string; svg: React.ReactNode }> = 
   },
 };
 
-/** Row of square social icons (black, red on hover), in the order entered in Site settings. */
-export function SocialLinks({ links, className = "" }: { links: SiteSettings["socialLinks"]; className?: string }) {
+/** Row of rounded social icons (red on hover), in the order entered in Site settings. `onDark`: frosted, for dark backgrounds. */
+export function SocialLinks({ links, onDark = false, className = "" }: { links: SiteSettings["socialLinks"]; onDark?: boolean; className?: string }) {
   const valid = links?.filter((l) => glyphs[l.platform] && l.url);
   if (!valid?.length) return null;
   return (
@@ -51,7 +51,7 @@ export function SocialLinks({ links, className = "" }: { links: SiteSettings["so
             target="_blank"
             rel="noopener noreferrer"
             aria-label={glyphs[platform].label}
-            className="steel-gradient flex size-10 items-center rounded-xl justify-center text-paper transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-red hover:bg-none motion-reduce:transition-none"
+            className={`flex size-10 items-center justify-center rounded-xl text-paper transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-red hover:bg-none motion-reduce:transition-none ${onDark ? "bg-white/10 ring-1 ring-white/15" : "steel-gradient"}`}
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="size-[1.125rem] fill-current">
               {glyphs[platform].svg}
@@ -63,38 +63,11 @@ export function SocialLinks({ links, className = "" }: { links: SiteSettings["so
   );
 }
 
-/**
- * The social links as a vertical rail mirroring the left side nav: each
- * network's icon in a small circle, on a line joining them all.
- */
-export function SocialRail({ links, label, className = "" }: { links: SiteSettings["socialLinks"]; label: string; className?: string }) {
-  const valid = links?.filter((l) => glyphs[l.platform] && l.url);
-  if (!valid?.length) return null;
+/** The WhatsApp logo, filled with the current colour. */
+export function WhatsAppIcon({ className = "" }: { className?: string }) {
   return (
-    <nav aria-label={label} className={className}>
-      <ul className="relative flex flex-col items-end gap-4">
-        {/* Line through the icon centres (first to last) */}
-        <span aria-hidden="true" className="absolute top-[1.5rem] right-[1.125rem] bottom-[1.5rem] w-px translate-x-1/2 bg-steel-300" />
-        {valid.map((link) => {
-          const g = glyphs[link.platform];
-          return (
-            <li key={link.platform}>
-              <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={g.label} className="group flex items-center py-1.5">
-                <span className="relative flex size-9 shrink-0 items-center justify-center">
-                  <span
-                    aria-hidden="true"
-                    className="steel-gradient flex size-7 items-center justify-center rounded-full text-paper transition-transform duration-200 group-hover:scale-110 group-hover:bg-red group-hover:bg-none motion-reduce:transition-none"
-                  >
-                    <svg viewBox="0 0 24 24" className="size-3.5 fill-current">
-                      {g.svg}
-                    </svg>
-                  </span>
-                </span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+    <svg viewBox="0 0 24 24" aria-hidden="true" className={`fill-current ${className}`}>
+      {glyphs.whatsapp.svg}
+    </svg>
   );
 }

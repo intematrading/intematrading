@@ -42,6 +42,7 @@ with INTEMA's own photography via Sanity.
 | products/power-horse.jpg | Ambo Ampeng | https://unsplash.com/photos/nZvTEtAc024 |
 | products/irn-bru.jpg | Charlie Wollborg | https://unsplash.com/photos/Yezt64WAT8A |
 | produce-shelves.jpg | Jack Lee | https://unsplash.com/photos/IH65r4HEQWQ |
+| nonfood-haircare.jpg | FS Cut & Color | https://unsplash.com/photos/PL1WRIJOQuQ |
 | products/soap-1.jpg | Heather Ford | https://unsplash.com/photos/FbrDS0jY_Hw |
 | products/soap-2.jpg | Townsend Walton | https://unsplash.com/photos/Nwzq_MuVZwg |
 | products/soap-3.jpg | Nathan Powers | https://unsplash.com/photos/nu1LXI_zOGA |

@@ -7,7 +7,8 @@
     "contact": "Contact",
     "primary": "Main navigation",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "whatsapp": "Chat with us on WhatsApp"
   },
   "Common": {
     "skipToContent": "Skip to content",
@@ -24,8 +25,8 @@
     "switchTo": "Switch to {language}"
   },
   "Home": {
-    "snapshotHeading": "By the numbers",
-    "snapshotIntro": "A diversified FMCG importer, distributor, manufacturer and exporter, serving wholesale and retail markets across three countries from our base in Addis Ababa.",
+    "snapshotHeading": "About INTEMA",
+    "snapshotIntro": "A diversified FMCG importer, distributor, manufacturer and exporter, connecting trusted global brands with Ethiopian markets from our base in Addis Ababa.",
     "importedBrands": "Brands we import",
     "moreItems": "+{count} more",
     "ourServices": "Our services",
@@ -33,14 +34,20 @@
     "aboutUs": "About us",
     "getInTouch": "Get in *touch*",
     "scrollDown": "Scroll down",
-    "outroEyebrow": "More services",
-    "outroHeading": "Need something else?",
-    "outroCta": "Explore services",
-    "outroBody": "Our services go beyond what's listed here. Tell us what you need and our team will find a way to help.",
-    "outroSide": "Let's talk",
     "ourTeam": "Our team",
     "meetTeam": "Meet *our team*",
-    "viewTeam": "Meet the whole team"
+    "viewTeam": "Meet the whole team",
+    "categories": "Categories",
+    "routeHeading": "From port to shelf",
+    "portfolioEyebrow": "Our portfolio",
+    "brandsHeading": "Brands we import",
+    "brandsIntro": "Food and non-food brands sourced from America, Europe and Asia, and distributed across Ethiopia.",
+    "mainImporter": "Main importers of",
+    "routeMore": "More",
+    "routeMoreBody": "Logistics, market insight and the rest of what we offer.",
+    "allServices": "All services",
+    "mission": "Mission",
+    "vision": "Vision"
   },
   "Services": {
     "import": "We Import",
@@ -52,14 +59,32 @@
     "targetMarkets": "Target markets",
     "ourProducts": "Our products",
     "closePreview": "Close preview",
-    "viewItem": "View {name}"
+    "viewItem": "View {name}",
+    "marketEyebrow": "Market opportunity",
+    "sourcingHeading": "Where we source",
+    "brandCount": "{count, plural, one {# brand} other {# brands}}",
+    "productCount": "{count, plural, one {# product} other {# products}}"
   },
   "Footer": {
-    "contact": "Contact details",
+    "contact": "Get in touch",
     "phone": "Phone",
     "email": "Email",
     "rights": "All rights reserved.",
-    "follow": "Follow us"
+    "follow": "Follow us",
+    "ctaHeading": "Start the conversation. Build your brand in Ethiopia.",
+    "ctaBody": "Talk to INTEMA about importing, distribution and growing your brand across the Ethiopian market.",
+    "about": "INTEMA Trading PLC. is a diversified FMCG importer, distributor, manufacturer and exporter, connecting trusted global brands with Ethiopia since 2014.",
+    "links": "Useful links",
+    "services": "Services",
+    "emailLabel": "Email us",
+    "phoneLabel": "Call us",
+    "addressLabel": "Address",
+    "serviceFood": "Food & FMCG distribution",
+    "serviceNonFood": "Non-food & professional care",
+    "serviceProduce": "Own-brand manufacturing",
+    "serviceExport": "Coffee export",
+    "serviceLogistics": "Warehousing & logistics",
+    "serviceMarket": "Market development"
   },
   "NotFound": {
     "title": "Page not found",
@@ -87,7 +112,19 @@
       "invalidEmail": "Enter a valid email address.",
       "tooShort": "Please write at least 10 characters."
     },
-    "formEyebrow": "Contact"
+    "formEyebrow": "Contact",
+    "eyebrow": "Talk to our sales team",
+    "title": "Contact us",
+    "detailsHeading": "Contact details",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone",
+    "follow": "Follow us",
+    "mapEyebrow": "Visit us",
+    "mapHeading": "Find us",
+    "openMap": "Open in Google Maps",
+    "mapTitle": "Map: INTEMA Trading PLC., Addis Ababa",
+    "detailsEyebrow": "Reach us"
   },
   "About": {
     "galleryHeading": "Inside *INTEMA*",

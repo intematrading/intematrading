@@ -1,5 +1,6 @@
 import { HomeIcon } from "@sanity/icons/Home";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { titledTextList } from "./shared";
 
 export const homePage = defineType({
   name: "homePage",
@@ -9,7 +10,8 @@ export const homePage = defineType({
   groups: [
     { name: "hero", title: "Hero", default: true },
     { name: "stats", title: "Snapshot strip" },
-    { name: "cards", title: "Entry cards" },
+    { name: "cards", title: "What we do" },
+    { name: "route", title: "From port to shelf" },
     { name: "commitment", title: "Commitment band" },
     { name: "seo", title: "SEO" },
   ],
@@ -49,7 +51,7 @@ export const homePage = defineType({
       description: "Each card links to its section on the Our Services page.",
       type: "array",
       group: "cards",
-      validation: (r) => r.max(3),
+      validation: (r) => r.max(4),
       of: [
         defineArrayMember({
           type: "object",
@@ -57,12 +59,28 @@ export const homePage = defineType({
           fields: [
             defineField({
               name: "section",
+              title: "Kind",
               type: "string",
-              options: { list: ["import", "produce", "export"], layout: "radio" },
+              options: {
+                list: [
+                  { title: "Food & FMCG distribution", value: "food" },
+                  { title: "Non-food & professional personal care", value: "nonFood" },
+                  { title: "We Produce", value: "produce" },
+                  { title: "We Export", value: "export" },
+                  { title: "We Import (both platforms)", value: "import" },
+                ],
+                layout: "radio",
+              },
               validation: (r) => r.required(),
             }),
             defineField({ name: "title", type: "localeString", validation: (r) => r.required() }),
             defineField({ name: "description", type: "localeString" }),
+            defineField({
+              name: "categories",
+              description: "Shown as chips on the card. Leave empty to list the brands or products instead.",
+              type: "array",
+              of: [defineArrayMember({ type: "localeString" })],
+            }),
             defineField({
               name: "image",
               type: "image",
@@ -74,9 +92,21 @@ export const homePage = defineType({
         }),
       ],
     }),
+    defineField({
+      name: "whatWeDoIntro",
+      title: "What we do intro",
+      type: "localeText",
+      group: "cards",
+      description: "Paragraph beside the What we do cards.",
+    }),
+    defineField({ name: "routeHeading", title: "Heading", type: "localeString", group: "route" }),
+    defineField({ name: "routeIntro", title: "Intro", type: "localeText", group: "route" }),
+    titledTextList("routeSteps", "Steps", "route"),
     defineField({ name: "commitmentEyebrow", title: "Small label", type: "localeString", group: "commitment" }),
     defineField({ name: "commitmentHeadline", title: "Headline", type: "localeString", group: "commitment" }),
     defineField({ name: "commitmentBody", title: "Paragraph", type: "localeText", group: "commitment" }),
+    defineField({ name: "mission", title: "Mission (glass card)", type: "localeText", group: "commitment", description: "Short, Ethiopia-only. Falls back to the About page mission." }),
+    defineField({ name: "vision", title: "Vision (glass card)", type: "localeText", group: "commitment", description: "Short, Ethiopia-only. Falls back to the About page vision." }),
     defineField({
       name: "commitmentImage",
       title: "Photo",

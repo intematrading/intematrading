@@ -8,6 +8,9 @@ export type Placeholder = { src: string; position?: string };
 export const placeholders = {
   hero: { src: "/placeholders/hero-port.jpg", position: "50% 60%" },
   import: { src: "/placeholders/import-ship.jpg" },
+  // What we do platform cards
+  food: { src: "/placeholders/produce-shelves.jpg" },
+  nonFood: { src: "/placeholders/nonfood-haircare.jpg", position: "60% 50%" },
   produce: { src: "/placeholders/produce-stick-candles.jpg", position: "50% 100%" },
   export: { src: "/placeholders/export-coffee.jpg" },
   stats: { src: "/placeholders/about-fleet.jpg" },
@@ -36,6 +39,7 @@ export const productPlaceholders: Record<string, Placeholder> = {
   "brand-international-collection": product("international-collection"),
   "brand-power-horse": product("power-horse"),
   "brand-irn-bru": product("irn-bru"),
+  "brand-loreal-professionnel": { src: "/placeholders/nonfood-haircare.jpg", position: "60% 50%" },
   "produce-abay": { src: "/placeholders/abay-candles.jpg", position: "25% 100%" },
   "produce-skor": product("soap-1"),
   "produce-cool": product("soap-2"),

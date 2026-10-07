@@ -45,7 +45,8 @@ export const siteSettings: SiteSettings = {
   seo: {
     title: { en: "INTEMA Trading PLC.", am: "ኢንተማ ትሬዲንግ" },
     description: {
-      en: "Since 2014, INTEMA Trading PLC. has connected trusted global brands with retailers across Ethiopia, Djibouti & Sudan.",
+      en: "Since 2014, INTEMA Trading PLC. has been connecting trusted global brands with Ethiopia.",
+    fr: "Depuis 2014, INTEMA Trading PLC. relie des marques mondiales de confiance à l’Éthiopie.",
       am: "ከ2014 ጀምሮ ኢንተማ ትሬዲንግ የታመኑ ዓለም አቀፍ ብራንዶችን በኢትዮጵያ፣ በጅቡቲና በሱዳን ከሚገኙ ቸርቻሪዎች ጋር ሲያገናኝ ቆይቷል።",
     },
   },
@@ -72,13 +73,15 @@ export const homePage: HomePage = {
     },
     {
       _key: "market",
-      value: "170M",
+      value: "135M",
       label: {
-        en: "Combined market across Ethiopia, Djibouti & Sudan",
+        en: "Ethiopian market",
+        fr: "Marché éthiopien",
         am: "በኢትዮጵያ፣ በጅቡቲና በሱዳን ያለ ጥምር ገበያ",
       },
       note: {
-        en: "Ethiopia, Djibouti and Sudan together make up a market of roughly 170 million people.",
+        en: "Africa’s second most populous country, with around 135 million people.",
+        fr: "Le deuxième pays le plus peuplé d’Afrique, avec environ 135 millions d’habitants.",
         am: "ኢትዮጵያ፣ ጅቡቲና ሱዳን በአንድነት ወደ 170 ሚሊዮን የሚጠጋ ሕዝብ ያለው ገበያ ናቸው።",
       },
     },
@@ -92,14 +95,27 @@ export const homePage: HomePage = {
       },
     },
   ],
+  whatWeDoIntro: {
+    en: "INTEMA Trading PLC. is an FMCG importer, distributor, manufacturer and exporter, connecting trusted global brands with wholesale and retail markets across Ethiopia.",
+    fr: "INTEMA Trading PLC. est un importateur, distributeur, fabricant et exportateur de produits de grande consommation qui relie des marques mondiales de confiance aux marchés de gros et de détail de toute l’Éthiopie.",
+  },
   entryCards: [
     {
-      _key: "import",
-      section: "import",
-      title: { en: "We Import", am: "እናስመጣለን" },
+      _key: "food",
+      section: "food",
+      title: { en: "Food & FMCG", fr: "Alimentaire & PGC" },
       description: {
-        en: "Trusted global FMCG brands, food and non-food",
-        am: "የታመኑ ዓለም አቀፍ የፍጆታ ምርት ብራንዶች — ምግብና ምግብ ነክ ያልሆኑ",
+        en: "We import and distribute food, beverages and fast-moving consumer goods through wholesale and retail channels.",
+        fr: "Nous importons et distribuons des produits alimentaires, des boissons et des produits de grande consommation via les circuits de gros et de détail.",
+      },
+    },
+    {
+      _key: "nonFood",
+      section: "nonFood",
+      title: { en: "Non-food & professional care", fr: "Non-alimentaire & soins professionnels" },
+      description: {
+        en: "Selected international brands in personal care, beauty and hygiene, plus a specialised channel for salon and professional beauty markets.",
+        fr: "Des marques internationales sélectionnées en soins personnels, beauté et hygiène, ainsi qu’un circuit spécialisé pour les salons et les marchés de la beauté professionnelle.",
       },
     },
     {
@@ -128,14 +144,19 @@ export const homePage: HomePage = {
     en: "We build strong relationships with key customers so we're viewed as indispensable partners, not just another supplier.",
     am: "ከቁልፍ ደንበኞቻችን ጋር ጠንካራ ግንኙነት በመገንባት እንደ ሌላ አቅራቢ ሳይሆን እንደ አስፈላጊ አጋር እንድንታይ እንሠራለን።",
   },
+  mission: {
+    en: "To be an indispensable partner to our key customers, not just another supplier: advising on assortment, stock levels, pricing, display and promotions.",
+  },
+  vision: {
+    en: "To become Ethiopia's recognised distributor of specialty food, cosmetic and personal care products to wholesale and retail outlets.",
+  },
   // Descriptions are the company profile's own wording (Keys to success and
   // Our partners).
   commitmentPoints: [
     {
       title: { en: "Innovative, quality products", am: "ፈጠራ የታከለባቸው ጥራት ያላቸው ምርቶች" },
       description: {
-        en: "Trusted global food and non-food brands, imported and distributed across Ethiopia, Djibouti and Sudan.",
-        am: "የታመኑ ዓለም አቀፍ የምግብና ምግብ ነክ ያልሆኑ ብራንዶችን በኢትዮጵያ፣ በጅቡቲና በሱዳን እናስመጣለን፣ እናከፋፍላለን።",
+        en: "Trusted global food and non-food brands, imported and distributed across Ethiopia.",
       },
     },
     {

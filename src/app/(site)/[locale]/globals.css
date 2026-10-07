@@ -117,18 +117,24 @@
 }
 
 @layer base {
-  /* Left padding for content inside a centred 80rem column so it clears the
-     fixed left side nav even when expanded (~11.5rem wide + gap): 13rem from
-     the screen edge, less whatever margin the centred column already has,
-     never below 2rem. */
+  /* --bar-h: height of the fixed top bar (see SiteHeader); --rail-pad:
+     desktop side padding of page content (see Container). */
   :root {
-    --rail-pad: max(2rem, calc(13rem - max(0px, (100vw - 80rem) / 2)));
+    --bar-h: 3.25rem;
+    --rail-pad: 2rem;
+  }
+  @media (min-width: 64rem) {
+    :root {
+      --bar-h: 3.5rem;
+    }
+  }
+  /* Sections scrolled to by the nav land just below the top bar. */
+  section[id],
+  footer[id] {
+    scroll-margin-top: calc(var(--bar-h) + 1.5rem);
   }
   html {
     scroll-behavior: smooth;
-    /* Keep the scrollbar's space while a drawer locks the page, so the
-       page doesn't shift sideways. */
-    scrollbar-gutter: stable;
     -webkit-text-size-adjust: 100%;
   }
   @media (prefers-reduced-motion: reduce) {

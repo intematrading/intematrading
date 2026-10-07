@@ -7,7 +7,8 @@
     "contact": "Contact",
     "primary": "Navigation principale",
     "openMenu": "Ouvrir le menu",
-    "closeMenu": "Fermer le menu"
+    "closeMenu": "Fermer le menu",
+    "whatsapp": "Écrivez-nous sur WhatsApp"
   },
   "Common": {
     "skipToContent": "Aller au contenu",
@@ -24,8 +25,8 @@
     "switchTo": "Passer en {language}"
   },
   "Home": {
-    "snapshotHeading": "En chiffres",
-    "snapshotIntro": "Importateur, distributeur, fabricant et exportateur de produits de grande consommation, au service des marchés de gros et de détail dans trois pays depuis notre base d'Addis-Abeba.",
+    "snapshotHeading": "À propos d’INTEMA",
+    "snapshotIntro": "Importateur, distributeur, fabricant et exportateur de produits de grande consommation, nous relions des marques mondiales de confiance aux marchés éthiopiens depuis notre base d'Addis-Abeba.",
     "importedBrands": "Marques que nous importons",
     "moreItems": "+{count} de plus",
     "ourServices": "Nos services",
@@ -33,14 +34,20 @@
     "aboutUs": "À propos de nous",
     "getInTouch": "Prenons *contact*",
     "scrollDown": "Faire défiler",
-    "outroEyebrow": "Autres services",
-    "outroHeading": "Besoin d'autre chose ?",
-    "outroCta": "Découvrir nos services",
-    "outroBody": "Nos services vont au-delà de ce qui est présenté ici. Dites-nous ce dont vous avez besoin et notre équipe trouvera une solution.",
-    "outroSide": "Parlons-en",
     "ourTeam": "Notre équipe",
     "meetTeam": "Découvrez *notre équipe*",
-    "viewTeam": "Rencontrer toute l'équipe"
+    "viewTeam": "Rencontrer toute l'équipe",
+    "categories": "Catégories",
+    "routeHeading": "Du port au rayon",
+    "portfolioEyebrow": "Notre portefeuille",
+    "brandsHeading": "Marques que nous importons",
+    "brandsIntro": "Des marques alimentaires et non alimentaires venues d'Amérique, d'Europe et d'Asie, distribuées dans toute l'Éthiopie.",
+    "mainImporter": "Principal importateur de",
+    "routeMore": "Et plus",
+    "routeMoreBody": "Logistique, connaissance du marché et le reste de notre offre.",
+    "allServices": "Tous les services",
+    "mission": "Mission",
+    "vision": "Vision"
   },
   "Services": {
     "import": "Nous importons",
@@ -52,14 +59,32 @@
     "targetMarkets": "Marchés cibles",
     "ourProducts": "Nos produits",
     "closePreview": "Fermer l'aperçu",
-    "viewItem": "Voir {name}"
+    "viewItem": "Voir {name}",
+    "marketEyebrow": "Opportunité de marché",
+    "sourcingHeading": "Nos régions d'approvisionnement",
+    "brandCount": "{count, plural, one {# marque} other {# marques}}",
+    "productCount": "{count, plural, one {# produit} other {# produits}}"
   },
   "Footer": {
-    "contact": "Coordonnées",
+    "contact": "Nous contacter",
     "phone": "Téléphone",
     "email": "E-mail",
     "rights": "Tous droits réservés.",
-    "follow": "Suivez-nous"
+    "follow": "Suivez-nous",
+    "ctaHeading": "Engageons la conversation. Développez votre marque en Éthiopie.",
+    "ctaBody": "Parlez avec INTEMA d’importation, de distribution et du développement de votre marque sur le marché éthiopien.",
+    "about": "INTEMA Trading PLC. est un importateur, distributeur, fabricant et exportateur de produits de grande consommation qui relie des marques mondiales de confiance à l’Éthiopie depuis 2014.",
+    "links": "Liens utiles",
+    "services": "Services",
+    "emailLabel": "Écrivez-nous",
+    "phoneLabel": "Appelez-nous",
+    "addressLabel": "Adresse",
+    "serviceFood": "Distribution alimentaire & PGC",
+    "serviceNonFood": "Non-alimentaire & soins professionnels",
+    "serviceProduce": "Fabrication de nos marques",
+    "serviceExport": "Exportation de café",
+    "serviceLogistics": "Entreposage & logistique",
+    "serviceMarket": "Développement du marché"
   },
   "NotFound": {
     "title": "Page introuvable",
@@ -87,7 +112,19 @@
       "invalidEmail": "Saisissez une adresse e-mail valide.",
       "tooShort": "Veuillez écrire au moins 10 caractères."
     },
-    "formEyebrow": "Contact"
+    "formEyebrow": "Contact",
+    "eyebrow": "Parlez à notre équipe commerciale",
+    "title": "Contactez-nous",
+    "detailsHeading": "Coordonnées",
+    "address": "Adresse",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "follow": "Suivez-nous",
+    "mapEyebrow": "Venez nous voir",
+    "mapHeading": "Nous trouver",
+    "openMap": "Ouvrir dans Google Maps",
+    "mapTitle": "Carte : INTEMA Trading PLC., Addis-Abeba",
+    "detailsEyebrow": "Nous joindre"
   },
   "About": {
     "galleryHeading": "Au cœur d'*INTEMA*",

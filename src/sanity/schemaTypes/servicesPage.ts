@@ -1,6 +1,6 @@
 import { PackageIcon } from "@sanity/icons/Package";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { imageWithAlt } from "./shared";
+import { imageWithAlt, statList, titledTextList } from "./shared";
 
 export const servicesPage = defineType({
   name: "servicesPage",
@@ -8,7 +8,8 @@ export const servicesPage = defineType({
   type: "document",
   icon: PackageIcon,
   groups: [
-    { name: "import", title: "We Import", default: true },
+    { name: "market", title: "Why Ethiopia?", default: true },
+    { name: "import", title: "We Import" },
     { name: "produce", title: "We Produce" },
     { name: "export", title: "We Export" },
     { name: "seo", title: "SEO" },
@@ -25,10 +26,18 @@ export const servicesPage = defineType({
     imageWithAlt("heroImage", "Header photo"),
 
     // We Import — the brand logos themselves are "Brand" documents.
+    // Why Ethiopia?
+    defineField({ name: "marketHeading", title: "Heading", type: "localeString", group: "market" }),
+    defineField({ name: "marketIntro", title: "Intro", type: "localeText", group: "market" }),
+    statList("marketStats", "Market figures", "market"),
+    defineField({ name: "marketSource", title: "Sources line", type: "localeString", group: "market", description: "Shown in small print under the figures." }),
+
     defineField({ name: "importHeading", type: "localeString", group: "import" }),
     defineField({ name: "importIntro", type: "localeText", group: "import" }),
     defineField({ name: "nonFoodIntro", title: "Non-food category description", type: "localeText", group: "import" }),
     defineField({ name: "foodIntro", title: "Food category description", type: "localeText", group: "import" }),
+
+    titledTextList("sourcingRegions", "Where we source", "import"),
 
     // We Produce
     defineField({ name: "produceHeading", type: "localeString", group: "produce" }),

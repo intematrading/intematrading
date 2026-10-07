@@ -15,10 +15,8 @@ const nextConfig: NextConfig = {
     // 90 for large full-bleed background photos.
     qualities: [75, 90],
   },
-  // Contact is no longer its own page: the inquiry form is in the footer.
   async redirects() {
     return [
-      { source: "/:locale(en|fr)/contact", destination: "/:locale#contact", permanent: false },
       // The site was English/Amharic before French replaced Amharic.
       { source: "/am", destination: "/fr", permanent: false },
       { source: "/am/:path*", destination: "/fr/:path*", permanent: false },

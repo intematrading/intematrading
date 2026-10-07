@@ -1,29 +1,43 @@
-import { ArrowRight, BadgeCheck, Flame, Handshake, Plane, ShieldCheck, Ship } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Flame,
+  Handshake,
+  Plane,
+  ShieldCheck,
+  Ship,
+  ShoppingBasket,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Accent } from "@/components/Accent";
+import { BranchLines } from "@/components/BranchLines";
 import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
 import { CursorSway } from "@/components/CursorSway";
 import { Eyebrow } from "@/components/Eyebrow";
-import { HorizontalScroll } from "@/components/HorizontalScroll";
 import { IconBox } from "@/components/IconBox";
-import { Logo } from "@/components/Logo";
+import { PartnerStrip } from "@/components/Partners";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
-import { PinnedMorph } from "@/components/PinnedMorph";
+import { BrandGrid } from "@/components/ProductGrid";
+import { ProductPreviewProvider } from "@/components/ProductPreview";
 import { ScrollStage } from "@/components/ScrollStage";
 import { SectionHeading } from "@/components/SectionHeading";
 import { statIcon } from "@/components/stat-icons";
 import { Reveal } from "@/components/Reveal";
+import { RouteSteps } from "@/components/RouteSteps";
 import { TeamCard } from "@/components/TeamCard";
 import { Testimonials } from "@/components/Testimonials";
 import { placeholders } from "@/content/placeholders";
-import type { ServiceSection } from "@/content/types";
+import type { CardKind } from "@/content/types";
 import { Link } from "@/i18n/navigation";
 import {
+  getAboutPage,
   getBrands,
   getExportItems,
   getHomePage,
@@ -37,8 +51,29 @@ import {
 } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
-const sectionIcons: Record<ServiceSection, typeof Ship> = { import: Ship, produce: Flame, export: Plane };
+const cardIcons: Record<CardKind, LucideIcon> = {
+  food: ShoppingBasket,
+  nonFood: Sparkles,
+  import: Ship,
+  produce: Flame,
+  export: Plane,
+};
 const pointIcons = [ShieldCheck, BadgeCheck, Handshake];
+// What we do from xl: cards span two of five rows; the left column starts a
+// row down, so each right card's middle lines up with a gap on the left
+// (where its branch line passes).
+const staggered = [
+  "xl:col-start-1 xl:row-span-2 xl:row-start-2",
+  "xl:col-start-2 xl:row-span-2 xl:row-start-1",
+  "xl:col-start-1 xl:row-span-2 xl:row-start-4",
+  "xl:col-start-2 xl:row-span-2 xl:row-start-3",
+];
+// Brands INTEMA is the main importer of (logos in public/).
+const mainImporterLogos = [
+  // Heights balanced by eye: L'Oréal's thin, wide wordmark vs Heinz's compact badge.
+  { name: "L'Oréal", src: "/loreal-logo.svg", width: 800, height: 145, size: "h-9 sm:h-11" },
+  { name: "Heinz", src: "/heinz-logo.svg", width: 1024, height: 459, size: "h-11 sm:h-14" },
+];
 
 
 export async function generateMetadata({ params }: PageProps<"/[locale]">): Promise<Metadata> {
@@ -52,9 +87,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [home, settings, services, teamPage, teamMembers, testimonials, brands, producedItems, exportItems, t, common, svc] = await Promise.all([
+  const [home, about, services, teamPage, teamMembers, testimonials, brands, producedItems, exportItems, t, common, svc] = await Promise.all([
     getHomePage(),
-    getSiteSettings(),
+    getAboutPage(),
     getServicesPage(),
     getTeamPage(),
     getTeamMembers(),
@@ -74,30 +109,35 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const cards = home.entryCards ?? [];
 
   const stats = home.stats ?? [];
-  // Real brands/products shown as chips on each What we do panel.
-  const itemsFor: Record<ServiceSection, { label: string; names: string[] }> = {
-    import: { label: t("importedBrands"), names: brands.map((b) => b.name) },
-    produce: { label: svc("ourProducts"), names: producedItems.map((p) => tr(p.name, locale)) },
-    export: { label: svc("exportBrands"), names: exportItems.map((e) => e.name) },
+  // Mission and vision cards: Home's short versions, else the About page's.
+  const mission = tr(home.mission ?? about.mission, locale);
+  const vision = tr(home.vision ?? about.vision, locale);
+  const glass = "rounded-3xl bg-white/12 shadow-2xl ring-1 ring-white/30 backdrop-blur-xl backdrop-saturate-150 ring-inset";
+  const food = brands.filter((b) => b.category === "food");
+  const nonFood = brands.filter((b) => b.category === "nonFood");
+  // Chips on each What we do card: its categories when set in Sanity,
+  // otherwise its real brands / products.
+  const itemsFor = (card: (typeof cards)[number]): { label: string; names: string[] } => {
+    if (card.categories?.length) return { label: t("categories"), names: card.categories.map((c) => tr(c, locale)) };
+    switch (card.section) {
+      case "food":
+        return { label: t("importedBrands"), names: food.map((b) => b.name) };
+      case "nonFood":
+        return { label: t("importedBrands"), names: nonFood.map((b) => b.name) };
+      case "produce":
+        return { label: svc("ourProducts"), names: producedItems.map((p) => tr(p.name, locale)) };
+      case "export":
+        return { label: svc("exportBrands"), names: exportItems.map((e) => e.name) };
+      default:
+        return { label: t("importedBrands"), names: brands.map((b) => b.name) };
+    }
   };
 
   return (
     <div className="flex flex-col bg-steel-100">
-      {/* ── Hero: pinned while it grows from an inset rounded panel to the
-          full screen (margins and corners shrink with scroll), then it
-          scrolls away. Logo top-left, content centred. ───────────────── */}
-      {/* Phones and tablets: no pinning or growing, the hero starts full
-          screen (with no scroll run the stage's progress is 1: no inset, no
-          corners). */}
-      <ScrollStage reducedValue={0} className="relative h-[175svh] motion-reduce:h-auto max-lg:h-auto">
-        <div
-          className="sticky top-0 h-svh [--gap:0.75rem] sm:[--gap:1rem] motion-reduce:static max-lg:static"
-          style={{ padding: "calc(var(--gap) * (1 - var(--p)))" }}
-        >
-          <section
-            className="on-dark relative isolate flex h-full min-h-[36rem] flex-col overflow-hidden text-paper"
-            style={{ borderRadius: "calc(2rem * (1 - var(--p)))" }}
-          >
+      {/* ── Hero: full screen from the start, content centred. The top
+          bar slides in once the page is scrolled. ───────────────────── */}
+      <section className="on-dark relative isolate flex h-svh min-h-[36rem] flex-col overflow-hidden text-paper">
             <div className="absolute inset-0 -z-20">
               <PhotoFrame
                 image={home.heroImage}
@@ -120,8 +160,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             <Container className="flex flex-1 flex-col pt-6 pb-8 sm:pt-7 sm:pb-12">
               {/* Centred content */}
               <div className="flex flex-1 flex-col items-center justify-center py-10 text-center">
-                {/* White logo above the headline */}
-                <Logo alt={tr(settings.companyName, locale)} tone="white" className="mb-8 h-20 w-auto sm:mb-10 sm:h-24" priority />
                 <h1 className="max-w-4xl">
                   {headline ? (
                     <>
@@ -144,14 +182,14 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                   <ButtonLink href="/services" variant="redOnDark">
                     {common("exploreServices")}
                   </ButtonLink>
-                  <ButtonLink href="/#contact" variant="outline">
+                  <ButtonLink href="/contact" variant="outline">
                     {common("contactUs")}
                   </ButtonLink>
                 </div>
               </div>
             </Container>
 
-            {/* Right edge: a thin vertical line mirroring the side nav's, with a
+            {/* Right edge: a thin vertical line with a
                 dot travelling down it and "Scroll down" beneath */}
             <div aria-hidden="true" className="absolute top-1/2 right-[2.125rem] hidden -translate-y-1/2 flex-col items-center gap-4 lg:flex xl:right-[2.625rem]">
               <span className="relative h-32 w-px bg-paper/15">
@@ -161,9 +199,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 {t("scrollDown")}
               </span>
             </div>
-          </section>
-        </div>
-      </ScrollStage>
+      </section>
 
       {/* ── Snapshot: slides up, then pins while the stats animate in one
           by one (driven by scroll), then scrolls on. ────────────────── */}
@@ -190,13 +226,14 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                   {common("learnMore")}
                 </ButtonLink>
               </div>
-              <ul className="divide-y divide-steel-300 lg:col-span-6 lg:col-start-7">
+              {/* 2x2 grid, cells split by a faded cross */}
+              <ul className="relative grid gap-y-10 sm:grid-cols-2 sm:gap-y-0 lg:col-span-7 lg:col-start-6 sm:before:absolute sm:before:inset-y-0 sm:before:left-1/2 sm:before:w-px sm:before:bg-linear-to-b sm:before:from-transparent sm:before:via-steel-300 sm:before:to-transparent sm:after:absolute sm:after:inset-x-0 sm:after:top-1/2 sm:after:h-px sm:after:bg-linear-to-r sm:after:from-transparent sm:after:via-steel-300 sm:after:to-transparent">
                 {stats.map((stat, i) => {
                   const Icon = statIcon(stat._key);
                   return (
                     <li
                       key={stat._key}
-                      className="scroll-reveal flex items-start gap-5 py-7 first:pt-0 last:pb-0 sm:gap-8 sm:py-[clamp(1rem,4.5svh,2.5rem)] max-lg:!opacity-100 max-lg:![transform:none] sm:max-lg:py-8"
+                      className="scroll-reveal flex items-start gap-5 sm:p-[clamp(1.25rem,4svh,2.5rem)] max-lg:!opacity-100 max-lg:![transform:none]"
                       style={{ "--start": 0.05 + (i / stats.length) * 0.6, "--span": 0.18 } as React.CSSProperties}
                     >
                       <IconBox icon={Icon} size="lg" className="mt-1" />
@@ -204,7 +241,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                       <div className="flex flex-col-reverse">
                         <p className="mt-2">
                           <span className="block text-lg font-semibold text-ink">{tr(stat.label, locale)}</span>
-                          {stat.note && <span className="mt-1.5 block max-w-md text-muted">{tr(stat.note, locale)}</span>}
+                          {stat.note && <span className="mt-1.5 block max-w-xs text-muted">{tr(stat.note, locale)}</span>}
                         </p>
                         <p className="font-display-heading text-steel-gradient text-5xl leading-none sm:text-[clamp(2.5rem,7svh,3.75rem)]" lang="en">
                           {stat.value}
@@ -219,194 +256,203 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </ScrollStage>
       ) : null}
 
-      {/* ── Commitment band: arrives as a plain full-width rectangle; once
-          it fills the screen (edge to edge, full height) it holds while it
-          shrinks to its content height and side margins and rounded corners
-          grow in — the hero's expansion in reverse — then scrolls on. ─── */}
+      {/* ── Commitment band: full width and at least a screen tall. The
+          headline and paragraph on the left; on the right, glass cards for
+          the mission and vision above the three commitment points. ──── */}
       {home.commitmentHeadline && (
-        // "About" in the side nav
-        <div id="about" data-nav-section="/about">
-        <PinnedMorph>
-          <div className="[--gap:0.75rem] sm:[--gap:1rem]" style={{ paddingInline: "calc(var(--gap) * var(--p))" }}>
-            <section
-              aria-labelledby="commitment-heading"
-              className="on-dark relative isolate flex items-center overflow-hidden text-paper"
-              style={{
-                borderRadius: "calc(2rem * var(--p))",
-                minHeight: "calc(var(--full, 0px) - (var(--full, 0px) - var(--nat, 0px)) * var(--p))",
-              }}
-            >
-              {/* Even near-black tint on phones (stacked text over the photo); a fade
-                  from the left on desktop, leaving the right side clear. */}
-              <PhotoBackdrop
-                image={home.commitmentImage}
-                placeholder={placeholders.commitment}
-                locale={locale}
-                sizes="100vw"
-                icon={Handshake}
-                overlay="bg-black/55 lg:bg-transparent lg:bg-linear-to-r lg:from-black/75 lg:from-25% lg:via-black/45 lg:via-50% lg:to-black/5"
-              />
-              <div data-natural className="w-full">
-              <Container className="grid gap-10 py-12 sm:py-14 lg:grid-cols-12 lg:items-center lg:gap-8">
-                <div className="lg:col-span-5">
-                  <SectionHeading id="commitment-heading" eyebrow={tr(home.commitmentEyebrow, locale)} size="band" onDark>
-                    {tr(home.commitmentHeadline, locale)}
-                  </SectionHeading>
-                  {home.commitmentBody && <p className="mt-6 max-w-sm text-paper/90">{tr(home.commitmentBody, locale)}</p>}
-                  <ButtonLink href="/about" variant="redOnDark" className="mt-8">
-                    {t("aboutUs")}
-                  </ButtonLink>
-                </div>
+        <section id="about" aria-labelledby="commitment-heading" className="on-dark relative isolate flex min-h-svh items-center overflow-hidden text-paper">
+          {/* Even near-black tint on phones (stacked text over the photo); a fade
+              from the left on desktop, leaving the right side clear. */}
+          <PhotoBackdrop
+            image={home.commitmentImage}
+            placeholder={placeholders.commitment}
+            locale={locale}
+            sizes="100vw"
+            icon={Handshake}
+            overlay="bg-black/55 lg:bg-transparent lg:bg-linear-to-r lg:from-black/75 lg:from-25% lg:via-black/45 lg:via-50% lg:to-black/5"
+          />
+          <Container className="grid gap-10 py-16 sm:py-20 lg:grid-cols-12 lg:items-center lg:gap-8">
+            <Reveal className="lg:col-span-5">
+              <SectionHeading id="commitment-heading" eyebrow={tr(home.commitmentEyebrow, locale)} size="band" onDark>
+                {tr(home.commitmentHeadline, locale)}
+              </SectionHeading>
+              {home.commitmentBody && <p className="mt-6 max-w-sm text-paper/90">{tr(home.commitmentBody, locale)}</p>}
+              <ButtonLink href="/about" variant="redOnDark" className="mt-8">
+                {t("aboutUs")}
+              </ButtonLink>
+            </Reveal>
 
-                {home.commitmentPoints?.length ? (
-                  <div className="rounded-3xl bg-white/12 p-6 shadow-2xl ring-1 ring-white/30 backdrop-blur-xl backdrop-saturate-150 ring-inset sm:p-8 lg:col-span-6 lg:col-start-7 xl:p-10">
-                    <ul className="w-full divide-y divide-white/20">
-                      {home.commitmentPoints.map((point, i) => {
-                        const Icon = pointIcons[i % pointIcons.length];
-                        return (
-                          <li key={point._key ?? point.title.en} className="flex items-start gap-5 py-5 first:pt-0 last:pb-0">
-                            <IconBox icon={Icon} />
-                            <div>
-                              <h3 className="text-lg leading-snug font-bold text-paper">{tr(point.title, locale)}</h3>
-                              {point.description && <p className="mt-1 text-sm text-paper/85 sm:text-base">{tr(point.description, locale)}</p>}
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                ) : null}
-              </Container>
-              </div>
-            </section>
-          </div>
-        </PinnedMorph>
-        </div>
+            <div className="grid gap-4 sm:gap-5 lg:col-span-7 lg:col-start-6">
+              {mission || vision ? (
+                <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+                  {[
+                    { key: "mission", title: t("mission"), text: mission },
+                    { key: "vision", title: t("vision"), text: vision },
+                  ].map(({ key, title, text }) =>
+                    text ? (
+                      <Reveal key={key} className="h-full">
+                        <div className={`${glass} h-full p-6 sm:p-8`}>
+                          <h3 className="text-lg font-bold text-paper">{title}</h3>
+                          <p className="mt-2 text-sm text-paper/85 sm:text-base">{text}</p>
+                        </div>
+                      </Reveal>
+                    ) : null,
+                  )}
+                </div>
+              ) : null}
+              {home.commitmentPoints?.length ? (
+                <Reveal>
+                  <ul className={`${glass} divide-y divide-white/20 p-6 sm:p-8 xl:p-10`}>
+                    {home.commitmentPoints.map((point, i) => {
+                      const Icon = pointIcons[i % pointIcons.length];
+                      return (
+                        <li key={point._key ?? point.title.en} className="flex max-w-xl items-start gap-5 py-5 first:pt-0 last:pb-0">
+                          <IconBox icon={Icon} />
+                          <div>
+                            <h3 className="text-lg leading-snug font-bold text-paper">{tr(point.title, locale)}</h3>
+                            {point.description && <p className="mt-1 text-sm text-paper/85 sm:text-base">{tr(point.description, locale)}</p>}
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </Reveal>
+              ) : null}
+            </div>
+          </Container>
+        </section>
       )}
 
-      {/* ── What we do: pinned, and scrolling down moves a row of large
-          photo cards (shaded steel-to-black, real brands as chips)
-          sideways, after an intro. ──────────────────────────────────── */}
-      {cards.length ? (
-        // "Services" in the side nav
-        <section id="services" data-nav-section="/services" aria-labelledby="what-we-do">
-          <HorizontalScroll>
-            <div
-              data-panel
-              className="flex w-[min(28rem,85vw)] shrink-0 flex-col justify-center px-1 sm:px-6 lg:w-[30rem] lg:px-10 max-lg:w-full max-lg:max-w-2xl"
-              // Slides in from the left as the section scrolls up
-              style={{ transform: "translateX(calc(-40vw * (1 - var(--enter))))", opacity: "var(--enter)" }}
-            >
-              <SectionHeading id="what-we-do" eyebrow={t("ourServices")}>
-                {t("whatWeDo")}
-              </SectionHeading>
-              {services.intro && <p className="mt-6 text-muted">{tr(services.intro, locale)}</p>}
-              {/* The three main services: icon, name and a short description */}
-              <ul className="mt-8 space-y-5">
-                {cards.map((card) => (
-                  <li key={card._key} className="flex items-start gap-4">
-                    <IconBox icon={sectionIcons[card.section]} />
-                    <div>
-                      <p className="text-lg leading-snug font-semibold text-ink">{tr(card.title, locale)}</p>
-                      {card.description && <p className="mt-1 text-sm text-muted">{tr(card.description, locale)}</p>}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            {cards.map((card, i) => {
-              const Icon = sectionIcons[card.section];
-              const items = itemsFor[card.section];
-              return (
-                <Link
-                  key={card._key}
-                  data-panel
-                  href="/services"
-                  style={{ transform: `translateX(calc(${30 + i * 15}vw * (1 - var(--enter))))` }}
-                  className="group on-dark relative isolate flex h-[calc(100svh-6rem)] max-h-[40rem] w-[84vw] shrink-0 max-lg:h-[min(34rem,80svh)] max-lg:w-full flex-col overflow-hidden rounded-[1.75rem] p-7 text-paper shadow-lg transition-shadow hover:shadow-2xl sm:rounded-[2rem] sm:p-10 lg:w-[58vw] lg:p-12"
-                >
-                  <div className="absolute inset-0 -z-20">
-                    <PhotoFrame
-                      image={card.image}
-                      placeholder={placeholders[card.section]}
-                      locale={locale}
-                      width={1400}
-                      height={1000}
-                      sizes="(min-width: 1024px) 58vw, 84vw"
-                      icon={Icon}
-                      className="transition-transform duration-700 group-hover:scale-[1.03] motion-reduce:transition-none"
-                    />
-                  </div>
-                  {/* Steel-to-black shade rising from the bottom, where the text sits */}
-                  <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-black/90 via-steel-800/55 via-50% to-steel-700/45" />
-                  {/* Darker edges all round */}
-                  <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgb(0_0_0/0.75)_100%)]" />
-
-                  <span aria-hidden="true" className="font-display-heading self-end text-5xl text-paper/80 drop-shadow-lg sm:text-7xl" lang="en">
-                    0{i + 1}
-                  </span>
-
-                  <div className="mt-auto grid gap-8 lg:grid-cols-2 lg:items-end lg:gap-12">
-                    <div>
-                      <h3 className="font-display-heading text-5xl text-paper sm:text-6xl xl:text-7xl">
-                        {tr(card.title, locale)}
-                      </h3>
-                      {card.description && <p className="mt-4 max-w-sm text-lg text-paper/85">{tr(card.description, locale)}</p>}
-                      <span className="mt-7 inline-flex items-center gap-2 rounded-full bg-paper px-6 py-3 text-sm font-bold text-ink transition-colors group-hover:bg-steel-200 sm:text-base">
-                        {common("learnMore")}
-                        <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-0.5" />
-                      </span>
-                    </div>
-                    {items.names.length ? (
-                      <div className="hidden sm:block">
-                        <p className="label-caps text-paper/75">{items.label}</p>
-                        <ul className="mt-4 flex flex-wrap gap-2">
-                          {items.names.slice(0, 8).map((name) => (
-                            <li key={name} className="rounded-full bg-white/12 px-4 py-2 text-sm font-semibold text-paper ring-1 ring-white/25 backdrop-blur-md">
-                              {name}
-                            </li>
-                          ))}
-                          {items.names.length > 8 && (
-                            <li className="rounded-full bg-white/12 px-4 py-2 text-sm font-semibold text-paper ring-1 ring-white/25 backdrop-blur-md">
-                              {t("moreItems", { count: items.names.length - 8 })}
-                            </li>
-                          )}
-                        </ul>
-                      </div>
-                    ) : null}
-                  </div>
-                </Link>
-              );
-            })}
-            {/* Closing panel: "more services" note, right-aligned, with a
-                vertical line and label echoing the hero's scroll cue */}
-            <div data-panel className="flex w-[min(34rem,90vw)] shrink-0 items-center justify-end gap-14 px-4 sm:px-10 lg:w-[48rem] lg:gap-28 lg:px-20 max-lg:w-full max-lg:pt-6">
-              <div className="flex flex-col items-end text-right">
-                <SectionHeading id="what-we-do-outro" eyebrow={t("outroEyebrow")}>
-                  {t("outroHeading")}
+      {/* ── Brands we import: "main importer of …" highlight, then the
+          food and non-food brands, each as text beside a loose grid of
+          small product tiles (as on the Services page) */}
+      {brands.length ? (
+        <section aria-labelledby="brands-heading" className="py-16 sm:py-24">
+          <Container>
+            <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-6">
+                <SectionHeading id="brands-heading" eyebrow={t("portfolioEyebrow")}>
+                  {t("brandsHeading")}
                 </SectionHeading>
-                <p className="mt-6 max-w-sm text-muted sm:text-lg">{t("outroBody")}</p>
-                <ButtonLink href="/services" variant="red" className="mt-8">
-                  {t("outroCta")}
-                </ButtonLink>
+                <p className="mt-6 max-w-xl text-muted sm:text-lg">{t("brandsIntro")}</p>
               </div>
-              <div aria-hidden="true" className="hidden flex-col items-center gap-4 sm:flex">
-                <span className="relative h-32 w-px bg-steel-400/40">
-                  <span className="animate-scroll-dot absolute top-0 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-steel-500 motion-reduce:hidden" />
-                </span>
-                <span className="text-[0.625rem] font-semibold tracking-[0.25em] text-steel-600 uppercase [writing-mode:vertical-rl]">
-                  {t("outroSide")}
-                </span>
+              {/* "Main importers of": a fading rule, then the L'Oréal and Heinz logos side by side */}
+              <div className="lg:col-span-5 lg:col-start-8 lg:self-center lg:text-right">
+                <p className="label-caps text-red-ink">{t("mainImporter")}</p>
+                <span aria-hidden="true" className="mt-4 block h-px bg-linear-to-r from-steel-400 to-transparent lg:bg-linear-to-l" />
+                <ul className="mt-6 flex items-center gap-8 sm:gap-10 lg:justify-end">
+                  {mainImporterLogos.map((logo) => (
+                    <li key={logo.name}>
+                      <Image src={logo.src} alt={logo.name} width={logo.width} height={logo.height} unoptimized className={`w-auto object-contain ${logo.size}`} />
+                    </li>
+                  ))}
+                </ul>
               </div>
+            </Reveal>
+          </Container>
+          {/* Partner logos, looping, above the food brands */}
+          <PartnerStrip locale={locale} className="mt-12" />
+          <ProductPreviewProvider>
+            <div className="mt-12">
+              <BrandGrid brands={food} icon={ShoppingBasket} label={svc("food")} intro={tr(cards.find((c) => c.section === "food")?.description, locale)} locale={locale} />
+              <BrandGrid brands={nonFood} icon={Sparkles} label={svc("nonFood")} intro={tr(cards.find((c) => c.section === "nonFood")?.description, locale)} reverse locale={locale} />
             </div>
-          </HorizontalScroll>
+          </ProductPreviewProvider>
         </section>
       ) : null}
 
-      {/* ── Meet our team: heading, intro and a link to the Team drawer,
-          then the people ("Team" in the side nav) ────────────────── */}
+      {/* ── From port to shelf: the integrated route from supplier to
+          the Ethiopian market, as seven numbered services ──────────── */}
+      <RouteSteps locale={locale} white moreLink />
+
+      {/* ── What we do: the intro beside the four photo cards (the two
+          import platforms, produce, export): a 2x2 grid, and from xl two
+          staggered columns with lines branching to them from a red dot
+          under the intro ───────────────────────────────────────────── */}
+      {cards.length ? (
+        <section id="services" aria-labelledby="what-we-do" className="py-16 sm:py-24">
+          <Container>
+          <BranchLines className="grid gap-10 lg:grid-cols-12 lg:gap-14 xl:grid-cols-[21rem_minmax(0,1fr)] xl:gap-x-28">
+            <Reveal className="lg:sticky lg:top-[calc(var(--bar-h)+3rem)] lg:col-span-4 lg:self-start xl:static xl:col-span-1 xl:self-center">
+              <span data-branch-root aria-hidden="true" className="red-gradient mb-10 hidden size-12 rounded-full xl:block" />
+              <SectionHeading id="what-we-do" eyebrow={t("ourServices")}>
+                {t("whatWeDo")}
+              </SectionHeading>
+              {(home.whatWeDoIntro || services.intro) && <p className="mt-6 text-muted sm:text-lg">{tr(home.whatWeDoIntro ?? services.intro, locale)}</p>}
+              <ButtonLink href="/services" variant="red" className="mt-8">
+                {common("exploreServices")}
+              </ButtonLink>
+            </Reveal>
+            <ul data-branch-list className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:col-span-8 xl:col-span-1 xl:grid-rows-[repeat(5,11.5rem)] xl:gap-x-16 xl:gap-y-12">
+              {cards.map((card, i) => {
+                const Icon = cardIcons[card.section] ?? Ship;
+                const items = itemsFor(card);
+                return (
+                  // Enters (fades and lifts in) once BranchLines marks it data-shown.
+                  <li
+                    key={card._key}
+                    data-branch-leaf
+                    className={`translate-y-12 opacity-0 transition-[opacity,translate] duration-700 ease-out data-shown:translate-y-0 data-shown:opacity-100 motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${staggered[i] ?? ""}`}
+                  >
+                      <Link
+                        href="/services"
+                        className="group on-dark relative isolate flex h-full min-h-[24rem] flex-col overflow-hidden rounded-3xl p-6 text-paper shadow-lg transition-shadow hover:shadow-2xl sm:min-h-[26rem] sm:p-7"
+                      >
+                        <div className="absolute inset-0 -z-20">
+                          <PhotoFrame
+                            image={card.image}
+                            placeholder={placeholders[card.section] ?? placeholders.import}
+                            locale={locale}
+                            width={900}
+                            height={900}
+                            sizes="(min-width: 1024px) 26rem, (min-width: 640px) 45vw, 92vw"
+                            icon={Icon}
+                            className="transition-transform duration-700 group-hover:scale-[1.04] motion-reduce:transition-none"
+                          />
+                        </div>
+                        {/* Shade rising from the bottom, where the text sits, plus darker edges */}
+                        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-black/90 via-black/55 via-55% to-black/25" />
+                        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgb(0_0_0/0.55)_100%)]" />
+
+                        <span aria-hidden="true" className="font-display-heading self-end text-4xl text-paper/80" lang="en">
+                          0{i + 1}
+                        </span>
+                        <div className="mt-auto">
+                          <h3 className="font-display-heading text-3xl sm:text-4xl">{tr(card.title, locale)}</h3>
+                          {card.description && <p className="mt-2 line-clamp-2 text-sm text-paper/85">{tr(card.description, locale)}</p>}
+                          {items.names.length ? (
+                            <ul className="mt-4 flex flex-wrap gap-1.5">
+                              {items.names.slice(0, 4).map((name) => (
+                                <li key={name} className="rounded-full bg-white/12 px-3 py-1 text-xs font-semibold ring-1 ring-white/25 backdrop-blur-md">
+                                  {name}
+                                </li>
+                              ))}
+                              {items.names.length > 4 && (
+                                <li className="rounded-full bg-white/12 px-3 py-1 text-xs font-semibold ring-1 ring-white/25 backdrop-blur-md">
+                                  {t("moreItems", { count: items.names.length - 4 })}
+                                </li>
+                              )}
+                            </ul>
+                          ) : null}
+                          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold">
+                            {common("learnMore")}
+                            <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-0.5" />
+                          </span>
+                        </div>
+                      </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </BranchLines>
+          </Container>
+        </section>
+      ) : null}
+
+      {/* ── Meet our team: heading and intro, the people, then a link to
+          the Team page ─────────────────────────────────────────────── */}
       {teamMembers.length ? (
-        <section id="team" data-nav-section="/team" aria-labelledby="team-heading" className="pt-16 pb-4 sm:pt-24">
+        <section id="team" aria-labelledby="team-heading" className="bg-paper py-16 sm:py-24">
           <Container>
             <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-end">
               <div className="lg:col-span-5">
@@ -416,20 +462,22 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               </div>
               <div className="lg:col-span-6 lg:col-start-7">
                 {teamPage.intro && <p className="max-w-2xl text-muted sm:text-lg">{tr(teamPage.intro, locale)}</p>}
-                <ButtonLink href="/team" variant="red" className="mt-6">
-                  {t("viewTeam")}
-                </ButtonLink>
               </div>
             </Reveal>
             <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
               {teamMembers.slice(0, 4).map((m) => (
                 <li key={m._id}>
                   <Reveal className="h-full">
-                    <TeamCard member={m} locale={locale} />
+                    <TeamCard member={m} locale={locale} onWhite />
                   </Reveal>
                 </li>
               ))}
             </ul>
+            <div className="mt-12 flex justify-center">
+              <ButtonLink href="/team" variant="red">
+                {t("viewTeam")}
+              </ButtonLink>
+            </div>
           </Container>
         </section>
       ) : null}

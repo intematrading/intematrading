@@ -1,5 +1,6 @@
 "use client";
 
+import { Globe } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
@@ -11,7 +12,7 @@ const labels: Record<Locale, { short: string; name: string }> = {
   fr: { short: "FR", name: "Français" },
 };
 
-export function LanguageSwitcher({ vertical = false, className = "" }: { vertical?: boolean; className?: string }) {
+export function LanguageSwitcher({ className = "" }: { className?: string }) {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
@@ -22,8 +23,9 @@ export function LanguageSwitcher({ vertical = false, className = "" }: { vertica
     <div
       role="group"
       aria-label={t("label")}
-      className={`flex ${vertical ? "flex-col" : ""} gap-0.5 rounded-xl border border-white/50 bg-white/70 p-1 text-[0.6875rem] leading-none shadow-lg backdrop-blur-xl ${isPending ? "opacity-60" : ""} ${className}`}
+      className={`flex items-center gap-0.5 rounded-xl border border-white/50 bg-white/70 p-0.5 text-[0.6875rem] leading-none shadow-lg backdrop-blur-xl ${isPending ? "opacity-60" : ""} ${className}`}
     >
+      <Globe aria-hidden="true" className="mx-1 size-4 text-steel-600" strokeWidth={1.75} />
       {routing.locales.map((l) => {
         const active = l === locale;
         return (
@@ -47,7 +49,7 @@ export function LanguageSwitcher({ vertical = false, className = "" }: { vertica
                 startTransition(() => router.replace(`${pathname}${hash}`, { locale: l }));
               }
             }}
-            className={`flex size-8 items-center justify-center rounded-lg font-bold tracking-wider transition-colors ${
+            className={`flex size-7 items-center justify-center rounded-lg font-bold tracking-wider transition-colors ${
               active ? "red-gradient text-paper" : "text-ink hover:text-red-ink"
             }`}
           >

@@ -15,10 +15,9 @@ import { Container } from "@/components/Container";
 import { Gallery } from "@/components/Gallery";
 import { GetInTouch } from "@/components/GetInTouch";
 import { IconBox } from "@/components/IconBox";
-import { Marquee } from "@/components/Marquee";
 import { PageHero } from "@/components/PageHero";
+import { Partners } from "@/components/Partners";
 import { panel } from "@/components/panel";
-import { PartnerLogo } from "@/components/PartnerLogo";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
 import { Reveal } from "@/components/Reveal";
@@ -29,7 +28,7 @@ import {
   heroPlaceholders,
   placeholders,
 } from "@/content/placeholders";
-import { getAboutPage, getBrands, getSiteSettings, tr } from "@/lib/content";
+import { getAboutPage, getSiteSettings, tr } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
 const stepIcons = [Ship, PhoneCall, Truck, TrendingUp];
@@ -57,11 +56,7 @@ export default async function AboutPage({
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [page, brands, t] = await Promise.all([
-    getAboutPage(),
-    getBrands(),
-    getTranslations("About"),
-  ]);
+  const [page, t] = await Promise.all([getAboutPage(), getTranslations("About")]);
   const steps = page.processSteps ?? [];
 
   return (
@@ -260,7 +255,7 @@ export default async function AboutPage({
               <p className="mt-6 max-w-2xl text-muted sm:text-lg">{t("galleryIntro")}</p>
             </Reveal>
           </Container>
-          {/* Full drawer width, edges feathered (see Gallery) */}
+          {/* Full width, edges feathered (see Gallery) */}
           <div className="mt-10 sm:mt-12">
               <Gallery
                 label={t("galleryLabel")}
@@ -297,41 +292,7 @@ export default async function AboutPage({
       ) : null}
 
       {/* ── Partners: heading and CTA, then a looping logo strip ────── */}
-      <section aria-labelledby="partners-heading" className="pb-16 sm:pb-24">
-        <Container>
-          <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-center">
-            <div className="lg:col-span-6">
-              <SectionHeading
-                id="partners-heading"
-                eyebrow={t("partnersEyebrow")}
-              >
-                {tr(page.partnersHeading, locale)}
-              </SectionHeading>
-              {page.partnersIntro && (
-                <p className="mt-6 text-muted sm:text-lg">
-                  {tr(page.partnersIntro, locale)}
-                </p>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-3 lg:col-span-6 lg:justify-end">
-              <ButtonLink href="/?type=brand#contact" variant="red">
-                {t("partnerCta")}
-              </ButtonLink>
-            </div>
-          </Reveal>
-        </Container>
-        <div className="mt-12">
-          <Marquee
-            label={t("partnersLabel")}
-            seconds={brands.length * 3.5}
-            feather={12}
-          >
-            {brands.map((brand) => (
-              <PartnerLogo key={brand._id} brand={brand} locale={locale} />
-            ))}
-          </Marquee>
-        </div>
-      </section>
+      <Partners locale={locale} className="pb-16 sm:pb-24" />
 
       {/* ── Keys to success, then Get in touch: two floating panels ─── */}
       <div className="flex flex-col gap-3 px-3 pb-3 sm:gap-4 sm:px-4 sm:pb-4">

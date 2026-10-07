@@ -6,9 +6,9 @@ import { tr } from "@/lib/content";
 import { PhotoFrame } from "./PhotoFrame";
 
 /** Rounded card for one person: portrait, name, role and (optionally) a short bio. */
-export function TeamCard({ member, locale, showBio = false }: { member: TeamMember; locale: Locale; showBio?: boolean }) {
+export function TeamCard({ member, locale, showBio = false, onWhite = false }: { member: TeamMember; locale: Locale; showBio?: boolean; /** On a white section: light grey card. */ onWhite?: boolean }) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-3xl bg-paper shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-xl">
+    <article className={`group flex h-full flex-col overflow-hidden rounded-3xl ring-1 ring-black/5 transition-shadow hover:shadow-xl ${onWhite ? "bg-steel-100" : "bg-paper shadow-sm"}`}>
       <div className="relative aspect-[4/5] overflow-hidden">
         <PhotoFrame
           image={member.photo}

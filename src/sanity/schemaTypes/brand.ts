@@ -42,6 +42,13 @@ export const brand = defineType({
       description: "Transparent PNG or SVG. Without a logo, the name is shown instead.",
       fields: [defineField({ name: "alt", title: "Alt text", type: "localeString" })],
     }),
+    defineField({
+      name: "featured",
+      title: "Main importer",
+      type: "boolean",
+      description: 'Named in the home page\'s "main importer of …" highlight.',
+      initialValue: false,
+    }),
     defineField({ name: "order", type: "number", description: "Lower numbers appear first." }),
   ],
   orderings: [{ title: "Display order", name: "order", by: [{ field: "order", direction: "asc" }] }],

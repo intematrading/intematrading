@@ -251,7 +251,7 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
                   {tr(page.partnerHeading, locale)}
                 </SectionHeading>
                 {page.partnerBody && <p className="mt-5 max-w-md text-paper/90">{tr(page.partnerBody, locale)}</p>}
-                <ButtonLink href="/?type=brand#contact" variant="redOnDark" className="mt-8">
+                <ButtonLink href="/contact?type=brand" variant="redOnDark" className="mt-8">
                   {t("applyCta")}
                 </ButtonLink>
               </div>

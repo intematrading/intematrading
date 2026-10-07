@@ -10,7 +10,7 @@ import { SectionHeading } from "./SectionHeading";
 
 /**
  * "Get in touch" band: a full-bleed photo with a near-black fade, and a single Contact CTA.
- * Used at the end of the About and Our Services drawer pages; the photo is the Home page's
+ * Used at the end of the About and Our Services pages; the photo is the Home page's
  * "Get in touch photo" in Sanity, the text the Contact page intro.
  */
 export async function GetInTouch({ locale, className = "" }: { locale: Locale; className?: string }) {
@@ -41,7 +41,7 @@ export async function GetInTouch({ locale, className = "" }: { locale: Locale; c
             {t("getInTouch")}
           </SectionHeading>
           {contactPage.intro && <p className="mt-5 max-w-md text-paper/90">{tr(contactPage.intro, locale)}</p>}
-          <ButtonLink href="/#contact" variant="redOnDark" className="mt-8">
+          <ButtonLink href="/contact" variant="redOnDark" className="mt-8">
             {common("contactUs")}
           </ButtonLink>
         </div>

@@ -20,7 +20,7 @@ export function InquiryForm() {
   const typeRef = useRef<HTMLSelectElement>(null);
   useEffect(() => {
     startedAt.current = Date.now();
-    // Links like /?type=brand#contact preselect the type: on arrival from
+    // Links like /contact?type=brand preselect the type: on arrival from
     // the URL, or on the page already via the event from lib/home-nav.
     const select = (type: string | null) => {
       if (typeRef.current && type && (inquiryTypes as readonly string[]).includes(type)) typeRef.current.value = type;

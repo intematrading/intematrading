@@ -7,7 +7,7 @@ import { Eyebrow } from "./Eyebrow";
 import { PhotoFrame } from "./PhotoFrame";
 
 /**
- * Header at the top of each drawer page: a shaded photo across the top with
+ * Header at the top of each inner page (About, Services, Team): a shaded photo across the top with
  * the eyebrow, title and intro over its lower part.
  */
 export function PageHero({
@@ -43,9 +43,8 @@ export function PageHero({
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-black/85 via-black/45 to-black/25" />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgb(0_0_0/0.55)_100%)]" />
 
-      <Container className="pt-28 pb-10 sm:pb-14">
-        {/* Names the drawer dialog (see PageDrawer) */}
-        <h1 id="drawer-title">
+      <Container className="pt-24 pb-10 sm:pb-14">
+        <h1>
           {eyebrow && (
             <Eyebrow as="span" onDark>
               {eyebrow}

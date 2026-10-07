@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   };
 }
 
-export default async function LocaleLayout({ children, drawer, params }: LayoutProps<"/[locale]">) {
+export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
@@ -64,13 +64,11 @@ export default async function LocaleLayout({ children, drawer, params }: LayoutP
           >
             {t("skipToContent")}
           </a>
-          <SiteHeader companyName={tr(settings.companyName, locale)} />
+          <SiteHeader companyName={tr(settings.companyName, locale)} whatsappUrl={settings.socialLinks?.find((l) => l.platform === "whatsapp")?.url} />
           <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
             {children}
           </main>
           <SiteFooter settings={settings} locale={locale} />
-          {/* About, Our Services and Contact open in a drawer over the home page */}
-          {drawer}
           <TawkChat />
         </NextIntlClientProvider>
       </body>
