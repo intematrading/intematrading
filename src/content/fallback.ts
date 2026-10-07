@@ -58,8 +58,8 @@ export const homePage: HomePage = {
     am: "የጥራት መጋዘን — *በምሥራቅ አፍሪካ* እናስመጣለን፣ እናመርታለን፣ እንልካለን",
   },
   heroSubheadline: {
-    en: "Since 2014, INTEMA Trading PLC. has connected trusted global brands with retailers across Ethiopia, Djibouti & Sudan.",
-    am: "ከ2014 ጀምሮ ኢንተማ ትሬዲንግ ኃ.የተ.የግ.ማ. የታመኑ ዓለም አቀፍ ብራንዶችን በኢትዮጵያ፣ በጅቡቲና በሱዳን ከሚገኙ ቸርቻሪዎች ጋር ሲያገናኝ ቆይቷል።",
+    en: "Since 2014, INTEMA Trading PLC. has been connecting trusted global brands with Ethiopia.",
+    fr: "Depuis 2014, INTEMA Trading PLC. relie des marques mondiales de confiance à l’Éthiopie.",
   },
   stats: [
     {
@@ -180,8 +180,8 @@ export const homePage: HomePage = {
       am: "ኢንተማ ትሬዲንግ — በምሥራቅ አፍሪካ ማስመጣት፣ ማምረትና መላክ",
     },
     description: {
-      en: "The Quality Warehouse. Since 2014, INTEMA Trading PLC. has connected trusted global brands with retailers across Ethiopia, Djibouti & Sudan.",
-      am: "የጥራት መጋዘን። ከ2014 ጀምሮ ኢንተማ ትሬዲንግ የታመኑ ዓለም አቀፍ ብራንዶችን በኢትዮጵያ፣ በጅቡቲና በሱዳን ከሚገኙ ቸርቻሪዎች ጋር ሲያገናኝ ቆይቷል።",
+      en: "The Quality Warehouse. Since 2014, INTEMA Trading PLC. has been connecting trusted global brands with Ethiopia.",
+      fr: "The Quality Warehouse. Depuis 2014, INTEMA Trading PLC. relie des marques mondiales de confiance à l’Éthiopie.",
     },
   },
 };
