@@ -179,6 +179,8 @@ export type TeamMember = {
   group: TeamGroupKey;
   bio?: LocaleString;
   photo?: SanityImage;
+  /** A Lottie JSON for the team card, uploaded in the Studio. */
+  animationUrl?: string;
 };
 
 export type TeamPage = {

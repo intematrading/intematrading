@@ -55,7 +55,7 @@ const brandsQuery = defineQuery(
 );
 const teamPageQuery = defineQuery(`*[_id == "teamPage"][0]`);
 const teamMembersQuery = defineQuery(
-  `*[_type == "teamMember"] | order(coalesce(order, 999) asc, name.en asc){ _id, name, role, group, bio, photo }`,
+  `*[_type == "teamMember"] | order(coalesce(order, 999) asc, name.en asc){ _id, name, role, group, bio, photo, "animationUrl": animation.asset->url }`,
 );
 const partnersQuery = defineQuery(`*[_type == "partner"] | order(coalesce(order, 999) asc, name asc){ _id, name, logo, website }`);
 const contactPageQuery = defineQuery(`*[_id == "contactPage"][0]`);

@@ -55,17 +55,9 @@ export const testimonialPlaceholders: Placeholder[] = [
   { src: "/placeholders/testimonial-3.jpg" },
 ];
 
-// Stock portraits standing in for named team members, keyed by the fallback
-// document ids. These are NOT photos of the people named — replace every one
-// with a real photo in the Studio before launch.
+// Stock portrait standing in for the leadership feature (Team page), keyed by
+// document id. NOT a photo of the person named: replace it with a real photo
+// in the Studio before launch.
 export const teamPlaceholders: Record<string, Placeholder> = {
   "team-bedru": { src: "/placeholders/team-1.jpg", position: "50% 20%" },
-  "team-seid": { src: "/placeholders/team-3.jpg", position: "50% 20%" },
-  "team-noah": { src: "/placeholders/team-4.jpg", position: "50% 20%" },
-  "team-abdu": { src: "/placeholders/team-5.jpg", position: "50% 20%" },
-  "team-amira": { src: "/placeholders/team-6.jpg", position: "50% 20%" },
-  "team-sebrina": { src: "/placeholders/team-7.jpg", position: "50% 25%" },
-  "team-beza": { src: "/placeholders/team-8.jpg", position: "50% 25%" },
-  "team-seada": { src: "/placeholders/team-9.jpg", position: "50% 20%" },
-  "team-neima": { src: "/placeholders/team-11.jpg", position: "50% 20%" },
 };

@@ -25,6 +25,13 @@ export const teamMember = defineType({
     }),
     defineField({ name: "bio", type: "localeText" }),
     defineField({
+      name: "animation",
+      title: "Card animation (Lottie)",
+      type: "file",
+      options: { accept: ".json,application/json" },
+      description: "A Lottie JSON file (e.g. from lottiefiles.com, downloaded as Lottie JSON) shown on the team card. Leave empty to use the built-in animation for the role.",
+    }),
+    defineField({
       name: "photo",
       type: "image",
       options: { hotspot: true },
