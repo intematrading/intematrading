@@ -12,7 +12,6 @@ export const teamPage = defineType({
     { name: "heads", title: "Department heads" },
     { name: "ambassador", title: "Brand ambassador" },
     { name: "more", title: "Facts, departments & training" },
-    { name: "partner", title: "Partner call-to-action" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
@@ -39,9 +38,6 @@ export const teamPage = defineType({
     titledTextList("departments", "Departments", "more"),
     defineField({ name: "trainingHeading", type: "localeString", group: "more" }),
     defineField({ name: "training", type: "localeText", group: "more" }),
-    defineField({ name: "partnerHeading", type: "localeString", group: "partner" }),
-    defineField({ name: "partnerBody", type: "localeText", group: "partner" }),
-    imageWithAlt("partnerImage", "Photo", "partner"),
     defineField({ name: "seo", type: "seo", group: "seo" }),
   ],
   preview: { prepare: () => ({ title: "Team page" }) },

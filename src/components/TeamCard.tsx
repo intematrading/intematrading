@@ -16,15 +16,15 @@ export function TeamCard({ member, locale, showBio = false }: { member: TeamMemb
           locale={locale}
           width={480}
           height={600}
-          sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"
+          sizes="(min-width: 1024px) 22vw, 45vw"
           icon={UserRound}
           className="transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none"
         />
       </div>
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <h3 className="font-title-heading text-lg text-ink">{tr(member.name, locale)}</h3>
+      <div className="flex flex-1 flex-col p-4 sm:p-6">
+        <h3 className="font-title-heading text-base text-ink sm:text-lg">{tr(member.name, locale)}</h3>
         <p className="label-caps mt-1 text-red-ink">{tr(member.role, locale)}</p>
-        {showBio && member.bio && <p className="mt-3 text-sm text-muted">{tr(member.bio, locale)}</p>}
+        {showBio && member.bio && <p className="mt-3 text-xs text-muted sm:text-sm">{tr(member.bio, locale)}</p>}
       </div>
     </article>
   );

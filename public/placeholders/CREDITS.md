@@ -18,7 +18,6 @@ with INTEMA's own photography via Sanity.
 | hero-about.jpg | Gift Habeshaw | https://unsplash.com/photos/SpLQSi6CajQ |
 | hero-team.jpg | Cytonn Photography | https://unsplash.com/photos/n95VMLxqM2I |
 | team-1.jpg | kevin Clonee | https://unsplash.com/photos/TlsyyWh3Oa0 |
-| team-2.jpg | Fortune Vieyra | https://unsplash.com/photos/QIMjYJSFoXM |
 | team-3.jpg | Olawale Munna | https://unsplash.com/photos/qpyR0WKV_Cs |
 | team-4.jpg | tekimax | https://unsplash.com/photos/0OczC2-oFsA |
 | team-5.jpg | Dellon Thomas | https://unsplash.com/photos/olasY6OD8pw |
@@ -27,7 +26,6 @@ with INTEMA's own photography via Sanity.
 | team-8.jpg | Etty Fidele | https://unsplash.com/photos/AzVexpHvuKY |
 | team-9.jpg | Raymond Owusu-Afriyie | https://unsplash.com/photos/VPvYUK2Iibo |
 | team-11.jpg | Prince Akachi | https://unsplash.com/photos/J1OScm_uHUQ |
-| partner-cta.jpg | Amina Atar | https://unsplash.com/photos/4mEyvORkbN0 |
 | testimonial-1.jpg | alex starnes | https://unsplash.com/photos/PK_t0Lrh7MM |
 | testimonial-2.jpg | Nigel Msipa | https://unsplash.com/photos/vZbWlXzZtAY |
 | testimonial-3.jpg | Christina @ wocintechchat.com | https://unsplash.com/photos/3ok_-Wvny2Q |

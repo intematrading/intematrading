@@ -199,9 +199,6 @@ export type TeamPage = {
   departments?: TitledText[];
   trainingHeading?: LocaleString;
   training?: LocaleString;
-  partnerHeading?: LocaleString;
-  partnerBody?: LocaleString;
-  partnerImage?: SanityImage;
   seo?: Seo;
 };
 

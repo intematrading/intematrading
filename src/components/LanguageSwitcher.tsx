@@ -49,7 +49,7 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
                 startTransition(() => router.replace(`${pathname}${hash}`, { locale: l }));
               }
             }}
-            className={`flex size-7 items-center justify-center rounded-lg font-bold tracking-wider transition-colors ${
+            className={`flex size-9 items-center lg:size-8 justify-center rounded-lg font-bold tracking-wider transition-colors ${
               active ? "red-gradient text-paper" : "text-ink hover:text-red-ink"
             }`}
           >

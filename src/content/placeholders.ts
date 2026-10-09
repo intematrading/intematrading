@@ -15,7 +15,6 @@ export const placeholders = {
   vision: { src: "/placeholders/about-warehouse.jpg" },
   keys: { src: "/placeholders/about-retail.jpg" },
   produceBand: { src: "/placeholders/produce-factory.jpg" },
-  partnerCta: { src: "/placeholders/partner-cta.jpg" },
   ambassador: { src: "/placeholders/abay-candles.jpg", position: "25% 100%" },
   // Home: Meet our team
   teamBand: { src: "/placeholders/about-training.jpg" },
@@ -61,7 +60,6 @@ export const testimonialPlaceholders: Placeholder[] = [
 // with a real photo in the Studio before launch.
 export const teamPlaceholders: Record<string, Placeholder> = {
   "team-bedru": { src: "/placeholders/team-1.jpg", position: "50% 20%" },
-  "team-eliyas": { src: "/placeholders/team-2.jpg", position: "50% 20%" },
   "team-seid": { src: "/placeholders/team-3.jpg", position: "50% 20%" },
   "team-noah": { src: "/placeholders/team-4.jpg", position: "50% 20%" },
   "team-abdu": { src: "/placeholders/team-5.jpg", position: "50% 20%" },

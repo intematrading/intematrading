@@ -109,7 +109,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
               the stat cards. Faint behind the text on phones. */}
           <EthiopiaMap
             label={t("addisAbaba")}
-            className="absolute -top-16 -right-40 -z-10 w-[34rem] opacity-30 sm:-right-24 sm:w-[44rem] lg:-top-28 lg:right-[max(-14rem,calc((100vw-80rem)/2-13rem))] lg:w-[52rem] lg:opacity-50 xl:w-[58rem]"
+            className="absolute top-72 -right-48 -z-10 w-[34rem] opacity-30 sm:top-40 sm:-right-24 sm:w-[44rem] lg:-top-28 lg:right-[max(-14rem,calc((100vw-80rem)/2-13rem))] lg:w-[52rem] lg:opacity-50 xl:w-[58rem]"
           />
           <Container>
             <Reveal className="max-w-3xl lg:max-w-[46%]">

@@ -2,17 +2,15 @@ import { Building2, GraduationCap, Megaphone, Truck, UserRound, Users } from "lu
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
 import { IconBox } from "@/components/IconBox";
 import { PageHero } from "@/components/PageHero";
-import { panel } from "@/components/panel";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { TeamCard } from "@/components/TeamCard";
-import { heroPlaceholders, placeholders } from "@/content/placeholders";
+import { heroPlaceholders, placeholders, teamPlaceholders } from "@/content/placeholders";
 import type { Stat, TeamMember } from "@/content/types";
 import type { Locale as AppLocale } from "@/i18n/routing";
 import { getSiteSettings, getTeamMembers, getTeamPage, tr } from "@/lib/content";
@@ -33,20 +31,20 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/team">):
   });
 }
 
-/** "Team at a glance": the team facts stacked in a white card, one per row: figure, then label and note. */
+/** "Team at a glance": the team facts in one row (2x2 on phones), split by thin dividers. */
 function TeamFacts({ facts, heading, locale }: { facts: Stat[]; heading: string; locale: AppLocale }) {
   return (
-    <div className="rounded-[1.75rem] bg-paper p-6 shadow-sm ring-1 ring-black/5 sm:rounded-[2rem] sm:p-10 lg:sticky lg:top-[calc(var(--bar-h)+2.5rem)]">
+    <div className="rounded-[1.75rem] bg-steel-50 p-6 ring-1 ring-black/5 sm:rounded-[2rem] sm:p-10">
       <h3 className="label-caps text-red-ink">{heading}</h3>
-      <dl className="mt-2 divide-y divide-steel-200">
+      <dl className="mt-6 grid grid-cols-2 gap-y-8 lg:grid-cols-4 lg:divide-x lg:divide-steel-200">
         {facts.map((fact) => (
-          <div key={fact._key} className="flex items-center gap-5 py-5 first:pt-4 last:pb-0 sm:py-6 sm:first:pt-5">
+          <div key={fact._key} className="flex flex-col pr-4 lg:px-8 lg:first:pl-0 lg:last:pr-0">
             {/* Label first for screen readers; the figure shows first */}
-            <dt className="order-last">
+            <dt className="order-last mt-3">
               <span className="block font-semibold text-ink">{tr(fact.label, locale)}</span>
               {fact.note && <span className="mt-1 block text-sm text-muted">{tr(fact.note, locale)}</span>}
             </dt>
-            <dd className="font-display-heading text-steel-gradient w-32 shrink-0 text-5xl leading-none whitespace-nowrap" lang="en">
+            <dd className="font-display-heading text-steel-gradient text-5xl leading-none sm:text-6xl" lang="en">
               {fact.value}
             </dd>
           </div>
@@ -57,17 +55,86 @@ function TeamFacts({ facts, heading, locale }: { facts: Stat[]; heading: string;
 }
 
 /**
- * A team group: heading and intro, then the people's cards. With an `aside`
- * (Leadership: the team facts) the cards share the width with it; otherwise
- * they run full width, 4 across.
+ * Leadership: the leader (or leaders) as a feature, a large portrait beside
+ * the heading, intro, name, role and bio, then the team facts in one row.
  */
+function Leadership({
+  heading,
+  eyebrow,
+  intro,
+  leaders,
+  facts,
+  factsHeading,
+  locale,
+}: {
+  heading: string;
+  eyebrow: string;
+  intro?: string;
+  leaders: TeamMember[];
+  facts?: Stat[];
+  factsHeading: string;
+  locale: AppLocale;
+}) {
+  return (
+    <section aria-labelledby="leadership-heading" className="py-16 sm:py-24">
+      <Container>
+        {leaders.map((m, i) => (
+          <div key={m._id} className={`grid items-center gap-10 md:grid-cols-12 lg:gap-16 ${i ? "mt-16" : ""}`}>
+            {/* Phones: text first, then the portrait */}
+            <Reveal className="order-last md:order-none md:col-span-5">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-sm ring-1 ring-black/5 sm:rounded-[2rem]">
+                <PhotoFrame
+                  image={m.photo}
+                  placeholder={teamPlaceholders[m._id]}
+                  locale={locale}
+                  width={720}
+                  height={900}
+                  sizes="(min-width: 768px) 40vw, 100vw"
+                  icon={UserRound}
+                />
+              </div>
+            </Reveal>
+            <Reveal className="md:col-span-7">
+              {i === 0 && (
+                <>
+                  <SectionHeading id="leadership-heading" eyebrow={eyebrow}>
+                    {heading}
+                  </SectionHeading>
+                  {intro && <p className="mt-6 max-w-xl text-muted sm:text-lg">{intro}</p>}
+                </>
+              )}
+              {/* Indented under the heading, joined to it by a line that drops
+                  from the intro and turns in to a dot beside the name */}
+              <div className={`relative pl-16 sm:pl-24 ${i === 0 ? "mt-6 pt-10" : ""}`}>
+                {i === 0 && (
+                  <span aria-hidden="true" className="absolute top-0 left-1 h-[3.9rem] w-12 rounded-bl-2xl border-b border-l border-steel-400 sm:h-[4.4rem] sm:w-19">
+                    <span className="absolute right-0 bottom-0 size-2.5 translate-x-1/2 translate-y-1/2 rounded-full bg-red" />
+                  </span>
+                )}
+                <h3 className="font-display-heading text-steel-gradient text-4xl sm:text-5xl">{tr(m.name, locale)}</h3>
+                <p className="label-caps mt-3 text-red-ink">{tr(m.role, locale)}</p>
+                {m.bio && <p className="mt-5 max-w-xl leading-relaxed text-muted sm:text-lg">{tr(m.bio, locale)}</p>}
+              </div>
+            </Reveal>
+          </div>
+        ))}
+        {facts?.length ? (
+          <Reveal className="mt-16 sm:mt-20">
+            <TeamFacts facts={facts} heading={factsHeading} locale={locale} />
+          </Reveal>
+        ) : null}
+      </Container>
+    </section>
+  );
+}
+
+/** A team group: heading and intro, then the people's cards, 4 across (2 on phones). */
 function TeamGroup({
   id,
   eyebrow,
   heading,
   intro,
   members,
-  aside,
   locale,
 }: {
   id: string;
@@ -75,20 +142,19 @@ function TeamGroup({
   heading: string;
   intro?: string;
   members: TeamMember[];
-  aside?: React.ReactNode;
   locale: AppLocale;
 }) {
   return (
     <section aria-labelledby={id} className="py-16 sm:py-24">
-      <Container className="grid gap-12 lg:grid-cols-12 lg:gap-14">
-        <div className={aside ? "lg:col-span-7" : "lg:col-span-12"}>
+      <Container>
+        <div>
           <Reveal>
             <SectionHeading id={id} eyebrow={eyebrow}>
               {heading}
             </SectionHeading>
             {intro && <p className="mt-6 max-w-2xl text-muted sm:text-lg">{intro}</p>}
           </Reveal>
-          <ul className={`mt-10 grid gap-4 sm:grid-cols-2 sm:gap-6 ${aside ? "" : "sm:gap-y-10 lg:grid-cols-4 lg:gap-y-12"}`}>
+          <ul className="mt-10 grid grid-cols-2 gap-3 gap-y-6 sm:gap-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-y-12">
             {members.map((m) => (
               <li key={m._id}>
                 <Reveal className="h-full">
@@ -98,7 +164,6 @@ function TeamGroup({
             ))}
           </ul>
         </div>
-        {aside && <Reveal className="lg:col-span-5">{aside}</Reveal>}
       </Container>
     </section>
   );
@@ -125,15 +190,15 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
         locale={locale}
       />
 
-      {/* ── Leadership | team at a glance ────────────────────────── */}
+      {/* ── Leadership: the CEO as a feature, then the team facts in a row ── */}
       {leadership.length > 0 && (
-        <TeamGroup
-          id="leadership-heading"
-          eyebrow={t("leadershipEyebrow")}
+        <Leadership
           heading={tr(page.leadershipHeading, locale)}
+          eyebrow={t("leadershipEyebrow")}
           intro={tr(page.leadershipIntro, locale)}
-          members={leadership}
-          aside={page.facts?.length ? <TeamFacts facts={page.facts} heading={t("atAGlance").replace(/\*/g, "")} locale={locale} /> : undefined}
+          leaders={leadership}
+          facts={page.facts}
+          factsHeading={t("atAGlance").replace(/\*/g, "")}
           locale={locale}
         />
       )}
@@ -152,19 +217,19 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
 
       {/* ── Brand ambassador: a short shaded panel (Abay candles), the
           text on the left and the portrait on the right, standing on the
-          panel's bottom edge and rising above its top (phones: portrait
-          first, centred) ── */}
+          panel's bottom edge and rising above its top. Phones: the portrait
+          sits on top of the panel and the panel holds only the centred text ── */}
       {page.ambassadorName && (
-        <Reveal className="px-3 pt-24 sm:px-4 md:pt-32 lg:pt-44">
+        <Reveal className="px-3 pt-[22rem] sm:px-4 sm:pt-[25rem] md:pt-32 lg:pt-44">
           <section aria-labelledby="ambassador-heading" className="on-dark relative isolate rounded-[1.75rem] text-paper shadow-sm ring-1 ring-black/5 sm:rounded-[2rem]">
             {/* Background clipped to the panel; the portrait isn't */}
             <div className="absolute inset-0 -z-10 isolate overflow-hidden rounded-[inherit]">
               <PhotoBackdrop image={page.ambassadorBackground} placeholder={placeholders.ambassador} locale={locale} icon={Users} overlay="bg-black/75" vignette />
             </div>
             <Container className="grid gap-x-12 md:grid-cols-12">
-              <div className="relative -mt-24 md:order-last md:col-span-4 md:mt-0 lg:col-start-9">
+              <div className="absolute inset-x-0 bottom-full md:relative md:inset-x-auto md:bottom-auto md:order-last md:col-span-4 lg:col-start-9">
                 {/* The whole photo at its own 2:3 shape, no frame styling. Phones: centred,
-                    poking out above the panel. From md: standing on the panel's bottom
+                    ending at the panel's top edge. From md: standing on the panel's bottom
                     edge, its height (from the column width) rising above the panel. */}
                 <div className="relative mx-auto aspect-[2/3] w-56 sm:w-64 md:absolute md:inset-x-0 md:bottom-0 md:w-auto">
                   {/* No stock stand-in here: a stranger's face would read as the ambassador's. */}
@@ -213,32 +278,6 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
           </Container>
         </section>
       ) : null}
-
-      {/* ── Partner call-to-action: a shaded photo panel ─────────── */}
-      {page.partnerHeading && (
-        <Reveal className="px-3 pb-3 sm:px-4 sm:pb-4">
-          <section aria-labelledby="partner-heading" className={`on-dark relative isolate text-paper ${panel}`}>
-            <PhotoBackdrop
-              image={page.partnerImage}
-              placeholder={placeholders.partnerCta}
-              locale={locale}
-              icon={Users}
-              overlay="bg-black/60 lg:bg-transparent lg:bg-linear-to-r lg:from-black/80 lg:from-30% lg:via-black/50 lg:via-55% lg:to-black/10"
-            />
-            <Container className="py-14 sm:py-20">
-              <div className="lg:max-w-[50%]">
-                <SectionHeading id="partner-heading" eyebrow={t("partnerEyebrow")} onDark>
-                  {tr(page.partnerHeading, locale)}
-                </SectionHeading>
-                {page.partnerBody && <p className="mt-5 max-w-md text-paper/90">{tr(page.partnerBody, locale)}</p>}
-                <ButtonLink href="/contact?type=brand" variant="redOnDark" className="mt-8">
-                  {t("applyCta")}
-                </ButtonLink>
-              </div>
-            </Container>
-          </section>
-        </Reveal>
-      )}
     </div>
   );
 }

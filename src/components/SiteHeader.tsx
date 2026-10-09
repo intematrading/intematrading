@@ -74,7 +74,7 @@ export function SiteHeader({ companyName, whatsappUrl }: { companyName: string; 
         }`}
       >
         {/* Logo: back to the top of Home */}
-        <Link href="/" aria-label={companyName} className="justify-self-start">
+        <Link href="/" aria-label={companyName} className="flex min-h-11 items-center justify-self-start">
           <Logo alt="" className="h-8 w-auto" priority />
         </Link>
 

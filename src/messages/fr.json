@@ -116,11 +116,10 @@
     "email": "E-mail",
     "phone": "Téléphone",
     "follow": "Suivez-nous",
-    "mapEyebrow": "Venez nous voir",
     "mapHeading": "Nous trouver",
-    "openMap": "Ouvrir dans Google Maps",
     "mapTitle": "Carte indiquant INTEMA Trading PLC. à Addis-Abeba",
-    "detailsEyebrow": "Nous joindre"
+    "detailsEyebrow": "Nous joindre",
+    "mapIntro": "Nos bureaux se trouvent à Arada, au cœur d’Addis-Abeba. Passez nous voir aux heures d’ouverture, ou contactez-nous d’abord et nous serons prêts à vous recevoir."
   },
   "About": {
     "snapshot": "L'entreprise en bref",
@@ -136,11 +135,9 @@
   "Team": {
     "atAGlance": "L'équipe en *bref*",
     "organised": "Notre organisation",
-    "applyCta": "Devenir partenaire",
     "brandAmbassador": "Visage de la marque",
     "leadershipEyebrow": "Notre direction",
     "organisedEyebrow": "Services",
-    "partnerEyebrow": "Travailler avec INTEMA",
     "headsEyebrow": "Au quotidien"
   },
   "Testimonials": {

@@ -1,4 +1,4 @@
-import { ExternalLink, Mail, MapPin, Phone, Share2 } from "lucide-react";
+import { Mail, MapPin, Phone, Share2 } from "lucide-react";
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -61,7 +61,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
                 <IconBox icon={Mail} />
                 <div className="min-w-0">
                   <p className={labelClass}>{t("email")}</p>
-                  <a href={`mailto:${settings.email}`} className="mt-2 block font-semibold break-all text-ink hover:text-red-ink hover:underline">
+                  <a href={`mailto:${settings.email}`} className="mt-1 block py-1 font-semibold break-all text-ink hover:text-red-ink hover:underline">
                     {settings.email}
                   </a>
                 </div>
@@ -112,19 +112,11 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
       {/* ── Map ─────────────────────────────────────────────────────── */}
       <section aria-labelledby="map-heading">
         <Container>
-          <Reveal className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading id="map-heading" eyebrow={t("mapEyebrow")} size="band">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <SectionHeading id="map-heading" size="band">
               {t("mapHeading")}
             </SectionHeading>
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-bold text-red-ink hover:underline"
-            >
-              {t("openMap")}
-              <ExternalLink aria-hidden="true" className="size-4" />
-            </a>
+            <p className="mt-4 text-muted sm:text-lg">{t("mapIntro")}</p>
           </Reveal>
         </Container>
         {/* Full width, square corners */}

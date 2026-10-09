@@ -190,9 +190,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           view. ───────────────────────────────────────────────────────── */}
       {stats.length ? (
           <section aria-labelledby="snapshot-heading" className="relative overflow-hidden py-16 text-ink sm:py-20 lg:py-24">
-            <Container className="grid w-full gap-12 lg:grid-cols-12 lg:items-center lg:gap-10">
-              <div className="lg:col-span-5">
-                <div aria-hidden="true" className="pointer-events-none -mt-[9.5rem] mb-[-2rem] hidden w-[min(26rem,100%)] lg:block">
+            <Container className="grid w-full gap-12 xl:grid-cols-12 xl:items-center xl:gap-10">
+              <div className="xl:col-span-5">
+                <div aria-hidden="true" className="pointer-events-none -mt-[9.5rem] mb-[-2rem] hidden w-[min(26rem,100%)] xl:block">
                   <CursorSway>
                     <Image src="/img1.png" alt="" width={2000} height={2000} sizes="(min-width: 1024px) 26rem, 0px" className="w-full" />
                   </CursorSway>
@@ -206,7 +206,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 </ButtonLink>
               </div>
               {/* 2x2 grid, cells split by a faded cross */}
-              <ul className="relative grid gap-y-10 sm:grid-cols-2 sm:gap-y-0 lg:col-span-7 lg:col-start-6 sm:before:absolute sm:before:inset-y-0 sm:before:left-1/2 sm:before:w-px sm:before:bg-linear-to-b sm:before:from-transparent sm:before:via-steel-300 sm:before:to-transparent sm:after:absolute sm:after:inset-x-0 sm:after:top-1/2 sm:after:h-px sm:after:bg-linear-to-r sm:after:from-transparent sm:after:via-steel-300 sm:after:to-transparent">
+              <ul className="relative grid gap-y-10 sm:grid-cols-2 sm:gap-y-0 xl:col-span-7 xl:col-start-6 sm:before:absolute sm:before:inset-y-0 sm:before:left-1/2 sm:before:w-px sm:before:bg-linear-to-b sm:before:from-transparent sm:before:via-steel-300 sm:before:to-transparent sm:after:absolute sm:after:inset-x-0 sm:after:top-1/2 sm:after:h-px sm:after:bg-linear-to-r sm:after:from-transparent sm:after:via-steel-300 sm:after:to-transparent">
                 {stats.map((stat, i) => {
                   const Icon = statIcon(stat._key);
                   return (

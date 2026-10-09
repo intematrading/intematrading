@@ -330,13 +330,13 @@ export const teamPage: TeamPage = {
   title: { en: "Our Team", am: "ቡድናችን" },
   eyebrow: { en: "The people behind INTEMA", fr: "L’équipe derrière INTEMA", am: "ከኢንተማ ጀርባ ያሉ ሰዎች" },
   intro: {
-    en: "INTEMA is led by its principal owners, Bedru Hussen Jemal and Eliyas Abrar Sh. Between them they bring senior management experience, a strong focus on customer service and more than 10 years in distribution and sales management.",
-    am: "ኢንተማ የሚመራው በዋና ባለቤቶቹ በድሩ ሁሴን ጀማል እና ኤልያስ አብራር ሸ. ሲሆን፣ ጥምር ልምዳቸው የከፍተኛ አመራር ክህሎትን፣ ከፍተኛ የደንበኞች አገልግሎትን እና በማከፋፈልና በሽያጭ አመራር ከ10 ዓመታት በላይ ልምድን ያካትታል።",
+    en: "INTEMA is led by its principal owner and CEO, Bedru Hussen Jemal. Our leadership brings senior management experience, a strong focus on customer service and more than 10 years in distribution and sales management.",
+    fr: "INTEMA est dirigée par son associé principal et PDG, Bedru Hussen Jemal. Notre direction apporte une expérience de direction, un vrai sens du service client et plus de 10 ans dans la distribution et la gestion commerciale.",
   },
   leadershipHeading: { en: "Leadership", am: "አመራር" },
   leadershipIntro: {
-    en: "In distribution, relationships are everything, so selling starts at the top. Bedru brings his experience in sales and distribution, and Eliyas leads customer service and relations.",
-    am: "በማከፋፈል ሥራ የስኬት ቁልፉ ግንኙነት ነው፤ በአካል የሚደረግ ሽያጭም ከላይ ይመራል — በድሩ በሽያጭና በማከፋፈል ክህሎቱና ልምዱ፣ ኤልያስ ደግሞ በደንበኞች አገልግሎትና ግንኙነት።",
+    en: "In distribution, relationships are everything, so selling starts at the top. Bedru brings years of experience in sales and distribution and still calls on customers himself.",
+    fr: "Dans la distribution, tout repose sur les relations, alors la vente commence au sommet. Bedru apporte des années d’expérience dans la vente et la distribution et rend encore visite lui-même aux clients.",
   },
   headsHeading: { en: "Our departments", fr: "Nos départements" },
   headsIntro: {
@@ -382,11 +382,6 @@ export const teamPage: TeamPage = {
     en: "We've invested in coffee training so our team really knows the product. That includes an Ethiopian and Saudi coffee exchange (\"Coffee Talk\" with Saudi coffee expert Ali Al Diwani) and international trade fairs like Gulfood.",
     am: "ኢንተማ ቡድኑ ዕውቀት ያለውና በሚገባ የተዘጋጀ እንዲሆን በቡና ሥልጠናና ትምህርት ላይ ኢንቨስት አድርጓል — በኢትዮጵያ–ሳዑዲ የቡና ልውውጥ (ከሳዑዲው የቡና ባለሙያ አሊ አል ዲዋኒ ጋር “ኮፊ ቶክ”) እና እንደ ጋልፉድ ባሉ ዓለም አቀፍ የንግድ ትርዒቶች መሳተፍን ጨምሮ።",
   },
-  partnerHeading: { en: "Partner *with us*", am: "*ከእኛ ጋር* ይሥሩ" },
-  partnerBody: {
-    en: "Are you a brand looking for distribution in Ethiopia, Djibouti or Sudan, a retailer or wholesaler, or someone who'd like to work with us? Tell us about your business and our team will get back to you.",
-    am: "በኢትዮጵያ፣ በጅቡቲና በሱዳን አከፋፋይ የሚፈልጉ የብራንድ ባለቤቶች፣ ቸርቻሪዎችና ጅምላ ሻጮች እንዲሁም ተባባሪዎች — ስለ ሥራዎ ይንገሩን፤ ቡድናችን ምላሽ ይሰጥዎታል።",
-  },
   seo: {
     title: { en: "Our Team | Leadership & Sales", am: "ቡድናችን — አመራርና ሽያጭ" },
     description: {
@@ -403,13 +398,6 @@ export const teamMembers: TeamMember[] = [
     role: { en: "CEO & Principal Owner", fr: "PDG et associé principal" },
     group: "leadership",
     bio: { en: "Leads sales and distribution, personally calling on potential customers to review our product line and services.", fr: "Dirige les ventes et la distribution, et rend visite en personne aux clients potentiels pour leur présenter notre gamme et nos services.", am: "ሽያጭንና ማከፋፈልን ይመራል፤ የምርትና የአገልግሎት ዝርዝራችንን ለማቅረብ ደንበኞችን በአካል ይጎበኛል።" },
-  },
-  {
-    _id: "team-eliyas",
-    name: { en: "Eliyas Abrar Sh.", fr: "Eliyas Abrar Sh.", am: "ኤልያስ አብራር ሸ." },
-    role: { en: "Principal owner", fr: "Copropriétaire", am: "ዋና ባለቤት" },
-    group: "leadership",
-    bio: { en: "Leads customer service and relations.", fr: "Dirige le service et la relation client.", am: "የደንበኞች አገልግሎትንና ግንኙነትን ይመራል።" },
   },
   {
     _id: "team-seid",
@@ -495,8 +483,8 @@ export const aboutPage: AboutPage = {
       am: "በ2014 የተመሠረተው ኢንተማ ትሬዲንግ ኃ.የተ.የግ.ማ. የግል ኩባንያ ሲሆን፣ ዋና መሥሪያ ቤቱን በአራዳ ክፍለ ከተማ፣ አዲስ አበባ ያደረገ ሁለገብ የፍጆታ ምርቶች አስመጪ፣ አከፋፋይ፣ አምራችና ላኪ ነው — የጅምላና የችርቻሮ ገበያዎችን ለማገልገል ምቹ በሆነ ቦታ።",
     },
     {
-      en: "INTEMA serves Ethiopia, Djibouti and Sudan, a combined market of roughly 170 million people, and is principally owned by Bedru Hussen Jemal and Eliyas Abrar Sh., whose combined experience brings upper office management skills, high levels of customer service, and over 10 years in distribution and sales management with Beiersdorf, L'Oréal Professional and L'Oréal Consumer Products.",
-      am: "ኢንተማ በግምት 170 ሚሊዮን ሕዝብ ያለውን የኢትዮጵያ፣ የጅቡቲና የሱዳን ጥምር ገበያ ያገለግላል። ዋና ባለቤቶቹ በድሩ ሁሴን ጀማልና ኤልያስ አብራር ሸ. ሲሆኑ፣ ጥምር ልምዳቸው የከፍተኛ አመራር ክህሎትን፣ ከፍተኛ የደንበኞች አገልግሎትንና በቤየርስዶርፍ፣ በሎሬያል ፕሮፌሽናልና በሎሬያል ኮንሲውመር ፕሮዳክትስ ከ10 ዓመታት በላይ የማከፋፈልና የሽያጭ አመራር ልምድን ያካትታል።",
+      en: "INTEMA serves Ethiopia, Djibouti and Sudan, a combined market of roughly 170 million people. It's principally owned by Bedru Hussen Jemal, and our leadership brings senior management experience, a strong focus on customer service and over 10 years in distribution and sales management with Beiersdorf, L'Oréal Professional and L'Oréal Consumer Products.",
+      fr: "INTEMA dessert l’Éthiopie, Djibouti et le Soudan, un marché d’environ 170 millions de personnes. Son associé principal est Bedru Hussen Jemal, et notre direction apporte une expérience de direction, un vrai sens du service client et plus de 10 ans dans la distribution et la gestion commerciale chez Beiersdorf, L’Oréal Professionnel et L’Oréal Produits Grand Public.",
     },
     {
       en: "On top of import and distribution, we make our own candle brand, Abay, and export Ethiopian coffee under two registered brands, Seedcup and Bella. We don't just sell products. We look after our customers.",

@@ -54,25 +54,25 @@ export async function RouteSteps({
           {(intro || home.routeIntro) && <p className="mt-6 text-muted sm:text-lg">{intro || tr(home.routeIntro, locale)}</p>}
         </Reveal>
         <ol className="relative mt-16 sm:mt-20">
-          <span aria-hidden="true" className="absolute inset-y-0 left-5 w-px bg-linear-to-b from-transparent via-steel-300 to-transparent lg:left-1/2" />
+          <span aria-hidden="true" className="absolute inset-y-0 left-5 w-px bg-linear-to-b from-transparent via-steel-300 to-transparent md:left-1/2" />
           {/* Importation is covered by We Import above, so the route starts at distribution */}
           {home.routeSteps.filter((step) => step._key !== "importation").map((step, i) => {
             const Icon = stepIcons[step._key] ?? Boxes;
             const flip = i % 2 === 1;
             return (
-              <li key={step._key} className="relative pb-16 pl-16 last:pb-0 sm:pb-20 lg:grid lg:grid-cols-2 lg:items-center lg:gap-40 lg:pl-0 xl:gap-48">
+              <li key={step._key} className="relative pb-16 pl-16 last:pb-0 sm:pb-20 md:grid md:grid-cols-2 md:items-center md:gap-28 md:pl-0 lg:gap-40 xl:gap-48">
                 {/* The stop: the service's icon on the line */}
-                <span className="absolute top-0 left-5 z-10 flex size-10 -translate-x-1/2 items-center justify-center rounded-full bg-red text-paper shadow-lg ring-4 ring-paper lg:top-1/2 lg:left-1/2 lg:size-14 lg:-translate-y-1/2">
+                <span className="absolute top-0 left-5 z-10 flex size-10 -translate-x-1/2 items-center justify-center rounded-full bg-red text-paper shadow-lg ring-4 ring-paper md:top-1/2 md:left-1/2 md:size-12 md:-translate-y-1/2 lg:size-14">
                   <Icon aria-hidden="true" className="size-5 lg:size-6" />
                 </span>
-                <Reveal className={flip ? "lg:order-last" : ""}>
+                <Reveal className={flip ? "md:order-last" : ""}>
                   {/* Animated vector illustration of the service */}
                   <div className="overflow-hidden rounded-[1.75rem] bg-steel-50 ring-1 ring-black/5 sm:rounded-[2rem]">
                     <RouteIllustration step={step._key} />
                   </div>
                 </Reveal>
-                <Reveal className={`mt-6 lg:mt-0 ${flip ? "lg:text-right" : ""}`}>
-                  <h3 className="font-display-heading text-steel-gradient text-4xl sm:text-5xl">{tr(step.title, locale)}</h3>
+                <Reveal className={`mt-6 md:mt-0 ${flip ? "md:text-right" : ""}`}>
+                  <h3 className="font-display-heading text-steel-gradient text-4xl lg:text-5xl">{tr(step.title, locale)}</h3>
                   {step.body && <p className="mt-4 text-sm font-semibold text-ink sm:text-base">{tr(step.body, locale)}</p>}
                   {step.details && <p className="mt-2 text-sm leading-relaxed text-muted">{tr(step.details, locale)}</p>}
                 </Reveal>
@@ -110,13 +110,13 @@ export async function RouteStrip({ steps, heading, intro, locale }: { steps?: Ro
           </div>
         </Reveal>
         <Reveal>
-          <ol className="relative mt-14 grid grid-cols-2 gap-y-10 sm:grid-cols-4 lg:grid-cols-7">
+          <ol className="relative mt-14 flex flex-wrap justify-center gap-y-10">
             {/* The line through the stops (desktop), fading at both ends */}
             <span aria-hidden="true" className="absolute inset-x-0 top-8 hidden h-px bg-linear-to-r from-transparent via-steel-300 to-transparent lg:block" />
             {steps.map((step) => {
               const Icon = stepIcons[step._key] ?? Boxes;
               return (
-                <li key={step._key} className="relative flex flex-col items-center px-2 text-center">
+                <li key={step._key} className="relative flex w-1/2 flex-col items-center px-2 text-center sm:w-1/4 lg:w-[calc(100%/7)]">
                   <span className="steel-gradient flex size-16 items-center justify-center rounded-full text-paper shadow-md ring-4 ring-paper">
                     <Icon aria-hidden="true" className="size-6" />
                   </span>
