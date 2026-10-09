@@ -24,7 +24,6 @@ export type SocialPlatform = "linkedin" | "facebook" | "instagram" | "whatsapp" 
 
 export type SiteSettings = {
   companyName: LocaleString;
-  tagline?: LocaleString;
   address?: LocaleString;
   poBox?: LocaleString;
   email: string;
@@ -105,8 +104,6 @@ export type Brand = {
   subBrands?: string[];
   description?: LocaleString;
   image?: SanityImage;
-  /** Named in the home page's "main importer of …" highlight. */
-  featured?: boolean;
 };
 
 /** A company in the partner logo strip, independent of the imported brands. */

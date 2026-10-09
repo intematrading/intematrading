@@ -31,7 +31,7 @@ export function PhotoFrame({
   icon: LucideIcon;
   className?: string;
   priority?: boolean;
-  /** "contain" shows the whole image (used by the gallery preview). */
+  /** "contain" shows the whole image (e.g. the cut-out ambassador portrait). */
   fit?: "cover" | "contain";
   /** Must be listed in images.qualities in next.config.ts. */
   quality?: number;

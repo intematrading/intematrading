@@ -148,7 +148,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                     <>
                       <Eyebrow as="span" onDark>
                         {brandLine}
-                        <span className="sr-only"> — </span>
+                        <span className="sr-only">. </span>
                       </Eyebrow>
                       <span className="font-display-heading mt-4 block text-[clamp(2.5rem,5.5vw,5.5rem)] leading-[0.95] text-balance">
                         <Accent text={headline} />

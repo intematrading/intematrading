@@ -110,7 +110,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
       </section>
 
       {/* ── Map ─────────────────────────────────────────────────────── */}
-      <section aria-labelledby="map-heading" className="pb-16 sm:pb-24">
+      <section aria-labelledby="map-heading">
         <Container>
           <Reveal className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading id="map-heading" eyebrow={t("mapEyebrow")} size="band">
@@ -126,16 +126,17 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
               <ExternalLink aria-hidden="true" className="size-4" />
             </a>
           </Reveal>
-          <Reveal className="mt-8">
-            <iframe
-              src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-              title={t("mapTitle")}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="block h-[22rem] w-full rounded-[1.75rem] bg-steel-200 shadow-sm ring-1 ring-black/5 sm:h-[28rem] sm:rounded-[2rem]"
-            />
-          </Reveal>
         </Container>
+        {/* Full width, square corners */}
+        <Reveal className="mt-8">
+          <iframe
+            src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+            title={t("mapTitle")}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="block h-[24rem] w-full bg-steel-200 sm:h-[32rem]"
+          />
+        </Reveal>
       </section>
     </div>
   );

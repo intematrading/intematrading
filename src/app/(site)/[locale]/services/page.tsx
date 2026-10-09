@@ -152,8 +152,8 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
             <RegionTree heading={t("sourcingHeading")} regions={page.sourcingRegions ?? []} locale={locale} className="mt-16 sm:mt-20" />
           </Container>
           <div className="mt-20 sm:mt-28">
-            <BrandGrid brands={nonFood} icon={Sparkles} label={t("nonFood")} intro={tr(page.nonFoodIntro, locale)} carousel locale={locale} />
-            <BrandGrid brands={food} icon={ShoppingBasket} label={t("food")} intro={tr(page.foodIntro, locale)} reverse carousel locale={locale} />
+            <BrandGrid brands={nonFood} icon={Sparkles} label={t("nonFood")} intro={tr(page.nonFoodIntro, locale)} locale={locale} />
+            <BrandGrid brands={food} icon={ShoppingBasket} label={t("food")} intro={tr(page.foodIntro, locale)} reverse locale={locale} />
           </div>
         </section>
 
@@ -166,7 +166,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
             <ServiceHeading id="produce-heading" number="02" title={produceSec.title} intro={tr(page.produceIntro, locale)} onDark />
           </Container>
           <div className="mt-16 sm:mt-20">
-            <ProducedGrid products={producedItems} icon={Flame} label={t("ourProducts")} intro={tr(page.productsIntro, locale)} onDark carousel locale={locale} />
+            <ProducedGrid products={producedItems} icon={Flame} label={t("ourProducts")} intro={tr(page.productsIntro, locale)} onDark locale={locale} />
           </div>
         </section>
 

@@ -8,7 +8,6 @@ export const siteSettings = defineType({
   icon: CogIcon,
   fields: [
     defineField({ name: "companyName", type: "localeString", validation: (r) => r.required() }),
-    defineField({ name: "tagline", type: "localeString" }),
     defineField({ name: "address", type: "localeString", description: "Street / sub-city address." }),
     defineField({ name: "poBox", title: "P.O. Box", type: "localeString" }),
     defineField({ name: "email", type: "string", validation: (r) => r.required().email() }),

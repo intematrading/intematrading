@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useIsDecorativeCopy } from "./DecorativeCopy";
 
-export type ProductPreviewData = {
+type ProductPreviewData = {
   title: string;
   label?: string;
   meta?: string;

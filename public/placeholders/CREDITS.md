@@ -12,7 +12,6 @@ with INTEMA's own photography via Sanity.
 | export-coffee.jpg | Clint McKoy | https://unsplash.com/photos/h28p96ICizo |
 | commitment-truck.jpg | Nishat Samadzai | https://unsplash.com/photos/k2xIbQC_x6A |
 | about-warehouse.jpg | Arum Visuals | https://unsplash.com/photos/VnMbc9Szs-E |
-| about-fleet.jpg | Marcin Jozwiak | https://unsplash.com/photos/kGoPcmpPT7c |
 | about-retail.jpg | Franki Chamaki | https://unsplash.com/photos/ivfp_yxZuYQ |
 | about-coffee.jpg | Tina Guina | https://unsplash.com/photos/obV_LM0KjxY |
 | about-training.jpg | René Porter | https://unsplash.com/photos/5j6YBI45TI4 |

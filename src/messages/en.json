@@ -16,7 +16,6 @@
     "contactUs": "Contact us",
     "exploreServices": "Explore our services",
     "home": "Home",
-    "close": "Close",
     "loadError": "This page couldn't load",
     "retry": "Try again"
   },
@@ -26,7 +25,7 @@
   },
   "Home": {
     "snapshotHeading": "About INTEMA",
-    "snapshotIntro": "A diversified FMCG importer, distributor, manufacturer and exporter, connecting trusted global brands with Ethiopian markets from our base in Addis Ababa.",
+    "snapshotIntro": "We import, distribute, make and export consumer goods from our base in Addis Ababa, and we've been bringing trusted international brands to shops across Ethiopia since 2014.",
     "importedBrands": "Brands we import",
     "moreItems": "+{count} more",
     "ourServices": "Our services",
@@ -70,7 +69,7 @@
     "email": "Email",
     "rights": "All rights reserved.",
     "follow": "Follow us",
-    "about": "INTEMA Trading PLC. is a diversified FMCG importer, distributor, manufacturer and exporter, connecting trusted global brands with Ethiopia since 2014.",
+    "about": "INTEMA Trading PLC. has been bringing trusted international brands to Ethiopia since 2014. We also make our own candles and export Ethiopian coffee.",
     "links": "Useful links",
     "services": "Services",
     "emailLabel": "Email us",
@@ -102,7 +101,7 @@
         "brand": "Brand principal",
         "other": "Other"
       },
-      "success": "Thank you — your inquiry has been sent. Our sales team will be in touch soon.",
+      "success": "Thank you, your inquiry has been sent. Our sales team will be in touch soon.",
       "error": "Sorry, your inquiry couldn't be sent. Please try again, or email us directly.",
       "invalid": "Please check the highlighted fields.",
       "required": "This field is required.",
@@ -120,7 +119,7 @@
     "mapEyebrow": "Visit us",
     "mapHeading": "Find us",
     "openMap": "Open in Google Maps",
-    "mapTitle": "Map: INTEMA Trading PLC., Addis Ababa",
+    "mapTitle": "Map showing INTEMA Trading PLC. in Addis Ababa",
     "detailsEyebrow": "Reach us"
   },
   "About": {
@@ -132,7 +131,6 @@
     "processEyebrow": "How we work",
     "partnersEyebrow": "Trusted brands",
     "keysEyebrow": "Why INTEMA",
-    "step": "Step {n}",
     "teamCta": "Meet the team"
   },
   "Team": {

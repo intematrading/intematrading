@@ -8,7 +8,6 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Logo } from "./Logo";
 import { navItems } from "./nav-items";
 import { WhatsAppIcon } from "./SocialLinks";
-import { scrollToSection } from "@/lib/home-nav";
 
 /**
  * Floating glass top bar (height --bar-h, inset from the screen edges, with
@@ -38,16 +37,9 @@ export function SiteHeader({ companyName, whatsappUrl }: { companyName: string; 
   const [scrolled, setScrolled] = useState(false);
   const shown = scrolled || pathname !== "/";
 
-  // Arriving at /#section (e.g. the /contact redirect): the home sections
-  // size themselves after load, so scroll there again once they have.
+  // Only Home hides the bar until the page is scrolled.
   useEffect(() => {
-    const id = window.location.hash.slice(1);
-    if (!id) return;
-    const timer = setTimeout(() => document.getElementById(id) && scrollToSection(id), 400);
-    return () => clearTimeout(timer);
-  }, [pathname]);
-
-  useEffect(() => {
+    if (pathname !== "/") return;
     const check = () => setScrolled(window.scrollY > 40);
     check();
     window.addEventListener("scroll", check, { passive: true });
@@ -111,7 +103,7 @@ export function SiteHeader({ companyName, whatsappUrl }: { companyName: string; 
               target="_blank"
               rel="noopener noreferrer"
               aria-label={t("whatsapp")}
-              className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#25D366] px-3 text-xs font-bold text-white shadow-lg transition-colors hover:bg-[#1ebe5b]"
+              className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#15803d] px-3 text-xs font-bold text-white shadow-lg transition-colors hover:bg-[#0f7a43]"
             >
               <WhatsAppIcon className="size-4" />
               <span className="hidden sm:inline">WhatsApp</span>

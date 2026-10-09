@@ -20,15 +20,9 @@ export function InquiryForm() {
   const typeRef = useRef<HTMLSelectElement>(null);
   useEffect(() => {
     startedAt.current = Date.now();
-    // Links like /contact?type=brand preselect the type: on arrival from
-    // the URL, or on the page already via the event from lib/home-nav.
-    const select = (type: string | null) => {
-      if (typeRef.current && type && (inquiryTypes as readonly string[]).includes(type)) typeRef.current.value = type;
-    };
-    select(new URLSearchParams(window.location.search).get("type"));
-    const onType = (e: Event) => select((e as CustomEvent<string>).detail);
-    window.addEventListener("inquiry:type", onType);
-    return () => window.removeEventListener("inquiry:type", onType);
+    // Links like /contact?type=brand preselect the type.
+    const type = new URLSearchParams(window.location.search).get("type");
+    if (typeRef.current && type && (inquiryTypes as readonly string[]).includes(type)) typeRef.current.value = type;
   }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {

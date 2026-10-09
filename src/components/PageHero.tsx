@@ -48,7 +48,7 @@ export function PageHero({
           {eyebrow && (
             <Eyebrow as="span" onDark>
               {eyebrow}
-              <span className="sr-only"> — </span>
+              <span className="sr-only">. </span>
             </Eyebrow>
           )}
           <span className={`font-display-heading block text-[clamp(2.75rem,6vw,5rem)] leading-[0.95] ${eyebrow ? "mt-4" : ""}`}>{title}</span>

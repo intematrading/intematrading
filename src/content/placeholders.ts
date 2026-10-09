@@ -10,7 +10,6 @@ export const placeholders = {
   import: { src: "/placeholders/import-ship.jpg" },
   produce: { src: "/placeholders/produce-stick-candles.jpg", position: "50% 100%" },
   export: { src: "/placeholders/export-coffee.jpg" },
-  stats: { src: "/placeholders/about-fleet.jpg" },
   commitment: { src: "/placeholders/commitment-truck.jpg", position: "60% 50%" },
   contactBand: { src: "/placeholders/contact-handshake.jpg", position: "60% 45%" },
   vision: { src: "/placeholders/about-warehouse.jpg" },

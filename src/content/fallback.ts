@@ -22,7 +22,6 @@ import type {
 
 export const siteSettings: SiteSettings = {
   companyName: { en: "INTEMA Trading PLC.", am: "ኢንተማ ትሬዲንግ ኃ.የተ.የግ.ማ." },
-  tagline: { en: "The Quality Warehouse", am: "የጥራት መጋዘን" },
   address: { en: "Arada Sub City, Addis Ababa", am: "አራዳ ክፍለ ከተማ፣ አዲስ አበባ" },
   poBox: { en: "P.O. Box 24527, Addis Ababa, Ethiopia", am: "ፖ.ሣ.ቁ. 24527፣ አዲስ አበባ፣ ኢትዮጵያ" },
   email: "import@intematrading.com",
@@ -103,12 +102,12 @@ export const homePage: HomePage = {
     },
   ],
   foodInfo: {
-    en: "We import and distribute food, beverages and fast-moving consumer goods from established international brands, from Heinz sauces and Campbell’s soups to Nido milk and Power Horse energy drinks. Products reach wholesalers, supermarkets and shops across Ethiopia through our own sales and delivery network, with regular deliveries that keep favourite brands on the shelf.",
-    fr: "Nous importons et distribuons des produits alimentaires, des boissons et des produits de grande consommation de marques internationales reconnues, des sauces Heinz et soupes Campbell’s au lait Nido et aux boissons énergisantes Power Horse. Ils parviennent aux grossistes, supermarchés et boutiques de toute l’Éthiopie grâce à notre propre réseau de vente et de livraison, avec des livraisons régulières qui gardent les marques préférées en rayon.",
+    en: "We bring in food, drinks and everyday consumer goods from well known international brands like Heinz, Campbell's, Nido and Power Horse. Our own sales and delivery team gets them to wholesalers, supermarkets and shops across Ethiopia, with regular deliveries so the shelves don't run empty.",
+    fr: "Nous importons des produits alimentaires, des boissons et des produits du quotidien de grandes marques internationales comme Heinz, Campbell’s, Nido et Power Horse. Notre propre équipe de vente et de livraison les apporte aux grossistes, supermarchés et boutiques de toute l’Éthiopie, avec des livraisons régulières pour que les rayons ne soient jamais vides.",
   },
   nonFoodInfo: {
-    en: "Our non-food range covers personal care, beauty and hygiene, from Clere body lotions and Fa shower gels to Vatika hair care and Reckitt’s household names. As the main importer of L’Oréal Professionnel, we also run a dedicated channel for salons and professional beauty, supplying the products and support that professionals rely on.",
-    fr: "Notre gamme non alimentaire couvre les soins personnels, la beauté et l’hygiène, des laits corporels Clere et gels douche Fa aux soins capillaires Vatika et aux grandes marques de Reckitt. Principal importateur de L’Oréal Professionnel, nous gérons aussi un canal dédié aux salons et à la beauté professionnelle, avec les produits et l’accompagnement dont les professionnels ont besoin.",
+    en: "On the non-food side we cover personal care, beauty and hygiene, with brands like Clere, Fa, Vatika and Reckitt. We're also the main importer of L'Oréal Professionnel, and we have a team that works directly with salons and beauty professionals.",
+    fr: "Côté non alimentaire, nous couvrons les soins personnels, la beauté et l’hygiène, avec des marques comme Clere, Fa, Vatika et Reckitt. Nous sommes aussi le principal importateur de L’Oréal Professionnel, avec une équipe qui travaille directement avec les salons et les professionnels de la beauté.",
   },  foodCategories: [
     { en: "Dairy", fr: "Produits laitiers" },
     { en: "Food products", fr: "Produits alimentaires" },
@@ -128,8 +127,8 @@ export const homePage: HomePage = {
   ],
 
   whatWeDoIntro: {
-    en: "INTEMA Trading PLC. is an FMCG importer, distributor, manufacturer and exporter, connecting trusted global brands with wholesale and retail markets across Ethiopia.",
-    fr: "INTEMA Trading PLC. est un importateur, distributeur, fabricant et exportateur de produits de grande consommation qui relie des marques mondiales de confiance aux marchés de gros et de détail de toute l’Éthiopie.",
+    en: "INTEMA imports and distributes consumer goods, makes its own products and exports Ethiopian coffee. Here's what each part of the business does.",
+    fr: "INTEMA importe et distribue des produits de grande consommation, fabrique ses propres produits et exporte du café éthiopien. Voici ce que fait chaque partie de l’entreprise.",
   },
   entryCards: [
     {
@@ -145,15 +144,15 @@ export const homePage: HomePage = {
       _key: "produce",
       section: "produce",
       title: { en: "We Produce", fr: "Nous produisons" },
-      description: { en: "INTEMA makes its own Abay candles in Ethiopia, sold in 8-candle packs, alongside a legacy line of soap brands.", fr: "INTEMA fabrique ses propres bougies Abay en Éthiopie, vendues en paquets de 8, ainsi qu’une gamme historique de savons." },
+      description: { en: "We make our own Abay candles here in Ethiopia and sell them in packs of 8.", fr: "Nous fabriquons nos propres bougies Abay en Éthiopie et les vendons en paquets de 8." },
     },
     {
       _key: "export",
       section: "export",
       title: { en: "We Export", fr: "Nous exportons" },
       description: {
-        en: "Ethiopian coffee, exported under our two registered brands, Seedcup and Bella, to buyers in the Middle East, Asia and Europe.",
-        fr: "Du café éthiopien, exporté sous nos deux marques déposées, Seedcup et Bella, vers des acheteurs au Moyen-Orient, en Asie et en Europe.",
+        en: "We export Ethiopian coffee under our two brands, Seedcup and Bella, to buyers in the Middle East, Asia and Europe.",
+        fr: "Nous exportons du café éthiopien sous nos deux marques, Seedcup et Bella, vers des acheteurs au Moyen-Orient, en Asie et en Europe.",
       },
     },
   ],
@@ -168,7 +167,7 @@ export const homePage: HomePage = {
     am: "ከቁልፍ ደንበኞቻችን ጋር ጠንካራ ግንኙነት በመገንባት እንደ ሌላ አቅራቢ ሳይሆን እንደ አስፈላጊ አጋር እንድንታይ እንሠራለን።",
   },
   mission: {
-    en: "To be an indispensable partner to our key customers, not just another supplier: advising on assortment, stock levels, pricing, display and promotions.",
+    en: "To be a partner our key customers can rely on, not just another supplier. We help them with product choice, stock levels, pricing, display and promotions.",
   },
   vision: {
     en: "To become Ethiopia's recognised distributor of specialty food, cosmetic and personal care products to wholesale and retail outlets.",
@@ -199,7 +198,7 @@ export const homePage: HomePage = {
   ],
   seo: {
     title: {
-      en: "INTEMA Trading PLC. — Importing, Producing & Exporting Across East Africa",
+      en: "INTEMA Trading PLC. | Importing, Producing & Exporting Across East Africa",
       am: "ኢንተማ ትሬዲንግ — በምሥራቅ አፍሪካ ማስመጣት፣ ማምረትና መላክ",
     },
     description: {
@@ -223,11 +222,11 @@ export const servicesPage: ServicesPage = {
     am: "የታመኑ ዓለም አቀፍ የፍጆታ ምርት ብራንዶች — ምግብና ምግብ ነክ ያልሆኑ።",
   },
   nonFoodIntro: {
-    en: "Cosmetic and personal care supplies — skin, hair and body care from trusted international brands — for wholesale and retail stands across Ethiopia, Djibouti and Sudan.",
+    en: "Skin, hair and body care from trusted international brands, for wholesale and retail customers across Ethiopia, Djibouti and Sudan.",
     am: "የኮስሞቲክስና የግል እንክብካቤ ምርቶች — ከታመኑ ዓለም አቀፍ ብራንዶች የቆዳ፣ የፀጉርና የሰውነት እንክብካቤ — በኢትዮጵያ፣ በጅቡቲና በሱዳን ለሚገኙ የጅምላና የችርቻሮ መሸጫዎች።",
   },
   foodIntro: {
-    en: "Specialty food and drinks — from dairy and sauces to soups, snacks and beverages — delivered to our accounts twice a week.",
+    en: "Specialty food and drinks, including dairy, sauces, soups, snacks and beverages, delivered to our customers twice a week.",
     am: "ልዩ ምግብና መጠጦች — ከወተት ተዋጽኦና ሶሶች እስከ ሾርባ፣ መክሰስና መጠጦች — ለደንበኞቻችን በሳምንት ሁለት ጊዜ ይደርሳሉ።",
   },
 
@@ -237,7 +236,7 @@ export const servicesPage: ServicesPage = {
     am: "ኢንተማ አባይ (አባይ ሻማ) የተሰኘውን የራሱን የሻማ ብራንድ ያመርታል። ምርቱ በ8 ሻማ ጥቅል የሚሸጥ ሲሆን የብራንዱ አምባሳደር ነፃነት ወርቅነህ ነው።",
   },
   productsIntro: {
-    en: "Made in-house: our Abay candle brand and a legacy line of soap brands.",
+    en: "Abay is our own candle brand, made here in Ethiopia and sold in packs of 8.",
     am: "በራሳችን የሚመረቱ፦ የአባይ ሻማ ብራንዳችንና ነባር የሳሙና ብራንዶቻችን።",
   },
 
@@ -247,31 +246,31 @@ export const servicesPage: ServicesPage = {
     am: "የኢትዮጵያ ቡና ወደ መካከለኛው ምሥራቅ፣ እስያና አውሮፓ።",
   },
   exportBody: {
-    en: "Coffee is Ethiopia's main export commodity — internationally recognised for its high quality and taste, and a way for INTEMA to secure forex for its import business. Through two registered export brands, Seedcup and Bella, INTEMA aims to spread the popularity of Ethiopian coffee tradition to the Middle East, Asia and Europe. Our team has invested in coffee training and education, including participation in an Ethiopian/Saudi coffee exchange and international trade shows such as Gulfood.",
+    en: "Coffee is Ethiopia's biggest export and it's known around the world for its quality and taste. Exporting it also earns the foreign currency that keeps our import business going. Through our two registered brands, Seedcup and Bella, we want more people in the Middle East, Asia and Europe to enjoy Ethiopian coffee. Our team has trained in coffee, taken part in an Ethiopian and Saudi coffee exchange, and shown at international trade fairs like Gulfood.",
     am: "ቡና የኢትዮጵያ ዋነኛ የወጪ ንግድ ምርት ሲሆን በጥራቱና በጣዕሙ በዓለም አቀፍ ደረጃ የታወቀ ነው፤ እንዲሁም ኢንተማ ለማስመጣት ሥራው የውጭ ምንዛሪ የሚያገኝበት መንገድ ነው። ሲድካፕ እና ቤላ በተባሉ ሁለት የተመዘገቡ የወጪ ንግድ ብራንዶች አማካኝነት ኢንተማ የኢትዮጵያን የቡና ባህል ተወዳጅነት ወደ መካከለኛው ምሥራቅ፣ እስያና አውሮፓ ለማስፋፋት ያለመ ነው። ቡድናችን በቡና ሥልጠናና ትምህርት ላይ ኢንቨስት ያደረገ ሲሆን፣ በኢትዮጵያ–ሳዑዲ የቡና ልውውጥ እና እንደ ጋልፉድ ባሉ ዓለም አቀፍ የንግድ ትርዒቶች ተሳትፏል።",
   },
   exportBrandsIntro: {
     en: "Two registered export brands carrying Ethiopian coffee to the Middle East, Asia and Europe.",
     am: "የኢትዮጵያን ቡና ወደ መካከለኛው ምሥራቅ፣ እስያና አውሮፓ የሚወስዱ ሁለት የተመዘገቡ የወጪ ንግድ ብራንዶች።",
   },
-  routeHeading: { en: "Every step, handled", fr: "Chaque étape, maîtrisée" },
+  routeHeading: { en: "Every step of the way", fr: "À chaque étape" },
   routeIntro: {
-    en: "Beyond importing, INTEMA runs the whole journey in-house, from the supplier’s dock to the store shelf. Here is how each step works.",
-    fr: "Au-delà de l’importation, INTEMA gère tout le parcours en interne, du quai du fournisseur jusqu’au rayon. Voici comment se déroule chaque étape.",
+    en: "We don't stop at importing. We look after the whole journey ourselves, from the supplier's dock to the shop shelf.",
+    fr: "Nous ne nous arrêtons pas à l’importation. Nous gérons nous-mêmes tout le trajet, du quai du fournisseur jusqu’au rayon du magasin.",
   },
   exportMarkets: [
-    { _key: "middleEast", title: { en: "Middle East", fr: "Moyen-Orient" }, body: { en: "Saudi Arabia and the Gulf, where Ethiopian coffee has a long-standing following.", fr: "L’Arabie saoudite et le Golfe, où le café éthiopien est apprécié de longue date." } },
-    { _key: "asia", title: { en: "Asia", fr: "Asie" }, body: { en: "Growing specialty-coffee markets across East and Southeast Asia.", fr: "Des marchés du café de spécialité en pleine croissance en Asie de l’Est et du Sud-Est." } },
-    { _key: "europe", title: { en: "Europe", fr: "Europe" }, body: { en: "Roasters and buyers who prize Ethiopia’s distinctive origins.", fr: "Des torréfacteurs et acheteurs qui recherchent les origines singulières de l’Éthiopie." } },
+    { _key: "middleEast", title: { en: "Middle East", fr: "Moyen-Orient" }, body: { en: "Saudi Arabia and the Gulf, where people have loved Ethiopian coffee for a long time.", fr: "L’Arabie saoudite et le Golfe, où l’on apprécie le café éthiopien depuis longtemps." } },
+    { _key: "asia", title: { en: "Asia", fr: "Asie" }, body: { en: "Specialty coffee is taking off across East and Southeast Asia.", fr: "Le café de spécialité est en plein essor en Asie de l’Est et du Sud-Est." } },
+    { _key: "europe", title: { en: "Europe", fr: "Europe" }, body: { en: "Roasters and buyers who know and value Ethiopian coffee.", fr: "Des torréfacteurs et acheteurs qui connaissent et apprécient le café éthiopien." } },
   ],
 
   seo: {
     title: {
-      en: "Our Services — Import, Production & Coffee Export",
+      en: "Our Services | Import, Production & Coffee Export",
       am: "አገልግሎቶቻችን — ማስመጣት፣ ማምረትና የቡና ወጪ ንግድ",
     },
     description: {
-      en: "We import trusted global FMCG brands, produce the Abay candle brand and a legacy soap line, and export Ethiopian coffee through Seedcup and Bella.",
+      en: "We import trusted international consumer brands, make our own Abay candles and export Ethiopian coffee under the Seedcup and Bella brands.",
       am: "የታመኑ ዓለም አቀፍ የፍጆታ ምርቶችን እናስመጣለን፣ የአባይ ሻማንና ነባር የሳሙና ምርቶችን እናመርታለን፣ የኢትዮጵያ ቡናን በሲድካፕና ቤላ ብራንዶች እንልካለን።",
     },
   },
@@ -331,24 +330,24 @@ export const teamPage: TeamPage = {
   title: { en: "Our Team", am: "ቡድናችን" },
   eyebrow: { en: "The people behind INTEMA", fr: "L’équipe derrière INTEMA", am: "ከኢንተማ ጀርባ ያሉ ሰዎች" },
   intro: {
-    en: "INTEMA is led by principal owners Bedru Hussen Jemal and Eliyas Abrar Sh., whose combined experience brings upper office management skills, high levels of customer service, and over 10 years in distribution and sales management.",
+    en: "INTEMA is led by its principal owners, Bedru Hussen Jemal and Eliyas Abrar Sh. Between them they bring senior management experience, a strong focus on customer service and more than 10 years in distribution and sales management.",
     am: "ኢንተማ የሚመራው በዋና ባለቤቶቹ በድሩ ሁሴን ጀማል እና ኤልያስ አብራር ሸ. ሲሆን፣ ጥምር ልምዳቸው የከፍተኛ አመራር ክህሎትን፣ ከፍተኛ የደንበኞች አገልግሎትን እና በማከፋፈልና በሽያጭ አመራር ከ10 ዓመታት በላይ ልምድን ያካትታል።",
   },
   leadershipHeading: { en: "Leadership", am: "አመራር" },
   leadershipIntro: {
-    en: "Relationships are the key to success in distribution, and personal selling is led from the top — Bedru with his skill and experience in sales and distribution, and Eliyas in customer service and relations.",
+    en: "In distribution, relationships are everything, so selling starts at the top. Bedru brings his experience in sales and distribution, and Eliyas leads customer service and relations.",
     am: "በማከፋፈል ሥራ የስኬት ቁልፉ ግንኙነት ነው፤ በአካል የሚደረግ ሽያጭም ከላይ ይመራል — በድሩ በሽያጭና በማከፋፈል ክህሎቱና ልምዱ፣ ኤልያስ ደግሞ በደንበኞች አገልግሎትና ግንኙነት።",
   },
   headsHeading: { en: "Our departments", fr: "Nos départements" },
   headsIntro: {
-    en: "Day to day, INTEMA runs on twenty-six people across nine departments. Sales, marketing and media (ten people) win and serve our customers, administration and finance (four) keep the business running, and operations (eleven) keep stock ready and moving, each led by one of the heads below.",
-    fr: "Au quotidien, INTEMA s’appuie sur vingt-six personnes réparties dans neuf départements. Les ventes, le marketing et les médias (dix personnes) gagnent et servent nos clients, l’administration et les finances (quatre) font tourner l’entreprise, et les opérations (onze) tiennent le stock prêt et en mouvement, chacun sous la direction d’un des responsables ci-dessous.",
+    en: "Twenty-six people across nine departments run INTEMA day to day. Ten work in sales, marketing and media, four in administration and finance, and eleven in operations. Each department has a head, and you can meet them below.",
+    fr: "Vingt-six personnes réparties dans neuf départements font tourner INTEMA au quotidien. Dix travaillent dans les ventes, le marketing et les médias, quatre dans l’administration et les finances, et onze dans les opérations. Chaque département a un responsable, que vous pouvez découvrir ci-dessous.",
   },
   ambassadorName: { en: "Netsanet Workneh", am: "ነፃነት ወርቅነህ" },
   ambassadorRole: { en: "Brand ambassador", fr: "Visage de la marque" },
   ambassadorBio: {
-    en: "Netsanet Workneh is the face of Abay, INTEMA’s own candle brand. Abay candles are made by INTEMA in Ethiopia and sold in 8-candle packs through the same wholesale and retail network that carries our imported brands. As brand ambassador, Netsanet represents Abay to customers and retail partners, helping a locally made product earn its place on shelves and in homes across the country.",
-    fr: "Netsanet Workneh est le visage d’Abay, la marque de bougies d’INTEMA. Fabriquées par INTEMA en Éthiopie, les bougies Abay sont vendues en paquets de 8 via le même réseau de gros et de détail que nos marques importées. Visage de la marque, Netsanet représente Abay auprès des clients et des partenaires commerciaux, et aide un produit local à gagner sa place dans les rayons et les foyers de tout le pays.",
+    en: "Netsanet Workneh is the face of Abay, the candle brand we make here in Ethiopia. Abay is sold in packs of 8 through the same wholesale and retail network as the brands we import. Netsanet represents Abay to our customers and retail partners and helps a homegrown product find its way into more shops and homes.",
+    fr: "Netsanet Workneh est le visage d’Abay, la marque de bougies que nous fabriquons ici en Éthiopie. Abay est vendue en paquets de 8 via le même réseau de gros et de détail que nos marques importées. Netsanet représente Abay auprès de nos clients et partenaires commerciaux et aide ce produit local à entrer dans plus de boutiques et de foyers.",
   },
   facts: [
     { _key: "team", value: "26+", label: { en: "Team members", fr: "Collaborateurs" }, note: { en: "Across nine departments", fr: "Répartis dans neuf départements" } },
@@ -365,31 +364,31 @@ export const teamPage: TeamPage = {
     {
       _key: "sales",
       title: { en: "Sales & marketing", fr: "Ventes et marketing" },
-      body: { en: "A six-person sales team serves current customers and wins new business, with marketing and media & communications: ten people in all.", fr: "Une équipe commerciale de six personnes sert nos clients et en gagne de nouveaux, avec le marketing et les médias et la communication : dix personnes au total." },
+      body: { en: "Our six-person sales team looks after current customers and brings in new ones, working with marketing and media. That's ten people in all.", fr: "Notre équipe commerciale de six personnes s’occupe des clients actuels et en trouve de nouveaux, avec le marketing et les médias. Cela fait dix personnes en tout." },
     },
     {
       _key: "admin",
       title: { en: "Administration & finance", fr: "Administration et finances" },
-      body: { en: "HR and the executive office, finance and general services: four people keeping the business running.", fr: "RH et secrétariat de direction, finances et services généraux : quatre personnes qui font tourner l’entreprise." },
+      body: { en: "HR, the executive office, finance and general services. Four people who keep the business running.", fr: "RH, secrétariat de direction, finances et services généraux. Quatre personnes qui font tourner l’entreprise." },
     },
     {
       _key: "operations",
       title: { en: "Operations", fr: "Opérations" },
-      body: { en: "A ten-person store and warehouse team plus technical support, with deliveries Monday to Friday on routes planned to save time and fuel.", fr: "Une équipe de dix personnes au magasin et à l’entrepôt, plus le support technique, avec des livraisons du lundi au vendredi sur des itinéraires conçus pour économiser temps et carburant." },
+      body: { en: "A ten-person store and warehouse team plus technical support, with deliveries going out Monday to Friday.", fr: "Une équipe de dix personnes au magasin et à l’entrepôt, plus le support technique, avec des livraisons du lundi au vendredi." },
     },
   ],
   trainingHeading: { en: "Training", am: "ሥልጠና" },
   training: {
-    en: "INTEMA has invested in coffee training and education so its team is knowledgeable and well prepared — including an Ethiopian/Saudi coffee exchange (“Coffee Talk” with Saudi coffee expert Ali Al Diwani) and international trade shows such as Gulfood.",
+    en: "We've invested in coffee training so our team really knows the product. That includes an Ethiopian and Saudi coffee exchange (\"Coffee Talk\" with Saudi coffee expert Ali Al Diwani) and international trade fairs like Gulfood.",
     am: "ኢንተማ ቡድኑ ዕውቀት ያለውና በሚገባ የተዘጋጀ እንዲሆን በቡና ሥልጠናና ትምህርት ላይ ኢንቨስት አድርጓል — በኢትዮጵያ–ሳዑዲ የቡና ልውውጥ (ከሳዑዲው የቡና ባለሙያ አሊ አል ዲዋኒ ጋር “ኮፊ ቶክ”) እና እንደ ጋልፉድ ባሉ ዓለም አቀፍ የንግድ ትርዒቶች መሳተፍን ጨምሮ።",
   },
   partnerHeading: { en: "Partner *with us*", am: "*ከእኛ ጋር* ይሥሩ" },
   partnerBody: {
-    en: "Brand principals looking for distribution in Ethiopia, Djibouti and Sudan, retailers and wholesalers, and collaborators — tell us about your business and our team will get back to you.",
+    en: "Are you a brand looking for distribution in Ethiopia, Djibouti or Sudan, a retailer or wholesaler, or someone who'd like to work with us? Tell us about your business and our team will get back to you.",
     am: "በኢትዮጵያ፣ በጅቡቲና በሱዳን አከፋፋይ የሚፈልጉ የብራንድ ባለቤቶች፣ ቸርቻሪዎችና ጅምላ ሻጮች እንዲሁም ተባባሪዎች — ስለ ሥራዎ ይንገሩን፤ ቡድናችን ምላሽ ይሰጥዎታል።",
   },
   seo: {
-    title: { en: "Our Team — Leadership & Sales", am: "ቡድናችን — አመራርና ሽያጭ" },
+    title: { en: "Our Team | Leadership & Sales", am: "ቡድናችን — አመራርና ሽያጭ" },
     description: {
       en: "Meet the leadership and sales team behind INTEMA Trading PLC., with over 10 years in distribution and sales management.",
       am: "ከ10 ዓመታት በላይ የማከፋፈልና የሽያጭ አመራር ልምድ ያላቸውን የኢንተማ ትሬዲንግ አመራርና የሽያጭ ቡድን ይተዋወቁ።",
@@ -477,7 +476,7 @@ export const contactPage: ContactPage = {
   },
   formHeading: { en: "Send an inquiry", am: "ጥያቄ ይላኩ" },
   formIntro: {
-    en: "Tell us who you are and what you're looking for — our sales team will get back to you.",
+    en: "Tell us who you are and what you're looking for, and our sales team will get back to you.",
     am: "ማን እንደሆኑና ምን እንደሚፈልጉ ይንገሩን — የሽያጭ ቡድናችን ምላሽ ይሰጥዎታል።",
   },
 };
@@ -486,13 +485,13 @@ export const aboutPage: AboutPage = {
   title: { en: "About Us", am: "ስለ እኛ" },
   eyebrow: { en: "Since 2014", fr: "Depuis 2014", am: "ከ2014 ጀምሮ" },
   intro: {
-    en: "The Quality Warehouse — a diversified FMCG importer, distributor, manufacturer and exporter serving Ethiopia, Djibouti and Sudan since 2014.",
+    en: "We're The Quality Warehouse, a diversified FMCG importer, distributor, manufacturer and exporter serving Ethiopia, Djibouti and Sudan since 2014.",
     am: "የጥራት መጋዘን — ከ2014 ጀምሮ ኢትዮጵያን፣ ጅቡቲንና ሱዳንን የሚያገለግል ሁለገብ የፍጆታ ምርቶች አስመጪ፣ አከፋፋይ፣ አምራችና ላኪ።",
   },
   whoWeAreHeading: { en: "Who we are & what we do", am: "ማን ነን፣ ምን እንሠራለን" },
   whoWeAre: [
     {
-      en: "Established in 2014, INTEMA Trading PLC. is a privately held S-Corporation and a diversified FMCG importer, distributor, manufacturer and exporter headquartered in Arada Sub City, Addis Ababa — a prime location to service both wholesale and retail markets.",
+      en: "INTEMA Trading PLC. was founded in 2014. We're a privately held company that imports, distributes, makes and exports consumer goods, and our head office is in Arada Sub City, Addis Ababa, a good spot for serving both wholesale and retail customers.",
       am: "በ2014 የተመሠረተው ኢንተማ ትሬዲንግ ኃ.የተ.የግ.ማ. የግል ኩባንያ ሲሆን፣ ዋና መሥሪያ ቤቱን በአራዳ ክፍለ ከተማ፣ አዲስ አበባ ያደረገ ሁለገብ የፍጆታ ምርቶች አስመጪ፣ አከፋፋይ፣ አምራችና ላኪ ነው — የጅምላና የችርቻሮ ገበያዎችን ለማገልገል ምቹ በሆነ ቦታ።",
     },
     {
@@ -500,7 +499,7 @@ export const aboutPage: AboutPage = {
       am: "ኢንተማ በግምት 170 ሚሊዮን ሕዝብ ያለውን የኢትዮጵያ፣ የጅቡቲና የሱዳን ጥምር ገበያ ያገለግላል። ዋና ባለቤቶቹ በድሩ ሁሴን ጀማልና ኤልያስ አብራር ሸ. ሲሆኑ፣ ጥምር ልምዳቸው የከፍተኛ አመራር ክህሎትን፣ ከፍተኛ የደንበኞች አገልግሎትንና በቤየርስዶርፍ፣ በሎሬያል ፕሮፌሽናልና በሎሬያል ኮንሲውመር ፕሮዳክትስ ከ10 ዓመታት በላይ የማከፋፈልና የሽያጭ አመራር ልምድን ያካትታል።",
     },
     {
-      en: "Beyond import and distribution, INTEMA manufactures its own candle brand, “Abay,” and exports Ethiopian coffee internationally through two registered export brands, Seedcup and Bella. We do not only sell product — we provide service.",
+      en: "On top of import and distribution, we make our own candle brand, Abay, and export Ethiopian coffee under two registered brands, Seedcup and Bella. We don't just sell products. We look after our customers.",
       am: "ከማስመጣትና ከማከፋፈል ባሻገር ኢንተማ “አባይ” የተሰኘውን የራሱን የሻማ ብራንድ ያመርታል፤ የኢትዮጵያን ቡናም ሲድካፕና ቤላ በተባሉ ሁለት የተመዘገቡ የወጪ ንግድ ብራንዶች ወደ ውጭ ይልካል። ምርት ብቻ አንሸጥም — አገልግሎት እንሰጣለን።",
     },
   ],
@@ -512,7 +511,7 @@ export const aboutPage: AboutPage = {
     { _key: "fleet", value: "4+", label: { en: "Delivery fleet", am: "የማከፋፈያ ተሽከርካሪዎች" }, note: { en: "Doubled within a year", am: "በአንድ ዓመት ውስጥ በእጥፍ አድጓል" } },
   ],
   visionSectionHeading: { en: "What drives us", fr: "Ce qui nous anime" },
-  visionSectionIntro: { en: "Everything we do is guided by a clear vision for where INTEMA is going and a mission for how we work with our customers every day.", fr: "Tout ce que nous faisons est guidé par une vision claire de l’avenir d’INTEMA et par une mission qui définit notre façon de travailler chaque jour avec nos clients." },
+  visionSectionIntro: { en: "Where we want INTEMA to go, and how we want to work with our customers along the way.", fr: "Où nous voulons mener INTEMA, et comment nous voulons travailler avec nos clients en chemin." },
   visionHeading: { en: "Vision", am: "ራዕይ" },
   vision: {
     en: "To become a recognized distributor of specialty food, cosmetic and personal care supplies and services to wholesale and retail stands throughout the Ethiopian, Sudanese and Djiboutian markets.",
@@ -520,12 +519,12 @@ export const aboutPage: AboutPage = {
   },
   missionHeading: { en: "Mission", am: "ተልዕኮ" },
   mission: {
-    en: "To develop strong relationships with key customers so INTEMA is viewed as an indispensable partner, not just another supplier — recommending product assortment, stocking levels, pricing, display and promotional ideas tailored to each customer's retail base.",
+    en: "To build strong relationships with our key customers so they see INTEMA as a partner they can't do without, not just another supplier. We help each one with product choice, stock levels, pricing, display and promotion ideas that suit their shop.",
     am: "ኢንተማ እንደ ሌላ አቅራቢ ሳይሆን እንደ አስፈላጊ አጋር እንዲታይ ከቁልፍ ደንበኞች ጋር ጠንካራ ግንኙነት መገንባት — ለእያንዳንዱ ደንበኛ የሚስማማ የምርት ዓይነት፣ የክምችት መጠን፣ ዋጋ፣ አቀራረብና የማስተዋወቂያ ሐሳቦችን በመጠቆም።",
   },
   processHeading: { en: "Our process", am: "የአሠራር ሂደታችን" },
   processIntro: {
-    en: "One platform, every market: INTEMA reaches its customers through a single integrated operation spanning import distribution, own-brand manufacturing and coffee export — across three countries.",
+    en: "We run import, distribution, our own manufacturing and coffee export as one business, so our customers deal with one team for everything, in all three countries.",
     am: "አንድ መድረክ፣ ሁሉም ገበያ፦ ኢንተማ ማስመጣትና ማከፋፈልን፣ የራሱን ብራንድ ማምረትንና የቡና ወጪ ንግድን በሚያጣምር አንድ የተቀናጀ አሠራር በሦስት አገሮች ደንበኞቹን ይደርሳል።",
   },
   processSteps: [
@@ -533,7 +532,7 @@ export const aboutPage: AboutPage = {
       _key: "source",
       title: { en: "Source", am: "ማስመጣት" },
       body: {
-        en: "We import trusted food and non-food brands — including exclusive distribution rights to groundbreaking products not yet available in our markets.",
+        en: "We import trusted food and non-food brands, including some we hold exclusive rights to that you won't find anywhere else in our markets.",
         am: "የታመኑ የምግብና ምግብ ነክ ያልሆኑ ብራንዶችን እናስመጣለን — በገበያዎቻችን ገና ላልተገኙ አዳዲስ ምርቶች ብቸኛ የማከፋፈል መብትን ጨምሮ።",
       },
     },
@@ -562,12 +561,12 @@ export const aboutPage: AboutPage = {
       },
     },
   ],
-  keysIntro: { en: "Five principles explain why retailers, wholesalers and brand owners choose to work with INTEMA, and keep working with us.", fr: "Cinq principes expliquent pourquoi détaillants, grossistes et propriétaires de marques choisissent de travailler avec INTEMA, et nous restent fidèles." },
+  keysIntro: { en: "Here's why retailers, wholesalers and brand owners choose to work with us, and why they stay.", fr: "Voici pourquoi détaillants, grossistes et propriétaires de marques choisissent de travailler avec nous, et pourquoi ils restent." },
   keysHeading: { en: "Keys to success", am: "የስኬት ቁልፎች" },
   keysToSuccess: [
     { en: "Innovative, quality products.", am: "ፈጠራ የታከለባቸው ጥራት ያላቸው ምርቶች።" },
     {
-      en: "Individualised customer service — providing customers with what they want, when and how they want it.",
+      en: "Customer service built around each customer. We give people what they want, when and how they want it.",
       am: "ለእያንዳንዱ ደንበኛ የተለየ አገልግሎት — ደንበኞች የሚፈልጉትን፣ በሚፈልጉት ጊዜና መንገድ ማቅረብ።",
     },
     {
@@ -586,7 +585,7 @@ export const aboutPage: AboutPage = {
     am: "የታመኑ ዓለም አቀፍ የምግብና ምግብ ነክ ያልሆኑ ብራንዶችን በኢትዮጵያ፣ በጅቡቲና በሱዳን እናስመጣለን፣ እናከፋፍላለን።",
   },
   seo: {
-    title: { en: "About INTEMA Trading PLC. — The Quality Warehouse", am: "ስለ ኢንተማ ትሬዲንግ — የጥራት መጋዘን" },
+    title: { en: "About INTEMA Trading PLC. | The Quality Warehouse", am: "ስለ ኢንተማ ትሬዲንግ — የጥራት መጋዘን" },
     description: {
       en: "Since 2014, INTEMA Trading PLC. has imported, distributed, manufactured and exported across Ethiopia, Djibouti and Sudan. Our story, vision, process and partners.",
       am: "ከ2014 ጀምሮ ኢንተማ ትሬዲንግ በኢትዮጵያ፣ በጅቡቲና በሱዳን ሲያስመጣ፣ ሲያከፋፍል፣ ሲያመርትና ሲልክ ቆይቷል። ታሪካችን፣ ራዕያችን፣ አሠራራችንና አጋሮቻችን።",
@@ -614,7 +613,7 @@ export const producedItems: ProducedItem[] = [
     _id: "produce-abay",
     name: { en: "Abay", am: "አባይ ሻማ" },
     category: { en: "Candles", am: "ሻማ" },
-    description: { en: "Abay (አባይ ሻማ) is INTEMA’s own candle brand, made in Ethiopia and sold in packs of 8. Dependable, clean-burning household candles for everyday use, from power cuts to celebrations, at a price that suits every home.\n\nAbay reaches shops and wholesalers across the country through the same sales and delivery network that carries our imported brands, with Netsanet Workneh as its brand ambassador.", fr: "Abay (አባይ ሻማ) est la marque de bougies d’INTEMA, fabriquée en Éthiopie et vendue en paquets de 8. Des bougies domestiques fiables, à la combustion propre, pour tous les jours, des coupures de courant aux fêtes, à un prix adapté à chaque foyer.\n\nAbay est distribuée aux boutiques et grossistes de tout le pays grâce au même réseau de vente et de livraison que nos marques importées, avec Netsanet Workneh comme visage de la marque." },
+    description: { en: "Abay (አባይ ሻማ) is our own candle brand, made here in Ethiopia and sold in packs of 8. They're simple, reliable household candles that families keep at home for power cuts, holidays and everyday use.\n\nYou'll find Abay in shops and with wholesalers across the country. It goes out through the same sales and delivery network as the brands we import, and Netsanet Workneh is the face of the brand.", fr: "Abay (አባይ ሻማ) est notre propre marque de bougies, fabriquée ici en Éthiopie et vendue en paquets de 8. Ce sont des bougies simples et fiables que les familles gardent à la maison pour les coupures de courant, les fêtes et le quotidien.\n\nOn trouve Abay dans les boutiques et chez les grossistes de tout le pays. Elle passe par le même réseau de vente et de livraison que nos marques importées, et Netsanet Workneh en est le visage." },
   },
 ];
 

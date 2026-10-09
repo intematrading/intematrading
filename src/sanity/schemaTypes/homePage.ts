@@ -97,7 +97,7 @@ export const homePage = defineType({
       title: "What we do intro",
       type: "localeText",
       group: "cards",
-      description: "Paragraph beside the What we do cards.",
+      description: "Intro under the What we do heading.",
     }),
     defineField({ name: "routeHeading", title: "Heading", type: "localeString", group: "route" }),
     defineField({ name: "routeIntro", title: "Intro", type: "localeText", group: "route" }),

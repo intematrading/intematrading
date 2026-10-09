@@ -27,13 +27,17 @@ const arrayItemType: Record<string, string> = {
   stats: "stat",
   facts: "stat",
   entryCards: "entryCard",
-  gallery: "galleryImage",
   processSteps: "titledText",
   departments: "titledText",
   socialLinks: "socialLink",
   commitmentPoints: "commitmentPoint",
   keysToSuccess: "localeString",
-  exportMarkets: "localeString",
+  exportMarkets: "titledText",
+  sourcingRegions: "titledText",
+  marketStats: "stat",
+  routeSteps: "titledText",
+  foodCategories: "localeString",
+  nonFoodCategories: "localeString",
   whoWeAre: "localeText",
 };
 
@@ -72,6 +76,9 @@ const docs = [
   ...fallback.teamMembers.map((m, i) => ({ ...m, _type: "teamMember", order: i + 1 })),
   ...fallback.producedItems.map((p, i) => ({ ...p, _type: "producedItem", order: i + 1 })),
   ...fallback.exportItems.map((e, i) => ({ ...e, _type: "exportItem", order: i + 1 })),
+  ...fallback.partners.map((p, i) => ({ ...p, _type: "partner", order: i + 1 })),
+  // `sample` and `_id` are dropped: samples become numbered Studio drafts.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ...fallback.testimonials.map(({ sample: _sample, _id, ...t }, i) => ({
     ...t,
     _id: `drafts.testimonial-sample-${i + 1}`,

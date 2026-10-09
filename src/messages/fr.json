@@ -16,7 +16,6 @@
     "contactUs": "Nous contacter",
     "exploreServices": "Découvrir nos services",
     "home": "Accueil",
-    "close": "Fermer",
     "loadError": "Cette page n'a pas pu se charger",
     "retry": "Réessayer"
   },
@@ -26,7 +25,7 @@
   },
   "Home": {
     "snapshotHeading": "À propos d’INTEMA",
-    "snapshotIntro": "Importateur, distributeur, fabricant et exportateur de produits de grande consommation, nous relions des marques mondiales de confiance aux marchés éthiopiens depuis notre base d'Addis-Abeba.",
+    "snapshotIntro": "Nous importons, distribuons, fabriquons et exportons des produits de grande consommation depuis notre base d’Addis-Abeba, et apportons des marques internationales de confiance aux boutiques de toute l’Éthiopie depuis 2014.",
     "importedBrands": "Marques que nous importons",
     "moreItems": "+{count} de plus",
     "ourServices": "Nos services",
@@ -70,7 +69,7 @@
     "email": "E-mail",
     "rights": "Tous droits réservés.",
     "follow": "Suivez-nous",
-    "about": "INTEMA Trading PLC. est un importateur, distributeur, fabricant et exportateur de produits de grande consommation qui relie des marques mondiales de confiance à l’Éthiopie depuis 2014.",
+    "about": "INTEMA Trading PLC. apporte des marques internationales de confiance en Éthiopie depuis 2014. Nous fabriquons aussi nos propres bougies et exportons du café éthiopien.",
     "links": "Liens utiles",
     "services": "Services",
     "emailLabel": "Écrivez-nous",
@@ -102,7 +101,7 @@
         "brand": "Propriétaire de marque",
         "other": "Autre"
       },
-      "success": "Merci — votre demande a bien été envoyée. Notre équipe commerciale vous contactera rapidement.",
+      "success": "Merci, votre demande a bien été envoyée. Notre équipe commerciale vous contactera rapidement.",
       "error": "Désolé, votre demande n'a pas pu être envoyée. Veuillez réessayer ou nous écrire directement par e-mail.",
       "invalid": "Veuillez vérifier les champs signalés.",
       "required": "Ce champ est obligatoire.",
@@ -120,7 +119,7 @@
     "mapEyebrow": "Venez nous voir",
     "mapHeading": "Nous trouver",
     "openMap": "Ouvrir dans Google Maps",
-    "mapTitle": "Carte : INTEMA Trading PLC., Addis-Abeba",
+    "mapTitle": "Carte indiquant INTEMA Trading PLC. à Addis-Abeba",
     "detailsEyebrow": "Nous joindre"
   },
   "About": {
@@ -132,7 +131,6 @@
     "processEyebrow": "Notre méthode",
     "partnersEyebrow": "Des marques de confiance",
     "keysEyebrow": "Pourquoi INTEMA",
-    "step": "Étape {n}",
     "teamCta": "Rencontrer l'équipe"
   },
   "Team": {
