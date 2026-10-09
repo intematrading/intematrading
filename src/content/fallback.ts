@@ -54,7 +54,8 @@ export const siteSettings: SiteSettings = {
 
 export const homePage: HomePage = {
   heroHeadline: {
-    en: "The Quality Warehouse — Importing, Producing & Exporting *Across East Africa*",
+    en: "Trusted Brands, Delivered — Importing, Producing & Exporting *Across East Africa*",
+    fr: "Des marques de confiance, livrées — Importer, produire et exporter *en Afrique de l'Est*",
     am: "የጥራት መጋዘን — *በምሥራቅ አፍሪካ* እናስመጣለን፣ እናመርታለን፣ እንልካለን",
   },
   heroSubheadline: {
@@ -202,8 +203,8 @@ export const homePage: HomePage = {
       am: "ኢንተማ ትሬዲንግ — በምሥራቅ አፍሪካ ማስመጣት፣ ማምረትና መላክ",
     },
     description: {
-      en: "The Quality Warehouse. Since 2014, INTEMA Trading PLC. has been connecting trusted global brands with Ethiopia.",
-      fr: "The Quality Warehouse. Depuis 2014, INTEMA Trading PLC. relie des marques mondiales de confiance à l’Éthiopie.",
+      en: "Trusted brands, delivered. Since 2014, INTEMA Trading PLC. has been connecting trusted global brands with Ethiopia.",
+      fr: "Des marques de confiance, livrées. Depuis 2014, INTEMA Trading PLC. relie des marques mondiales de confiance à l’Éthiopie.",
     },
   },
 };
@@ -473,7 +474,7 @@ export const aboutPage: AboutPage = {
   title: { en: "About Us", am: "ስለ እኛ" },
   eyebrow: { en: "Since 2014", fr: "Depuis 2014", am: "ከ2014 ጀምሮ" },
   intro: {
-    en: "We're The Quality Warehouse, a diversified FMCG importer, distributor, manufacturer and exporter serving Ethiopia, Djibouti and Sudan since 2014.",
+    en: "INTEMA brings trusted brands to shops across the region. We're a diversified FMCG importer, distributor, manufacturer and exporter, serving Ethiopia, Djibouti and Sudan since 2014.",
     am: "የጥራት መጋዘን — ከ2014 ጀምሮ ኢትዮጵያን፣ ጅቡቲንና ሱዳንን የሚያገለግል ሁለገብ የፍጆታ ምርቶች አስመጪ፣ አከፋፋይ፣ አምራችና ላኪ።",
   },
   whoWeAreHeading: { en: "Who we are & what we do", am: "ማን ነን፣ ምን እንሠራለን" },
@@ -573,7 +574,7 @@ export const aboutPage: AboutPage = {
     am: "የታመኑ ዓለም አቀፍ የምግብና ምግብ ነክ ያልሆኑ ብራንዶችን በኢትዮጵያ፣ በጅቡቲና በሱዳን እናስመጣለን፣ እናከፋፍላለን።",
   },
   seo: {
-    title: { en: "About INTEMA Trading PLC. | The Quality Warehouse", am: "ስለ ኢንተማ ትሬዲንግ — የጥራት መጋዘን" },
+    title: { en: "About INTEMA Trading PLC. | Trusted Brands, Delivered", fr: "À propos d’INTEMA Trading PLC. | Des marques de confiance, livrées", am: "ስለ ኢንተማ ትሬዲንግ — የጥራት መጋዘን" },
     description: {
       en: "Since 2014, INTEMA Trading PLC. has imported, distributed, manufactured and exported across Ethiopia, Djibouti and Sudan. Our story, vision, process and partners.",
       am: "ከ2014 ጀምሮ ኢንተማ ትሬዲንግ በኢትዮጵያ፣ በጅቡቲና በሱዳን ሲያስመጣ፣ ሲያከፋፍል፣ ሲያመርትና ሲልክ ቆይቷል። ታሪካችን፣ ራዕያችን፣ አሠራራችንና አጋሮቻችን።",

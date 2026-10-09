@@ -91,7 +91,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     getTranslations("Services"),
   ]);
 
-  // "The Quality Warehouse — Importing, …": the part before the dash is the
+  // "Trusted Brands, Delivered — Importing, …": the part before the dash is the
   // small line above the headline; both stay inside the one <h1>.
   const [brandLine, ...rest] = tr(home.heroHeadline, locale).split(/\s+—\s+/);
   const headline = rest.join(" — ");
@@ -266,7 +266,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                     { key: "vision", title: t("vision"), text: vision, icon: Eye },
                   ].map(({ key, title, text, icon }) =>
                     text ? (
-                      <Reveal key={key} className="h-full">
+                      <Reveal key={key} className="h-full" glass>
                         <div className={`${glass} h-full p-6 sm:p-8`}>
                           <h3 className="flex items-center gap-4 text-lg font-bold text-paper">
                             <IconBox icon={icon} />
@@ -280,7 +280,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 </div>
               ) : null}
               {home.commitmentPoints?.length ? (
-                <Reveal>
+                <Reveal glass>
                   <ul className={`${glass} divide-y divide-white/20 p-6 sm:p-8 xl:p-10`}>
                     {home.commitmentPoints.map((point, i) => {
                       const Icon = pointIcons[i % pointIcons.length];

@@ -22,7 +22,7 @@ export default function OpengraphImage() {
       >
         <div style={{ width: 96, height: 8, borderRadius: 4, background: "#fe0001" }} />
         <div style={{ marginTop: 40, fontSize: 96, fontWeight: 800, letterSpacing: -2, color: "#fe0001" }}>INTEMA</div>
-        <div style={{ marginTop: 8, fontSize: 40, color: "#dcdcdd" }}>Trading PLC. · The Quality Warehouse</div>
+        <div style={{ marginTop: 8, fontSize: 40, color: "#dcdcdd" }}>Trading PLC. · Trusted Brands, Delivered</div>
         <div style={{ marginTop: 48, fontSize: 28, color: "#979798" }}>Connecting global brands with Ethiopia</div>
       </div>
     ),

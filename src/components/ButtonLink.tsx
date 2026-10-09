@@ -9,6 +9,8 @@ const variants = {
   // The logo's grey gradient.
   steel: "steel-gradient text-paper hover:bg-red hover:bg-none",
   outline: "text-paper ring-2 ring-paper ring-inset hover:bg-paper hover:text-ink",
+  // White fill, for grey or dark backgrounds (footer).
+  white: "bg-paper text-ink hover:bg-red hover:text-paper",
 } as const;
 
 /** Classes for a CTA; shared with the inquiry form's submit button. */

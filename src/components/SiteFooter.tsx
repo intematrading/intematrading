@@ -28,11 +28,11 @@ export async function SiteFooter({ settings, locale }: { settings: SiteSettings;
     getContactPage(),
   ]);
   const companyName = tr(settings.companyName, locale);
-  const headingClass = "label-caps text-red-glow";
+  const headingClass = "font-title-heading text-base tracking-wider text-paper";
   const linkClass = "text-paper/80 transition-colors hover:text-paper";
 
   return (
-    <footer className="on-dark steel-gradient-deep text-paper">
+    <footer className="on-dark bg-steel-600 text-paper">
       {/* Get in touch: heading and the Contact page intro, with the Contact CTA */}
       <Container className="flex flex-col gap-8 py-14 sm:py-16 lg:flex-row lg:items-end lg:justify-between">
         <div>
@@ -40,12 +40,12 @@ export async function SiteFooter({ settings, locale }: { settings: SiteSettings;
           <p className="font-display-heading mt-4 text-4xl sm:text-5xl">{home("getInTouch").replace(/\*/g, "")}</p>
           {contactPage.intro && <p className="mt-4 max-w-2xl text-paper/80 sm:text-lg">{tr(contactPage.intro, locale)}</p>}
         </div>
-        <ButtonLink href="/contact" variant="redOnDark" className="shrink-0 self-start lg:self-auto">
+        <ButtonLink href="/contact" variant="white" className="shrink-0 self-start lg:self-auto">
           {common("contactUs")}
         </ButtonLink>
       </Container>
 
-      <div className="border-t border-white/10">
+      <div className="border-t border-white/15">
         <Container className="grid gap-12 py-14 sm:grid-cols-2 sm:py-16 lg:grid-cols-12 lg:gap-10">
           {/* Logo, description, social links */}
           <div className="lg:col-span-4">
@@ -85,7 +85,7 @@ export async function SiteFooter({ settings, locale }: { settings: SiteSettings;
             <address className="mt-5 space-y-5 not-italic">
               <div>
                 <p className="flex items-center gap-2 text-sm font-semibold text-paper">
-                  <Mail aria-hidden="true" className="size-4 text-red-glow" />
+                  <Mail aria-hidden="true" className="size-4 text-paper/80" />
                   {t("emailLabel")}
                 </p>
                 <a href={`mailto:${settings.email}`} className={`mt-1 block break-all ${linkClass}`}>
@@ -95,7 +95,7 @@ export async function SiteFooter({ settings, locale }: { settings: SiteSettings;
               {settings.phones?.length ? (
                 <div>
                   <p className="flex items-center gap-2 text-sm font-semibold text-paper">
-                    <Phone aria-hidden="true" className="size-4 text-red-glow" />
+                    <Phone aria-hidden="true" className="size-4 text-paper/80" />
                     {t("phoneLabel")}
                   </p>
                   <ul className="mt-1 space-y-0.5 tabular-nums">
@@ -112,7 +112,7 @@ export async function SiteFooter({ settings, locale }: { settings: SiteSettings;
               {(settings.address || settings.poBox) && (
                 <div>
                   <p className="flex items-center gap-2 text-sm font-semibold text-paper">
-                    <MapPin aria-hidden="true" className="size-4 text-red-glow" />
+                    <MapPin aria-hidden="true" className="size-4 text-paper/80" />
                     {t("addressLabel")}
                   </p>
                   <p className="mt-1 text-paper/80">
@@ -126,9 +126,9 @@ export async function SiteFooter({ settings, locale }: { settings: SiteSettings;
         </Container>
       </div>
 
-      <div className="border-t border-white/10">
+      <div className="border-t border-white/15">
         <Container className="py-6">
-          <p className="text-sm text-paper/60">
+          <p className="text-sm text-paper/80">
             © {new Date().getFullYear()} {companyName} {t("rights")}
           </p>
         </Container>

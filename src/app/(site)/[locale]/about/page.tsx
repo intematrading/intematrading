@@ -145,7 +145,7 @@ export default async function AboutPage({
                 { key: "mission", icon: Target, heading: page.missionHeading, body: page.mission },
               ].map(({ key, icon, heading, body }) =>
                 body ? (
-                  <Reveal key={key} className="h-full">
+                  <Reveal key={key} className="h-full" glass>
                     <article className="flex h-full flex-col rounded-3xl bg-white/12 p-7 shadow-2xl ring-1 ring-white/30 backdrop-blur-xl backdrop-saturate-150 ring-inset sm:p-10">
                       <IconBox icon={icon} size="lg" />
                       <h3 className="font-display-heading mt-6 text-4xl sm:text-5xl">{tr(heading, locale)}</h3>
