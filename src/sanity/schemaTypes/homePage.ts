@@ -1,6 +1,6 @@
 import { HomeIcon } from "@sanity/icons/Home";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { titledTextList } from "./shared";
+import { imageWithAlt } from "./shared";
 
 export const homePage = defineType({
   name: "homePage",
@@ -11,8 +11,10 @@ export const homePage = defineType({
     { name: "hero", title: "Hero", default: true },
     { name: "stats", title: "Snapshot strip" },
     { name: "cards", title: "What we do" },
+    { name: "brands", title: "Brands we import" },
     { name: "route", title: "From port to shelf" },
     { name: "commitment", title: "Commitment band" },
+    { name: "team", title: "Meet our team" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
@@ -48,10 +50,10 @@ export const homePage = defineType({
     defineField({
       name: "entryCards",
       title: "Entry cards",
-      description: "Each card links to its section on the Our Services page.",
+      description: "What we do: one card per business line (We Import, We Produce, We Export). Each links to the Our Services page.",
       type: "array",
       group: "cards",
-      validation: (r) => r.max(4),
+      validation: (r) => r.max(3),
       of: [
         defineArrayMember({
           type: "object",
@@ -63,11 +65,9 @@ export const homePage = defineType({
               type: "string",
               options: {
                 list: [
-                  { title: "Food & FMCG distribution", value: "food" },
-                  { title: "Non-food & professional personal care", value: "nonFood" },
+                  { title: "We Import", value: "import" },
                   { title: "We Produce", value: "produce" },
                   { title: "We Export", value: "export" },
-                  { title: "We Import (both platforms)", value: "import" },
                 ],
                 layout: "radio",
               },
@@ -101,7 +101,30 @@ export const homePage = defineType({
     }),
     defineField({ name: "routeHeading", title: "Heading", type: "localeString", group: "route" }),
     defineField({ name: "routeIntro", title: "Intro", type: "localeText", group: "route" }),
-    titledTextList("routeSteps", "Steps", "route"),
+    defineField({
+      name: "routeSteps",
+      title: "Steps",
+      group: "route",
+      type: "array",
+      description: "Home shows the title and short line; the Services page also shows the details (with an illustration per step).",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "titledText",
+          fields: [
+            defineField({ name: "title", type: "localeString", validation: (r) => r.required() }),
+            defineField({ name: "body", title: "Short line", type: "localeText" }),
+            defineField({ name: "details", title: "Details (Services page)", type: "localeText" }),
+          ],
+          preview: { select: { title: "title.en", subtitle: "body.en" } },
+        }),
+      ],
+    }),
+    defineField({ name: "foodInfo", title: "Food description", type: "localeText", group: "brands", description: "The Food column under the partner logos." }),
+    defineField({ name: "nonFoodInfo", title: "Non-food description", type: "localeText", group: "brands", description: "The Non-food column under the partner logos." }),
+    defineField({ name: "foodCategories", title: "Food categories", type: "array", group: "brands", of: [defineArrayMember({ type: "localeString" })] }),
+    defineField({ name: "nonFoodCategories", title: "Non-food categories", type: "array", group: "brands", of: [defineArrayMember({ type: "localeString" })] }),
+    imageWithAlt("teamImage", "Background photo", "team"),
     defineField({ name: "commitmentEyebrow", title: "Small label", type: "localeString", group: "commitment" }),
     defineField({ name: "commitmentHeadline", title: "Headline", type: "localeString", group: "commitment" }),
     defineField({ name: "commitmentBody", title: "Paragraph", type: "localeText", group: "commitment" }),
@@ -132,14 +155,6 @@ export const homePage = defineType({
           preview: { select: { title: "title.en", subtitle: "description.en" } },
         }),
       ],
-    }),
-    defineField({
-      name: "contactImage",
-      title: "Get in touch photo",
-      type: "image",
-      group: "commitment",
-      options: { hotspot: true },
-      fields: [defineField({ name: "alt", title: "Alt text", type: "localeString" })],
     }),
     defineField({ name: "seo", type: "seo", group: "seo" }),
   ],

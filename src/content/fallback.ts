@@ -11,6 +11,7 @@ import type {
   ContactPage,
   ExportItem,
   HomePage,
+  Partner,
   ProducedItem,
   ServicesPage,
   SiteSettings,
@@ -94,43 +95,65 @@ export const homePage: HomePage = {
         am: "የሽያጭ ቡድናችን በየቀኑ የሚጎበኛቸው የጅምላና የችርቻሮ ደንበኞች፤ ምርት በሳምንት ሁለት ጊዜ ይደርሳል።",
       },
     },
+    {
+      _key: "team",
+      value: "26",
+      label: { en: "Team members", fr: "Collaborateurs" },
+      note: { en: "Across sales, operations, administration and finance.", fr: "Entre ventes, opérations, administration et finances." },
+    },
   ],
+  foodInfo: {
+    en: "We import and distribute food, beverages and fast-moving consumer goods from established international brands, from Heinz sauces and Campbell’s soups to Nido milk and Power Horse energy drinks. Products reach wholesalers, supermarkets and shops across Ethiopia through our own sales and delivery network, with regular deliveries that keep favourite brands on the shelf.",
+    fr: "Nous importons et distribuons des produits alimentaires, des boissons et des produits de grande consommation de marques internationales reconnues, des sauces Heinz et soupes Campbell’s au lait Nido et aux boissons énergisantes Power Horse. Ils parviennent aux grossistes, supermarchés et boutiques de toute l’Éthiopie grâce à notre propre réseau de vente et de livraison, avec des livraisons régulières qui gardent les marques préférées en rayon.",
+  },
+  nonFoodInfo: {
+    en: "Our non-food range covers personal care, beauty and hygiene, from Clere body lotions and Fa shower gels to Vatika hair care and Reckitt’s household names. As the main importer of L’Oréal Professionnel, we also run a dedicated channel for salons and professional beauty, supplying the products and support that professionals rely on.",
+    fr: "Notre gamme non alimentaire couvre les soins personnels, la beauté et l’hygiène, des laits corporels Clere et gels douche Fa aux soins capillaires Vatika et aux grandes marques de Reckitt. Principal importateur de L’Oréal Professionnel, nous gérons aussi un canal dédié aux salons et à la beauté professionnelle, avec les produits et l’accompagnement dont les professionnels ont besoin.",
+  },  foodCategories: [
+    { en: "Dairy", fr: "Produits laitiers" },
+    { en: "Food products", fr: "Produits alimentaires" },
+    { en: "Beverages", fr: "Boissons" },
+    { en: "Confectionery", fr: "Confiserie" },
+    { en: "Soups", fr: "Soupes" },
+    { en: "Energy drinks", fr: "Boissons énergisantes" },
+    { en: "Packaged consumer products", fr: "Produits de consommation emballés" },
+  ],
+  nonFoodCategories: [
+    { en: "Personal care", fr: "Soins personnels" },
+    { en: "Beauty", fr: "Beauté" },
+    { en: "Professional hair care", fr: "Soins capillaires professionnels" },
+    { en: "Hygiene", fr: "Hygiène" },
+    { en: "Consumer health & wellness", fr: "Santé et bien-être" },
+    { en: "Household & lifestyle", fr: "Maison et art de vivre" },
+  ],
+
   whatWeDoIntro: {
     en: "INTEMA Trading PLC. is an FMCG importer, distributor, manufacturer and exporter, connecting trusted global brands with wholesale and retail markets across Ethiopia.",
     fr: "INTEMA Trading PLC. est un importateur, distributeur, fabricant et exportateur de produits de grande consommation qui relie des marques mondiales de confiance aux marchés de gros et de détail de toute l’Éthiopie.",
   },
   entryCards: [
     {
-      _key: "food",
-      section: "food",
-      title: { en: "Food & FMCG", fr: "Alimentaire & PGC" },
+      _key: "import",
+      section: "import",
+      title: { en: "We Import", fr: "Nous importons" },
       description: {
-        en: "We import and distribute food, beverages and fast-moving consumer goods through wholesale and retail channels.",
-        fr: "Nous importons et distribuons des produits alimentaires, des boissons et des produits de grande consommation via les circuits de gros et de détail.",
-      },
-    },
-    {
-      _key: "nonFood",
-      section: "nonFood",
-      title: { en: "Non-food & professional care", fr: "Non-alimentaire & soins professionnels" },
-      description: {
-        en: "Selected international brands in personal care, beauty and hygiene, plus a specialised channel for salon and professional beauty markets.",
-        fr: "Des marques internationales sélectionnées en soins personnels, beauté et hygiène, ainsi qu’un circuit spécialisé pour les salons et les marchés de la beauté professionnelle.",
+        en: "Trusted food and non-food brands from America, Europe and Asia, distributed across Ethiopia.",
+        fr: "Des marques alimentaires et non alimentaires d’Amérique, d’Europe et d’Asie, distribuées dans toute l’Éthiopie.",
       },
     },
     {
       _key: "produce",
       section: "produce",
-      title: { en: "We Produce", am: "እናመርታለን" },
-      description: { en: "Our own Abay candle brand", am: "የራሳችን የአባይ ሻማ ብራንድ" },
+      title: { en: "We Produce", fr: "Nous produisons" },
+      description: { en: "INTEMA makes its own Abay candles in Ethiopia, sold in 8-candle packs, alongside a legacy line of soap brands.", fr: "INTEMA fabrique ses propres bougies Abay en Éthiopie, vendues en paquets de 8, ainsi qu’une gamme historique de savons." },
     },
     {
       _key: "export",
       section: "export",
-      title: { en: "We Export", am: "እንልካለን" },
+      title: { en: "We Export", fr: "Nous exportons" },
       description: {
-        en: "Ethiopian coffee to the Middle East, Asia & Europe",
-        am: "የኢትዮጵያ ቡና ወደ መካከለኛው ምሥራቅ፣ እስያና አውሮፓ",
+        en: "Ethiopian coffee, exported under our two registered brands, Seedcup and Bella, to buyers in the Middle East, Asia and Europe.",
+        fr: "Du café éthiopien, exporté sous nos deux marques déposées, Seedcup et Bella, vers des acheteurs au Moyen-Orient, en Asie et en Europe.",
       },
     },
   ],
@@ -231,10 +254,15 @@ export const servicesPage: ServicesPage = {
     en: "Two registered export brands carrying Ethiopian coffee to the Middle East, Asia and Europe.",
     am: "የኢትዮጵያን ቡና ወደ መካከለኛው ምሥራቅ፣ እስያና አውሮፓ የሚወስዱ ሁለት የተመዘገቡ የወጪ ንግድ ብራንዶች።",
   },
+  routeHeading: { en: "Every step, handled", fr: "Chaque étape, maîtrisée" },
+  routeIntro: {
+    en: "Beyond importing, INTEMA runs the whole journey in-house, from the supplier’s dock to the store shelf. Here is how each step works.",
+    fr: "Au-delà de l’importation, INTEMA gère tout le parcours en interne, du quai du fournisseur jusqu’au rayon. Voici comment se déroule chaque étape.",
+  },
   exportMarkets: [
-    { en: "Middle East", am: "መካከለኛው ምሥራቅ" },
-    { en: "Asia", am: "እስያ" },
-    { en: "Europe", am: "አውሮፓ" },
+    { _key: "middleEast", title: { en: "Middle East", fr: "Moyen-Orient" }, body: { en: "Saudi Arabia and the Gulf, where Ethiopian coffee has a long-standing following.", fr: "L’Arabie saoudite et le Golfe, où le café éthiopien est apprécié de longue date." } },
+    { _key: "asia", title: { en: "Asia", fr: "Asie" }, body: { en: "Growing specialty-coffee markets across East and Southeast Asia.", fr: "Des marchés du café de spécialité en pleine croissance en Asie de l’Est et du Sud-Est." } },
+    { _key: "europe", title: { en: "Europe", fr: "Europe" }, body: { en: "Roasters and buyers who prize Ethiopia’s distinctive origins.", fr: "Des torréfacteurs et acheteurs qui recherchent les origines singulières de l’Éthiopie." } },
   ],
 
   seo: {
@@ -252,6 +280,22 @@ export const servicesPage: ServicesPage = {
 // Descriptions are short, factual product categories; there is no brand copy
 // in the content package. International Collection is left blank until the
 // team supplies a line for it.
+// Partner companies for the logo strip (logos are uploaded in the Studio).
+export const partners: Partner[] = [
+  { _id: "partner-loreal-professionnel", name: "L’Oréal Professionnel" },
+  { _id: "partner-reckitt", name: "Reckitt" },
+  { _id: "partner-queen-elisabeth", name: "Queen Elisabeth Cocoa Butter" },
+  { _id: "partner-clere", name: "Clere" },
+  { _id: "partner-fa", name: "Fa" },
+  { _id: "partner-vatika", name: "Vatika" },
+  { _id: "partner-nido", name: "Nido" },
+  { _id: "partner-heinz", name: "Heinz" },
+  { _id: "partner-campbells", name: "Campbell's Soup" },
+  { _id: "partner-international-collection", name: "International Collection" },
+  { _id: "partner-power-horse", name: "Power Horse" },
+  { _id: "partner-irn-bru", name: "Irn Bru" },
+];
+
 export const brands: Brand[] = [
   {
     _id: "brand-reckitt",
@@ -295,22 +339,21 @@ export const teamPage: TeamPage = {
     en: "Relationships are the key to success in distribution, and personal selling is led from the top — Bedru with his skill and experience in sales and distribution, and Eliyas in customer service and relations.",
     am: "በማከፋፈል ሥራ የስኬት ቁልፉ ግንኙነት ነው፤ በአካል የሚደረግ ሽያጭም ከላይ ይመራል — በድሩ በሽያጭና በማከፋፈል ክህሎቱና ልምዱ፣ ኤልያስ ደግሞ በደንበኞች አገልግሎትና ግንኙነት።",
   },
-  salesHeading: { en: "Sales & marketing", am: "ሽያጭና ማርኬቲንግ" },
-  salesIntro: {
-    en: "Sales operations are handled by an 8-person team under Head of Sales Tesfaye Hassen and Marketing Manager Kalid Hussen.",
-    am: "የሽያጭ ሥራዎች በሽያጭ ኃላፊ ተስፋዬ ሐሰን እና በማርኬቲንግ ሥራ አስኪያጅ ካሊድ ሁሴን የሚመራ ባለ 8 አባላት ቡድን ይከናወናሉ።",
+  headsHeading: { en: "Our departments", fr: "Nos départements" },
+  headsIntro: {
+    en: "Day to day, INTEMA runs on twenty-six people across nine departments. Sales, marketing and media (ten people) win and serve our customers, administration and finance (four) keep the business running, and operations (eleven) keep stock ready and moving, each led by one of the heads below.",
+    fr: "Au quotidien, INTEMA s’appuie sur vingt-six personnes réparties dans neuf départements. Les ventes, le marketing et les médias (dix personnes) gagnent et servent nos clients, l’administration et les finances (quatre) font tourner l’entreprise, et les opérations (onze) tiennent le stock prêt et en mouvement, chacun sous la direction d’un des responsables ci-dessous.",
   },
-  salesTeamSize: "8",
   ambassadorName: { en: "Netsanet Workneh", am: "ነፃነት ወርቅነህ" },
-  ambassadorRole: { en: "Brand ambassador", am: "የብራንድ አምባሳደር" },
+  ambassadorRole: { en: "Brand ambassador", fr: "Visage de la marque" },
   ambassadorBio: {
-    en: "Brand ambassador for Abay, INTEMA's own candle brand.",
-    am: "የኢንተማ የራሱ የሻማ ብራንድ የሆነው የአባይ አምባሳደር።",
+    en: "Netsanet Workneh is the face of Abay, INTEMA’s own candle brand. Abay candles are made by INTEMA in Ethiopia and sold in 8-candle packs through the same wholesale and retail network that carries our imported brands. As brand ambassador, Netsanet represents Abay to customers and retail partners, helping a locally made product earn its place on shelves and in homes across the country.",
+    fr: "Netsanet Workneh est le visage d’Abay, la marque de bougies d’INTEMA. Fabriquées par INTEMA en Éthiopie, les bougies Abay sont vendues en paquets de 8 via le même réseau de gros et de détail que nos marques importées. Visage de la marque, Netsanet représente Abay auprès des clients et des partenaires commerciaux, et aide un produit local à gagner sa place dans les rayons et les foyers de tout le pays.",
   },
   facts: [
-    { _key: "reps", value: "8", label: { en: "Sales representatives", am: "የሽያጭ ተወካዮች" }, note: { en: "Up from 2 at founding", am: "ሲመሠረት ከነበሩት 2 አድጎ" } },
-    { _key: "fleet", value: "2→4", label: { en: "Delivery fleet", am: "የማከፋፈያ ተሽከርካሪዎች" }, note: { en: "Doubled within a year", am: "በአንድ ዓመት ውስጥ በእጥፍ አድጓል" } },
-    { _key: "accounts", value: "20–30", label: { en: "Accounts serviced daily", am: "በየቀኑ የሚስተናገዱ ደንበኞች" }, note: { en: "Deliveries twice weekly", am: "በሳምንት ሁለት ጊዜ ማድረስ" } },
+    { _key: "team", value: "26+", label: { en: "Team members", fr: "Collaborateurs" }, note: { en: "Across nine departments", fr: "Répartis dans neuf départements" } },
+    { _key: "fleet", value: "4+", label: { en: "Delivery fleet", am: "የማከፋፈያ ተሽከርካሪዎች" }, note: { en: "Doubled within a year", am: "በአንድ ዓመት ውስጥ በእጥፍ አድጓል" } },
+    { _key: "accounts", value: "30+", label: { en: "Accounts serviced daily", am: "በየቀኑ የሚስተናገዱ ደንበኞች" }, note: { en: "Deliveries twice weekly", am: "በሳምንት ሁለት ጊዜ ማድረስ" } },
     {
       _key: "experience",
       value: "10+",
@@ -321,27 +364,18 @@ export const teamPage: TeamPage = {
   departments: [
     {
       _key: "sales",
-      title: { en: "Sales & delivery", am: "ሽያጭና ማድረስ" },
-      body: {
-        en: "8 delivery/sales representatives provide full service and delivery to current customers and make sales calls for new business.",
-        am: "8 የማድረስ/የሽያጭ ተወካዮች ለነባር ደንበኞች ሙሉ አገልግሎትና ማድረስ ይሰጣሉ፤ ለአዲስ ሥራም የሽያጭ ጉብኝት ያደርጋሉ።",
-      },
+      title: { en: "Sales & marketing", fr: "Ventes et marketing" },
+      body: { en: "A six-person sales team serves current customers and wins new business, with marketing and media & communications: ten people in all.", fr: "Une équipe commerciale de six personnes sert nos clients et en gagne de nouveaux, avec le marketing et les médias et la communication : dix personnes au total." },
     },
     {
-      _key: "marketing",
-      title: { en: "Marketing", am: "ማርኬቲንግ" },
-      body: {
-        en: "Marketing and sales are closely integrated around the name “The Quality Warehouse”, including in-store campaigns such as the Clere shampoo campaign.",
-        am: "ማርኬቲንግና ሽያጭ “የጥራት መጋዘን” በሚለው ስም ዙሪያ በቅርበት የተሳሰሩ ናቸው፤ እንደ ክሌር ሻምፑ ዘመቻ ያሉ የሱቅ ውስጥ ዘመቻዎችንም ያካትታሉ።",
-      },
+      _key: "admin",
+      title: { en: "Administration & finance", fr: "Administration et finances" },
+      body: { en: "HR and the executive office, finance and general services: four people keeping the business running.", fr: "RH et secrétariat de direction, finances et services généraux : quatre personnes qui font tourner l’entreprise." },
     },
     {
-      _key: "logistics",
-      title: { en: "Logistics & distribution", am: "ሎጂስቲክስና ማከፋፈል" },
-      body: {
-        en: "Delivery fleet, warehouse and merchandising teams, with deliveries Monday to Friday on routes planned to save time and fuel.",
-        am: "የማከፋፈያ ተሽከርካሪዎች፣ የመጋዘንና የምርት አቀራረብ ቡድኖች፤ ጊዜና ነዳጅ በሚቆጥቡ መስመሮች ከሰኞ እስከ ዓርብ ማድረስ።",
-      },
+      _key: "operations",
+      title: { en: "Operations", fr: "Opérations" },
+      body: { en: "A ten-person store and warehouse team plus technical support, with deliveries Monday to Friday on routes planned to save time and fuel.", fr: "Une équipe de dix personnes au magasin et à l’entrepôt, plus le support technique, avec des livraisons du lundi au vendredi sur des itinéraires conçus pour économiser temps et carburant." },
     },
   ],
   trainingHeading: { en: "Training", am: "ሥልጠና" },
@@ -366,34 +400,73 @@ export const teamPage: TeamPage = {
 export const teamMembers: TeamMember[] = [
   {
     _id: "team-bedru",
-    name: { en: "Bedru Hussen Jemal", am: "በድሩ ሁሴን ጀማል" },
-    role: { en: "Principal owner", am: "ዋና ባለቤት" },
+    name: { en: "Bedru Hussen Jemal", fr: "Bedru Hussen Jemal", am: "በድሩ ሁሴን ጀማል" },
+    role: { en: "CEO & Principal Owner", fr: "PDG et associé principal" },
     group: "leadership",
-    bio: {
-      en: "Leads sales and distribution, personally calling on potential customers to review our product line and services.",
-      am: "ሽያጭንና ማከፋፈልን ይመራል፤ የምርትና የአገልግሎት ዝርዝራችንን ለማቅረብ ደንበኞችን በአካል ይጎበኛል።",
-    },
+    bio: { en: "Leads sales and distribution, personally calling on potential customers to review our product line and services.", fr: "Dirige les ventes et la distribution, et rend visite en personne aux clients potentiels pour leur présenter notre gamme et nos services.", am: "ሽያጭንና ማከፋፈልን ይመራል፤ የምርትና የአገልግሎት ዝርዝራችንን ለማቅረብ ደንበኞችን በአካል ይጎበኛል።" },
   },
   {
     _id: "team-eliyas",
-    name: { en: "Eliyas Abrar Sh.", am: "ኤልያስ አብራር ሸ." },
-    role: { en: "Principal owner", am: "ዋና ባለቤት" },
+    name: { en: "Eliyas Abrar Sh.", fr: "Eliyas Abrar Sh.", am: "ኤልያስ አብራር ሸ." },
+    role: { en: "Principal owner", fr: "Copropriétaire", am: "ዋና ባለቤት" },
     group: "leadership",
-    bio: { en: "Leads customer service and relations.", am: "የደንበኞች አገልግሎትንና ግንኙነትን ይመራል።" },
+    bio: { en: "Leads customer service and relations.", fr: "Dirige le service et la relation client.", am: "የደንበኞች አገልግሎትንና ግንኙነትን ይመራል።" },
   },
   {
-    _id: "team-tesfaye",
-    name: { en: "Tesfaye Hassen", am: "ተስፋዬ ሐሰን" },
-    role: { en: "Head of Sales", am: "የሽያጭ ኃላፊ" },
+    _id: "team-seid",
+    name: { en: "Seid Kedir", fr: "Seid Kedir" },
+    role: { en: "Head of Sales", fr: "Responsable des ventes" },
     group: "sales",
-    bio: { en: "Works in close connection with our 8 delivery/sales representatives.", am: "ከ8ቱ የማድረስ/የሽያጭ ተወካዮቻችን ጋር በቅርበት ይሠራል።" },
+    bio: { en: "Leads our six-person sales team, serving wholesale and retail customers every day.", fr: "Dirige notre équipe commerciale de six personnes, qui sert chaque jour nos clients de gros et de détail." },
   },
   {
-    _id: "team-kalid",
-    name: { en: "Kalid Hussen", am: "ካሊድ ሁሴን" },
-    role: { en: "Marketing Manager", am: "የማርኬቲንግ ሥራ አስኪያጅ" },
+    _id: "team-amira",
+    name: { en: "Amira Mehsen", fr: "Amira Mehsen" },
+    role: { en: "Marketing Manager", fr: "Responsable marketing" },
     group: "sales",
-    bio: { en: "Works in close connection with our 8 delivery/sales representatives.", am: "ከ8ቱ የማድረስ/የሽያጭ ተወካዮቻችን ጋር በቅርበት ይሠራል።" },
+    bio: { en: "Leads our two-person marketing team, from in-store campaigns to promotions for the brands we distribute.", fr: "Dirige notre équipe marketing de deux personnes, des campagnes en magasin aux promotions des marques que nous distribuons." },
+  },
+  {
+    _id: "team-noah",
+    name: { en: "Noah Habtamu", fr: "Noah Habtamu" },
+    role: { en: "Head of Media & Communications", fr: "Responsable médias et communication" },
+    group: "sales",
+    bio: { en: "Leads our two-person media & communications team and INTEMA’s brand presence.", fr: "Dirige notre équipe médias et communication de deux personnes, ainsi que l’image de marque d’INTEMA." },
+  },
+  {
+    _id: "team-sebrina",
+    name: { en: "Sebrina Nibras", fr: "Sebrina Nibras" },
+    role: { en: "HR Manager & Executive Secretary", fr: "Responsable RH et secrétaire de direction" },
+    group: "admin",
+    bio: { en: "Leads human resources and runs the executive office.", fr: "Dirige les ressources humaines et le secrétariat de direction." },
+  },
+  {
+    _id: "team-abdu",
+    name: { en: "Abdu", fr: "Abdu" },
+    role: { en: "Finance Manager", fr: "Responsable financier" },
+    group: "admin",
+    bio: { en: "Leads our two-person finance and accounting team.", fr: "Dirige notre équipe finances et comptabilité de deux personnes." },
+  },
+  {
+    _id: "team-beza",
+    name: { en: "Beza Yirga", fr: "Beza Yirga" },
+    role: { en: "General Services Manager", fr: "Responsable des services généraux" },
+    group: "admin",
+    bio: { en: "Manages general services, facilities and office support.", fr: "Gère les services généraux, les locaux et le soutien administratif." },
+  },
+  {
+    _id: "team-seada",
+    name: { en: "Seada Kedir", fr: "Seada Kedir" },
+    role: { en: "Store & Warehouse Manager", fr: "Responsable du magasin et de l’entrepôt" },
+    group: "operations",
+    bio: { en: "Leads our ten-person store and warehouse team, keeping stock ready for delivery.", fr: "Dirige notre équipe de dix personnes au magasin et à l’entrepôt, qui tient le stock prêt pour la livraison." },
+  },
+  {
+    _id: "team-neima",
+    name: { en: "Neima Ahmed", fr: "Neima Ahmed" },
+    role: { en: "Technical Lead", fr: "Responsable technique" },
+    group: "operations",
+    bio: { en: "Heads technical support for INTEMA’s operations.", fr: "Dirige le support technique des opérations d’INTEMA." },
   },
 ];
 
@@ -434,7 +507,7 @@ export const aboutPage: AboutPage = {
   stats: [
     { _key: "founded", value: "2014", label: { en: "Founded", am: "የተመሠረተበት" }, note: { en: "12 years in operation", am: "12 ዓመታት በሥራ ላይ" } },
     { _key: "market", value: "170M", label: { en: "Combined market", am: "ጥምር ገበያ" }, note: { en: "Ethiopia, Djibouti & Sudan", am: "ኢትዮጵያ፣ ጅቡቲና ሱዳን" } },
-    { _key: "reps", value: "8", label: { en: "Sales representatives", am: "የሽያጭ ተወካዮች" }, note: { en: "Up from 2 at founding", am: "ሲመሠረት ከነበሩት 2 አድጎ" } },
+    { _key: "team", value: "26", label: { en: "Team members", fr: "Collaborateurs" }, note: { en: "Across nine departments", fr: "Répartis dans neuf départements" } },
     { _key: "accounts", value: "20–30", label: { en: "Accounts serviced daily", am: "በየቀኑ የሚስተናገዱ ደንበኞች" }, note: { en: "Deliveries twice weekly", am: "በሳምንት ሁለት ጊዜ ማድረስ" } },
     { _key: "fleet", value: "2→4", label: { en: "Delivery fleet", am: "የማከፋፈያ ተሽከርካሪዎች" }, note: { en: "Doubled within a year", am: "በአንድ ዓመት ውስጥ በእጥፍ አድጓል" } },
   ],

@@ -1,6 +1,7 @@
 import {
   ArrowRight,
   BadgeCheck,
+  Eye,
   Flame,
   Handshake,
   Plane,
@@ -8,6 +9,8 @@ import {
   Ship,
   ShoppingBasket,
   Sparkles,
+  Target,
+  Users,
   type LucideIcon,
 } from "lucide-react";
 import type { Metadata } from "next";
@@ -15,7 +18,7 @@ import Image from "next/image";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Accent } from "@/components/Accent";
-import { BranchLines } from "@/components/BranchLines";
+import { BranchConnector } from "@/components/RegionTree";
 import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
 import { CursorSway } from "@/components/CursorSway";
@@ -24,17 +27,14 @@ import { IconBox } from "@/components/IconBox";
 import { PartnerStrip } from "@/components/Partners";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
-import { BrandGrid } from "@/components/ProductGrid";
-import { ProductPreviewProvider } from "@/components/ProductPreview";
-import { ScrollStage } from "@/components/ScrollStage";
 import { SectionHeading } from "@/components/SectionHeading";
 import { statIcon } from "@/components/stat-icons";
 import { Reveal } from "@/components/Reveal";
-import { RouteSteps } from "@/components/RouteSteps";
+import { RouteStrip } from "@/components/RouteSteps";
 import { TeamCard } from "@/components/TeamCard";
 import { Testimonials } from "@/components/Testimonials";
 import { placeholders } from "@/content/placeholders";
-import type { CardKind } from "@/content/types";
+import type { ServiceSection } from "@/content/types";
 import { Link } from "@/i18n/navigation";
 import {
   getAboutPage,
@@ -51,23 +51,12 @@ import {
 } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
-const cardIcons: Record<CardKind, LucideIcon> = {
-  food: ShoppingBasket,
-  nonFood: Sparkles,
+const cardIcons: Record<ServiceSection, LucideIcon> = {
   import: Ship,
   produce: Flame,
   export: Plane,
 };
 const pointIcons = [ShieldCheck, BadgeCheck, Handshake];
-// What we do from xl: cards span two of five rows; the left column starts a
-// row down, so each right card's middle lines up with a gap on the left
-// (where its branch line passes).
-const staggered = [
-  "xl:col-start-1 xl:row-span-2 xl:row-start-2",
-  "xl:col-start-2 xl:row-span-2 xl:row-start-1",
-  "xl:col-start-1 xl:row-span-2 xl:row-start-4",
-  "xl:col-start-2 xl:row-span-2 xl:row-start-3",
-];
 // Brands INTEMA is the main importer of (logos in public/).
 const mainImporterLogos = [
   // Heights balanced by eye: L'Oréal's thin, wide wordmark vs Heinz's compact badge.
@@ -113,17 +102,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const mission = tr(home.mission ?? about.mission, locale);
   const vision = tr(home.vision ?? about.vision, locale);
   const glass = "rounded-3xl bg-white/12 shadow-2xl ring-1 ring-white/30 backdrop-blur-xl backdrop-saturate-150 ring-inset";
-  const food = brands.filter((b) => b.category === "food");
-  const nonFood = brands.filter((b) => b.category === "nonFood");
   // Chips on each What we do card: its categories when set in Sanity,
   // otherwise its real brands / products.
   const itemsFor = (card: (typeof cards)[number]): { label: string; names: string[] } => {
     if (card.categories?.length) return { label: t("categories"), names: card.categories.map((c) => tr(c, locale)) };
     switch (card.section) {
-      case "food":
-        return { label: t("importedBrands"), names: food.map((b) => b.name) };
-      case "nonFood":
-        return { label: t("importedBrands"), names: nonFood.map((b) => b.name) };
       case "produce":
         return { label: svc("ourProducts"), names: producedItems.map((p) => tr(p.name, locale)) };
       case "export":
@@ -134,7 +117,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   };
 
   return (
-    <div className="flex flex-col bg-steel-100">
+    <div className="flex flex-col bg-paper">
       {/* ── Hero: full screen from the start, content centred. The top
           bar slides in once the page is scrolled. ───────────────────── */}
       <section className="on-dark relative isolate flex h-svh min-h-[36rem] flex-col overflow-hidden text-paper">
@@ -201,23 +184,19 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </div>
       </section>
 
-      {/* ── Snapshot: slides up, then pins while the stats animate in one
-          by one (driven by scroll), then scrolls on. ────────────────── */}
+      {/* ── About INTEMA: sized to its content. The heading and intro under
+          a container hanging on a crane line from the section's top edge;
+          beside them the stats, which fade in one after another once in
+          view. ───────────────────────────────────────────────────────── */}
       {stats.length ? (
-        // Phones and tablets: a normal section sized to its content, the
-        // stats shown as they are (no pinning or scroll-driven reveal).
-        <ScrollStage className="relative h-[260svh] motion-reduce:h-auto max-lg:h-auto">
-          <section aria-labelledby="snapshot-heading" className="sticky top-0 flex h-svh items-center overflow-hidden py-[max(3rem,8svh)] text-ink motion-reduce:static motion-reduce:h-auto motion-reduce:py-16 max-lg:static max-lg:h-auto max-lg:py-16 sm:max-lg:py-20">
-            {/* Container on a crane line, hanging from the top-left. Hidden
-                above the section at first and lowered in while the section
-                slides up, settling as it reaches the top. */}
-            <div className="pointer-events-none absolute top-0 left-[max(0rem,calc((100vw-80rem)/2))] hidden w-[min(30rem,36vw)] lg:block" style={{ transform: "translateY(calc(-12% - 88% * (1 - var(--enter))))" }}>
-              <CursorSway>
-                <Image src="/img1.png" alt="" width={2000} height={2000} sizes="(min-width: 1024px) 30rem, 0px" className="w-full" />
-              </CursorSway>
-            </div>
-            <Container className="grid w-full gap-12 lg:grid-cols-12 lg:items-center lg:gap-24">
-              <div className="lg:col-span-5 lg:self-end lg:pb-4">
+          <section aria-labelledby="snapshot-heading" className="relative overflow-hidden py-16 text-ink sm:py-20 lg:py-24">
+            <Container className="grid w-full gap-12 lg:grid-cols-12 lg:items-center lg:gap-10">
+              <div className="lg:col-span-5">
+                <div aria-hidden="true" className="pointer-events-none -mt-[9.5rem] mb-[-2rem] hidden w-[min(26rem,100%)] lg:block">
+                  <CursorSway>
+                    <Image src="/img1.png" alt="" width={2000} height={2000} sizes="(min-width: 1024px) 26rem, 0px" className="w-full" />
+                  </CursorSway>
+                </div>
                 <SectionHeading id="snapshot-heading" eyebrow={brandLine}>
                   {t("snapshotHeading")}
                 </SectionHeading>
@@ -231,11 +210,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 {stats.map((stat, i) => {
                   const Icon = statIcon(stat._key);
                   return (
-                    <li
-                      key={stat._key}
-                      className="scroll-reveal flex items-start gap-5 sm:p-[clamp(1.25rem,4svh,2.5rem)] max-lg:!opacity-100 max-lg:![transform:none]"
-                      style={{ "--start": 0.05 + (i / stats.length) * 0.6, "--span": 0.18 } as React.CSSProperties}
-                    >
+                    <li key={stat._key}>
+                      <Reveal delay={i * 200} className="flex items-start gap-5 py-2 sm:px-6 sm:py-10 lg:px-8 lg:py-14">
                       <IconBox icon={Icon} size="lg" className="mt-1" />
                       {/* Number, then its label and description underneath */}
                       <div className="flex flex-col-reverse">
@@ -247,13 +223,13 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                           {stat.value}
                         </p>
                       </div>
+                      </Reveal>
                     </li>
                   );
                 })}
               </ul>
             </Container>
           </section>
-        </ScrollStage>
       ) : null}
 
       {/* ── Commitment band: full width and at least a screen tall. The
@@ -286,13 +262,16 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               {mission || vision ? (
                 <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
                   {[
-                    { key: "mission", title: t("mission"), text: mission },
-                    { key: "vision", title: t("vision"), text: vision },
-                  ].map(({ key, title, text }) =>
+                    { key: "mission", title: t("mission"), text: mission, icon: Target },
+                    { key: "vision", title: t("vision"), text: vision, icon: Eye },
+                  ].map(({ key, title, text, icon }) =>
                     text ? (
                       <Reveal key={key} className="h-full">
                         <div className={`${glass} h-full p-6 sm:p-8`}>
-                          <h3 className="text-lg font-bold text-paper">{title}</h3>
+                          <h3 className="flex items-center gap-4 text-lg font-bold text-paper">
+                            <IconBox icon={icon} />
+                            {title}
+                          </h3>
                           <p className="mt-2 text-sm text-paper/85 sm:text-base">{text}</p>
                         </div>
                       </Reveal>
@@ -350,131 +329,149 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               </div>
             </Reveal>
           </Container>
-          {/* Partner logos, looping, above the food brands */}
-          <PartnerStrip locale={locale} className="mt-12" />
-          <ProductPreviewProvider>
-            <div className="mt-12">
-              <BrandGrid brands={food} icon={ShoppingBasket} label={svc("food")} intro={tr(cards.find((c) => c.section === "food")?.description, locale)} locale={locale} />
-              <BrandGrid brands={nonFood} icon={Sparkles} label={svc("nonFood")} intro={tr(cards.find((c) => c.section === "nonFood")?.description, locale)} reverse locale={locale} />
+          {/* Food | Non-food: what each covers and its categories, side by
+              side; one CTA to the Services page */}
+          <Container className="mt-16 sm:mt-20">
+            <div className="grid gap-12 md:grid-cols-2 md:gap-0 md:divide-x md:divide-steel-200">
+              {[
+                { key: "food", icon: ShoppingBasket, label: svc("food"), text: home.foodInfo, categories: home.foodCategories },
+                { key: "nonFood", icon: Sparkles, label: svc("nonFood"), text: home.nonFoodInfo, categories: home.nonFoodCategories },
+              ].map(({ key, icon, label, text, categories }) => {
+                return (
+                  <Reveal key={key} className="md:px-10 md:first:pl-0 md:last:pr-0 lg:px-14">
+                    <h3 className="flex items-center gap-4">
+                      <IconBox icon={icon} />
+                      <span className="font-display-heading text-steel-gradient text-3xl sm:text-4xl">{label}</span>
+                    </h3>
+                    {text && <p className="mt-5 leading-relaxed text-muted sm:text-lg">{tr(text, locale)}</p>}
+                    {categories?.length ? (
+                      <>
+                        <p className="label-caps mt-8 text-red-ink">{t("categories")}</p>
+                        <ul className="mt-3 flex flex-wrap gap-2">
+                          {categories.map((c) => (
+                            <li key={c.en} className="rounded-full bg-steel-100 px-3.5 py-1.5 text-sm font-semibold text-ink">
+                              {tr(c, locale)}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : null}
+                  </Reveal>
+                );
+              })}
             </div>
-          </ProductPreviewProvider>
+          </Container>
+          <div className="mt-14 flex justify-center">
+            <ButtonLink href="/services#import" variant="red">
+              {t("allProducts")}
+            </ButtonLink>
+          </div>
+          {/* Partner logos, looping, under the CTA */}
+          <PartnerStrip locale={locale} className="mt-16 sm:mt-20" />
         </section>
       ) : null}
 
-      {/* ── From port to shelf: the integrated route from supplier to
-          the Ethiopian market, as seven numbered services ──────────── */}
-      <RouteSteps locale={locale} white moreLink />
-
-      {/* ── What we do: the intro beside the four photo cards (the two
-          import platforms, produce, export): a 2x2 grid, and from xl two
-          staggered columns with lines branching to them from a red dot
-          under the intro ───────────────────────────────────────────── */}
+      {/* ── What we do: heading and intro centred, a line branching to the
+          three business lines (import, produce, export) side by side, then
+          the Services CTA ────────────────────────────────────────────── */}
       {cards.length ? (
         <section id="services" aria-labelledby="what-we-do" className="py-16 sm:py-24">
           <Container>
-          <BranchLines className="grid gap-10 lg:grid-cols-12 lg:gap-14 xl:grid-cols-[21rem_minmax(0,1fr)] xl:gap-x-28">
-            <Reveal className="lg:sticky lg:top-[calc(var(--bar-h)+3rem)] lg:col-span-4 lg:self-start xl:static xl:col-span-1 xl:self-center">
-              <span data-branch-root aria-hidden="true" className="red-gradient mb-10 hidden size-12 rounded-full xl:block" />
+            <Reveal className="mx-auto max-w-2xl text-center">
               <SectionHeading id="what-we-do" eyebrow={t("ourServices")}>
                 {t("whatWeDo")}
               </SectionHeading>
               {(home.whatWeDoIntro || services.intro) && <p className="mt-6 text-muted sm:text-lg">{tr(home.whatWeDoIntro ?? services.intro, locale)}</p>}
-              <ButtonLink href="/services" variant="red" className="mt-8">
-                {common("exploreServices")}
-              </ButtonLink>
             </Reveal>
-            <ul data-branch-list className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:col-span-8 xl:col-span-1 xl:grid-rows-[repeat(5,11.5rem)] xl:gap-x-16 xl:gap-y-12">
-              {cards.map((card, i) => {
+          </Container>
+          {/* Wider than the page column so the three lines have room */}
+          <div className="mx-auto max-w-[96rem] px-4 sm:px-6 lg:px-10">
+            <BranchConnector className="mt-10" />
+            <ul className="mt-10 grid gap-14 sm:mt-8 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-steel-200">
+              {cards.map((card) => {
                 const Icon = cardIcons[card.section] ?? Ship;
                 const items = itemsFor(card);
                 return (
-                  // Enters (fades and lifts in) once BranchLines marks it data-shown.
-                  <li
-                    key={card._key}
-                    data-branch-leaf
-                    className={`translate-y-12 opacity-0 transition-[opacity,translate] duration-700 ease-out data-shown:translate-y-0 data-shown:opacity-100 motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none ${staggered[i] ?? ""}`}
-                  >
-                      <Link
-                        href="/services"
-                        className="group on-dark relative isolate flex h-full min-h-[24rem] flex-col overflow-hidden rounded-3xl p-6 text-paper shadow-lg transition-shadow hover:shadow-2xl sm:min-h-[26rem] sm:p-7"
-                      >
-                        <div className="absolute inset-0 -z-20">
+                  <li key={card._key} className="sm:px-6 lg:px-12 xl:px-16">
+                    <Reveal className="h-full">
+                      <Link href={`/services#${card.section}`} className="group flex h-full flex-col items-center text-center">
+                        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
                           <PhotoFrame
                             image={card.image}
                             placeholder={placeholders[card.section] ?? placeholders.import}
                             locale={locale}
-                            width={900}
-                            height={900}
-                            sizes="(min-width: 1024px) 26rem, (min-width: 640px) 45vw, 92vw"
+                            width={720}
+                            height={540}
+                            sizes="(min-width: 1024px) 28rem, (min-width: 640px) 30vw, 92vw"
                             icon={Icon}
                             className="transition-transform duration-700 group-hover:scale-[1.04] motion-reduce:transition-none"
                           />
                         </div>
-                        {/* Shade rising from the bottom, where the text sits, plus darker edges */}
-                        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-t from-black/90 via-black/55 via-55% to-black/25" />
-                        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgb(0_0_0/0.55)_100%)]" />
-
-                        <span aria-hidden="true" className="font-display-heading self-end text-4xl text-paper/80" lang="en">
-                          0{i + 1}
+                        <h3 className="font-display-heading text-steel-gradient mt-7 text-3xl sm:text-4xl">{tr(card.title, locale)}</h3>
+                        {card.description && <p className="mt-2 max-w-xs text-sm text-muted sm:text-base">{tr(card.description, locale)}</p>}
+                        {items.names.length ? (
+                          <ul className="mt-5 flex flex-wrap justify-center gap-1.5">
+                            {items.names.slice(0, 4).map((name) => (
+                              <li key={name} className="rounded-full bg-steel-100 px-3 py-1 text-xs font-semibold text-ink">
+                                {name}
+                              </li>
+                            ))}
+                            {items.names.length > 4 && (
+                              <li className="rounded-full bg-steel-100 px-3 py-1 text-xs font-semibold text-ink">{t("moreItems", { count: items.names.length - 4 })}</li>
+                            )}
+                          </ul>
+                        ) : null}
+                        <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-ink group-hover:text-red-ink">
+                          {common("learnMore")}
+                          <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-0.5" />
                         </span>
-                        <div className="mt-auto">
-                          <h3 className="font-display-heading text-3xl sm:text-4xl">{tr(card.title, locale)}</h3>
-                          {card.description && <p className="mt-2 line-clamp-2 text-sm text-paper/85">{tr(card.description, locale)}</p>}
-                          {items.names.length ? (
-                            <ul className="mt-4 flex flex-wrap gap-1.5">
-                              {items.names.slice(0, 4).map((name) => (
-                                <li key={name} className="rounded-full bg-white/12 px-3 py-1 text-xs font-semibold ring-1 ring-white/25 backdrop-blur-md">
-                                  {name}
-                                </li>
-                              ))}
-                              {items.names.length > 4 && (
-                                <li className="rounded-full bg-white/12 px-3 py-1 text-xs font-semibold ring-1 ring-white/25 backdrop-blur-md">
-                                  {t("moreItems", { count: items.names.length - 4 })}
-                                </li>
-                              )}
-                            </ul>
-                          ) : null}
-                          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold">
-                            {common("learnMore")}
-                            <ArrowRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-0.5" />
-                          </span>
-                        </div>
                       </Link>
+                    </Reveal>
                   </li>
                 );
               })}
             </ul>
-          </BranchLines>
+          </div>
+          <Container>
+            <div className="mt-14 flex justify-center">
+              <ButtonLink href="/services" variant="red">
+                {common("exploreServices")}
+              </ButtonLink>
+            </div>
           </Container>
         </section>
       ) : null}
 
+      {/* ── From port to shelf: heading, intro and CTA, then the services in one row */}
+      <RouteStrip steps={home.routeSteps} heading={tr(home.routeHeading, locale)} intro={tr(home.routeIntro, locale)} locale={locale} />
+
       {/* ── Meet our team: heading and intro, the people, then a link to
           the Team page ─────────────────────────────────────────────── */}
       {teamMembers.length ? (
-        <section id="team" aria-labelledby="team-heading" className="bg-paper py-16 sm:py-24">
+        <section id="team" aria-labelledby="team-heading" className="on-dark relative isolate overflow-hidden py-16 text-paper sm:py-24">
+          <PhotoBackdrop image={home.teamImage} placeholder={placeholders.teamBand} locale={locale} icon={Users} overlay="bg-black/70" vignette />
           <Container>
             <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-end">
               <div className="lg:col-span-5">
-                <SectionHeading id="team-heading" eyebrow={t("ourTeam")}>
+                <SectionHeading id="team-heading" eyebrow={t("ourTeam")} onDark>
                   {t("meetTeam")}
                 </SectionHeading>
               </div>
               <div className="lg:col-span-6 lg:col-start-7">
-                {teamPage.intro && <p className="max-w-2xl text-muted sm:text-lg">{tr(teamPage.intro, locale)}</p>}
+                {teamPage.intro && <p className="max-w-2xl text-paper/85 sm:text-lg">{tr(teamPage.intro, locale)}</p>}
               </div>
             </Reveal>
             <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
               {teamMembers.slice(0, 4).map((m) => (
                 <li key={m._id}>
                   <Reveal className="h-full">
-                    <TeamCard member={m} locale={locale} onWhite />
+                    <TeamCard member={m} locale={locale} />
                   </Reveal>
                 </li>
               ))}
             </ul>
             <div className="mt-12 flex justify-center">
-              <ButtonLink href="/team" variant="red">
+              <ButtonLink href="/team" variant="redOnDark">
                 {t("viewTeam")}
               </ButtonLink>
             </div>

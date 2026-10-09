@@ -43,11 +43,10 @@
     "brandsHeading": "Marques que nous importons",
     "brandsIntro": "Des marques alimentaires et non alimentaires venues d'Amérique, d'Europe et d'Asie, distribuées dans toute l'Éthiopie.",
     "mainImporter": "Principal importateur de",
-    "routeMore": "Et plus",
-    "routeMoreBody": "Logistique, connaissance du marché et le reste de notre offre.",
-    "allServices": "Tous les services",
     "mission": "Mission",
-    "vision": "Vision"
+    "vision": "Vision",
+    "allProducts": "Voir tous les produits",
+    "fullRoute": "Découvrir nos services"
   },
   "Services": {
     "import": "Nous importons",
@@ -62,8 +61,8 @@
     "viewItem": "Voir {name}",
     "marketEyebrow": "Opportunité de marché",
     "sourcingHeading": "Nos régions d'approvisionnement",
-    "brandCount": "{count, plural, one {# marque} other {# marques}}",
-    "productCount": "{count, plural, one {# produit} other {# produits}}"
+    "addisAbaba": "Addis-Abeba",
+    "routeEyebrow": "Du port au rayon"
   },
   "Footer": {
     "contact": "Nous contacter",
@@ -71,8 +70,6 @@
     "email": "E-mail",
     "rights": "Tous droits réservés.",
     "follow": "Suivez-nous",
-    "ctaHeading": "Engageons la conversation. Développez votre marque en Éthiopie.",
-    "ctaBody": "Parlez avec INTEMA d’importation, de distribution et du développement de votre marque sur le marché éthiopien.",
     "about": "INTEMA Trading PLC. est un importateur, distributeur, fabricant et exportateur de produits de grande consommation qui relie des marques mondiales de confiance à l’Éthiopie depuis 2014.",
     "links": "Liens utiles",
     "services": "Services",
@@ -149,15 +146,14 @@
     "teamCta": "Rencontrer l'équipe"
   },
   "Team": {
-    "salesTeamSize": "personnes dans notre équipe commerciale",
     "atAGlance": "L'équipe en *bref*",
     "organised": "Notre organisation",
     "applyCta": "Devenir partenaire",
-    "brandAmbassador": "Ambassadrice de marque",
+    "brandAmbassador": "Visage de la marque",
     "leadershipEyebrow": "Notre direction",
-    "salesEyebrow": "Sur le terrain",
     "organisedEyebrow": "Services",
-    "partnerEyebrow": "Travailler avec INTEMA"
+    "partnerEyebrow": "Travailler avec INTEMA",
+    "headsEyebrow": "Au quotidien"
   },
   "Testimonials": {
     "eyebrow": "Témoignages",

@@ -1,5 +1,5 @@
 import { PackageIcon } from "@sanity/icons/Package";
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 import { imageWithAlt, statList, titledTextList } from "./shared";
 
 export const servicesPage = defineType({
@@ -12,6 +12,7 @@ export const servicesPage = defineType({
     { name: "import", title: "We Import" },
     { name: "produce", title: "We Produce" },
     { name: "export", title: "We Export" },
+    { name: "route", title: "Our route (end of page)" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
@@ -62,14 +63,10 @@ export const servicesPage = defineType({
       group: "export",
       description: 'The brands themselves are managed under "Export brands".',
     }),
-    defineField({
-      name: "exportMarkets",
-      title: "Target markets",
-      type: "array",
-      group: "export",
-      of: [defineArrayMember({ type: "localeString" })],
-    }),
+    titledTextList("exportMarkets", "Target markets", "export"),
 
+    defineField({ name: "routeHeading", title: "Heading", type: "localeString", group: "route", description: "The steps themselves are edited on the Home page (From port to shelf)." }),
+    defineField({ name: "routeIntro", title: "Intro", type: "localeText", group: "route" }),
     defineField({ name: "seo", type: "seo", group: "seo" }),
   ],
   preview: { prepare: () => ({ title: "Our Services page" }) },

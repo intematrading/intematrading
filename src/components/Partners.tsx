@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
-import { getAboutPage, getBrands, tr } from "@/lib/content";
+import { getAboutPage, getPartners, tr } from "@/lib/content";
 import { ButtonLink } from "./ButtonLink";
 import { Container } from "./Container";
 import { Marquee } from "./Marquee";
@@ -10,7 +10,7 @@ import { SectionHeading } from "./SectionHeading";
 
 /**
  * "Our partners": heading, intro and a Become-a-partner CTA, then a looping
- * strip of the brand logos (About). Text: About page → Partners.
+ * strip of the partner logos (About). Text: About page → Partners.
  */
 export async function Partners({ locale, className = "" }: { locale: Locale; className?: string }) {
   const [page, t] = await Promise.all([getAboutPage(), getTranslations("About")]);
@@ -36,15 +36,15 @@ export async function Partners({ locale, className = "" }: { locale: Locale; cla
   );
 }
 
-/** Just the looping strip of partner (brand) logos. */
+/** Just the looping strip of partner company logos (Partner companies in Sanity). */
 export async function PartnerStrip({ locale, className = "" }: { locale: Locale; className?: string }) {
-  const [brands, t] = await Promise.all([getBrands(), getTranslations("About")]);
-  if (!brands.length) return null;
+  const [partners, t] = await Promise.all([getPartners(), getTranslations("About")]);
+  if (!partners.length) return null;
   return (
     <div className={className}>
-      <Marquee label={t("partnersLabel")} seconds={brands.length * 3.5} feather={12}>
-        {brands.map((brand) => (
-          <PartnerLogo key={brand._id} brand={brand} locale={locale} />
+      <Marquee label={t("partnersLabel")} seconds={partners.length * 3.5} feather={12}>
+        {partners.map((partner) => (
+          <PartnerLogo key={partner._id} partner={partner} locale={locale} />
         ))}
       </Marquee>
     </div>

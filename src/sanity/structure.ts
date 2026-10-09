@@ -22,6 +22,7 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.documentTypeListItem("brand").title("Imported brands"),
+      S.documentTypeListItem("partner").title("Partner companies (logo strip)"),
       S.documentTypeListItem("producedItem").title("Produced products"),
       S.documentTypeListItem("exportItem").title("Export brands"),
       S.documentTypeListItem("teamMember").title("Team members"),

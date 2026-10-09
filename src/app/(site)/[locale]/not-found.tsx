@@ -5,7 +5,7 @@ import { Container } from "@/components/Container";
 export default function NotFound() {
   const t = useTranslations("NotFound");
   return (
-    <div className="bg-steel-100">
+    <div className="bg-paper">
       <Container className="flex min-h-[70svh] flex-col items-start justify-center py-24">
         <p className="font-display-heading text-steel-gradient text-8xl leading-none sm:text-9xl" lang="en">
           404

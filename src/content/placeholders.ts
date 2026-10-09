@@ -8,9 +8,6 @@ export type Placeholder = { src: string; position?: string };
 export const placeholders = {
   hero: { src: "/placeholders/hero-port.jpg", position: "50% 60%" },
   import: { src: "/placeholders/import-ship.jpg" },
-  // What we do platform cards
-  food: { src: "/placeholders/produce-shelves.jpg" },
-  nonFood: { src: "/placeholders/nonfood-haircare.jpg", position: "60% 50%" },
   produce: { src: "/placeholders/produce-stick-candles.jpg", position: "50% 100%" },
   export: { src: "/placeholders/export-coffee.jpg" },
   stats: { src: "/placeholders/about-fleet.jpg" },
@@ -18,10 +15,11 @@ export const placeholders = {
   contactBand: { src: "/placeholders/contact-handshake.jpg", position: "60% 45%" },
   vision: { src: "/placeholders/about-warehouse.jpg" },
   keys: { src: "/placeholders/about-retail.jpg" },
-  produceBand: { src: "/placeholders/produce-shelves.jpg" },
+  produceBand: { src: "/placeholders/produce-factory.jpg" },
   partnerCta: { src: "/placeholders/partner-cta.jpg" },
-  teamFacts: { src: "/placeholders/about-fleet.jpg" },
   ambassador: { src: "/placeholders/abay-candles.jpg", position: "25% 100%" },
+  // Home: Meet our team
+  teamBand: { src: "/placeholders/about-training.jpg" },
 } satisfies Record<string, Placeholder>;
 
 // Product-card stand-ins: stock category shots, not the actual products.
@@ -75,17 +73,18 @@ export const galleryPlaceholders: Record<string, Placeholder> = {
   training: { src: "/placeholders/about-training.jpg" },
 };
 
-export const teamSectionPlaceholders = {
-  leadership: { src: "/placeholders/team-leadership.jpg" },
-  sales: { src: "/placeholders/team-sales.jpg", position: "50% 35%" },
-} satisfies Record<string, Placeholder>;
-
 // Stock portraits standing in for named team members, keyed by the fallback
 // document ids. These are NOT photos of the people named — replace every one
 // with a real photo in the Studio before launch.
 export const teamPlaceholders: Record<string, Placeholder> = {
   "team-bedru": { src: "/placeholders/team-1.jpg", position: "50% 20%" },
   "team-eliyas": { src: "/placeholders/team-2.jpg", position: "50% 20%" },
-  "team-tesfaye": { src: "/placeholders/team-3.jpg", position: "50% 20%" },
-  "team-kalid": { src: "/placeholders/team-4.jpg", position: "50% 20%" },
+  "team-seid": { src: "/placeholders/team-3.jpg", position: "50% 20%" },
+  "team-noah": { src: "/placeholders/team-4.jpg", position: "50% 20%" },
+  "team-abdu": { src: "/placeholders/team-5.jpg", position: "50% 20%" },
+  "team-amira": { src: "/placeholders/team-6.jpg", position: "50% 20%" },
+  "team-sebrina": { src: "/placeholders/team-7.jpg", position: "50% 25%" },
+  "team-beza": { src: "/placeholders/team-8.jpg", position: "50% 25%" },
+  "team-seada": { src: "/placeholders/team-9.jpg", position: "50% 20%" },
+  "team-neima": { src: "/placeholders/team-11.jpg", position: "50% 20%" },
 };

@@ -43,11 +43,10 @@
     "brandsHeading": "Brands we import",
     "brandsIntro": "Food and non-food brands sourced from America, Europe and Asia, and distributed across Ethiopia.",
     "mainImporter": "Main importers of",
-    "routeMore": "More",
-    "routeMoreBody": "Logistics, market insight and the rest of what we offer.",
-    "allServices": "All services",
     "mission": "Mission",
-    "vision": "Vision"
+    "vision": "Vision",
+    "allProducts": "See all products",
+    "fullRoute": "Discover our services"
   },
   "Services": {
     "import": "We Import",
@@ -62,8 +61,8 @@
     "viewItem": "View {name}",
     "marketEyebrow": "Market opportunity",
     "sourcingHeading": "Where we source",
-    "brandCount": "{count, plural, one {# brand} other {# brands}}",
-    "productCount": "{count, plural, one {# product} other {# products}}"
+    "addisAbaba": "Addis Ababa",
+    "routeEyebrow": "From port to shelf"
   },
   "Footer": {
     "contact": "Get in touch",
@@ -71,8 +70,6 @@
     "email": "Email",
     "rights": "All rights reserved.",
     "follow": "Follow us",
-    "ctaHeading": "Start the conversation. Build your brand in Ethiopia.",
-    "ctaBody": "Talk to INTEMA about importing, distribution and growing your brand across the Ethiopian market.",
     "about": "INTEMA Trading PLC. is a diversified FMCG importer, distributor, manufacturer and exporter, connecting trusted global brands with Ethiopia since 2014.",
     "links": "Useful links",
     "services": "Services",
@@ -149,15 +146,14 @@
     "teamCta": "Meet the team"
   },
   "Team": {
-    "salesTeamSize": "people in our sales team",
     "atAGlance": "Team at a *glance*",
     "organised": "How we're organised",
     "applyCta": "Apply to partner",
     "brandAmbassador": "Brand ambassador",
     "leadershipEyebrow": "Who leads us",
-    "salesEyebrow": "On the ground",
     "organisedEyebrow": "Departments",
-    "partnerEyebrow": "Work with INTEMA"
+    "partnerEyebrow": "Work with INTEMA",
+    "headsEyebrow": "Who runs the day to day"
   },
   "Testimonials": {
     "eyebrow": "Testimonials",

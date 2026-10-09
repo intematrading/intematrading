@@ -6,7 +6,7 @@ export const brand = defineType({
   title: "Imported brand",
   type: "document",
   icon: TagIcon,
-  description: "A brand partner shown in the We Import logo grid.",
+  description: "An imported brand with its product photo (Home and Services product grids). Partner logos are separate: see Partner companies.",
   fields: [
     defineField({ name: "name", type: "string", validation: (r) => r.required() }),
     defineField({
@@ -37,12 +37,6 @@ export const brand = defineType({
       fields: [defineField({ name: "alt", title: "Alt text", type: "localeString" })],
     }),
     defineField({
-      name: "logo",
-      type: "image",
-      description: "Transparent PNG or SVG. Without a logo, the name is shown instead.",
-      fields: [defineField({ name: "alt", title: "Alt text", type: "localeString" })],
-    }),
-    defineField({
       name: "featured",
       title: "Main importer",
       type: "boolean",
@@ -52,5 +46,5 @@ export const brand = defineType({
     defineField({ name: "order", type: "number", description: "Lower numbers appear first." }),
   ],
   orderings: [{ title: "Display order", name: "order", by: [{ field: "order", direction: "asc" }] }],
-  preview: { select: { title: "name", subtitle: "category", media: "logo" } },
+  preview: { select: { title: "name", subtitle: "category", media: "image" } },
 });

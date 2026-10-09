@@ -17,6 +17,8 @@ export function Marquee({
   repeat = 1,
   reverse = false,
   feather,
+  gap = "gap-6",
+  separator,
 }: {
   children: React.ReactNode;
   label: string;
@@ -28,22 +30,27 @@ export function Marquee({
   reverse?: boolean;
   /** Width of the faded edges, as a percentage of the row: one value, or [left, right]. */
   feather?: number | [number, number];
+  /** Space between items (and between the two copies), as a gap class. */
+  gap?: string;
+  /** An <li> shown after each full set of items, marking where the loop starts over. */
+  separator?: ReactElement;
 }) {
-  const listClass = "flex shrink-0 gap-6";
+  const listClass = `flex shrink-0 ${gap}`;
   const items = Children.toArray(children).filter(isValidElement) as ReactElement<Record<string, unknown>>[];
-  const copies = Array.from({ length: repeat }, (_, r) =>
-    items.map((item) =>
+  const copies = Array.from({ length: repeat }, (_, r) => [
+    ...items.map((item) =>
       r === 0 ? (
         item
       ) : (
         <DecorativeCopy key={`${item.key}-r${r}`}>{cloneElement(item, { "aria-hidden": true })}</DecorativeCopy>
       ),
     ),
-  );
+    separator ? cloneElement(separator, { key: `sep-${r}` }) : null,
+  ]);
 
   return (
     <MarqueeScroller label={label} seconds={seconds} reverse={reverse} feather={feather}>
-      <div className="flex w-max gap-6">
+      <div className={`flex w-max ${gap}`}>
         <ul className={listClass}>{copies}</ul>
         <ul className={listClass} aria-hidden="true">
           <DecorativeCopy>{copies}</DecorativeCopy>

@@ -6,6 +6,7 @@ const byKey: Record<string, LucideIcon> = {
   founded: CalendarDays,
   market: Globe,
   reps: Users,
+  team: Users,
   accounts: Store,
   fleet: Truck,
   experience: Award,

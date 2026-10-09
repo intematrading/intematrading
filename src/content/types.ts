@@ -19,7 +19,6 @@ export type Seo = {
 
 export type ServiceSection = "import" | "produce" | "export";
 /** What a home "What we do" card stands for: the two import platforms, or produce / export. */
-export type CardKind = ServiceSection | "food" | "nonFood";
 
 export type SocialPlatform = "linkedin" | "facebook" | "instagram" | "whatsapp" | "tiktok";
 
@@ -36,6 +35,9 @@ export type SiteSettings = {
   seo?: Seo;
 };
 
+/** A "From port to shelf" step: short line on Home; details too on Services. */
+export type RouteStep = TitledText & { details?: LocaleString };
+
 export type HomePage = {
   heroHeadline: LocaleString;
   heroSubheadline?: LocaleString;
@@ -43,16 +45,21 @@ export type HomePage = {
   stats?: { _key: string; value: string; label: LocaleString; note?: LocaleString }[];
   entryCards?: {
     _key: string;
-    section: CardKind;
+    section: ServiceSection;
     title: LocaleString;
     description?: LocaleString;
     categories?: LocaleString[];
     image?: SanityImage;
   }[];
   whatWeDoIntro?: LocaleString;
+  foodInfo?: LocaleString;
+  nonFoodInfo?: LocaleString;
+  foodCategories?: LocaleString[];
+  nonFoodCategories?: LocaleString[];
   routeHeading?: LocaleString;
   routeIntro?: LocaleString;
-  routeSteps?: TitledText[];
+  routeSteps?: RouteStep[];
+  teamImage?: SanityImage;
   commitmentEyebrow?: LocaleString;
   commitmentHeadline?: LocaleString;
   commitmentBody?: LocaleString;
@@ -60,7 +67,6 @@ export type HomePage = {
   vision?: LocaleString;
   commitmentImage?: SanityImage;
   commitmentPoints?: { _key?: string; title: LocaleString; description?: LocaleString }[];
-  contactImage?: SanityImage;
   seo?: Seo;
 };
 
@@ -86,7 +92,9 @@ export type ServicesPage = {
   exportIntro?: LocaleString;
   exportBody?: LocaleString;
   exportBrandsIntro?: LocaleString;
-  exportMarkets?: LocaleString[];
+  exportMarkets?: TitledText[];
+  routeHeading?: LocaleString;
+  routeIntro?: LocaleString;
   seo?: Seo;
 };
 
@@ -97,9 +105,16 @@ export type Brand = {
   subBrands?: string[];
   description?: LocaleString;
   image?: SanityImage;
-  logo?: SanityImage;
   /** Named in the home page's "main importer of …" highlight. */
   featured?: boolean;
+};
+
+/** A company in the partner logo strip, independent of the imported brands. */
+export type Partner = {
+  _id: string;
+  name: string;
+  logo?: SanityImage;
+  website?: string;
 };
 
 export type ProducedItem = {
@@ -117,7 +132,7 @@ export type ExportItem = {
   image?: SanityImage;
 };
 
-type Stat = { _key: string; value: string; label: LocaleString; note?: LocaleString };
+export type Stat = { _key: string; value: string; label: LocaleString; note?: LocaleString };
 type TitledText = { _key: string; title: LocaleString; body?: LocaleString };
 type CaptionedImage = { _key: string; image?: SanityImage; caption: LocaleString };
 
@@ -157,11 +172,13 @@ export type Testimonial = {
   sample?: boolean;
 };
 
+export type TeamGroupKey = "leadership" | "sales" | "admin" | "operations";
+
 export type TeamMember = {
   _id: string;
   name: LocaleString;
   role: LocaleString;
-  group: "leadership" | "sales";
+  group: TeamGroupKey;
   bio?: LocaleString;
   photo?: SanityImage;
 };
@@ -173,18 +190,14 @@ export type TeamPage = {
   heroImage?: SanityImage;
   leadershipHeading?: LocaleString;
   leadershipIntro?: LocaleString;
-  leadershipImage?: SanityImage;
-  salesHeading?: LocaleString;
-  salesIntro?: LocaleString;
-  salesTeamSize?: string;
-  salesImage?: SanityImage;
+  headsHeading?: LocaleString;
+  headsIntro?: LocaleString;
   ambassadorName?: LocaleString;
   ambassadorRole?: LocaleString;
   ambassadorBio?: LocaleString;
   ambassadorImage?: SanityImage;
   ambassadorBackground?: SanityImage;
   facts?: Stat[];
-  factsImage?: SanityImage;
   departments?: TitledText[];
   trainingHeading?: LocaleString;
   training?: LocaleString;

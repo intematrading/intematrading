@@ -3,8 +3,10 @@ import { getTranslations } from "next-intl/server";
 import type { SiteSettings } from "@/content/types";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { tr } from "@/lib/content";
+import { getContactPage, tr } from "@/lib/content";
+import { ButtonLink } from "./ButtonLink";
 import { Container } from "./Container";
+import { Eyebrow } from "./Eyebrow";
 import { Logo } from "./Logo";
 import { navItems } from "./nav-items";
 import { SocialLinks } from "./SocialLinks";
@@ -12,24 +14,35 @@ import { SocialLinks } from "./SocialLinks";
 const serviceKeys = ["serviceFood", "serviceNonFood", "serviceProduce", "serviceExport", "serviceLogistics", "serviceMarket"] as const;
 
 /**
- * Dark footer: a heading band (heading and a line), then
+ * Dark footer: a Get in touch band (heading, the Contact page intro and a
+ * Contact CTA), then
  * four columns (logo, short description and social links; useful links;
  * services; contact details) and the copyright line.
  */
 export async function SiteFooter({ settings, locale }: { settings: SiteSettings; locale: Locale }) {
-  const [t, nav] = await Promise.all([getTranslations("Footer"), getTranslations("Nav")]);
+  const [t, nav, home, common, contactPage] = await Promise.all([
+    getTranslations("Footer"),
+    getTranslations("Nav"),
+    getTranslations("Home"),
+    getTranslations("Common"),
+    getContactPage(),
+  ]);
   const companyName = tr(settings.companyName, locale);
   const headingClass = "label-caps text-red-glow";
   const linkClass = "text-paper/80 transition-colors hover:text-paper";
 
   return (
     <footer className="on-dark steel-gradient-deep text-paper">
-      {/* Heading band */}
-      <Container className="py-14 sm:py-16">
+      {/* Get in touch: heading and the Contact page intro, with the Contact CTA */}
+      <Container className="flex flex-col gap-8 py-14 sm:py-16 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="font-display-heading max-w-3xl text-3xl sm:text-4xl lg:text-5xl">{t("ctaHeading")}</p>
-          <p className="mt-4 max-w-2xl text-paper/80 sm:text-lg">{t("ctaBody")}</p>
+          <Eyebrow onDark>{common("contactUs")}</Eyebrow>
+          <p className="font-display-heading mt-4 text-4xl sm:text-5xl">{home("getInTouch").replace(/\*/g, "")}</p>
+          {contactPage.intro && <p className="mt-4 max-w-2xl text-paper/80 sm:text-lg">{tr(contactPage.intro, locale)}</p>}
         </div>
+        <ButtonLink href="/contact" variant="redOnDark" className="shrink-0 self-start lg:self-auto">
+          {common("contactUs")}
+        </ButtonLink>
       </Container>
 
       <div className="border-t border-white/10">

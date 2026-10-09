@@ -30,7 +30,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
   const mapQuery = encodeURIComponent([settings.address?.en, "Ethiopia"].filter(Boolean).join(", ") || "Addis Ababa, Ethiopia");
 
   return (
-    <div className="flex flex-col bg-steel-100">
+    <div className="flex flex-col bg-paper">
       <PageHero
         eyebrow={t("eyebrow")}
         title={t("title")}

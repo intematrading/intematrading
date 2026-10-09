@@ -13,7 +13,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
 import { Gallery } from "@/components/Gallery";
-import { GetInTouch } from "@/components/GetInTouch";
 import { IconBox } from "@/components/IconBox";
 import { PageHero } from "@/components/PageHero";
 import { Partners } from "@/components/Partners";
@@ -60,7 +59,7 @@ export default async function AboutPage({
   const steps = page.processSteps ?? [];
 
   return (
-    <div className="flex flex-col bg-steel-100">
+    <div className="flex flex-col bg-paper">
       <PageHero
         eyebrow={tr(page.eyebrow, locale)}
         title={tr(page.title, locale)}
@@ -340,9 +339,6 @@ export default async function AboutPage({
             </section>
           </Reveal>
         ) : null}
-        <Reveal>
-          <GetInTouch locale={locale} className={panel} />
-        </Reveal>
       </div>
     </div>
   );

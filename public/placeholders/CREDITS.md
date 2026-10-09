@@ -19,12 +19,16 @@ with INTEMA's own photography via Sanity.
 | about-training.jpg | René Porter | https://unsplash.com/photos/5j6YBI45TI4 |
 | hero-about.jpg | Gift Habeshaw | https://unsplash.com/photos/SpLQSi6CajQ |
 | hero-team.jpg | Cytonn Photography | https://unsplash.com/photos/n95VMLxqM2I |
-| team-leadership.jpg | Christina @ wocintechchat.com | https://unsplash.com/photos/faEfWCdOKIg |
-| team-sales.jpg | Reproductive Health Supplies Coalition | https://unsplash.com/photos/1Bsqy0meA88 |
 | team-1.jpg | kevin Clonee | https://unsplash.com/photos/TlsyyWh3Oa0 |
 | team-2.jpg | Fortune Vieyra | https://unsplash.com/photos/QIMjYJSFoXM |
 | team-3.jpg | Olawale Munna | https://unsplash.com/photos/qpyR0WKV_Cs |
 | team-4.jpg | tekimax | https://unsplash.com/photos/0OczC2-oFsA |
+| team-5.jpg | Dellon Thomas | https://unsplash.com/photos/olasY6OD8pw |
+| team-6.jpg | Etty Fidele | https://unsplash.com/photos/SLDpJ6UB1Qs |
+| team-7.jpg | Christina @ wocintechchat.com | https://unsplash.com/photos/S3GrMiUhpNU |
+| team-8.jpg | Etty Fidele | https://unsplash.com/photos/AzVexpHvuKY |
+| team-9.jpg | Raymond Owusu-Afriyie | https://unsplash.com/photos/VPvYUK2Iibo |
+| team-11.jpg | Prince Akachi | https://unsplash.com/photos/J1OScm_uHUQ |
 | partner-cta.jpg | Amina Atar | https://unsplash.com/photos/4mEyvORkbN0 |
 | testimonial-1.jpg | alex starnes | https://unsplash.com/photos/PK_t0Lrh7MM |
 | testimonial-2.jpg | Nigel Msipa | https://unsplash.com/photos/vZbWlXzZtAY |
@@ -41,8 +45,8 @@ with INTEMA's own photography via Sanity.
 | products/international-collection.jpg | Habib Dadkhah | https://unsplash.com/photos/bX7oRJ1XD2s |
 | products/power-horse.jpg | Ambo Ampeng | https://unsplash.com/photos/nZvTEtAc024 |
 | products/irn-bru.jpg | Charlie Wollborg | https://unsplash.com/photos/Yezt64WAT8A |
-| produce-shelves.jpg | Jack Lee | https://unsplash.com/photos/IH65r4HEQWQ |
 | nonfood-haircare.jpg | FS Cut & Color | https://unsplash.com/photos/PL1WRIJOQuQ |
+| produce-factory.jpg | Homa Appliances | https://unsplash.com/photos/pWUyHVJgLhg |
 | products/soap-1.jpg | Heather Ford | https://unsplash.com/photos/FbrDS0jY_Hw |
 | products/soap-2.jpg | Townsend Walton | https://unsplash.com/photos/Nwzq_MuVZwg |
 | products/soap-3.jpg | Nathan Powers | https://unsplash.com/photos/nu1LXI_zOGA |

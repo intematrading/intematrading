@@ -1,15 +1,15 @@
-import { Coffee, Flame, Globe2, Plane, ShoppingBasket, Sparkles } from "lucide-react";
+import { Coffee, Flame, ShoppingBasket, Sparkles } from "lucide-react";
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/Container";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
-import { panel } from "@/components/panel";
+import { RegionTree } from "@/components/RegionTree";
 import { Reveal } from "@/components/Reveal";
-import { GetInTouch } from "@/components/GetInTouch";
+import { EthiopiaMap } from "@/components/EthiopiaMap";
 import { IconBox } from "@/components/IconBox";
 import { PageHero } from "@/components/PageHero";
-import { BrandGrid, ExportGrid, ProducedGrid } from "@/components/ProductGrid";
+import { BrandGrid, ExportTiles, ProducedGrid } from "@/components/ProductGrid";
 import { RouteSteps } from "@/components/RouteSteps";
 import { ProductPreviewProvider } from "@/components/ProductPreview";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -68,15 +68,6 @@ function ServiceHeading({
   );
 }
 
-function SubHeading({ children, onDark = false }: { children: React.ReactNode; onDark?: boolean }) {
-  return (
-    <h3 className={`label-caps mb-5 flex items-center gap-3 ${onDark ? "text-paper" : "text-ink"}`}>
-      <span aria-hidden="true" className="red-gradient size-2 rounded-full" />
-      {children}
-    </h3>
-  );
-}
-
 export default async function ServicesPage({ params }: PageProps<"/[locale]/services">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
@@ -100,7 +91,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
   const [importSec, produceSec, exportSec] = sections;
 
   return (
-    <div className="flex flex-col bg-steel-100">
+    <div className="flex flex-col bg-paper">
       <PageHero
         eyebrow={tr(page.eyebrow, locale)}
         title={tr(page.title, locale)}
@@ -112,9 +103,16 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
 
       {/* ── Why Ethiopia? Market figures, with sources ─────────────── */}
       {page.marketStats?.length ? (
-        <section aria-labelledby="market-heading" className="py-16 sm:py-24">
+        <section aria-labelledby="market-heading" className="relative isolate overflow-hidden py-16 sm:py-24">
+          {/* Big map of Ethiopia to the right of the intro: cropped by the
+              section's top edge (under the hero), its lower part covered by
+              the stat cards. Faint behind the text on phones. */}
+          <EthiopiaMap
+            label={t("addisAbaba")}
+            className="absolute -top-16 -right-40 -z-10 w-[34rem] opacity-30 sm:-right-24 sm:w-[44rem] lg:-top-28 lg:right-[max(-14rem,calc((100vw-80rem)/2-13rem))] lg:w-[52rem] lg:opacity-50 xl:w-[58rem]"
+          />
           <Container>
-            <Reveal className="max-w-3xl">
+            <Reveal className="max-w-3xl lg:max-w-[46%]">
               <SectionHeading id="market-heading" eyebrow={t("marketEyebrow")}>
                 {tr(page.marketHeading, locale)}
               </SectionHeading>
@@ -139,7 +137,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
                 );
               })}
             </ul>
-            {page.marketSource && <p className="mt-6 text-xs text-muted">{tr(page.marketSource, locale)}</p>}
+            {page.marketSource && <p className="mt-6 text-center text-xs text-muted italic">{tr(page.marketSource, locale)}</p>}
           </Container>
         </section>
       ) : null}
@@ -150,84 +148,63 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         <section id="import" aria-labelledby="import-heading" className={sectionClass}>
           <Container>
             <ServiceHeading id="import-heading" number="01" title={importSec.title} intro={tr(page.importIntro, locale)} />
-            {/* Where we source: the regions brands are imported from */}
-            {page.sourcingRegions?.length ? (
-              <Reveal className="mt-10">
-                <SubHeading>{t("sourcingHeading")}</SubHeading>
-                <ul className="grid gap-3 sm:grid-cols-3 sm:gap-4">
-                  {page.sourcingRegions.map((region) => (
-                    <li key={region._key} className="flex items-start gap-4 rounded-3xl bg-paper p-5 shadow-sm ring-1 ring-black/5 sm:p-6">
-                      <IconBox icon={Globe2} />
-                      <div>
-                        <p className="font-title-heading text-lg text-ink">{tr(region.title, locale)}</p>
-                        {region.body && <p className="mt-1 text-sm text-muted">{tr(region.body, locale)}</p>}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            ) : null}
+            {/* Where we source: heading branching to each region's map, as Target markets */}
+            <RegionTree heading={t("sourcingHeading")} regions={page.sourcingRegions ?? []} locale={locale} className="mt-16 sm:mt-20" />
           </Container>
-          <div className="mt-12">
-            <BrandGrid brands={nonFood} icon={Sparkles} label={t("nonFood")} intro={tr(page.nonFoodIntro, locale)} locale={locale} />
-            <BrandGrid brands={food} icon={ShoppingBasket} label={t("food")} intro={tr(page.foodIntro, locale)} reverse locale={locale} />
+          <div className="mt-20 sm:mt-28">
+            <BrandGrid brands={nonFood} icon={Sparkles} label={t("nonFood")} intro={tr(page.nonFoodIntro, locale)} carousel locale={locale} />
+            <BrandGrid brands={food} icon={ShoppingBasket} label={t("food")} intro={tr(page.foodIntro, locale)} reverse carousel locale={locale} />
           </div>
         </section>
 
         {/* ── We Produce ────────────────────────────────────────────── */}
-        <div className="px-3 sm:px-4">
-        <section id="produce" aria-labelledby="produce-heading" className={`${sectionClass} on-dark relative isolate text-paper ${panel}`}>
-          {/* Background: a stocked supermarket aisle under a heavy near-black
-              shade, so the text and product cards stay readable */}
+        <section id="produce" aria-labelledby="produce-heading" className={`${sectionClass} on-dark relative isolate overflow-hidden text-paper`}>
+          {/* Full-width background: a factory floor under a heavy near-black
+              shade, so the text and products stay readable */}
           <PhotoBackdrop image={page.produceImage} placeholder={placeholders.produceBand} locale={locale} icon={Flame} overlay="bg-black/75" vignette />
           <Container>
             <ServiceHeading id="produce-heading" number="02" title={produceSec.title} intro={tr(page.produceIntro, locale)} onDark />
           </Container>
-          <div className="mt-12">
-            <ProducedGrid products={producedItems} icon={Flame} label={t("ourProducts")} intro={tr(page.productsIntro, locale)} onDark locale={locale} />
+          <div className="mt-16 sm:mt-20">
+            <ProducedGrid products={producedItems} icon={Flame} label={t("ourProducts")} intro={tr(page.productsIntro, locale)} onDark carousel locale={locale} />
           </div>
         </section>
-        </div>
 
         {/* ── We Export ─────────────────────────────────────────────── */}
         <section id="export" aria-labelledby="export-heading" className={sectionClass}>
           <Container>
             <ServiceHeading id="export-heading" number="03" title={exportSec.title} intro={tr(page.exportIntro, locale)} />
           </Container>
-          <div className="mt-12">
-            <ExportGrid brands={exportItems} icon={Coffee} label={t("exportBrands")} intro={tr(page.exportBrandsIntro, locale)} locale={locale} />
-          </div>
-          <Container className="mt-16 grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14 sm:mt-20">
-            {page.exportBody && (
-              <Reveal className="lg:col-span-6">
-                <p className="text-base leading-relaxed text-muted sm:text-lg">{tr(page.exportBody, locale)}</p>
-              </Reveal>
-            )}
-            {page.exportMarkets?.length ? (
-              <Reveal className="lg:col-span-5 lg:col-start-8">
-                <div className="rounded-[1.75rem] bg-paper p-7 shadow-sm ring-1 ring-black/5 sm:rounded-[2rem] sm:p-9">
-                  <SubHeading>{t("targetMarkets")}</SubHeading>
-                  <ul className="divide-y divide-steel-200">
-                    {page.exportMarkets.map((m) => (
-                      <li key={m.en} className="flex items-center gap-4 py-4 text-lg font-bold text-ink first:pt-0 last:pb-0">
-                        <IconBox icon={Plane} />
-                        {tr(m, locale)}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            ) : null}
+          {/* Two columns: the export brands' heading, intro and the coffee story | the brand tiles */}
+          <Container className="mt-16 grid gap-12 sm:mt-20 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="lg:col-span-5 lg:sticky lg:top-[calc(var(--bar-h)+3rem)] lg:self-start">
+              <h3 className="flex items-center gap-4">
+                <IconBox icon={Coffee} />
+                <span className="font-display-heading text-steel-gradient text-3xl sm:text-4xl">{t("exportBrands")}</span>
+              </h3>
+              {page.exportBrandsIntro && <p className="mt-5 text-muted sm:text-lg">{tr(page.exportBrandsIntro, locale)}</p>}
+              {page.exportBody && <p className="mt-5 leading-relaxed text-muted">{tr(page.exportBody, locale)}</p>}
+            </Reveal>
+            <div className="lg:col-span-7">
+              <ExportTiles brands={exportItems} label={t("exportBrands")} locale={locale} />
+            </div>
+          </Container>
+          <Container>
+            {/* Target markets: heading branching to each region's map (Figma: Frame 19) */}
+            <RegionTree heading={t("targetMarkets")} regions={page.exportMarkets ?? []} locale={locale} className="mt-24 sm:mt-32" />
           </Container>
         </section>
       </ProductPreviewProvider>
 
       {/* ── The other services: the route from port to shelf ────────── */}
-      <RouteSteps locale={locale} className="pt-0 sm:pt-0" />
-
-      <Reveal className="px-3 pb-3 sm:px-4 sm:pb-4">
-        <GetInTouch locale={locale} className={panel} />
-      </Reveal>
+      <RouteSteps
+        locale={locale}
+        id="services-route-heading"
+        eyebrow={t("routeEyebrow")}
+        heading={tr(page.routeHeading, locale)}
+        intro={tr(page.routeIntro, locale)}
+        className="pt-0 sm:pt-0"
+      />
     </div>
   );
 }

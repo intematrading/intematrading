@@ -14,3 +14,9 @@ export function DecorativeCopy({ children }: { children: React.ReactNode }) {
 }
 
 export const useIsDecorativeCopy = () => useContext(DecorativeContext);
+
+/** An external link that leaves the tab order inside a decorative repeat. */
+export function DecorativeAwareLink(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  const decorative = useIsDecorativeCopy();
+  return <a {...props} tabIndex={decorative ? -1 : props.tabIndex} />;
+}

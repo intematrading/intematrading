@@ -5,6 +5,7 @@ import { exportItem } from "./exportItem";
 import { homePage } from "./homePage";
 import { inquiry } from "./inquiry";
 import { localeString, localeText } from "./locale";
+import { partner } from "./partner";
 import { producedItem } from "./producedItem";
 import { seo } from "./seo";
 import { servicesPage } from "./servicesPage";
@@ -24,6 +25,7 @@ export const schemaTypes = [
   teamPage,
   contactPage,
   brand,
+  partner,
   producedItem,
   exportItem,
   teamMember,

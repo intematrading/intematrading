@@ -16,6 +16,8 @@ export const teamMember = defineType({
         list: [
           { title: "Leadership", value: "leadership" },
           { title: "Sales & marketing", value: "sales" },
+          { title: "Administration & finance", value: "admin" },
+          { title: "Operations", value: "operations" },
         ],
         layout: "radio",
       },
