@@ -9,7 +9,7 @@ export const producedItem = defineType({
   fields: [
     defineField({ name: "name", type: "localeString", validation: (r) => r.required() }),
     defineField({ name: "category", type: "localeString", description: 'Small label, e.g. "Candles" or "Soap".' }),
-    defineField({ name: "description", type: "localeString" }),
+    defineField({ name: "description", type: "localeText" }),
     imageWithAlt("image", "Product photo"),
     defineField({ name: "order", type: "number", description: "Lower numbers appear first." }),
   ],

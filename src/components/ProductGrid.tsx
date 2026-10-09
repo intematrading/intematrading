@@ -28,7 +28,8 @@ type GridItem = {
  * Home and the Services page): its icon, title and description in
  * one column, and an even grid of small product tiles in the other, 3 across
  * (2 on phones), no scrolling, or with `carousel` (Services) the heading
- * above an auto-scrolling row. `reverse` puts the tiles on the left; `onDark`
+ * above an auto-scrolling row (a plain row for 2–3 items, one large feature
+ * for a single item). `reverse` puts the tiles on the left; `onDark`
  * styles the text for a dark panel. Tiles open the shared product popup
  * inside a ProductPreviewProvider.
  */
@@ -130,13 +131,43 @@ export async function ProductGrid({
     );
     return (
       <div className="mt-24 first:mt-0 sm:mt-32">
-        <Container>
-          <Reveal className="max-w-2xl">
-            {heading}
-            {intro && <p className={`mt-5 sm:text-lg ${onDark ? "text-paper/80" : "text-muted"}`}>{intro}</p>}
-          </Reveal>
-        </Container>
-        {items.length < 4 ? (
+        {/* A single product stands on its own, without the group heading */}
+        {items.length > 1 && (
+          <Container>
+            <Reveal className="max-w-2xl">
+              {heading}
+              {intro && <p className={`mt-5 sm:text-lg ${onDark ? "text-paper/80" : "text-muted"}`}>{intro}</p>}
+            </Reveal>
+          </Container>
+        )}
+        {items.length === 1 ? (
+          // A single product: a large photo with its name and description beside it (no popup)
+          <Container>
+            <Reveal className="grid items-center gap-8 lg:grid-cols-12 lg:gap-16">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-[1.75rem] shadow-2xl sm:rounded-[2rem] lg:col-span-7">
+                <PhotoFrame
+                  image={items[0].image}
+                  placeholder={items[0].placeholder}
+                  locale={locale}
+                  width={1200}
+                  height={750}
+                  sizes="(min-width: 1024px) 46rem, 100vw"
+                  icon={Package}
+                />
+              </div>
+              <div className="lg:col-span-5">
+                {items[0].label && (
+                  <span className={`inline-block rounded-full px-3 py-1 text-xs font-bold tracking-wider uppercase ${onDark ? "bg-white/15 text-paper ring-1 ring-white/25" : "bg-steel-100 text-ink"}`}>
+                    {items[0].label}
+                  </span>
+                )}
+                <h3 className={`font-display-heading mt-5 text-5xl sm:text-6xl ${onDark ? "text-paper" : "text-steel-gradient"}`}>{items[0].title}</h3>
+                <span aria-hidden="true" className={`mt-6 block h-px w-24 ${onDark ? "bg-white/30" : "bg-steel-300"}`} />
+                {items[0].description && <p className={`mt-6 max-w-lg leading-relaxed whitespace-pre-line sm:text-lg ${onDark ? "text-paper/85" : "text-muted"}`}>{items[0].description}</p>}
+              </div>
+            </Reveal>
+          </Container>
+        ) : items.length < 4 ? (
           // Too few to loop: a plain row at the same tile size
           <Container className="mt-12">
             <ul aria-label={label} className="flex flex-wrap gap-x-10 gap-y-12">

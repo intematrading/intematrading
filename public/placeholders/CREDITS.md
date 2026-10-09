@@ -7,7 +7,6 @@ with INTEMA's own photography via Sanity.
 | --- | --- | --- |
 | hero-port.jpg | Haris Illahi | https://unsplash.com/photos/9VmKFc_c748 |
 | import-ship.jpg | Andy Li | https://unsplash.com/photos/CpsTAUPoScw |
-| produce-candles.jpg | Jarrod Reed | https://unsplash.com/photos/rjIDhjdKCCI |
 | produce-stick-candles.jpg | Nicola Fioravanti | https://unsplash.com/photos/UrAKbpKnak8 |
 | abay-candles.jpg | Siora Photography | https://unsplash.com/photos/Glxq-p_dsC8 |
 | export-coffee.jpg | Clint McKoy | https://unsplash.com/photos/h28p96ICizo |
@@ -47,9 +46,6 @@ with INTEMA's own photography via Sanity.
 | products/irn-bru.jpg | Charlie Wollborg | https://unsplash.com/photos/Yezt64WAT8A |
 | nonfood-haircare.jpg | FS Cut & Color | https://unsplash.com/photos/PL1WRIJOQuQ |
 | produce-factory.jpg | Homa Appliances | https://unsplash.com/photos/pWUyHVJgLhg |
-| products/soap-1.jpg | Heather Ford | https://unsplash.com/photos/FbrDS0jY_Hw |
-| products/soap-2.jpg | Townsend Walton | https://unsplash.com/photos/Nwzq_MuVZwg |
-| products/soap-3.jpg | Nathan Powers | https://unsplash.com/photos/nu1LXI_zOGA |
 
 The products/*.jpg images are stock category shots, not the actual products.
 

@@ -39,12 +39,6 @@ export const productPlaceholders: Record<string, Placeholder> = {
   "brand-irn-bru": product("irn-bru"),
   "brand-loreal-professionnel": { src: "/placeholders/nonfood-haircare.jpg", position: "60% 50%" },
   "produce-abay": { src: "/placeholders/abay-candles.jpg", position: "25% 100%" },
-  "produce-skor": product("soap-1"),
-  "produce-cool": product("soap-2"),
-  "produce-mama": product("soap-3"),
-  "produce-abu": product("soap-1", "30% 50%"),
-  "produce-kanna": product("soap-2", "70% 50%"),
-  "produce-pass": product("soap-3", "20% 60%"),
   "export-seedcup": { src: "/placeholders/about-coffee.jpg" },
   "export-bella": { src: "/placeholders/export-coffee.jpg" },
 };
@@ -62,16 +56,6 @@ export const testimonialPlaceholders: Placeholder[] = [
   { src: "/placeholders/testimonial-2.jpg" },
   { src: "/placeholders/testimonial-3.jpg" },
 ];
-
-export const galleryPlaceholders: Record<string, Placeholder> = {
-  warehouse: { src: "/placeholders/about-warehouse.jpg" },
-  fleet: { src: "/placeholders/about-fleet.jpg" },
-  retail: { src: "/placeholders/about-retail.jpg" },
-  port: { src: "/placeholders/hero-port.jpg", position: "50% 60%" },
-  candles: { src: "/placeholders/produce-candles.jpg", position: "70% 100%" },
-  coffee: { src: "/placeholders/about-coffee.jpg" },
-  training: { src: "/placeholders/about-training.jpg" },
-};
 
 // Stock portraits standing in for named team members, keyed by the fallback
 // document ids. These are NOT photos of the people named — replace every one

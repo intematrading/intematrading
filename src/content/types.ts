@@ -134,7 +134,6 @@ export type ExportItem = {
 
 export type Stat = { _key: string; value: string; label: LocaleString; note?: LocaleString };
 type TitledText = { _key: string; title: LocaleString; body?: LocaleString };
-type CaptionedImage = { _key: string; image?: SanityImage; caption: LocaleString };
 
 export type AboutPage = {
   title: LocaleString;
@@ -144,7 +143,8 @@ export type AboutPage = {
   whoWeAreHeading?: LocaleString;
   whoWeAre?: LocaleString[];
   stats?: Stat[];
-  gallery?: CaptionedImage[];
+  visionSectionHeading?: LocaleString;
+  visionSectionIntro?: LocaleString;
   visionHeading?: LocaleString;
   vision?: LocaleString;
   missionHeading?: LocaleString;
@@ -154,6 +154,7 @@ export type AboutPage = {
   processIntro?: LocaleString;
   processSteps?: TitledText[];
   keysHeading?: LocaleString;
+  keysIntro?: LocaleString;
   keysImage?: SanityImage;
   keysToSuccess?: LocaleString[];
   partnersHeading?: LocaleString;

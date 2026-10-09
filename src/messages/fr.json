@@ -124,25 +124,15 @@
     "detailsEyebrow": "Nous joindre"
   },
   "About": {
-    "galleryHeading": "Au cœur d'*INTEMA*",
-    "galleryLabel": "Galerie photo",
-    "prev": "Photo précédente",
-    "next": "Photo suivante",
-    "slide": "Photo {current} sur {total}",
-    "goTo": "Aller à la photo {n}",
     "snapshot": "L'entreprise en bref",
     "partnerCta": "Devenir partenaire",
-    "open": "Ouvrir la photo : {caption}",
-    "close": "Fermer l'aperçu",
     "partnersLabel": "Logos de nos partenaires",
     "whoEyebrow": "Notre histoire",
-    "galleryEyebrow": "Galerie",
-    "visionEyebrow": "Ce qui nous anime",
+    "visionEyebrow": "Notre raison d’être",
     "processEyebrow": "Notre méthode",
     "partnersEyebrow": "Des marques de confiance",
     "keysEyebrow": "Pourquoi INTEMA",
     "step": "Étape {n}",
-    "galleryIntro": "Un aperçu de nos entrepôts, de notre flotte de livraison et des magasins partenaires — les personnes et les lieux qui font circuler les produits dans trois pays.",
     "teamCta": "Rencontrer l'équipe"
   },
   "Team": {

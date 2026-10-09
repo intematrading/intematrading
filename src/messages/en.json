@@ -124,25 +124,15 @@
     "detailsEyebrow": "Reach us"
   },
   "About": {
-    "galleryHeading": "Inside *INTEMA*",
-    "galleryLabel": "Photo gallery",
-    "prev": "Previous photo",
-    "next": "Next photo",
-    "slide": "Photo {current} of {total}",
-    "goTo": "Go to photo {n}",
     "snapshot": "Company snapshot",
     "partnerCta": "Become a partner",
-    "open": "Open photo: {caption}",
-    "close": "Close preview",
     "partnersLabel": "Partner logos",
     "whoEyebrow": "Our story",
-    "galleryEyebrow": "Gallery",
-    "visionEyebrow": "What drives us",
+    "visionEyebrow": "Our purpose",
     "processEyebrow": "How we work",
     "partnersEyebrow": "Trusted brands",
     "keysEyebrow": "Why INTEMA",
     "step": "Step {n}",
-    "galleryIntro": "A look inside our warehouses, delivery fleet and partner stores — the people and places that keep products moving across three countries.",
     "teamCta": "Meet the team"
   },
   "Team": {

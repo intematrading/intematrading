@@ -12,18 +12,14 @@ import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
-import { Gallery } from "@/components/Gallery";
 import { IconBox } from "@/components/IconBox";
 import { PageHero } from "@/components/PageHero";
 import { Partners } from "@/components/Partners";
-import { panel } from "@/components/panel";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
-import { PhotoFrame } from "@/components/PhotoFrame";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { statIcon } from "@/components/stat-icons";
 import {
-  galleryPlaceholders,
   heroPlaceholders,
   placeholders,
 } from "@/content/placeholders";
@@ -131,60 +127,41 @@ export default async function AboutPage({
         </Container>
       </section>
 
-      {/* ── Vision & mission: two glass cards on a shaded photo panel ─── */}
+      {/* ── What drives us: full width shaded photo, heading and intro,
+          then the vision and mission as two glass cards ──────────────── */}
       {(page.vision || page.mission) && (
-        <Reveal className="px-3 sm:px-4">
-          <section
-            aria-labelledby="vision-heading"
-            className={`on-dark relative isolate text-paper ${panel}`}
-          >
-            <PhotoBackdrop image={page.visionImage} placeholder={placeholders.vision} locale={locale} icon={Eye} overlay="bg-black/60" vignette />
-            <Container className="py-14 sm:py-20">
-              <h2 id="vision-heading" className="sr-only">
-                {`${tr(page.visionHeading, locale)} & ${tr(page.missionHeading, locale)}`}
-              </h2>
-              <p className="label-caps text-center text-paper">
-                {t("visionEyebrow")}
-              </p>
-              <div className="mt-8 grid gap-4 sm:gap-6 md:grid-cols-2">
-                {[
-                  {
-                    key: "vision",
-                    icon: Eye,
-                    heading: page.visionHeading,
-                    body: page.vision,
-                  },
-                  {
-                    key: "mission",
-                    icon: Target,
-                    heading: page.missionHeading,
-                    body: page.mission,
-                  },
-                ].map(({ key, icon, heading, body }) =>
-                  body ? (
-                    <article
-                      key={key}
-                      className="flex flex-col rounded-3xl bg-white/12 p-7 shadow-2xl ring-1 ring-white/30 backdrop-blur-xl backdrop-saturate-150 ring-inset sm:p-10"
-                    >
+        <section aria-labelledby="vision-heading" className="on-dark relative isolate overflow-hidden text-paper">
+          <PhotoBackdrop image={page.visionImage} placeholder={placeholders.vision} locale={locale} icon={Eye} overlay="bg-black/65" vignette />
+          <Container className="py-16 sm:py-24">
+            <Reveal className="mx-auto max-w-2xl text-center">
+              <SectionHeading id="vision-heading" eyebrow={t("visionEyebrow")} onDark>
+                {tr(page.visionSectionHeading, locale) || t("visionEyebrow")}
+              </SectionHeading>
+              {page.visionSectionIntro && <p className="mt-6 text-paper/85 sm:text-lg">{tr(page.visionSectionIntro, locale)}</p>}
+            </Reveal>
+            <div className="mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
+              {[
+                { key: "vision", icon: Eye, heading: page.visionHeading, body: page.vision },
+                { key: "mission", icon: Target, heading: page.missionHeading, body: page.mission },
+              ].map(({ key, icon, heading, body }) =>
+                body ? (
+                  <Reveal key={key} className="h-full">
+                    <article className="flex h-full flex-col rounded-3xl bg-white/12 p-7 shadow-2xl ring-1 ring-white/30 backdrop-blur-xl backdrop-saturate-150 ring-inset sm:p-10">
                       <IconBox icon={icon} size="lg" />
-                      <h3 className="font-display-heading mt-6 text-4xl sm:text-5xl">
-                        {tr(heading, locale)}
-                      </h3>
-                      <p className="mt-4 text-base leading-relaxed text-paper/90 sm:text-lg">
-                        {tr(body, locale)}
-                      </p>
+                      <h3 className="font-display-heading mt-6 text-4xl sm:text-5xl">{tr(heading, locale)}</h3>
+                      <p className="mt-4 text-base leading-relaxed text-paper/90 sm:text-lg">{tr(body, locale)}</p>
                     </article>
-                  ) : null,
-                )}
-              </div>
-            </Container>
-          </section>
-        </Reveal>
+                  </Reveal>
+                ) : null,
+              )}
+            </div>
+          </Container>
+        </section>
       )}
 
       {/* ── Our process: intro, then the steps as numbered cards ────── */}
       {steps.length ? (
-        <section aria-labelledby="process-heading" className="pt-16 sm:pt-24">
+        <section aria-labelledby="process-heading" className="py-16 sm:py-24">
           <Container>
             <Reveal className="max-w-2xl">
               <SectionHeading
@@ -200,37 +177,19 @@ export default async function AboutPage({
               )}
             </Reveal>
             <Reveal>
-              <ol className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4">
+              <ol className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
                 {steps.map((step, i) => {
                   const Icon = stepIcons[i % stepIcons.length];
                   return (
-                    <li
-                      key={step._key}
-                      className="flex h-full min-h-[19rem] flex-col rounded-[1.75rem] bg-paper p-7 shadow-sm ring-1 ring-black/5 sm:rounded-[2rem] sm:p-9"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <IconBox icon={Icon} size="lg" />
-                        <span
-                          aria-hidden="true"
-                          className="font-display-heading text-steel-gradient text-7xl leading-none"
-                          lang="en"
-                        >
+                    <li key={step._key} className="flex h-full flex-col rounded-[1.75rem] bg-paper p-6 shadow-sm ring-1 ring-black/5 sm:p-7">
+                      <div className="flex items-center justify-between gap-4">
+                        <IconBox icon={Icon} />
+                        <span aria-hidden="true" className="font-display-heading text-steel-gradient text-5xl leading-none" lang="en">
                           0{i + 1}
                         </span>
                       </div>
-                      <div className="mt-auto pt-8">
-                        <p className="label-caps text-red-ink">
-                          {t("step", { n: i + 1 })}
-                        </p>
-                        <h3 className="font-display-heading text-steel-gradient mt-3 text-4xl">
-                          {tr(step.title, locale)}
-                        </h3>
-                        {step.body && (
-                          <p className="mt-3 leading-relaxed text-muted">
-                            {tr(step.body, locale)}
-                          </p>
-                        )}
-                      </div>
+                      <h3 className="font-display-heading text-steel-gradient mt-8 text-3xl">{tr(step.title, locale)}</h3>
+                      {step.body && <p className="mt-3 text-sm leading-relaxed text-muted">{tr(step.body, locale)}</p>}
                     </li>
                   );
                 })}
@@ -240,106 +199,39 @@ export default async function AboutPage({
         </section>
       ) : null}
 
-      {/* ── Gallery ──────────────────────────────────────────────── */}
-      {page.gallery?.length ? (
-        <section aria-labelledby="gallery-heading" className="py-16 sm:py-24">
-          <Container>
-            <Reveal>
-              <SectionHeading
-                id="gallery-heading"
-                eyebrow={t("galleryEyebrow")}
-              >
-                {t("galleryHeading")}
+      {/* ── Keys to success: full width shaded photo, heading and intro
+          beside the keys ──────────────────────────────────────────────── */}
+      {page.keysToSuccess?.length ? (
+        <section aria-labelledby="keys-heading" className="on-dark relative isolate overflow-hidden text-paper">
+          {/* Near-black shade, heaviest on the left behind the heading */}
+          <PhotoBackdrop
+            image={page.keysImage}
+            placeholder={placeholders.keys}
+            locale={locale}
+            icon={CheckCircle2}
+            overlay="bg-black/65 lg:bg-transparent lg:bg-linear-to-r lg:from-black/80 lg:via-black/65 lg:to-black/50"
+          />
+          <Container className="grid gap-10 py-16 sm:py-24 lg:grid-cols-12 lg:gap-12">
+            <Reveal className="lg:col-span-4">
+              <SectionHeading id="keys-heading" eyebrow={t("keysEyebrow")} onDark>
+                {tr(page.keysHeading, locale)}
               </SectionHeading>
-              <p className="mt-6 max-w-2xl text-muted sm:text-lg">{t("galleryIntro")}</p>
+              {page.keysIntro && <p className="mt-6 text-paper/85 sm:text-lg">{tr(page.keysIntro, locale)}</p>}
             </Reveal>
+            <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:col-span-8">
+              {page.keysToSuccess.map((key) => (
+                <li key={key.en} className="flex gap-4 rounded-2xl bg-white/10 p-5 ring-1 ring-white/25 backdrop-blur-md ring-inset sm:p-6">
+                  <CheckCircle2 aria-hidden="true" className="mt-0.5 size-6 shrink-0 text-paper" />
+                  <span className="text-base leading-relaxed text-paper/90">{tr(key, locale)}</span>
+                </li>
+              ))}
+            </ul>
           </Container>
-          {/* Full width, edges feathered (see Gallery) */}
-          <div className="mt-10 sm:mt-12">
-              <Gallery
-                label={t("galleryLabel")}
-                slides={page.gallery.map((g) => ({
-                  key: g._key,
-                  caption: tr(g.caption, locale),
-                  media: (
-                    <PhotoFrame
-                      image={g.image}
-                      placeholder={galleryPlaceholders[g._key]}
-                      locale={locale}
-                      width={900}
-                      height={560}
-                      sizes="(min-width: 1024px) 58vw, 86vw"
-                      icon={Ship}
-                    />
-                  ),
-                  preview: (
-                    <PhotoFrame
-                      image={g.image}
-                      placeholder={galleryPlaceholders[g._key]}
-                      locale={locale}
-                      width={1600}
-                      height={1000}
-                      sizes="100vw"
-                      icon={Ship}
-                      fit="contain"
-                    />
-                  ),
-                }))}
-              />
-          </div>
         </section>
       ) : null}
 
-      {/* ── Partners: heading and CTA, then a looping logo strip ────── */}
-      <Partners locale={locale} className="pb-16 sm:pb-24" />
-
-      {/* ── Keys to success, then Get in touch: two floating panels ─── */}
-      <div className="flex flex-col gap-3 px-3 pb-3 sm:gap-4 sm:px-4 sm:pb-4">
-        {page.keysToSuccess?.length ? (
-          <Reveal>
-            <section
-              aria-labelledby="keys-heading"
-              className={`on-dark relative isolate text-paper ${panel}`}
-            >
-              {/* Near-black shade, heaviest on the left behind the heading */}
-              <PhotoBackdrop
-                image={page.keysImage}
-                placeholder={placeholders.keys}
-                locale={locale}
-                icon={CheckCircle2}
-                overlay="bg-black/65 lg:bg-transparent lg:bg-linear-to-r lg:from-black/80 lg:via-black/65 lg:to-black/50"
-              />
-              <Container className="grid gap-10 py-14 sm:py-20 lg:grid-cols-12 lg:gap-12">
-                <div className="lg:col-span-4">
-                  <SectionHeading
-                    id="keys-heading"
-                    eyebrow={t("keysEyebrow")}
-                    onDark
-                  >
-                    {tr(page.keysHeading, locale)}
-                  </SectionHeading>
-                </div>
-                <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:col-span-8">
-                  {page.keysToSuccess.map((key) => (
-                    <li
-                      key={key.en}
-                      className="flex gap-4 rounded-2xl bg-white/10 p-5 ring-1 ring-white/25 backdrop-blur-md ring-inset sm:p-6"
-                    >
-                      <CheckCircle2
-                        aria-hidden="true"
-                        className="mt-0.5 size-6 shrink-0 text-paper"
-                      />
-                      <span className="text-base leading-relaxed text-paper/90">
-                        {tr(key, locale)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </Container>
-            </section>
-          </Reveal>
-        ) : null}
-      </div>
+      {/* ── Partners, just above the footer: heading and CTA, then the logo strip ── */}
+      <Partners locale={locale} className="py-16 sm:py-24" />
     </div>
   );
 }

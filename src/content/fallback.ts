@@ -507,22 +507,12 @@ export const aboutPage: AboutPage = {
   stats: [
     { _key: "founded", value: "2014", label: { en: "Founded", am: "የተመሠረተበት" }, note: { en: "12 years in operation", am: "12 ዓመታት በሥራ ላይ" } },
     { _key: "market", value: "170M", label: { en: "Combined market", am: "ጥምር ገበያ" }, note: { en: "Ethiopia, Djibouti & Sudan", am: "ኢትዮጵያ፣ ጅቡቲና ሱዳን" } },
-    { _key: "team", value: "26", label: { en: "Team members", fr: "Collaborateurs" }, note: { en: "Across nine departments", fr: "Répartis dans neuf départements" } },
-    { _key: "accounts", value: "20–30", label: { en: "Accounts serviced daily", am: "በየቀኑ የሚስተናገዱ ደንበኞች" }, note: { en: "Deliveries twice weekly", am: "በሳምንት ሁለት ጊዜ ማድረስ" } },
-    { _key: "fleet", value: "2→4", label: { en: "Delivery fleet", am: "የማከፋፈያ ተሽከርካሪዎች" }, note: { en: "Doubled within a year", am: "በአንድ ዓመት ውስጥ በእጥፍ አድጓል" } },
+    { _key: "team", value: "26+", label: { en: "Team members", fr: "Collaborateurs" }, note: { en: "Across nine departments", fr: "Répartis dans neuf départements" } },
+    { _key: "accounts", value: "30+", label: { en: "Accounts serviced daily", am: "በየቀኑ የሚስተናገዱ ደንበኞች" }, note: { en: "Deliveries twice weekly", am: "በሳምንት ሁለት ጊዜ ማድረስ" } },
+    { _key: "fleet", value: "4+", label: { en: "Delivery fleet", am: "የማከፋፈያ ተሽከርካሪዎች" }, note: { en: "Doubled within a year", am: "በአንድ ዓመት ውስጥ በእጥፍ አድጓል" } },
   ],
-  gallery: [
-    { _key: "warehouse", caption: { en: "Warehouse and merchandising teams keep stock moving", am: "የመጋዘንና የምርት አቀራረብ ቡድኖች ምርትን ያንቀሳቅሳሉ" } },
-    { _key: "fleet", caption: { en: "Our delivery fleet doubled within its first year", am: "የማከፋፈያ ተሽከርካሪዎቻችን በመጀመሪያው ዓመት በእጥፍ አድገዋል" } },
-    { _key: "retail", caption: { en: "20–30 wholesale and retail accounts serviced every day", am: "በየቀኑ 20–30 የጅምላና የችርቻሮ ደንበኞች ይስተናገዳሉ" } },
-    { _key: "port", caption: { en: "Trusted global brands imported for East African markets", am: "ለምሥራቅ አፍሪካ ገበያዎች የሚገቡ የታመኑ ዓለም አቀፍ ብራንዶች" } },
-    { _key: "candles", caption: { en: "Abay candles, produced in-house", am: "በራሳችን የሚመረቱ የአባይ ሻማዎች" } },
-    { _key: "coffee", caption: { en: "Ethiopian coffee exported through Seedcup and Bella", am: "በሲድካፕና ቤላ ብራንዶች የሚላክ የኢትዮጵያ ቡና" } },
-    {
-      _key: "training",
-      caption: { en: "Coffee training, including “Coffee Talk” with Saudi coffee expert Ali Al Diwani", am: "የቡና ሥልጠና — ከሳዑዲው የቡና ባለሙያ አሊ አል ዲዋኒ ጋር “ኮፊ ቶክ”ን ጨምሮ" },
-    },
-  ],
+  visionSectionHeading: { en: "What drives us", fr: "Ce qui nous anime" },
+  visionSectionIntro: { en: "Everything we do is guided by a clear vision for where INTEMA is going and a mission for how we work with our customers every day.", fr: "Tout ce que nous faisons est guidé par une vision claire de l’avenir d’INTEMA et par une mission qui définit notre façon de travailler chaque jour avec nos clients." },
   visionHeading: { en: "Vision", am: "ራዕይ" },
   vision: {
     en: "To become a recognized distributor of specialty food, cosmetic and personal care supplies and services to wholesale and retail stands throughout the Ethiopian, Sudanese and Djiboutian markets.",
@@ -572,6 +562,7 @@ export const aboutPage: AboutPage = {
       },
     },
   ],
+  keysIntro: { en: "Five principles explain why retailers, wholesalers and brand owners choose to work with INTEMA, and keep working with us.", fr: "Cinq principes expliquent pourquoi détaillants, grossistes et propriétaires de marques choisissent de travailler avec INTEMA, et nous restent fidèles." },
   keysHeading: { en: "Keys to success", am: "የስኬት ቁልፎች" },
   keysToSuccess: [
     { en: "Innovative, quality products.", am: "ፈጠራ የታከለባቸው ጥራት ያላቸው ምርቶች።" },
@@ -623,14 +614,8 @@ export const producedItems: ProducedItem[] = [
     _id: "produce-abay",
     name: { en: "Abay", am: "አባይ ሻማ" },
     category: { en: "Candles", am: "ሻማ" },
-    description: { en: "Our own candle brand, sold in 8-candle packs.", am: "የራሳችን የሻማ ብራንድ፤ በ8 ሻማ ጥቅል ይሸጣል።" },
+    description: { en: "Abay (አባይ ሻማ) is INTEMA’s own candle brand, made in Ethiopia and sold in packs of 8. Dependable, clean-burning household candles for everyday use, from power cuts to celebrations, at a price that suits every home.\n\nAbay reaches shops and wholesalers across the country through the same sales and delivery network that carries our imported brands, with Netsanet Workneh as its brand ambassador.", fr: "Abay (አባይ ሻማ) est la marque de bougies d’INTEMA, fabriquée en Éthiopie et vendue en paquets de 8. Des bougies domestiques fiables, à la combustion propre, pour tous les jours, des coupures de courant aux fêtes, à un prix adapté à chaque foyer.\n\nAbay est distribuée aux boutiques et grossistes de tout le pays grâce au même réseau de vente et de livraison que nos marques importées, avec Netsanet Workneh comme visage de la marque." },
   },
-  ...(["Skor", "Cool", "Mama", "Abu", "Kanna", "Pass"] as const).map((name) => ({
-    _id: `produce-${name.toLowerCase()}`,
-    name: { en: name },
-    category: { en: "Soap", am: "ሳሙና" },
-    description: { en: "Part of our legacy soap line.", am: "የነባር የሳሙና ምርቶቻችን አካል።" },
-  })),
 ];
 
 export const exportItems: ExportItem[] = [

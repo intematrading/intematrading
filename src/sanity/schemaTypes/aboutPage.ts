@@ -9,7 +9,6 @@ export const aboutPage = defineType({
   icon: InfoOutlineIcon,
   groups: [
     { name: "story", title: "Who we are", default: true },
-    { name: "gallery", title: "Gallery" },
     { name: "vision", title: "Vision & mission" },
     { name: "process", title: "Our process" },
     { name: "partners", title: "Partners" },
@@ -35,28 +34,8 @@ export const aboutPage = defineType({
       of: [defineArrayMember({ type: "localeText" })],
     }),
     statList("stats", "Company snapshot", "story"),
-    defineField({
-      name: "gallery",
-      title: "Image carousel",
-      type: "array",
-      group: "gallery",
-      of: [
-        defineArrayMember({
-          type: "object",
-          name: "galleryImage",
-          fields: [
-            defineField({
-              name: "image",
-              type: "image",
-              options: { hotspot: true },
-              fields: [defineField({ name: "alt", title: "Alt text", type: "localeString" })],
-            }),
-            defineField({ name: "caption", type: "localeString", validation: (r) => r.required() }),
-          ],
-          preview: { select: { title: "caption.en", media: "image" } },
-        }),
-      ],
-    }),
+    defineField({ name: "visionSectionHeading", title: "Section heading", type: "localeString", group: "vision" }),
+    defineField({ name: "visionSectionIntro", title: "Section intro", type: "localeText", group: "vision" }),
     defineField({ name: "visionHeading", type: "localeString", group: "vision" }),
     defineField({ name: "vision", type: "localeText", group: "vision" }),
     defineField({ name: "missionHeading", type: "localeString", group: "vision" }),
@@ -66,6 +45,7 @@ export const aboutPage = defineType({
     defineField({ name: "processIntro", type: "localeText", group: "process" }),
     titledTextList("processSteps", "Process steps", "process"),
     defineField({ name: "keysHeading", title: "Keys to success heading", type: "localeString", group: "process" }),
+    defineField({ name: "keysIntro", title: "Keys to success intro", type: "localeText", group: "process" }),
     imageWithAlt("keysImage", "Keys to success background photo", "process"),
     defineField({
       name: "keysToSuccess",
