@@ -2,8 +2,8 @@ import Script from "next/script";
 
 // Tawk.to live chat. IDs come from the Tawk.to dashboard embed code; they can
 // be overridden per environment without a code change.
-const PROPERTY_ID = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID ?? "6abceb9dd1e95d3448e4247d";
-const WIDGET_ID = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID ?? "1k3ovgntj";
+const PROPERTY_ID = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID ?? "6aca1318fc809834cabc847b";
+const WIDGET_ID = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID ?? "1k4ill626";
 
 /** Loads the Tawk.to widget once the page is idle. Position and colours are set in the Tawk.to dashboard. */
 export function TawkChat() {
