@@ -48,7 +48,7 @@ async function fetchOr<T>(query: string, fallbackValue: T): Promise<T> {
 }
 
 const settingsQuery = defineQuery(`*[_id == "siteSettings"][0]`);
-const homeQuery = defineQuery(`*[_id == "homePage"][0]`);
+const homeQuery = defineQuery(`*[_id == "homePage"][0]{ ..., routeSteps[]{ ..., "animationUrl": animation.asset->url } }`);
 const servicesQuery = defineQuery(`*[_id == "servicesPage"][0]`);
 const brandsQuery = defineQuery(
   `*[_type == "brand"] | order(coalesce(order, 999) asc, name asc){ _id, name, category, subBrands, description, image }`,

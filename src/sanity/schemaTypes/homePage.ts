@@ -106,7 +106,7 @@ export const homePage = defineType({
       title: "Steps",
       group: "route",
       type: "array",
-      description: "Home shows the title and short line; the Services page also shows the details (with an illustration per step).",
+      description: "Home shows the title and short line; the Services page also shows the details (with an illustration or uploaded animation per step).",
       of: [
         defineArrayMember({
           type: "object",
@@ -115,6 +115,13 @@ export const homePage = defineType({
             defineField({ name: "title", type: "localeString", validation: (r) => r.required() }),
             defineField({ name: "body", title: "Short line", type: "localeText" }),
             defineField({ name: "details", title: "Details (Services page)", type: "localeText" }),
+            defineField({
+              name: "animation",
+              title: "Animation (Services page, Lottie)",
+              type: "file",
+              options: { accept: ".json,application/json" },
+              description: "A Lottie JSON file (e.g. from lottiefiles.com, downloaded as Lottie JSON) shown beside this step on the Services page. Overrides the step's default animation; leave empty to use the default.",
+            }),
           ],
           preview: { select: { title: "title.en", subtitle: "body.en" } },
         }),

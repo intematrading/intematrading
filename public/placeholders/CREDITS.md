@@ -17,7 +17,6 @@ with INTEMA's own photography via Sanity.
 | about-training.jpg | René Porter | https://unsplash.com/photos/5j6YBI45TI4 |
 | hero-about.jpg | Gift Habeshaw | https://unsplash.com/photos/SpLQSi6CajQ |
 | hero-team.jpg | Cytonn Photography | https://unsplash.com/photos/n95VMLxqM2I |
-| team-1.jpg | kevin Clonee | https://unsplash.com/photos/TlsyyWh3Oa0 |
 | testimonial-1.jpg | alex starnes | https://unsplash.com/photos/PK_t0Lrh7MM |
 | testimonial-2.jpg | Nigel Msipa | https://unsplash.com/photos/vZbWlXzZtAY |
 | testimonial-3.jpg | Christina @ wocintechchat.com | https://unsplash.com/photos/3ok_-Wvny2Q |

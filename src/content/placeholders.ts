@@ -54,10 +54,3 @@ export const testimonialPlaceholders: Placeholder[] = [
   { src: "/placeholders/testimonial-2.jpg" },
   { src: "/placeholders/testimonial-3.jpg" },
 ];
-
-// Stock portrait standing in for the leadership feature (Team page), keyed by
-// document id. NOT a photo of the person named: replace it with a real photo
-// in the Studio before launch.
-export const teamPlaceholders: Record<string, Placeholder> = {
-  "team-bedru": { src: "/placeholders/team-1.jpg", position: "50% 20%" },
-};

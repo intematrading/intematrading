@@ -5,6 +5,7 @@ import type { Locale } from "@/i18n/routing";
 import { getHomePage, tr } from "@/lib/content";
 import { ButtonLink } from "./ButtonLink";
 import { Container } from "./Container";
+import { LottiePlayer } from "./LottiePlayer";
 import { RouteIllustration } from "./RouteIllustration";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
@@ -20,10 +21,22 @@ const stepIcons: Record<string, LucideIcon> = {
   marketDevelopment: Megaphone,
 };
 
+// The default animation for each step (by its key in Sanity): a Lottie file in
+// public/service-animations/, served with the site. To add one, drop the file
+// in that folder and add a line here; steps without one show the built-in illustration.
+const stepAnimations: Record<string, string> = {
+  wholesale: "wholesale.json",
+  warehousing: "warehousing.json",
+  transportation: "transportation.json",
+  sales: "sales.json",
+  marketDevelopment: "market.json",
+};
+
 /**
  * "From port to shelf" in full (Services, section id "route"): a vertical
  * route from distribution on (importation is covered by We Import), one icon
- * stop per step with its animated illustration and text either side,
+ * stop per step with its animation (uploaded in the Studio, else its default
+ * file, else a built-in illustration) and text either side,
  * alternating. Steps: Home page → From port to shelf in Sanity; the heading
  * and intro are the Services page's own.
  */
@@ -59,6 +72,7 @@ export async function RouteSteps({
           {home.routeSteps.filter((step) => step._key !== "importation").map((step, i) => {
             const Icon = stepIcons[step._key] ?? Boxes;
             const flip = i % 2 === 1;
+            const animation = step.animationUrl ?? (stepAnimations[step._key] && `/service-animations/${stepAnimations[step._key]}`);
             return (
               <li key={step._key} className="relative pb-16 pl-16 last:pb-0 sm:pb-20 md:grid md:grid-cols-2 md:items-center md:gap-28 md:pl-0 lg:gap-40 xl:gap-48">
                 {/* The stop: the service's icon on the line */}
@@ -66,9 +80,13 @@ export async function RouteSteps({
                   <Icon aria-hidden="true" className="size-5 lg:size-6" />
                 </span>
                 <Reveal className={flip ? "md:order-last" : ""}>
-                  {/* Animated vector illustration of the service */}
+                  {/* The step's animation from the Studio, else its default file, else its built-in illustration */}
                   <div className="overflow-hidden rounded-[1.75rem] bg-steel-50 ring-1 ring-black/5 sm:rounded-[2rem]">
-                    <RouteIllustration step={step._key} />
+                    {animation ? (
+                      <LottiePlayer src={animation} className="aspect-[8/5] w-full" />
+                    ) : (
+                      <RouteIllustration step={step._key} />
+                    )}
                   </div>
                 </Reveal>
                 <Reveal className={`mt-6 md:mt-0 ${flip ? "md:text-right" : ""}`}>

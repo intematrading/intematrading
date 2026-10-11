@@ -7,10 +7,11 @@ import { IconBox } from "@/components/IconBox";
 import { PageHero } from "@/components/PageHero";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
+import { MemberAnimation } from "@/components/RoleAnimation";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { TeamCard } from "@/components/TeamCard";
-import { heroPlaceholders, placeholders, teamPlaceholders } from "@/content/placeholders";
+import { heroPlaceholders, placeholders } from "@/content/placeholders";
 import type { Stat, TeamMember } from "@/content/types";
 import type { Locale as AppLocale } from "@/i18n/routing";
 import { getSiteSettings, getTeamMembers, getTeamPage, tr } from "@/lib/content";
@@ -55,7 +56,7 @@ function TeamFacts({ facts, heading, locale }: { facts: Stat[]; heading: string;
 }
 
 /**
- * Leadership: the leader (or leaders) as a feature, a large portrait beside
+ * Leadership: the leader (or leaders) as a feature, a large animation beside
  * the heading, intro, name, role and bio, then the team facts in one row.
  */
 function Leadership({
@@ -80,18 +81,10 @@ function Leadership({
       <Container>
         {leaders.map((m, i) => (
           <div key={m._id} className={`grid items-center gap-10 md:grid-cols-12 lg:gap-16 ${i ? "mt-16" : ""}`}>
-            {/* Phones: text first, then the portrait */}
+            {/* Phones: text first, then the animation */}
             <Reveal className="order-last md:order-none md:col-span-5">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] shadow-sm ring-1 ring-black/5 sm:rounded-[2rem]">
-                <PhotoFrame
-                  image={m.photo}
-                  placeholder={teamPlaceholders[m._id]}
-                  locale={locale}
-                  width={720}
-                  height={900}
-                  sizes="(min-width: 768px) 40vw, 100vw"
-                  icon={UserRound}
-                />
+              <div className="aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-white shadow-sm ring-1 ring-black/5 sm:rounded-[2rem]">
+                <MemberAnimation member={m} />
               </div>
             </Reveal>
             <Reveal className="md:col-span-7">

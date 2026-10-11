@@ -35,7 +35,7 @@ export type SiteSettings = {
 };
 
 /** A "From port to shelf" step: short line on Home; details too on Services. */
-export type RouteStep = TitledText & { details?: LocaleString };
+export type RouteStep = TitledText & { details?: LocaleString; animationUrl?: string };
 
 export type HomePage = {
   heroHeadline: LocaleString;
