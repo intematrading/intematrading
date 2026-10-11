@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server";
 import type { RouteStep } from "@/content/types";
 import type { Locale } from "@/i18n/routing";
 import { getHomePage, tr } from "@/lib/content";
-import { ButtonLink } from "./ButtonLink";
 import { Container } from "./Container";
 import { LottiePlayer } from "./LottiePlayer";
 import { RouteIllustration } from "./RouteIllustration";
@@ -104,47 +103,40 @@ export async function RouteSteps({
 }
 
 /**
- * Home: "From port to shelf" as a short section: heading, intro and a CTA to
- * the full route on the Services page, then every step in one row as a grey
- * gradient icon stop and its name on a fading line.
+ * Home (What we do): the "From port to shelf" steps (from distribution on;
+ * importation is the Import branch below) in one row, as grey gradient icon
+ * stops and their names on a fading line. From lg the row splits in half
+ * around an empty middle, where a line drops from it into the branches below
+ * (BranchConnector directly after, with no gap).
  */
-export async function RouteStrip({ steps, heading, intro, locale }: { steps?: RouteStep[]; heading?: string; intro?: string; locale: Locale }) {
-  if (!steps?.length) return null;
-  const t = await getTranslations("Home");
+export function RouteStops({ steps, locale, className = "" }: { steps?: RouteStep[]; locale: Locale; className?: string }) {
+  const stops = steps?.filter((step) => step._key !== "importation") ?? [];
+  if (!stops.length) return null;
+  const half = Math.ceil(stops.length / 2);
   return (
-    <section aria-labelledby="route-strip-heading" className="py-16 sm:py-24">
-      <Container>
-        <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
-            <SectionHeading id="route-strip-heading" eyebrow={t("ourServices")}>
-              {heading || t("routeHeading")}
-            </SectionHeading>
-            {intro && <p className="mt-6 max-w-2xl text-muted sm:text-lg">{intro}</p>}
-          </div>
-          <div className="lg:col-span-5 lg:flex lg:justify-end">
-            <ButtonLink href="/services#route" variant="red">
-              {t("fullRoute")}
-            </ButtonLink>
-          </div>
-        </Reveal>
-        <Reveal>
-          <ol className="relative mt-14 flex flex-wrap justify-center gap-y-10">
-            {/* The line through the stops (desktop), fading at both ends */}
-            <span aria-hidden="true" className="absolute inset-x-0 top-8 hidden h-px bg-linear-to-r from-transparent via-steel-300 to-transparent lg:block" />
-            {steps.map((step) => {
-              const Icon = stepIcons[step._key] ?? Boxes;
-              return (
-                <li key={step._key} className="relative flex w-1/2 flex-col items-center px-2 text-center sm:w-1/4 lg:w-[calc(100%/7)]">
-                  <span className="steel-gradient flex size-16 items-center justify-center rounded-full text-paper shadow-md ring-4 ring-paper">
-                    <Icon aria-hidden="true" className="size-6" />
-                  </span>
-                  <span className="mt-4 text-sm font-semibold text-ink sm:text-base">{tr(step.title, locale)}</span>
-                </li>
-              );
-            })}
-          </ol>
-        </Reveal>
-      </Container>
-    </section>
+    <ol
+      style={{ "--cols": stops.length + 1, "--after-gap": half + 2 } as React.CSSProperties}
+      className={`relative flex flex-wrap justify-center gap-y-10 lg:grid lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))] ${className}`}
+    >
+      {/* The line through the stops (desktop), fading at both ends */}
+      <span aria-hidden="true" className="absolute inset-x-0 top-8 hidden h-px bg-linear-to-r from-transparent via-steel-300 to-transparent lg:block" />
+      {/* From the middle of the line, the trunk down into the branches */}
+      <span aria-hidden="true" className="absolute top-8 bottom-0 left-1/2 hidden w-[1.5px] -translate-x-1/2 bg-steel-300 lg:block" />
+      <span aria-hidden="true" className="absolute top-8 left-1/2 hidden size-3 -translate-1/2 rounded-full bg-steel-300 lg:block" />
+      {stops.map((step, i) => {
+        const Icon = stepIcons[step._key] ?? Boxes;
+        return (
+          <li
+            key={step._key}
+            className={`relative flex w-1/2 flex-col items-center px-2 text-center sm:w-1/3 lg:w-auto ${i === half ? "lg:col-start-[var(--after-gap)]" : ""}`}
+          >
+            <span className="steel-gradient flex size-16 items-center justify-center rounded-full text-paper shadow-md ring-4 ring-paper">
+              <Icon aria-hidden="true" className="size-6" />
+            </span>
+            <span className="mt-4 text-sm font-semibold text-ink sm:text-base">{tr(step.title, locale)}</span>
+          </li>
+        );
+      })}
+    </ol>
   );
 }

@@ -31,11 +31,11 @@ export function RegionTree({ heading, regions, locale, className = "" }: { headi
   );
 }
 
-/** A line dropping from a heading and branching to a dot above each of three columns (from sm). */
-export function BranchConnector({ className = "" }: { className?: string }) {
+/** A line dropping from a heading and branching to a dot above each of three columns (from sm), in `color` (a text colour class). */
+export function BranchConnector({ className = "", color = "text-ink" }: { className?: string; color?: string }) {
   return (
-    <div aria-hidden="true" className={`relative mx-auto hidden h-20 sm:block ${className}`}>
-      <svg viewBox="0 0 600 80" preserveAspectRatio="none" className="absolute inset-0 size-full overflow-visible text-ink">
+    <div aria-hidden="true" className={`relative mx-auto hidden h-20 sm:block ${color} ${className}`}>
+      <svg viewBox="0 0 600 80" preserveAspectRatio="none" className="absolute inset-0 size-full overflow-visible">
         <path
           d="M300 0 V40 M100 74 V54 Q100 40 114 40 H486 Q500 40 500 54 V74 M300 40 V74"
           fill="none"
@@ -45,7 +45,7 @@ export function BranchConnector({ className = "" }: { className?: string }) {
         />
       </svg>
       {["left-1/6", "left-1/2", "left-5/6"].map((x) => (
-        <span key={x} className={`absolute bottom-0 ${x} size-3 -translate-x-1/2 translate-y-1/2 rounded-full bg-ink`} />
+        <span key={x} className={`absolute bottom-0 ${x} size-3 -translate-x-1/2 translate-y-1/2 rounded-full bg-current`} />
       ))}
     </div>
   );

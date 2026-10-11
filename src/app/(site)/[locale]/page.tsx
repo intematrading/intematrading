@@ -30,7 +30,7 @@ import { PhotoFrame } from "@/components/PhotoFrame";
 import { SectionHeading } from "@/components/SectionHeading";
 import { statIcon } from "@/components/stat-icons";
 import { Reveal } from "@/components/Reveal";
-import { RouteStrip } from "@/components/RouteSteps";
+import { RouteStops } from "@/components/RouteSteps";
 import { TeamCard } from "@/components/TeamCard";
 import { Testimonials } from "@/components/Testimonials";
 import { placeholders } from "@/content/placeholders";
@@ -371,9 +371,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </section>
       ) : null}
 
-      {/* ── What we do: heading and intro centred, a line branching to the
-          three business lines (import, produce, export) side by side, then
-          the Services CTA ────────────────────────────────────────────── */}
+      {/* ── What we do: heading and intro centred, the From port to shelf
+          steps in a row, a line branching to the three business lines
+          (import, produce, export) side by side, then the Services CTA ── */}
       {cards.length ? (
         <section id="services" aria-labelledby="what-we-do" className="py-16 sm:py-24">
           <Container>
@@ -383,10 +383,13 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               </SectionHeading>
               {(home.whatWeDoIntro || services.intro) && <p className="mt-6 text-muted sm:text-lg">{tr(home.whatWeDoIntro ?? services.intro, locale)}</p>}
             </Reveal>
+            <Reveal>
+              <RouteStops steps={home.routeSteps} locale={locale} className="mt-14" />
+            </Reveal>
           </Container>
           {/* Wider than the page column so the three lines have room */}
           <div className="mx-auto max-w-[96rem] px-4 sm:px-6 lg:px-10">
-            <BranchConnector className="mt-10" />
+            <BranchConnector className="mt-10 lg:mt-0" color="text-steel-300" />
             <ul className="mt-10 grid gap-14 sm:mt-8 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-steel-200">
               {cards.map((card) => {
                 const Icon = cardIcons[card.section] ?? Ship;
@@ -441,9 +444,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           </Container>
         </section>
       ) : null}
-
-      {/* ── From port to shelf: heading, intro and CTA, then the services in one row */}
-      <RouteStrip steps={home.routeSteps} heading={tr(home.routeHeading, locale)} intro={tr(home.routeIntro, locale)} locale={locale} />
 
       {/* ── Meet our team: heading and intro, the people, then a link to
           the Team page ─────────────────────────────────────────────── */}
