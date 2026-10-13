@@ -302,75 +302,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </section>
       )}
 
-      {/* ── Brands we import: "main importer of …" highlight, then the
-          food and non-food brands, each as text beside a loose grid of
-          small product tiles (as on the Services page) */}
-      {brands.length ? (
-        <section aria-labelledby="brands-heading" className="py-16 sm:py-24">
-          <Container>
-            <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-end">
-              <div className="lg:col-span-6">
-                <SectionHeading id="brands-heading" eyebrow={t("portfolioEyebrow")}>
-                  {t("brandsHeading")}
-                </SectionHeading>
-                <p className="mt-6 max-w-xl text-muted sm:text-lg">{t("brandsIntro")}</p>
-              </div>
-              {/* "Main importers of": a fading rule, then the L'Oréal and Heinz logos side by side */}
-              <div className="lg:col-span-5 lg:col-start-8 lg:self-center lg:text-right">
-                <p className="label-caps text-red-ink">{t("mainImporter")}</p>
-                <span aria-hidden="true" className="mt-4 block h-px bg-linear-to-r from-steel-400 to-transparent lg:bg-linear-to-l" />
-                <ul className="mt-6 flex items-center gap-8 sm:gap-10 lg:justify-end">
-                  {mainImporterLogos.map((logo) => (
-                    <li key={logo.name}>
-                      <Image src={logo.src} alt={logo.name} width={logo.width} height={logo.height} unoptimized className={`w-auto object-contain ${logo.size}`} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          </Container>
-          {/* Food | Non-food: what each covers and its categories, side by
-              side; one CTA to the Services page */}
-          <Container className="mt-16 sm:mt-20">
-            <div className="grid gap-12 md:grid-cols-2 md:gap-0 md:divide-x md:divide-steel-200">
-              {[
-                { key: "food", icon: ShoppingBasket, label: svc("food"), text: home.foodInfo, categories: home.foodCategories },
-                { key: "nonFood", icon: Sparkles, label: svc("nonFood"), text: home.nonFoodInfo, categories: home.nonFoodCategories },
-              ].map(({ key, icon, label, text, categories }) => {
-                return (
-                  <Reveal key={key} className="md:px-10 md:first:pl-0 md:last:pr-0 lg:px-14">
-                    <h3 className="flex items-center gap-4">
-                      <IconBox icon={icon} />
-                      <span className="font-display-heading text-steel-gradient text-3xl sm:text-4xl">{label}</span>
-                    </h3>
-                    {text && <p className="mt-5 leading-relaxed text-muted sm:text-lg">{tr(text, locale)}</p>}
-                    {categories?.length ? (
-                      <>
-                        <p className="label-caps mt-8 text-red-ink">{t("categories")}</p>
-                        <ul className="mt-3 flex flex-wrap gap-2">
-                          {categories.map((c) => (
-                            <li key={c.en} className="rounded-full bg-steel-100 px-3.5 py-1.5 text-sm font-semibold text-ink">
-                              {tr(c, locale)}
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    ) : null}
-                  </Reveal>
-                );
-              })}
-            </div>
-          </Container>
-          <div className="mt-14 flex justify-center">
-            <ButtonLink href="/services#import" variant="red">
-              {t("allProducts")}
-            </ButtonLink>
-          </div>
-          {/* Partner logos, looping, under the CTA */}
-          <PartnerStrip locale={locale} className="mt-16 sm:mt-20" />
-        </section>
-      ) : null}
-
       {/* ── What we do: heading and intro centred, the From port to shelf
           steps in a row, a line branching to the three business lines
           (import, produce, export) side by side, then the Services CTA ── */}
@@ -442,6 +373,75 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               </ButtonLink>
             </div>
           </Container>
+        </section>
+      ) : null}
+
+      {/* ── Brands we import: "main importer of …" highlight, then the
+          food and non-food brands, each as text beside a loose grid of
+          small product tiles (as on the Services page) */}
+      {brands.length ? (
+        <section aria-labelledby="brands-heading" className="py-16 sm:py-24">
+          <Container>
+            <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-6">
+                <SectionHeading id="brands-heading" eyebrow={t("portfolioEyebrow")}>
+                  {t("brandsHeading")}
+                </SectionHeading>
+                <p className="mt-6 max-w-xl text-muted sm:text-lg">{t("brandsIntro")}</p>
+              </div>
+              {/* "Main importers of": a fading rule, then the L'Oréal and Heinz logos side by side */}
+              <div className="lg:col-span-5 lg:col-start-8 lg:self-center lg:text-right">
+                <p className="label-caps text-red-ink">{t("mainImporter")}</p>
+                <span aria-hidden="true" className="mt-4 block h-px bg-linear-to-r from-steel-400 to-transparent lg:bg-linear-to-l" />
+                <ul className="mt-6 flex items-center gap-8 sm:gap-10 lg:justify-end">
+                  {mainImporterLogos.map((logo) => (
+                    <li key={logo.name}>
+                      <Image src={logo.src} alt={logo.name} width={logo.width} height={logo.height} unoptimized className={`w-auto object-contain ${logo.size}`} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          </Container>
+          {/* Food | Non-food: what each covers and its categories, side by
+              side; one CTA to the Services page */}
+          <Container className="mt-16 sm:mt-20">
+            <div className="grid gap-12 md:grid-cols-2 md:gap-0 md:divide-x md:divide-steel-200">
+              {[
+                { key: "food", icon: ShoppingBasket, label: svc("food"), text: home.foodInfo, categories: home.foodCategories },
+                { key: "nonFood", icon: Sparkles, label: svc("nonFood"), text: home.nonFoodInfo, categories: home.nonFoodCategories },
+              ].map(({ key, icon, label, text, categories }) => {
+                return (
+                  <Reveal key={key} className="md:px-10 md:first:pl-0 md:last:pr-0 lg:px-14">
+                    <h3 className="flex items-center gap-4">
+                      <IconBox icon={icon} />
+                      <span className="font-display-heading text-steel-gradient text-3xl sm:text-4xl">{label}</span>
+                    </h3>
+                    {text && <p className="mt-5 leading-relaxed text-muted sm:text-lg">{tr(text, locale)}</p>}
+                    {categories?.length ? (
+                      <>
+                        <p className="label-caps mt-8 text-red-ink">{t("categories")}</p>
+                        <ul className="mt-3 flex flex-wrap gap-2">
+                          {categories.map((c) => (
+                            <li key={c.en} className="rounded-full bg-steel-100 px-3.5 py-1.5 text-sm font-semibold text-ink">
+                              {tr(c, locale)}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : null}
+                  </Reveal>
+                );
+              })}
+            </div>
+          </Container>
+          <div className="mt-14 flex justify-center">
+            <ButtonLink href="/services#import" variant="red">
+              {t("allProducts")}
+            </ButtonLink>
+          </div>
+          {/* Partner logos, looping, under the CTA */}
+          <PartnerStrip locale={locale} className="mt-16 sm:mt-20" />
         </section>
       ) : null}
 

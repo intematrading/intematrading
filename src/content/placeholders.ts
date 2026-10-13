@@ -6,7 +6,7 @@
 export type Placeholder = { src: string; position?: string };
 
 export const placeholders = {
-  hero: { src: "/placeholders/hero-port.jpg", position: "50% 60%" },
+  hero: { src: "/placeholders/hero-ship.jpg", position: "50% 55%" },
   import: { src: "/placeholders/import-ship.jpg" },
   produce: { src: "/placeholders/produce-stick-candles.jpg", position: "50% 100%" },
   export: { src: "/placeholders/export-coffee.jpg" },

@@ -5,7 +5,7 @@ with INTEMA's own photography via Sanity.
 
 | File | Photographer | Source |
 | --- | --- | --- |
-| hero-port.jpg | Haris Illahi | https://unsplash.com/photos/9VmKFc_c748 |
+| hero-ship.jpg | John Simmons | https://unsplash.com/photos/N7_NUUtCkDU |
 | import-ship.jpg | Andy Li | https://unsplash.com/photos/CpsTAUPoScw |
 | produce-stick-candles.jpg | Nicola Fioravanti | https://unsplash.com/photos/UrAKbpKnak8 |
 | abay-candles.jpg | Siora Photography | https://unsplash.com/photos/Glxq-p_dsC8 |

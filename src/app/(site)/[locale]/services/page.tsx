@@ -106,10 +106,10 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         <section aria-labelledby="market-heading" className="relative isolate overflow-hidden py-16 sm:py-24">
           {/* Big map of Ethiopia to the right of the intro: cropped by the
               section's top edge (under the hero), its lower part covered by
-              the stat cards. Faint behind the text on phones. */}
+              the stat cards. On phones it sits under the intro instead. */}
           <EthiopiaMap
             label={t("addisAbaba")}
-            className="absolute top-72 -right-48 -z-10 w-[34rem] opacity-30 sm:top-40 sm:-right-24 sm:w-[44rem] lg:-top-28 lg:right-[max(-14rem,calc((100vw-80rem)/2-13rem))] lg:w-[52rem] lg:opacity-50 xl:w-[58rem]"
+            className="absolute -z-10 hidden opacity-30 sm:top-40 sm:-right-24 sm:block sm:w-[44rem] lg:-top-28 lg:right-[max(-14rem,calc((100vw-80rem)/2-13rem))] lg:w-[52rem] lg:opacity-50 xl:w-[58rem]"
           />
           <Container>
             <Reveal className="max-w-3xl lg:max-w-[46%]">
@@ -117,6 +117,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
                 {tr(page.marketHeading, locale)}
               </SectionHeading>
               {page.marketIntro && <p className="mt-6 text-muted sm:text-lg">{tr(page.marketIntro, locale)}</p>}
+              <EthiopiaMap label={t("addisAbaba")} className="mx-auto mt-10 w-full max-w-sm sm:hidden" />
             </Reveal>
             <ul className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
               {page.marketStats.map((stat) => {

@@ -32,12 +32,12 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/team">):
   });
 }
 
-/** "Team at a glance": the team facts in one row (2x2 on phones), split by thin dividers. */
+/** "Team at a glance": the team facts in one row (2x2 on tablets, stacked on phones), split by thin dividers. */
 function TeamFacts({ facts, heading, locale }: { facts: Stat[]; heading: string; locale: AppLocale }) {
   return (
     <div className="rounded-[1.75rem] bg-steel-50 p-6 ring-1 ring-black/5 sm:rounded-[2rem] sm:p-10">
       <h3 className="label-caps text-red-ink">{heading}</h3>
-      <dl className="mt-6 grid grid-cols-2 gap-y-8 lg:grid-cols-4 lg:divide-x lg:divide-steel-200">
+      <dl className="mt-6 grid gap-y-8 sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-steel-200">
         {facts.map((fact) => (
           <div key={fact._key} className="flex flex-col pr-4 lg:px-8 lg:first:pl-0 lg:last:pr-0">
             {/* Label first for screen readers; the figure shows first */}

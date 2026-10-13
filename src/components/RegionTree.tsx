@@ -9,7 +9,8 @@ type Region = { _key: string; title: LocaleString; body?: LocaleString };
 /**
  * A centred heading with a line branching from it to a dot above each of
  * three regions (from sm), then the regions in divided columns: each with
- * its vector map (washed light red on hover), name and line. Used for
+ * its vector map (washed light red on hover), name and line (on phones, one
+ * region per row with the map beside the text). Used for
  * Where we source and Target markets on the Services page.
  */
 export function RegionTree({ heading, regions, locale, className = "" }: { heading: string; regions: Region[]; locale: Locale; className?: string }) {
@@ -20,10 +21,12 @@ export function RegionTree({ heading, regions, locale, className = "" }: { headi
       <BranchConnector className="mt-3" />
       <ul className="mt-8 grid gap-10 sm:mt-6 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-steel-200">
         {regions.map((r) => (
-          <li key={r._key} className="group flex flex-col items-center text-center sm:px-8">
-            <RegionMap region={r._key} className="mb-5 h-32 w-auto max-w-full" />
-            <p className="font-title-heading text-ink">{tr(r.title, locale)}</p>
-            {r.body && <p className="mt-1.5 max-w-64 text-sm text-muted">{tr(r.body, locale)}</p>}
+          <li key={r._key} className="group flex items-center justify-center gap-5 sm:flex-col sm:gap-0 sm:px-8 sm:text-center">
+            <RegionMap region={r._key} className="h-24 w-28 shrink-0 sm:mb-5 sm:h-32 sm:w-auto sm:max-w-full" />
+            <div>
+              <p className="font-title-heading text-ink">{tr(r.title, locale)}</p>
+              {r.body && <p className="mt-1.5 max-w-64 text-sm text-muted">{tr(r.body, locale)}</p>}
+            </div>
           </li>
         ))}
       </ul>
