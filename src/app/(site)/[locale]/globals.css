@@ -93,6 +93,13 @@
     50% { transform: translateY(150px); }
   }
 
+  /* Store name bubbles bobbing over the distribution map (see DistributionSection) */
+  --animate-bob: bob 3.6s ease-in-out infinite;
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
   /* Ring pulsing out from the What we do line dots */
   --animate-dot-pulse: dot-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
   @keyframes dot-pulse {

@@ -11,12 +11,13 @@ import { IconBox } from "@/components/IconBox";
 import { PageHero } from "@/components/PageHero";
 import { BrandGrid, ExportTiles, ProducedGrid } from "@/components/ProductGrid";
 import { RouteSteps } from "@/components/RouteSteps";
+import { DistributionSection } from "@/components/DistributionSection";
 import { ProductPreviewProvider } from "@/components/ProductPreview";
 import { SectionHeading } from "@/components/SectionHeading";
 import { statIcon } from "@/components/stat-icons";
 import { heroPlaceholders, placeholders } from "@/content/placeholders";
 import type { ServiceSection } from "@/content/types";
-import { getBrands, getExportItems, getProducedItems, getServicesPage, getSiteSettings, tr } from "@/lib/content";
+import { getBrands, getExportItems, getHomePage, getProducedItems, getServicesPage, getSiteSettings, tr } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/services">): Promise<Metadata> {
@@ -72,8 +73,9 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [page, brands, producedItems, exportItems, t] = await Promise.all([
+  const [page, home, brands, producedItems, exportItems, t] = await Promise.all([
     getServicesPage(),
+    getHomePage(),
     getBrands(),
     getProducedItems(),
     getExportItems(),
@@ -83,12 +85,17 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
   const nonFood = brands.filter((b) => b.category === "nonFood");
   const food = brands.filter((b) => b.category === "food");
 
-  const sections: { id: ServiceSection; title: string }[] = [
+  const sections: { id: ServiceSection | "distribution"; title: string }[] = [
     { id: "import", title: tr(page.importHeading, locale) || t("import") },
+    { id: "distribution", title: tr(page.distributionHeading, locale) || t("distribute") },
     { id: "produce", title: tr(page.produceHeading, locale) || t("produce") },
     { id: "export", title: tr(page.exportHeading, locale) || t("export") },
   ];
-  const [importSec, produceSec, exportSec] = sections;
+  const [importSec, distributionSec, produceSec, exportSec] = sections;
+  // We Distribute: its own fields, else the Distribution step's (Home page → From port to shelf).
+  const distributionStep = home.routeSteps?.find((step) => step._key === "distribution");
+  const distributionIntro = tr(page.distributionIntro ?? distributionStep?.body, locale);
+  const distributionBody = tr(page.distributionBody ?? distributionStep?.details, locale);
 
   return (
     <div className="flex flex-col bg-paper">
@@ -158,13 +165,28 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
           </div>
         </section>
 
+        {/* ── We Distribute: the map of stores and the details, then photos from the stores ── */}
+        <section id="distribution" aria-labelledby="distribution-heading" className={sectionClass}>
+          <Container>
+            <ServiceHeading id="distribution-heading" number="02" title={distributionSec.title} intro={distributionIntro} />
+          </Container>
+          <DistributionSection
+            locale={locale}
+            stores={page.distributionStores}
+            details={distributionBody}
+            galleryIntro={tr(page.distributionGalleryIntro, locale)}
+            gallery={page.distributionGallery}
+            labels={{ andMuchMore: t("andMuchMore"), onTheShelves: t("onTheShelves") }}
+          />
+        </section>
+
         {/* ── We Produce ────────────────────────────────────────────── */}
         <section id="produce" aria-labelledby="produce-heading" className={`${sectionClass} on-dark relative isolate overflow-hidden text-paper`}>
           {/* Full-width background: a factory floor under a heavy near-black
               shade, so the text and products stay readable */}
           <PhotoBackdrop image={page.produceImage} placeholder={placeholders.produceBand} locale={locale} icon={Flame} overlay="bg-black/75" vignette />
           <Container>
-            <ServiceHeading id="produce-heading" number="02" title={produceSec.title} intro={tr(page.produceIntro, locale)} onDark />
+            <ServiceHeading id="produce-heading" number="03" title={produceSec.title} intro={tr(page.produceIntro, locale)} onDark />
           </Container>
           <div className="mt-16 sm:mt-20">
             <ProducedGrid products={producedItems} icon={Flame} label={t("ourProducts")} intro={tr(page.productsIntro, locale)} onDark locale={locale} />
@@ -174,7 +196,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         {/* ── We Export ─────────────────────────────────────────────── */}
         <section id="export" aria-labelledby="export-heading" className={sectionClass}>
           <Container>
-            <ServiceHeading id="export-heading" number="03" title={exportSec.title} intro={tr(page.exportIntro, locale)} />
+            <ServiceHeading id="export-heading" number="04" title={exportSec.title} intro={tr(page.exportIntro, locale)} />
           </Container>
           {/* Two columns: the export brands' heading, intro and the coffee story | the brand tiles */}
           <Container className="mt-16 grid gap-12 sm:mt-20 lg:grid-cols-12 lg:gap-16">

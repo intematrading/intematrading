@@ -69,6 +69,12 @@ export type HomePage = {
   seo?: Seo;
 };
 
+/** A store on the We Distribute map: its name (in the bubble) and logo (inside the pin). */
+export type MapStore = { _key: string; name: string; logo?: SanityImage };
+
+/** A photo with a short caption (e.g. the store it was taken in). */
+export type GalleryImage = NonNullable<SanityImage> & { _key: string; caption?: LocaleString };
+
 export type ServicesPage = {
   title: LocaleString;
   eyebrow?: LocaleString;
@@ -83,6 +89,12 @@ export type ServicesPage = {
   importIntro?: LocaleString;
   nonFoodIntro?: LocaleString;
   foodIntro?: LocaleString;
+  distributionHeading?: LocaleString;
+  distributionIntro?: LocaleString;
+  distributionBody?: LocaleString;
+  distributionStores?: MapStore[];
+  distributionGalleryIntro?: LocaleString;
+  distributionGallery?: GalleryImage[];
   produceHeading?: LocaleString;
   produceIntro?: LocaleString;
   produceImage?: SanityImage;

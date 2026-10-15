@@ -31,9 +31,20 @@ const stepAnimations: Record<string, string> = {
   marketDevelopment: "market.json",
 };
 
+// Steps with their own Services section (We Import, We Distribute), left out of the route lists.
+const ownSection = new Set(["importation", "distribution"]);
+const routeOnly = (steps?: RouteStep[]) => steps?.filter((step) => !ownSection.has(step._key)) ?? [];
+
+/** A step's animation on its panel: `upload` (from the Studio) if set, else its default file, else its built-in illustration. */
+function StepAnimation({ step, upload }: { step: string; upload?: string }) {
+  const src = upload ?? (stepAnimations[step] && `/service-animations/${stepAnimations[step]}`);
+  return src ? <LottiePlayer src={src} className="aspect-[8/5] w-full" /> : <RouteIllustration step={step} />;
+}
+
 /**
  * "From port to shelf" in full (Services, section id "route"): a vertical
- * route from distribution on (importation is covered by We Import), one icon
+ * route from wholesale on (importation and distribution have their own
+ * sections above), one icon
  * stop per step with its animation (uploaded in the Studio, else its default
  * file, else a built-in illustration) and text either side,
  * alternating. Steps: Home page → From port to shelf in Sanity; the heading
@@ -67,11 +78,9 @@ export async function RouteSteps({
         </Reveal>
         <ol className="relative mt-16 sm:mt-20">
           <span aria-hidden="true" className="absolute inset-y-0 left-5 w-px bg-linear-to-b from-transparent via-steel-300 to-transparent md:left-1/2" />
-          {/* Importation is covered by We Import above, so the route starts at distribution */}
-          {home.routeSteps.filter((step) => step._key !== "importation").map((step, i) => {
+          {routeOnly(home.routeSteps).map((step, i) => {
             const Icon = stepIcons[step._key] ?? Boxes;
             const flip = i % 2 === 1;
-            const animation = step.animationUrl ?? (stepAnimations[step._key] && `/service-animations/${stepAnimations[step._key]}`);
             return (
               <li key={step._key} className="relative pb-16 pl-16 last:pb-0 sm:pb-20 md:grid md:grid-cols-2 md:items-center md:gap-28 md:pl-0 lg:gap-40 xl:gap-48">
                 {/* The stop: the service's icon on the line */}
@@ -81,11 +90,7 @@ export async function RouteSteps({
                 <Reveal className={flip ? "md:order-last" : ""}>
                   {/* The step's animation from the Studio, else its default file, else its built-in illustration */}
                   <div className="overflow-hidden rounded-[1.75rem] bg-steel-50 ring-1 ring-black/5 sm:rounded-[2rem]">
-                    {animation ? (
-                      <LottiePlayer src={animation} className="aspect-[8/5] w-full" />
-                    ) : (
-                      <RouteIllustration step={step._key} />
-                    )}
+                    <StepAnimation step={step._key} upload={step.animationUrl} />
                   </div>
                 </Reveal>
                 <Reveal className={`mt-6 md:mt-0 ${flip ? "md:text-right" : ""}`}>
@@ -103,21 +108,21 @@ export async function RouteSteps({
 }
 
 /**
- * Home (What we do): the "From port to shelf" steps (from distribution on;
- * importation is the Import branch below) in one row, as grey gradient icon
- * stops and their names on a fading line. From lg the row splits in half
- * around an empty middle, where a line drops from it into the branches below
- * (BranchConnector directly after, with no gap).
+ * Home (What we do): the "From port to shelf" steps (from wholesale on;
+ * importation and distribution have their own Services sections) in one row,
+ * as grey gradient icon stops and their names on a fading line. From lg the
+ * row splits into two halves around an empty middle (each half spreading its
+ * stops evenly, so the middle stays centred for any count), where a line drops
+ * from it into the branches below (BranchConnector directly after, with no gap).
  */
 export function RouteStops({ steps, locale, className = "" }: { steps?: RouteStep[]; locale: Locale; className?: string }) {
-  const stops = steps?.filter((step) => step._key !== "importation") ?? [];
+  const stops = routeOnly(steps);
   if (!stops.length) return null;
   const half = Math.ceil(stops.length / 2);
+  // From lg: each stop's share of its half (the halves sit either side of a 1/7-wide gap).
+  const width = (i: number) => `calc((100% - 100% / 7) / 2 / ${i < half ? half : stops.length - half})`;
   return (
-    <ol
-      style={{ "--cols": stops.length + 1, "--after-gap": half + 2 } as React.CSSProperties}
-      className={`relative flex flex-wrap justify-center gap-y-10 lg:grid lg:grid-cols-[repeat(var(--cols),minmax(0,1fr))] ${className}`}
-    >
+    <ol className={`relative flex flex-wrap justify-center gap-y-10 lg:flex-nowrap ${className}`}>
       {/* The line through the stops (desktop), fading at both ends */}
       <span aria-hidden="true" className="absolute inset-x-0 top-8 hidden h-px bg-linear-to-r from-transparent via-steel-300 to-transparent lg:block" />
       {/* From the middle of the line, the trunk down into the branches */}
@@ -128,7 +133,8 @@ export function RouteStops({ steps, locale, className = "" }: { steps?: RouteSte
         return (
           <li
             key={step._key}
-            className={`relative flex w-1/2 flex-col items-center px-2 text-center sm:w-1/3 lg:w-auto ${i === half ? "lg:col-start-[var(--after-gap)]" : ""}`}
+            style={{ "--w": width(i) } as React.CSSProperties}
+            className={`relative flex w-1/2 flex-col items-center px-2 text-center sm:w-1/3 lg:w-(--w) ${i === half ? "lg:ml-[calc(100%/7)]" : ""}`}
           >
             <span className="steel-gradient flex size-16 items-center justify-center rounded-full text-paper shadow-md ring-4 ring-paper">
               <Icon aria-hidden="true" className="size-6" />

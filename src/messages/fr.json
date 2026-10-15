@@ -48,6 +48,9 @@
   },
   "Services": {
     "import": "Nous importons",
+    "distribute": "Nous distribuons",
+    "andMuchMore": "Et bien plus encore",
+    "onTheShelves": "Dans les rayons",
     "produce": "Nous produisons",
     "export": "Nous exportons",
     "nonFood": "Non alimentaire",
