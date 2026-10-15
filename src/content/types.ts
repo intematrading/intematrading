@@ -70,7 +70,7 @@ export type HomePage = {
 };
 
 /** A store on the We Distribute map: its name (in the bubble) and logo (inside the pin). */
-export type MapStore = { _key: string; name: string; logo?: SanityImage };
+export type MapStore = { _key: string; name: string; logo?: SanityImage; /** Fill the pin's circle edge to edge (logos on a coloured background). */ cover?: boolean };
 
 /** A photo with a short caption (e.g. the store it was taken in). */
 export type GalleryImage = NonNullable<SanityImage> & { _key: string; caption?: LocaleString };

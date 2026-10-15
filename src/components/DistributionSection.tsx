@@ -1,6 +1,5 @@
 import { Ellipsis, ImageIcon, MapPin, ShoppingCart, Store, type LucideIcon } from "lucide-react";
-import Image from "next/image";
-import type { GalleryImage, MapStore, SanityImage } from "@/content/types";
+import type { GalleryImage, MapStore } from "@/content/types";
 import type { Locale } from "@/i18n/routing";
 import { tr } from "@/lib/content";
 import { CmsImage } from "./CmsImage";
@@ -50,19 +49,6 @@ function routePath(a: (typeof pins)[number], b: (typeof pins)[number]) {
   return `M${x1.toFixed(1)} ${y1.toFixed(1)} Q${((x1 + x2) / 2).toFixed(1)} ${(Math.min(y1, y2) - bulge).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
 }
 
-// A store on a pin: its logo from the Studio, or a file in public/supermarket-logos/.
-type PinStore = { name: string; logo?: SanityImage; src?: string; /** Fill the circle edge to edge (logos on a coloured background). */ cover?: boolean };
-
-// The stores on pins 1–5 until they're entered in the Studio; the last pin is
-// always "…", its bubble reading "And much more".
-const defaultStores: PinStore[] = [
-  { name: "Allmart", src: "/supermarket-logos/allmart.jpeg" },
-  { name: "Bambis", src: "/supermarket-logos/bambis.jpeg" },
-  { name: "Besh", src: "/supermarket-logos/besh.jpeg" },
-  { name: "Emawa", src: "/supermarket-logos/emawa.jpg", cover: true },
-  { name: "Shoa", src: "/supermarket-logos/shoa.jpeg" },
-];
-
 const leanClass = { start: "-translate-x-[18%]", center: "-translate-x-1/2", end: "-translate-x-[82%]" };
 const tailClass = { start: "left-[18%]", center: "left-1/2", end: "left-[82%]" };
 
@@ -81,7 +67,7 @@ function LocationPin({
   className = "",
   style,
 }: {
-  store?: PinStore;
+  store?: MapStore;
   more?: boolean;
   locale: Locale;
   className?: string;
@@ -103,15 +89,13 @@ function LocationPin({
       {/* Inside the inner circle: the logo, "…", or a placeholder image */}
       <div
         className={`absolute top-[41.67%] left-1/2 flex size-[54%] -translate-1/2 items-center justify-center overflow-hidden rounded-full ${
-          store?.cover ? "" : store?.logo?.asset || store?.src ? "p-[3%]" : "p-[16%]"
+          store?.cover ? "" : store?.logo?.asset ? "p-[3%]" : "p-[16%]"
         } ${more ? "text-ink" : "text-steel-300"}`}
       >
         {more ? (
           <Ellipsis className="size-full" strokeWidth={2.5} />
         ) : store?.logo?.asset ? (
           <CmsImage image={store.logo} locale={locale} width={160} height={160} sizes="5rem" className={logo} />
-        ) : store?.src ? (
-          <Image src={store.src} alt="" width={160} height={160} sizes="5rem" className={logo} />
         ) : (
           <ImageIcon className="size-full" strokeWidth={1.5} />
         )}
@@ -121,7 +105,7 @@ function LocationPin({
 }
 
 /** The distribution map: location pins (with the stores' logos) joined by smooth dotted routes, each with a floating store-name bubble. */
-function StoreMap({ stores, more, locale }: { stores: PinStore[]; /** The last pin's bubble, e.g. "And much more". */ more: string; locale: Locale }) {
+function StoreMap({ stores, more, locale }: { stores: MapStore[]; /** The last pin's bubble, e.g. "And much more". */ more: string; locale: Locale }) {
   return (
     // Top padding leaves room for the bubble over the highest pin
     <div className="relative mx-auto w-full max-w-5xl pt-6 sm:pt-4">
@@ -215,7 +199,7 @@ export function DistributionSection({
   labels,
 }: {
   locale: Locale;
-  /** The map's stores (name and logo), in pin order; placeholders until entered in the Studio. */
+  /** The map's stores (name and logo, from the Studio), in pin order; empty pins show a placeholder image. */
   stores?: MapStore[];
   details?: string;
   galleryIntro?: string;
@@ -227,7 +211,7 @@ export function DistributionSection({
     <>
       <Container className="mt-8 sm:mt-10">
         <Reveal>
-          <StoreMap stores={stores?.length ? stores : defaultStores} more={labels.andMuchMore} locale={locale} />
+          <StoreMap stores={stores ?? []} more={labels.andMuchMore} locale={locale} />
         </Reveal>
         {details && (
           <Reveal>

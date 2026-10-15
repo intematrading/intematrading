@@ -50,14 +50,21 @@ export const servicesPage = defineType({
       title: "Stores on the map",
       type: "array",
       group: "distribution",
-      description: "The supermarkets on the map's first five pins, in order: 1 far left, 2 lower middle, 3 top middle, 4 right of centre, 5 bottom right (the sixth pin, top right, is always \"…\" with \"And much more\"). The name shows in the bubble, the logo inside the pin. Leave empty to use the logos in public/supermarket-logos.",
+      description: "The supermarkets on the map's first five pins, in order: 1 far left, 2 lower middle, 3 top middle, 4 right of centre, 5 bottom right (the sixth pin, top right, is always \"…\" with \"And much more\"). The name shows in the bubble, the logo inside the pin.",
       of: [
         defineArrayMember({
           type: "object",
           name: "mapStore",
           fields: [
             defineField({ name: "name", type: "string", validation: (r) => r.required() }),
-            defineField({ name: "logo", type: "image", description: "Shown inside the pin's circle; a square or round logo on a transparent or white background works best." }),
+            defineField({ name: "logo", type: "image", description: "Shown inside the pin's circle; a square or round logo works best." }),
+            defineField({
+              name: "cover",
+              title: "Fill the circle",
+              type: "boolean",
+              initialValue: false,
+              description: "For logos on a coloured background: fill the circle edge to edge instead of showing the logo with a white margin.",
+            }),
           ],
           preview: { select: { title: "name", media: "logo" } },
         }),
