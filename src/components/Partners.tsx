@@ -36,6 +36,22 @@ export async function Partners({ locale, className = "" }: { locale: Locale; cla
   );
 }
 
+/**
+ * Every brand logo at once, in a grid (Partner companies in Sanity): the
+ * portfolio shown by its brands rather than counted.
+ */
+export async function LogoWall({ locale, className = "" }: { locale: Locale; className?: string }) {
+  const [partners, t] = await Promise.all([getPartners(), getTranslations("About")]);
+  if (!partners.length) return null;
+  return (
+    <ul aria-label={t("partnersLabel")} className={`grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 ${className}`}>
+      {partners.map((partner) => (
+        <PartnerLogo key={partner._id} partner={partner} locale={locale} className="w-full" />
+      ))}
+    </ul>
+  );
+}
+
 /** Just the looping strip of partner company logos (Partner companies in Sanity). */
 export async function PartnerStrip({ locale, className = "" }: { locale: Locale; className?: string }) {
   const [partners, t] = await Promise.all([getPartners(), getTranslations("About")]);

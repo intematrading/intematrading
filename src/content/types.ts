@@ -72,6 +72,9 @@ export type HomePage = {
 /** A store on the We Distribute map: its name (in the bubble) and logo (inside the pin). */
 export type MapStore = { _key: string; name: string; logo?: SanityImage; /** Fill the pin's circle edge to edge (logos on a coloured background). */ cover?: boolean };
 
+/** A warehouse, depot or distribution partner on the We Distribute network map. */
+export type DistributionPoint = { _key: string; city: string; kind: "warehouse" | "depot" | "partner"; lat: number; lng: number };
+
 /** A photo with a short caption (e.g. the store it was taken in). */
 export type GalleryImage = NonNullable<SanityImage> & { _key: string; caption?: LocaleString };
 
@@ -84,7 +87,6 @@ export type ServicesPage = {
   marketIntro?: LocaleString;
   marketStats?: Stat[];
   marketSource?: LocaleString;
-  sourcingRegions?: TitledText[];
   importHeading?: LocaleString;
   importIntro?: LocaleString;
   nonFoodIntro?: LocaleString;
@@ -93,6 +95,9 @@ export type ServicesPage = {
   distributionIntro?: LocaleString;
   distributionBody?: LocaleString;
   distributionStores?: MapStore[];
+  /** Figures under the map; one with no value is hidden. */
+  distributionFacts?: Stat[];
+  distributionPoints?: DistributionPoint[];
   distributionGalleryIntro?: LocaleString;
   distributionGallery?: GalleryImage[];
   produceHeading?: LocaleString;
@@ -141,7 +146,7 @@ export type ExportItem = {
   image?: SanityImage;
 };
 
-export type Stat = { _key: string; value: string; label: LocaleString; note?: LocaleString };
+export type Stat = { _key: string; value?: string; label: LocaleString; note?: LocaleString };
 type TitledText = { _key: string; title: LocaleString; body?: LocaleString };
 
 export type AboutPage = {

@@ -23,7 +23,7 @@ import {
   heroPlaceholders,
   placeholders,
 } from "@/content/placeholders";
-import { getAboutPage, getSiteSettings, tr } from "@/lib/content";
+import { getAboutPage, getSiteSettings, tr, withValues } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
 const stepIcons = [Ship, PhoneCall, Truck, TrendingUp];
@@ -81,7 +81,7 @@ export default async function AboutPage({
               {t("teamCta")}
             </ButtonLink>
           </Reveal>
-          {page.stats?.length ? (
+          {withValues(page.stats).length ? (
             <Reveal className="lg:col-span-5 lg:col-start-8">
               <aside
                 aria-labelledby="snapshot-heading"
@@ -91,7 +91,7 @@ export default async function AboutPage({
                   {t("snapshot")}
                 </h3>
                 <ul className="mt-6 divide-y divide-steel-200">
-                  {page.stats.map((stat) => {
+                  {withValues(page.stats).map((stat) => {
                     const Icon = statIcon(stat._key);
                     return (
                       <li

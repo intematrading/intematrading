@@ -14,7 +14,7 @@ import { TeamCard } from "@/components/TeamCard";
 import { heroPlaceholders, placeholders } from "@/content/placeholders";
 import type { Stat, TeamMember } from "@/content/types";
 import type { Locale as AppLocale } from "@/i18n/routing";
-import { getSiteSettings, getTeamMembers, getTeamPage, tr } from "@/lib/content";
+import { getSiteSettings, getTeamMembers, getTeamPage, tr, withValues } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
 // Departments by their key in Sanity.
@@ -32,12 +32,12 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/team">):
   });
 }
 
-/** "Team at a glance": the team facts in one row (2x2 on tablets, stacked on phones), split by thin dividers. */
+/** "Team at a glance": the team facts (those with a figure) in one row (2x2 on tablets, stacked on phones), split by thin dividers. */
 function TeamFacts({ facts, heading, locale }: { facts: Stat[]; heading: string; locale: AppLocale }) {
   return (
     <div className="rounded-[1.75rem] bg-steel-50 p-6 ring-1 ring-black/5 sm:rounded-[2rem] sm:p-10">
       <h3 className="label-caps text-red-ink">{heading}</h3>
-      <dl className="mt-6 grid gap-y-8 sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-steel-200">
+      <dl className="mt-6 grid gap-y-8 sm:grid-cols-2 lg:grid-flow-col lg:grid-cols-none lg:auto-cols-fr lg:divide-x lg:divide-steel-200">
         {facts.map((fact) => (
           <div key={fact._key} className="flex flex-col pr-4 lg:px-8 lg:first:pl-0 lg:last:pr-0">
             {/* Label first for screen readers; the figure shows first */}
@@ -190,7 +190,7 @@ export default async function TeamPage({ params }: PageProps<"/[locale]/team">) 
           eyebrow={t("leadershipEyebrow")}
           intro={tr(page.leadershipIntro, locale)}
           leaders={leadership}
-          facts={page.facts}
+          facts={withValues(page.facts)}
           factsHeading={t("atAGlance").replace(/\*/g, "")}
           locale={locale}
         />

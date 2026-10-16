@@ -21,7 +21,7 @@ export const statList = (name: string, title: string, group?: string) =>
         type: "object",
         name: "stat",
         fields: [
-          defineField({ name: "value", type: "string", validation: (r) => r.required() }),
+          defineField({ name: "value", type: "string", description: "Leave empty to hide this figure until you have it." }),
           defineField({ name: "label", type: "localeString", validation: (r) => r.required() }),
           defineField({ name: "note", type: "localeString" }),
         ],

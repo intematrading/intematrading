@@ -100,6 +100,9 @@ export const getTestimonials = cache(async (): Promise<Testimonial[]> => {
   }
 });
 
+/** The stats that have a figure: one left empty in the Studio is hidden until it's filled in. */
+export const withValues = <T extends { value?: string }>(stats?: T[] | null): T[] => stats?.filter((stat) => stat.value?.trim()) ?? [];
+
 /** Picks the value for `locale`, falling back to English when a translation is missing. */
 export function tr(value: LocaleString | undefined | null, locale: Locale): string {
   if (!value) return "";

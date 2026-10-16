@@ -13,10 +13,13 @@ import { DecorativeAwareLink } from "./DecorativeCopy";
 export function PartnerLogo({
   partner,
   locale,
+  className = "w-56 shrink-0",
   ...liProps
 }: {
   partner: Partner;
   locale: Locale;
+  /** The <li>'s sizing: fixed width in the marquee, the grid cell in a logo wall. */
+  className?: string;
   /** Forwarded to the <li>: set on marquee repeats. */
   "aria-hidden"?: boolean;
 }) {
@@ -44,7 +47,7 @@ export function PartnerLogo({
     </>
   );
   return (
-    <li {...liProps} className="w-56 shrink-0">
+    <li {...liProps} className={className}>
       {partner.website ? (
         // Leaves the tab order in the marquee's visual-only repeats.
         <DecorativeAwareLink href={partner.website} target="_blank" rel="noopener noreferrer" className={tile}>

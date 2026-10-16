@@ -1,11 +1,13 @@
-import { Ellipsis, ImageIcon, MapPin, ShoppingCart, Store, type LucideIcon } from "lucide-react";
-import type { GalleryImage, MapStore } from "@/content/types";
+import { Ellipsis, ImageIcon, MapPin, Network, ShoppingCart, Store, type LucideIcon } from "lucide-react";
+import type { DistributionPoint, GalleryImage, MapStore, ServicesPage } from "@/content/types";
 import type { Locale } from "@/i18n/routing";
 import { tr } from "@/lib/content";
 import { CmsImage } from "./CmsImage";
 import { Container } from "./Container";
+import { EthiopiaMap } from "./EthiopiaMap";
 import { IconBox } from "./IconBox";
 import { Reveal } from "./Reveal";
+import { statIcon } from "./stat-icons";
 
 // Blank tiles shown until photos are added in the Studio (fills the mosaic once).
 const PLACEHOLDER_TILES = 5;
@@ -186,14 +188,17 @@ function tileClass(i: number) {
 
 /**
  * Services → We Distribute, under its heading: the map of the stores we
- * supply, with the details under it; then "On the shelves", a mosaic of
- * photos from those stores, captioned with the store, or blank tiles until
- * photos are added.
+ * supply, with the details under it; the distribution figures (only those
+ * with a value) and the distribution network on a map of Ethiopia (once any
+ * points are added); then "On the shelves", a mosaic of photos from those
+ * stores, captioned with the store, or blank tiles until photos are added.
  */
 export function DistributionSection({
   locale,
   stores,
   details,
+  facts,
+  points,
   galleryIntro,
   gallery,
   labels,
@@ -202,11 +207,20 @@ export function DistributionSection({
   /** The map's stores (name and logo, from the Studio), in pin order; empty pins show a placeholder image. */
   stores?: MapStore[];
   details?: string;
+  facts?: ServicesPage["distributionFacts"];
+  points?: DistributionPoint[];
   galleryIntro?: string;
   gallery?: GalleryImage[];
-  labels: { andMuchMore: string; onTheShelves: string };
+  labels: {
+    andMuchMore: string;
+    onTheShelves: string;
+    network: string;
+    headOffice: string;
+    kinds: Record<DistributionPoint["kind"], string>;
+  };
 }) {
   const photos = gallery?.filter((image) => image.asset) ?? [];
+  const figures = facts?.filter((fact) => fact.value?.trim()) ?? [];
   return (
     <>
       <Container className="mt-8 sm:mt-10">
@@ -219,6 +233,58 @@ export function DistributionSection({
           </Reveal>
         )}
       </Container>
+
+      {/* The scale of the operation: only the figures that have a value */}
+      {figures.length ? (
+        <Container className="mt-14 sm:mt-16">
+          <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]">
+            {figures.map((fact) => {
+              const Icon = statIcon(fact._key);
+              return (
+                <li key={fact._key}>
+                  <Reveal className="h-full">
+                    <div className="flex h-full flex-col rounded-3xl bg-paper p-6 shadow-sm ring-1 ring-black/5 sm:p-7">
+                      <IconBox icon={Icon} />
+                      <p className="font-display-heading text-steel-gradient mt-6 text-5xl leading-none" lang="en">
+                        {fact.value}
+                      </p>
+                      <p className="mt-3 font-semibold text-ink">{tr(fact.label, locale)}</p>
+                      {fact.note && <p className="mt-1 text-sm text-muted">{tr(fact.note, locale)}</p>}
+                    </div>
+                  </Reveal>
+                </li>
+              );
+            })}
+          </ul>
+        </Container>
+      ) : null}
+
+      {/* The distribution network: warehouses, depots and partners on a map of Ethiopia */}
+      {points?.length ? (
+        <Container className="mt-20 grid items-center gap-10 sm:mt-28 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="lg:col-span-7">
+            <EthiopiaMap
+              label={labels.headOffice}
+              points={points.map((point) => ({ key: point._key, lat: point.lat, lng: point.lng, tone: point.kind === "partner" ? "grey" : "red" }))}
+              className="w-full"
+            />
+          </Reveal>
+          <Reveal className="lg:col-span-5">
+            <SubHeading icon={Network}>{labels.network}</SubHeading>
+            <ul className="mt-8 divide-y divide-steel-200">
+              {points.map((point) => (
+                <li key={point._key} className="flex items-center justify-between gap-4 py-3.5">
+                  <span className="flex items-center gap-3 font-semibold text-ink">
+                    <span aria-hidden="true" className={`size-3 shrink-0 rounded-full ${point.kind === "partner" ? "bg-steel-500" : "bg-red"}`} />
+                    {point.city}
+                  </span>
+                  <span className="text-sm text-muted">{labels.kinds[point.kind]}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </Container>
+      ) : null}
 
       {/* On the shelves: photos from the stores we supply */}
       <Container className="mt-20 sm:mt-28">

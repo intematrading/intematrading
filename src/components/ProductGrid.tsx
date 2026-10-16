@@ -38,7 +38,7 @@ type GridItem = {
  * and name under a thin rule. Opens the product popup. `onDark` lightens
  * the text for the dark We Produce panel.
  */
-function ProductTile({ item, index, onDark, locale, viewLabel }: { item: GridItem; index: number; onDark: boolean; locale: Locale; viewLabel: string }) {
+function ProductTile({ item, onDark, locale, viewLabel }: { item: GridItem; onDark: boolean; locale: Locale; viewLabel: string }) {
   return (
     <article className="group relative h-full">
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
@@ -63,10 +63,7 @@ function ProductTile({ item, index, onDark, locale, viewLabel }: { item: GridIte
       </div>
       {/* Rule fading out at both ends */}
       <span aria-hidden="true" className={`mt-4 block h-px bg-linear-to-r from-transparent to-transparent ${onDark ? "via-white/35" : "via-steel-300"}`} />
-      <div className="mt-3 flex items-baseline gap-3">
-        <span aria-hidden="true" className={`font-display-heading text-xl ${onDark ? "text-paper/60" : "text-steel-gradient"}`} lang="en">
-          {String(index + 1).padStart(2, "0")}
-        </span>
+      <div className="mt-3">
         <div className="min-w-0">
           <h4 className={`font-title-heading text-base ${onDark ? "text-paper" : "text-ink"}`}>{item.title}</h4>
           {item.description && <p className={`mt-0.5 text-sm ${onDark ? "text-paper/75" : "text-muted"}`}>{item.description}</p>}
@@ -101,6 +98,7 @@ async function ProductGrid({
   icon: Icon,
   label,
   intro,
+  introEnd,
   reverse = false,
   onDark = false,
   locale,
@@ -109,6 +107,8 @@ async function ProductGrid({
   icon: LucideIcon;
   label: string;
   intro?: string;
+  /** A closing line after the intro, e.g. "Here are some of the products we import." */
+  introEnd?: string;
   /** Scroll the row towards the right. */
   reverse?: boolean;
   onDark?: boolean;
@@ -122,8 +122,8 @@ async function ProductGrid({
       <span className={`font-display-heading text-3xl sm:text-4xl ${onDark ? "text-paper" : "text-steel-gradient"}`}>{label}</span>
     </h3>
   );
-  const tile = (item: GridItem, i: number) => (
-    <ProductTile item={item} index={i} onDark={onDark} locale={locale} viewLabel={t("viewItem", { name: item.title })} />
+  const tile = (item: GridItem) => (
+    <ProductTile item={item} onDark={onDark} locale={locale} viewLabel={t("viewItem", { name: item.title })} />
   );
   return (
     <div className="mt-24 first:mt-0 sm:mt-32">
@@ -132,7 +132,13 @@ async function ProductGrid({
         <Container>
           <Reveal className="max-w-2xl">
             {heading}
-            {intro && <p className={`mt-5 sm:text-lg ${onDark ? "text-paper/80" : "text-muted"}`}>{intro}</p>}
+            {(intro || introEnd) && (
+              <p className={`mt-5 sm:text-lg ${onDark ? "text-paper/80" : "text-muted"}`}>
+                {intro}
+                {intro && introEnd && " "}
+                {introEnd && <span className={`font-semibold ${onDark ? "text-paper" : "text-ink"}`}>{introEnd}</span>}
+              </p>
+            )}
           </Reveal>
         </Container>
       )}
@@ -167,9 +173,9 @@ async function ProductGrid({
         // Too few to loop: a plain row at the same tile size
         <Container className="mt-12">
           <ul aria-label={label} className="flex flex-wrap gap-x-10 gap-y-12">
-            {items.map((item, i) => (
+            {items.map((item) => (
               <li key={item.key} className="w-64 sm:w-72">
-                <Reveal className="h-full">{tile(item, i)}</Reveal>
+                <Reveal className="h-full">{tile(item)}</Reveal>
               </li>
             ))}
           </ul>
@@ -193,9 +199,9 @@ async function ProductGrid({
               </li>
             }
           >
-            {items.map((item, i) => (
+            {items.map((item) => (
               <li key={item.key} className="w-64 shrink-0 sm:w-72">
-                {tile(item, i)}
+                {tile(item)}
               </li>
             ))}
           </Marquee>
@@ -205,7 +211,7 @@ async function ProductGrid({
   );
 }
 
-type Shared = { icon: LucideIcon; label: string; intro?: string; reverse?: boolean; onDark?: boolean; locale: Locale };
+type Shared = { icon: LucideIcon; label: string; intro?: string; introEnd?: string; reverse?: boolean; onDark?: boolean; locale: Locale };
 
 /** Imported brands of one category. */
 export function BrandGrid({ brands, ...props }: Shared & { brands: Brand[] }) {
@@ -247,12 +253,12 @@ export async function ExportTiles({ brands, label, locale }: { brands: ExportIte
   const t = await getTranslations("Services");
   return (
     <ul aria-label={label} className="grid grid-cols-2 gap-x-6 gap-y-10 sm:gap-x-10">
-      {brands.map((b, i) => {
+      {brands.map((b) => {
         const item: GridItem = { key: b._id, title: b.name, description: tr(b.description, locale), image: b.image, placeholder: productPlaceholders[b._id] };
         return (
           <li key={item.key}>
             <Reveal className="h-full">
-              <ProductTile item={item} index={i} onDark={false} locale={locale} viewLabel={t("viewItem", { name: item.title })} />
+              <ProductTile item={item} onDark={false} locale={locale} viewLabel={t("viewItem", { name: item.title })} />
             </Reveal>
           </li>
         );

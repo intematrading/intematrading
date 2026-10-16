@@ -39,7 +39,6 @@ export const servicesPage = defineType({
     defineField({ name: "nonFoodIntro", title: "Non-food category description", type: "localeText", group: "import" }),
     defineField({ name: "foodIntro", title: "Food category description", type: "localeText", group: "import" }),
 
-    titledTextList("sourcingRegions", "Where we source", "import"),
 
     // We Distribute — empty fields fall back to the Distribution step (Home page → From port to shelf).
     defineField({ name: "distributionHeading", type: "localeString", group: "distribution", description: 'Leave empty for "We Distribute".' }),
@@ -70,6 +69,57 @@ export const servicesPage = defineType({
         }),
       ],
       validation: (r) => r.max(5),
+    }),
+    defineField({
+      name: "distributionFacts",
+      title: "Distribution figures",
+      type: "array",
+      group: "distribution",
+      description: "The scale of the operation, shown as figures under the map. A figure with no value is hidden, so fill each one in when you have it.",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "stat",
+          fields: [
+            defineField({ name: "value", type: "string", description: 'e.g. "4,500 m²", "12", "1,200+". Leave empty to hide this figure.' }),
+            defineField({ name: "label", type: "localeString", validation: (r) => r.required() }),
+            defineField({ name: "note", type: "localeString" }),
+          ],
+          preview: { select: { title: "label.en", subtitle: "value" } },
+        }),
+      ],
+    }),
+    defineField({
+      name: "distributionPoints",
+      title: "Distribution network",
+      type: "array",
+      group: "distribution",
+      description: "Warehouses, depots and distribution partners, shown on a map of Ethiopia with Addis Ababa. Hidden until at least one is added.",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "distributionPoint",
+          fields: [
+            defineField({ name: "city", type: "string", validation: (r) => r.required() }),
+            defineField({
+              name: "kind",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Warehouse", value: "warehouse" },
+                  { title: "Depot", value: "depot" },
+                  { title: "Distribution partner", value: "partner" },
+                ],
+                layout: "radio",
+              },
+              validation: (r) => r.required(),
+            }),
+            defineField({ name: "lat", title: "Latitude", type: "number", description: "e.g. 9.03 for Addis Ababa (from Google Maps).", validation: (r) => r.required().min(3).max(15) }),
+            defineField({ name: "lng", title: "Longitude", type: "number", description: "e.g. 38.74 for Addis Ababa.", validation: (r) => r.required().min(33).max(48) }),
+          ],
+          preview: { select: { title: "city", subtitle: "kind" } },
+        }),
+      ],
     }),
     defineField({ name: "distributionGalleryIntro", title: "Photos intro", type: "localeText", group: "distribution", description: "Under the On the shelves heading." }),
     defineField({

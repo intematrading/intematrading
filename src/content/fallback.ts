@@ -87,12 +87,12 @@ export const homePage: HomePage = {
       },
     },
     {
-      _key: "accounts",
-      value: "20–30",
-      label: { en: "Retail accounts serviced daily", am: "በየቀኑ የሚስተናገዱ የችርቻሮ ደንበኞች" },
+      _key: "countries",
+      value: "3",
+      label: { en: "Countries served", fr: "Pays desservis" },
       note: {
-        en: "Wholesale and retail accounts visited by our sales team every day, with deliveries twice a week.",
-        am: "የሽያጭ ቡድናችን በየቀኑ የሚጎበኛቸው የጅምላና የችርቻሮ ደንበኞች፤ ምርት በሳምንት ሁለት ጊዜ ይደርሳል።",
+        en: "Ethiopia, Djibouti and Sudan, a combined market of around 170 million people.",
+        fr: "Éthiopie, Djibouti et Soudan, un marché d’environ 170 millions de personnes.",
       },
     },
     {
@@ -103,12 +103,12 @@ export const homePage: HomePage = {
     },
   ],
   foodInfo: {
-    en: "We bring in food, drinks and everyday consumer goods from well known international brands like Heinz, Campbell's, Nido and Power Horse. Our own sales and delivery team gets them to wholesalers, supermarkets and shops across Ethiopia, with regular deliveries so the shelves don't run empty.",
-    fr: "Nous importons des produits alimentaires, des boissons et des produits du quotidien de grandes marques internationales comme Heinz, Campbell’s, Nido et Power Horse. Notre propre équipe de vente et de livraison les apporte aux grossistes, supermarchés et boutiques de toute l’Éthiopie, avec des livraisons régulières pour que les rayons ne soient jamais vides.",
+    en: "Food, beverages and everyday consumer goods from established international brands, including Heinz, Campbell's, Nido and Power Horse, supplied to wholesalers, supermarkets and retailers by our own sales and delivery teams on planned, recurring schedules.",
+    fr: "Produits alimentaires, boissons et biens de consommation courante de grandes marques internationales, dont Heinz, Campbell's, Nido et Power Horse, livrés aux grossistes, supermarchés et détaillants par nos propres équipes commerciales et de livraison, selon des tournées planifiées et régulières.",
   },
   nonFoodInfo: {
-    en: "On the non-food side we cover personal care, beauty and hygiene, with brands like Clere, Fa, Vatika and Reckitt. We're also the main importer of L'Oréal Professionnel, and we have a team that works directly with salons and beauty professionals.",
-    fr: "Côté non alimentaire, nous couvrons les soins personnels, la beauté et l’hygiène, avec des marques comme Clere, Fa, Vatika et Reckitt. Nous sommes aussi le principal importateur de L’Oréal Professionnel, avec une équipe qui travaille directement avec les salons et les professionnels de la beauté.",
+    en: "Personal care, beauty and hygiene from brands including Clere, Fa, Vatika and Reckitt. INTEMA is also the main importer of L'Oréal Professionnel, with a dedicated team serving salons and beauty professionals.",
+    fr: "Soins personnels, beauté et hygiène avec des marques comme Clere, Fa, Vatika et Reckitt. INTEMA est également l’importateur principal de L’Oréal Professionnel, avec une équipe dédiée aux salons et aux professionnels de la beauté.",
   },  foodCategories: [
     { en: "Dairy", fr: "Produits laitiers" },
     { en: "Food products", fr: "Produits alimentaires" },
@@ -128,8 +128,8 @@ export const homePage: HomePage = {
   ],
 
   whatWeDoIntro: {
-    en: "INTEMA imports and distributes consumer goods, makes its own products and exports Ethiopian coffee. Here's what each part of the business does.",
-    fr: "INTEMA importe et distribue des produits de grande consommation, fabrique ses propres produits et exporte du café éthiopien. Voici ce que fait chaque partie de l’entreprise.",
+    en: "INTEMA imports and distributes international FMCG brands, manufactures its own products and exports Ethiopian coffee.",
+    fr: "INTEMA importe et distribue des marques internationales de grande consommation, fabrique ses propres produits et exporte du café éthiopien.",
   },
   entryCards: [
     {
@@ -137,8 +137,8 @@ export const homePage: HomePage = {
       section: "import",
       title: { en: "We Import", fr: "Nous importons" },
       description: {
-        en: "Trusted food and non-food brands from America, Europe and Asia, distributed across Ethiopia.",
-        fr: "Des marques alimentaires et non alimentaires d’Amérique, d’Europe et d’Asie, distribuées dans toute l’Éthiopie.",
+        en: "International food and non-food brands from America, Europe and Asia, imported and built in the Ethiopian market.",
+        fr: "Des marques internationales alimentaires et non alimentaires d’Amérique, d’Europe et d’Asie, importées et développées sur le marché éthiopien.",
       },
     },
     {
@@ -160,7 +160,7 @@ export const homePage: HomePage = {
   // Adapted from the About Us "Mission" and "Keys to Success" copy.
   commitmentEyebrow: { en: "Our mission", am: "ተልዕኳችን" },
   commitmentHeadline: {
-    en: "We do not only sell product, *we provide service.*",
+    en: "We don't just sell products, *we establish brands.*",
     am: "ምርት ብቻ አንሸጥም፤ *አገልግሎት እንሰጣለን።*",
   },
   commitmentBody: {
@@ -219,7 +219,7 @@ export const servicesPage: ServicesPage = {
 
   importHeading: { en: "We Import", am: "እናስመጣለን" },
   importIntro: {
-    en: "Trusted global FMCG brands, food and non-food.",
+    en: "More than a decade of importing for international brand owners, with the supplier network, know-how and track record to bring their products into Ethiopia reliably.",
     am: "የታመኑ ዓለም አቀፍ የፍጆታ ምርት ብራንዶች — ምግብና ምግብ ነክ ያልሆኑ።",
   },
   nonFoodIntro: {
@@ -336,8 +336,8 @@ export const teamPage: TeamPage = {
   },
   leadershipHeading: { en: "Leadership", am: "አመራር" },
   leadershipIntro: {
-    en: "In distribution, relationships are everything, so selling starts at the top. Bedru brings years of experience in sales and distribution and still calls on customers himself.",
-    fr: "Dans la distribution, tout repose sur les relations, alors la vente commence au sommet. Bedru apporte des années d’expérience dans la vente et la distribution et rend encore visite lui-même aux clients.",
+    en: "Distribution is built on relationships, and ours are led from the top. Bedru and the leadership team bring more than ten years of distribution and sales management experience with Beiersdorf, L'Oréal Professionnel and L'Oréal Consumer Products, and Bedru remains personally involved with key accounts.",
+    fr: "La distribution repose sur les relations, et les nôtres sont portées par la direction. Bedru et l’équipe dirigeante apportent plus de dix ans d’expérience en distribution et en direction commerciale chez Beiersdorf, L’Oréal Professionnel et L’Oréal Produits Grand Public, et Bedru reste personnellement impliqué auprès des comptes clés.",
   },
   headsHeading: { en: "Our departments", fr: "Nos départements" },
   headsIntro: {
@@ -352,8 +352,8 @@ export const teamPage: TeamPage = {
   },
   facts: [
     { _key: "team", value: "26+", label: { en: "Team members", fr: "Collaborateurs" }, note: { en: "Across nine departments", fr: "Répartis dans neuf départements" } },
-    { _key: "fleet", value: "4+", label: { en: "Delivery fleet", am: "የማከፋፈያ ተሽከርካሪዎች" }, note: { en: "Doubled within a year", am: "በአንድ ዓመት ውስጥ በእጥፍ አድጓል" } },
-    { _key: "accounts", value: "30+", label: { en: "Accounts serviced daily", am: "በየቀኑ የሚስተናገዱ ደንበኞች" }, note: { en: "Deliveries twice weekly", am: "በሳምንት ሁለት ጊዜ ማድረስ" } },
+    { _key: "fleet", value: "", label: { en: "Delivery vehicles", fr: "Véhicules de livraison" } },
+    { _key: "accounts", value: "", label: { en: "Active accounts", fr: "Clients actifs" } },
     {
       _key: "experience",
       value: "10+",
@@ -365,17 +365,17 @@ export const teamPage: TeamPage = {
     {
       _key: "sales",
       title: { en: "Sales & marketing", fr: "Ventes et marketing" },
-      body: { en: "Our six-person sales team looks after current customers and brings in new ones, working with marketing and media. That's ten people in all.", fr: "Notre équipe commerciale de six personnes s’occupe des clients actuels et en trouve de nouveaux, avec le marketing et les médias. Cela fait dix personnes en tout." },
+      body: { en: "A six-person field sales team managing key accounts and new-outlet development, working alongside marketing and media: ten people in total.", fr: "Une équipe de vente terrain de six personnes qui gère les comptes clés et le développement de nouveaux points de vente, aux côtés du marketing et des médias : dix personnes au total." },
     },
     {
       _key: "admin",
       title: { en: "Administration & finance", fr: "Administration et finances" },
-      body: { en: "HR, the executive office, finance and general services. Four people who keep the business running.", fr: "RH, secrétariat de direction, finances et services généraux. Quatre personnes qui font tourner l’entreprise." },
+      body: { en: "HR, the executive office, finance and general services: four people running the company's core functions.", fr: "RH, secrétariat de direction, finances et services généraux : quatre personnes qui assurent les fonctions centrales de l’entreprise." },
     },
     {
       _key: "operations",
       title: { en: "Operations", fr: "Opérations" },
-      body: { en: "A ten-person store and warehouse team plus technical support, with deliveries going out Monday to Friday.", fr: "Une équipe de dix personnes au magasin et à l’entrepôt, plus le support technique, avec des livraisons du lundi au vendredi." },
+      body: { en: "A ten-person store and warehouse team plus technical support, running dispatch and deliveries Monday to Friday.", fr: "Une équipe de dix personnes au magasin et à l’entrepôt, plus le support technique, qui assure l’expédition et les livraisons du lundi au vendredi." },
     },
   ],
   trainingHeading: { en: "Training", am: "ሥልጠና" },
@@ -488,7 +488,7 @@ export const aboutPage: AboutPage = {
       fr: "INTEMA dessert l’Éthiopie, Djibouti et le Soudan, un marché d’environ 170 millions de personnes. Son associé principal est Bedru Hussen Jemal, et notre direction apporte une expérience de direction, un vrai sens du service client et plus de 10 ans dans la distribution et la gestion commerciale chez Beiersdorf, L’Oréal Professionnel et L’Oréal Produits Grand Public.",
     },
     {
-      en: "On top of import and distribution, we make our own candle brand, Abay, and export Ethiopian coffee under two registered brands, Seedcup and Bella. We don't just sell products. We look after our customers.",
+      en: "On top of import and distribution, we make our own candle brand, Abay, and export Ethiopian coffee under two registered brands, Seedcup and Bella. We don't just sell products: we establish brands and build lasting partnerships with the retailers who carry them.",
       am: "ከማስመጣትና ከማከፋፈል ባሻገር ኢንተማ “አባይ” የተሰኘውን የራሱን የሻማ ብራንድ ያመርታል፤ የኢትዮጵያን ቡናም ሲድካፕና ቤላ በተባሉ ሁለት የተመዘገቡ የወጪ ንግድ ብራንዶች ወደ ውጭ ይልካል። ምርት ብቻ አንሸጥም — አገልግሎት እንሰጣለን።",
     },
   ],
@@ -496,8 +496,8 @@ export const aboutPage: AboutPage = {
     { _key: "founded", value: "2014", label: { en: "Founded", am: "የተመሠረተበት" }, note: { en: "12 years in operation", am: "12 ዓመታት በሥራ ላይ" } },
     { _key: "market", value: "170M", label: { en: "Combined market", am: "ጥምር ገበያ" }, note: { en: "Ethiopia, Djibouti & Sudan", am: "ኢትዮጵያ፣ ጅቡቲና ሱዳን" } },
     { _key: "team", value: "26+", label: { en: "Team members", fr: "Collaborateurs" }, note: { en: "Across nine departments", fr: "Répartis dans neuf départements" } },
-    { _key: "accounts", value: "30+", label: { en: "Accounts serviced daily", am: "በየቀኑ የሚስተናገዱ ደንበኞች" }, note: { en: "Deliveries twice weekly", am: "በሳምንት ሁለት ጊዜ ማድረስ" } },
-    { _key: "fleet", value: "4+", label: { en: "Delivery fleet", am: "የማከፋፈያ ተሽከርካሪዎች" }, note: { en: "Doubled within a year", am: "በአንድ ዓመት ውስጥ በእጥፍ አድጓል" } },
+    { _key: "accounts", value: "", label: { en: "Active accounts", fr: "Clients actifs" } },
+    { _key: "fleet", value: "", label: { en: "Delivery vehicles", fr: "Véhicules de livraison" } },
   ],
   visionSectionHeading: { en: "What drives us", fr: "Ce qui nous anime" },
   visionSectionIntro: { en: "Where we want INTEMA to go, and how we want to work with our customers along the way.", fr: "Où nous voulons mener INTEMA, et comment nous voulons travailler avec nos clients en chemin." },
@@ -513,7 +513,7 @@ export const aboutPage: AboutPage = {
   },
   processHeading: { en: "Our process", am: "የአሠራር ሂደታችን" },
   processIntro: {
-    en: "We run import, distribution, our own manufacturing and coffee export as one business, so our customers deal with one team for everything, in all three countries.",
+    en: "Import, distribution, manufacturing and coffee export run as one integrated business, giving brand owners and retailers a single, accountable partner from sourcing to shelf.",
     am: "አንድ መድረክ፣ ሁሉም ገበያ፦ ኢንተማ ማስመጣትና ማከፋፈልን፣ የራሱን ብራንድ ማምረትንና የቡና ወጪ ንግድን በሚያጣምር አንድ የተቀናጀ አሠራር በሦስት አገሮች ደንበኞቹን ይደርሳል።",
   },
   processSteps: [
@@ -521,7 +521,7 @@ export const aboutPage: AboutPage = {
       _key: "source",
       title: { en: "Source", am: "ማስመጣት" },
       body: {
-        en: "We import trusted food and non-food brands, including some we hold exclusive rights to that you won't find anywhere else in our markets.",
+        en: "Trusted international food and non-food brands, including exclusive lines not available elsewhere in our markets.",
         am: "የታመኑ የምግብና ምግብ ነክ ያልሆኑ ብራንዶችን እናስመጣለን — በገበያዎቻችን ገና ላልተገኙ አዳዲስ ምርቶች ብቸኛ የማከፋፈል መብትን ጨምሮ።",
       },
     },
@@ -529,7 +529,7 @@ export const aboutPage: AboutPage = {
       _key: "order",
       title: { en: "Order", am: "ማዘዝ" },
       body: {
-        en: "Phone your order in by 2:30 p.m. the afternoon before your delivery day, fax a completed order sheet, or choose tel-sell and we'll call you to check quantities.",
+        en: "Orders are taken by phone, order sheet or tele-sales the day before delivery, so stock arrives exactly when it is needed.",
         am: "ከማድረሻ ቀንዎ በፊት ባለው ቀን እስከ ከሰዓት 8፡30 በስልክ ያዝዙ፣ የተሞላ የትዕዛዝ ቅጽ በፋክስ ይላኩ፣ ወይም መጠኑን ለማረጋገጥ እኛ እንድንደውልልዎ ይምረጡ።",
       },
     },
@@ -537,7 +537,7 @@ export const aboutPage: AboutPage = {
       _key: "deliver",
       title: { en: "Deliver", am: "ማድረስ" },
       body: {
-        en: "Deliveries run Monday to Friday on routes planned to save time and fuel, with each account served once or twice a week.",
+        en: "Planned routes run Monday to Friday, optimised for time and fuel, with every account served once or twice a week.",
         am: "ጊዜና ነዳጅ በሚቆጥቡ መስመሮች ከሰኞ እስከ ዓርብ እናደርሳለን፤ እያንዳንዱ ደንበኛ በሳምንት አንድ ወይም ሁለት ጊዜ ይስተናገዳል።",
       },
     },
@@ -545,7 +545,7 @@ export const aboutPage: AboutPage = {
       _key: "support",
       title: { en: "Grow", am: "ማሳደግ" },
       body: {
-        en: "We help customers increase sales with tailored assortment and pricing, creative promotions, advertising and custom marketing material.",
+        en: "Tailored assortment and pricing, trade promotions, advertising and point-of-sale material that drive sell-out for our customers.",
         am: "በሚስማማ የምርት ዓይነትና ዋጋ፣ በፈጠራ የታከሉ ማስተዋወቂያዎች፣ በማስታወቂያና በልዩ የማርኬቲንግ ቁሳቁሶች ደንበኞች ሽያጫቸውን እንዲጨምሩ እንረዳለን።",
       },
     },

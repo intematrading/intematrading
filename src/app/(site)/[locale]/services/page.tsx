@@ -12,6 +12,7 @@ import { PageHero } from "@/components/PageHero";
 import { BrandGrid, ExportTiles, ProducedGrid } from "@/components/ProductGrid";
 import { RouteSteps } from "@/components/RouteSteps";
 import { DistributionSection } from "@/components/DistributionSection";
+import { LogoWall } from "@/components/Partners";
 import { ProductPreviewProvider } from "@/components/ProductPreview";
 import { SectionHeading } from "@/components/SectionHeading";
 import { statIcon } from "@/components/stat-icons";
@@ -156,12 +157,14 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         <section id="import" aria-labelledby="import-heading" className={sectionClass}>
           <Container>
             <ServiceHeading id="import-heading" number="01" title={importSec.title} intro={tr(page.importIntro, locale)} />
-            {/* Where we source: heading branching to each region's map, as Target markets */}
-            <RegionTree heading={t("sourcingHeading")} regions={page.sourcingRegions ?? []} locale={locale} className="mt-16 sm:mt-20" />
+            {/* The brands we import, as logos */}
+            <Reveal>
+              <LogoWall locale={locale} className="mt-12 sm:mt-16" />
+            </Reveal>
           </Container>
           <div className="mt-20 sm:mt-28">
-            <BrandGrid brands={nonFood} icon={Sparkles} label={t("nonFood")} intro={tr(page.nonFoodIntro, locale)} locale={locale} />
-            <BrandGrid brands={food} icon={ShoppingBasket} label={t("food")} intro={tr(page.foodIntro, locale)} reverse locale={locale} />
+            <BrandGrid brands={nonFood} icon={Sparkles} label={t("nonFood")} intro={tr(page.nonFoodIntro, locale)} introEnd={t("someImports")} locale={locale} />
+            <BrandGrid brands={food} icon={ShoppingBasket} label={t("food")} intro={tr(page.foodIntro, locale)} introEnd={t("someImports")} reverse locale={locale} />
           </div>
         </section>
 
@@ -173,10 +176,18 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
           <DistributionSection
             locale={locale}
             stores={page.distributionStores}
+            facts={page.distributionFacts}
+            points={page.distributionPoints}
             details={distributionBody}
             galleryIntro={tr(page.distributionGalleryIntro, locale)}
             gallery={page.distributionGallery}
-            labels={{ andMuchMore: t("andMuchMore"), onTheShelves: t("onTheShelves") }}
+            labels={{
+              andMuchMore: t("andMuchMore"),
+              onTheShelves: t("onTheShelves"),
+              network: t("networkHeading"),
+              headOffice: t("headOffice"),
+              kinds: { warehouse: t("kindWarehouse"), depot: t("kindDepot"), partner: t("kindPartner") },
+            }}
           />
         </section>
 

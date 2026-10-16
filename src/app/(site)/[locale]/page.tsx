@@ -24,7 +24,7 @@ import { Container } from "@/components/Container";
 import { CursorSway } from "@/components/CursorSway";
 import { Eyebrow } from "@/components/Eyebrow";
 import { IconBox } from "@/components/IconBox";
-import { PartnerStrip } from "@/components/Partners";
+import { LogoWall } from "@/components/Partners";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -48,6 +48,7 @@ import {
   getTeamPage,
   getTestimonials,
   tr,
+  withValues,
 } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
@@ -97,7 +98,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const headline = rest.join(" — ");
   const cards = home.entryCards ?? [];
 
-  const stats = home.stats ?? [];
+  const stats = withValues(home.stats);
   // Mission and vision cards: Home's short versions, else the About page's.
   const mission = tr(home.mission ?? about.mission, locale);
   const vision = tr(home.vision ?? about.vision, locale);
@@ -376,9 +377,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </section>
       ) : null}
 
-      {/* ── Brands we import: "main importer of …" highlight, then the
-          food and non-food brands, each as text beside a loose grid of
-          small product tiles (as on the Services page) */}
+      {/* ── Brands we import: "main importer of …" highlight, the brand
+          logos, then food and non-food side by side with their categories */}
       {brands.length ? (
         <section aria-labelledby="brands-heading" className="py-16 sm:py-24">
           <Container>
@@ -401,6 +401,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                   ))}
                 </ul>
               </div>
+            </Reveal>
+          </Container>
+          {/* The portfolio as its brand logos */}
+          <Container className="mt-12 sm:mt-14">
+            <Reveal>
+              <LogoWall locale={locale} />
             </Reveal>
           </Container>
           {/* Food | Non-food: what each covers and its categories, side by
@@ -440,8 +446,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               {t("allProducts")}
             </ButtonLink>
           </div>
-          {/* Partner logos, looping, under the CTA */}
-          <PartnerStrip locale={locale} className="mt-16 sm:mt-20" />
         </section>
       ) : null}
 
