@@ -108,15 +108,15 @@ export async function RouteSteps({
 }
 
 /**
- * Home (What we do): the "From port to shelf" steps (from wholesale on;
- * importation and distribution have their own Services sections) in one row,
+ * Home (What we do): the "From port to shelf" steps (from distribution on;
+ * importation is the Import branch below) in one row,
  * as grey gradient icon stops and their names on a fading line. From lg the
  * row splits into two halves around an empty middle (each half spreading its
  * stops evenly, so the middle stays centred for any count), where a line drops
  * from it into the branches below (BranchConnector directly after, with no gap).
  */
 export function RouteStops({ steps, locale, className = "" }: { steps?: RouteStep[]; locale: Locale; className?: string }) {
-  const stops = routeOnly(steps);
+  const stops = steps?.filter((step) => step._key !== "importation") ?? [];
   if (!stops.length) return null;
   const half = Math.ceil(stops.length / 2);
   // From lg: each stop's share of its half (the halves sit either side of a 1/7-wide gap).
