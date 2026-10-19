@@ -64,8 +64,6 @@
     "exportBrands": "Our export brands",
     "targetMarkets": "Target markets",
     "ourProducts": "Our products",
-    "closePreview": "Close preview",
-    "viewItem": "View {name}",
     "marketEyebrow": "Market opportunity",
     "addisAbaba": "Addis Ababa",
     "routeEyebrow": "From port to shelf"
@@ -126,7 +124,7 @@
     "mapHeading": "Find us",
     "mapTitle": "Map showing INTEMA Trading PLC. in Addis Ababa",
     "detailsEyebrow": "Reach us",
-    "mapIntro": "Our office is in Arada Sub City, in the heart of Addis Ababa. You're welcome to stop by during business hours, or get in touch first and we'll be ready for you."
+    "mapIntro": "Our office is in Bole Sub City, near the Atlas Hotel in Addis Ababa. You're welcome to stop by during business hours, or get in touch first and we'll be ready for you."
   },
   "About": {
     "snapshot": "Company snapshot",

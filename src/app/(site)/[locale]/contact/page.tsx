@@ -61,9 +61,15 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
                 <IconBox icon={Mail} />
                 <div className="min-w-0">
                   <p className={labelClass}>{t("email")}</p>
-                  <a href={`mailto:${settings.email}`} className="mt-1 block py-1 font-semibold break-all text-ink hover:text-red-ink hover:underline">
-                    {settings.email}
-                  </a>
+                  <ul className="mt-1">
+                    {[settings.email, ...(settings.otherEmails ?? [])].map((email) => (
+                      <li key={email}>
+                        <a href={`mailto:${email}`} className="block py-1 font-semibold break-all text-ink hover:text-red-ink hover:underline">
+                          {email}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
               {settings.phones?.length ? (

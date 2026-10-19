@@ -22,16 +22,14 @@ import type {
 
 export const siteSettings: SiteSettings = {
   companyName: { en: "INTEMA Trading PLC.", am: "ኢንተማ ትሬዲንግ ኃ.የተ.የግ.ማ." },
-  address: { en: "Arada Sub City, Addis Ababa", am: "አራዳ ክፍለ ከተማ፣ አዲስ አበባ" },
+  address: { en: "Office No. 203, Woreda 03, Bole Sub City (near Atlas Hotel), Addis Ababa", fr: "Bureau n° 203, woreda 03, district de Bole (près de l’hôtel Atlas), Addis-Abeba" },
   poBox: { en: "P.O. Box 24527, Addis Ababa, Ethiopia", am: "ፖ.ሣ.ቁ. 24527፣ አዲስ አበባ፣ ኢትዮጵያ" },
-  email: "import@intematrading.com",
+  email: "info@intematrading.com",
+  otherEmails: ["amira@intematrading.com", "bedru@intematrading.com"],
   website: "https://intematrading.com/",
   phones: [
-    "+251 111 264454",
     "+251 911 258980",
-    "+251 911 258981",
-    "+251 911 258982",
-    "+251 911 258983",
+    "+251 956 997777",
   ],
   // PLACEHOLDERS: network homepages until the real profile URLs are entered
   // in Site settings. The WhatsApp number is assumed; confirm it.
@@ -68,7 +66,7 @@ export const homePage: HomePage = {
       value: "2014",
       label: { en: "Founded", am: "የተመሠረተበት ዓመት" },
       note: {
-        en: "Established as a privately held company, headquartered in Arada Sub City, Addis Ababa.",
+        en: "Established as a privately held company, headquartered in Bole Sub City, Addis Ababa.",
         am: "በግል የተያዘ ኩባንያ ሆኖ የተመሠረተ፣ ዋና መሥሪያ ቤቱ በአራዳ ክፍለ ከተማ፣ አዲስ አበባ ነው።",
       },
     },
@@ -480,7 +478,7 @@ export const aboutPage: AboutPage = {
   whoWeAreHeading: { en: "Who we are & what we do", am: "ማን ነን፣ ምን እንሠራለን" },
   whoWeAre: [
     {
-      en: "INTEMA Trading PLC. was founded in 2014. We're a privately held company that imports, distributes, makes and exports consumer goods, and our head office is in Arada Sub City, Addis Ababa, a good spot for serving both wholesale and retail customers.",
+      en: "INTEMA Trading PLC. was founded in 2014. We're a privately held company that imports, distributes, makes and exports consumer goods, and our head office is in Bole Sub City, Addis Ababa.",
       am: "በ2014 የተመሠረተው ኢንተማ ትሬዲንግ ኃ.የተ.የግ.ማ. የግል ኩባንያ ሲሆን፣ ዋና መሥሪያ ቤቱን በአራዳ ክፍለ ከተማ፣ አዲስ አበባ ያደረገ ሁለገብ የፍጆታ ምርቶች አስመጪ፣ አከፋፋይ፣ አምራችና ላኪ ነው — የጅምላና የችርቻሮ ገበያዎችን ለማገልገል ምቹ በሆነ ቦታ።",
     },
     {

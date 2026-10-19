@@ -27,6 +27,7 @@ export type SiteSettings = {
   address?: LocaleString;
   poBox?: LocaleString;
   email: string;
+  otherEmails?: string[];
   website?: string;
   phones?: string[];
   inquiryRecipient?: string;

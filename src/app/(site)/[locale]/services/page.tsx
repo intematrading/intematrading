@@ -13,7 +13,6 @@ import { BrandGrid, ExportTiles, ProducedGrid } from "@/components/ProductGrid";
 import { RouteSteps } from "@/components/RouteSteps";
 import { DistributionSection } from "@/components/DistributionSection";
 import { LogoWall } from "@/components/Partners";
-import { ProductPreviewProvider } from "@/components/ProductPreview";
 import { SectionHeading } from "@/components/SectionHeading";
 import { statIcon } from "@/components/stat-icons";
 import { heroPlaceholders, placeholders } from "@/content/placeholders";
@@ -151,7 +150,6 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         </section>
       ) : null}
 
-      <ProductPreviewProvider>
 
         {/* ── We Import ─────────────────────────────────────────────── */}
         <section id="import" aria-labelledby="import-heading" className={sectionClass}>
@@ -228,7 +226,6 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
             <RegionTree heading={t("targetMarkets")} regions={page.exportMarkets ?? []} locale={locale} className="mt-24 sm:mt-32" />
           </Container>
         </section>
-      </ProductPreviewProvider>
 
       {/* ── The other services: the route from port to shelf ────────── */}
       <RouteSteps

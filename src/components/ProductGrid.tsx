@@ -1,5 +1,4 @@
-import { ArrowUpRight, Package, type LucideIcon } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { Package, type LucideIcon } from "lucide-react";
 import { productPlaceholders, type Placeholder } from "@/content/placeholders";
 import type { Brand, ExportItem, ProducedItem, SanityImage } from "@/content/types";
 import type { Locale } from "@/i18n/routing";
@@ -8,7 +7,6 @@ import { Container } from "./Container";
 import { IconBox } from "./IconBox";
 import { Marquee } from "./Marquee";
 import { PhotoFrame } from "./PhotoFrame";
-import { ProductPreviewTrigger } from "./ProductPreview";
 import { Reveal } from "./Reveal";
 
 type GridItem = {
@@ -16,8 +14,6 @@ type GridItem = {
   title: string;
   /** Small chip over the photo, e.g. "Candles". */
   label?: string;
-  /** Extra line in the popup, e.g. sub-brands. */
-  meta?: string;
   description?: string;
   image?: SanityImage;
   placeholder?: Placeholder;
@@ -29,16 +25,14 @@ type GridItem = {
  * with a separator where the loop restarts. Two or three items sit in a
  * plain row and a single item gets one large feature with no heading.
  * `reverse` scrolls the row the other way; `onDark` styles the text for a
- * dark panel. Tiles open the shared product popup inside a
- * ProductPreviewProvider.
+ * dark panel.
  */
 /**
  * One product, editorial style: a rounded photo with no card around it
- * (optional chip; a red arrow slides in on hover), then the item's number
- * and name under a thin rule. Opens the product popup. `onDark` lightens
- * the text for the dark We Produce panel.
+ * (optional chip), then the item's name and description under a thin rule.
+ * `onDark` lightens the text for the dark We Produce panel.
  */
-function ProductTile({ item, onDark, locale, viewLabel }: { item: GridItem; onDark: boolean; locale: Locale; viewLabel: string }) {
+function ProductTile({ item, onDark, locale }: { item: GridItem; onDark: boolean; locale: Locale }) {
   return (
     <article className="group relative h-full">
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
@@ -57,9 +51,6 @@ function ProductTile({ item, onDark, locale, viewLabel }: { item: GridItem; onDa
             {item.label}
           </span>
         )}
-        <span aria-hidden="true" className="absolute top-3 right-3 flex size-10 translate-y-2 items-center justify-center rounded-full bg-red text-paper opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none">
-          <ArrowUpRight className="size-5" />
-        </span>
       </div>
       {/* Rule fading out at both ends */}
       <span aria-hidden="true" className={`mt-4 block h-px bg-linear-to-r from-transparent to-transparent ${onDark ? "via-white/35" : "via-steel-300"}`} />
@@ -69,31 +60,11 @@ function ProductTile({ item, onDark, locale, viewLabel }: { item: GridItem; onDa
           {item.description && <p className={`mt-0.5 text-sm ${onDark ? "text-paper/75" : "text-muted"}`}>{item.description}</p>}
         </div>
       </div>
-      <ProductPreviewTrigger
-        label={viewLabel}
-        data={{
-          title: item.title,
-          label: item.label,
-          meta: item.meta,
-          description: item.description,
-          media: (
-            <PhotoFrame
-              image={item.image}
-              placeholder={item.placeholder}
-              locale={locale}
-              width={900}
-              height={675}
-              sizes="(min-width: 768px) 28rem, 100vw"
-              icon={Package}
-            />
-          ),
-        }}
-      />
     </article>
   );
 }
 
-async function ProductGrid({
+function ProductGrid({
   items,
   icon: Icon,
   label,
@@ -115,7 +86,6 @@ async function ProductGrid({
   locale: Locale;
 }) {
   if (!items.length) return null;
-  const t = await getTranslations("Services");
   const heading = (
     <h3 className="flex items-center gap-4">
       <IconBox icon={Icon} />
@@ -123,7 +93,7 @@ async function ProductGrid({
     </h3>
   );
   const tile = (item: GridItem) => (
-    <ProductTile item={item} onDark={onDark} locale={locale} viewLabel={t("viewItem", { name: item.title })} />
+    <ProductTile item={item} onDark={onDark} locale={locale} />
   );
   return (
     <div className="mt-24 first:mt-0 sm:mt-32">
@@ -221,7 +191,6 @@ export function BrandGrid({ brands, ...props }: Shared & { brands: Brand[] }) {
       items={brands.map((b) => ({
         key: b._id,
         title: b.name,
-        meta: b.subBrands?.join(" · "),
         description: tr(b.description, props.locale),
         image: b.image,
         placeholder: productPlaceholders[b._id],
@@ -248,9 +217,8 @@ export function ProducedGrid({ products, ...props }: Shared & { products: Produc
 }
 
 /** Just the export brands' tiles, side by side (Services: beside the export text). */
-export async function ExportTiles({ brands, label, locale }: { brands: ExportItem[]; label: string; locale: Locale }) {
+export function ExportTiles({ brands, label, locale }: { brands: ExportItem[]; label: string; locale: Locale }) {
   if (!brands.length) return null;
-  const t = await getTranslations("Services");
   return (
     <ul aria-label={label} className="grid grid-cols-2 gap-x-6 gap-y-10 sm:gap-x-10">
       {brands.map((b) => {
@@ -258,7 +226,7 @@ export async function ExportTiles({ brands, label, locale }: { brands: ExportIte
         return (
           <li key={item.key}>
             <Reveal className="h-full">
-              <ProductTile item={item} onDark={false} locale={locale} viewLabel={t("viewItem", { name: item.title })} />
+              <ProductTile item={item} onDark={false} locale={locale} />
             </Reveal>
           </li>
         );

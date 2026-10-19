@@ -64,8 +64,6 @@
     "exportBrands": "Nos marques à l'export",
     "targetMarkets": "Marchés cibles",
     "ourProducts": "Nos produits",
-    "closePreview": "Fermer l'aperçu",
-    "viewItem": "Voir {name}",
     "marketEyebrow": "Opportunité de marché",
     "addisAbaba": "Addis-Abeba",
     "routeEyebrow": "Du port au rayon"
@@ -126,7 +124,7 @@
     "mapHeading": "Nous trouver",
     "mapTitle": "Carte indiquant INTEMA Trading PLC. à Addis-Abeba",
     "detailsEyebrow": "Nous joindre",
-    "mapIntro": "Nos bureaux se trouvent à Arada, au cœur d’Addis-Abeba. Passez nous voir aux heures d’ouverture, ou contactez-nous d’abord et nous serons prêts à vous recevoir."
+    "mapIntro": "Nos bureaux se trouvent dans le district de Bole, près de l’hôtel Atlas, à Addis-Abeba. Passez nous voir aux heures d’ouverture, ou contactez-nous d’abord et nous serons prêts à vous recevoir."
   },
   "About": {
     "snapshot": "L'entreprise en bref",

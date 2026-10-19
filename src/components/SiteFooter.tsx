@@ -88,9 +88,15 @@ export async function SiteFooter({ settings, locale }: { settings: SiteSettings;
                   <Mail aria-hidden="true" className="size-4 text-paper/80" />
                   {t("emailLabel")}
                 </p>
-                <a href={`mailto:${settings.email}`} className={`mt-1 block break-all ${linkClass}`}>
-                  {settings.email}
-                </a>
+                <ul className="mt-1 space-y-0.5">
+                  {[settings.email, ...(settings.otherEmails ?? [])].map((email) => (
+                    <li key={email}>
+                      <a href={`mailto:${email}`} className={`block break-all ${linkClass}`}>
+                        {email}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
               {settings.phones?.length ? (
                 <div>

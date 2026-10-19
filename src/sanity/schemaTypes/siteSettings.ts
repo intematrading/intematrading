@@ -10,7 +10,14 @@ export const siteSettings = defineType({
     defineField({ name: "companyName", type: "localeString", validation: (r) => r.required() }),
     defineField({ name: "address", type: "localeString", description: "Street / sub-city address." }),
     defineField({ name: "poBox", title: "P.O. Box", type: "localeString" }),
-    defineField({ name: "email", type: "string", validation: (r) => r.required().email() }),
+    defineField({ name: "email", title: "Main email", type: "string", validation: (r) => r.required().email() }),
+    defineField({
+      name: "otherEmails",
+      title: "More email addresses",
+      description: "Listed under the main email on the Contact page and in the footer.",
+      type: "array",
+      of: [defineArrayMember({ type: "string", validation: (r) => r.email() })],
+    }),
     defineField({ name: "website", type: "url" }),
     defineField({
       name: "phones",
