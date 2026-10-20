@@ -2,6 +2,7 @@ import { Coffee, Flame, ShoppingBasket, Sparkles } from "lucide-react";
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { RegionTree } from "@/components/RegionTree";
@@ -39,12 +40,15 @@ function ServiceHeading({
   id,
   number,
   title,
+  tagline,
   intro,
   onDark = false,
 }: {
   id: string;
   number: string;
   title: string;
+  /** A short statement under the title, e.g. "Your Trusted Partner for Market Entry in Ethiopia". */
+  tagline?: string;
   intro?: string;
   onDark?: boolean;
 }) {
@@ -62,6 +66,7 @@ function ServiceHeading({
           <SectionHeading id={id} onDark={onDark}>
             {title}
           </SectionHeading>
+          {tagline && <p className={`font-title-heading mt-4 text-lg sm:text-xl ${onDark ? "text-paper" : "text-ink"}`}>{tagline}</p>}
           {intro && <p className={`mt-4 sm:text-lg ${onDark ? "text-paper/80" : "text-muted"}`}>{intro}</p>}
         </div>
       </header>
@@ -73,13 +78,14 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [page, home, brands, producedItems, exportItems, t] = await Promise.all([
+  const [page, home, brands, producedItems, exportItems, t, common] = await Promise.all([
     getServicesPage(),
     getHomePage(),
     getBrands(),
     getProducedItems(),
     getExportItems(),
     getTranslations("Services"),
+    getTranslations("Common"),
   ]);
 
   const nonFood = brands.filter((b) => b.category === "nonFood");
@@ -154,7 +160,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         {/* ── We Import ─────────────────────────────────────────────── */}
         <section id="import" aria-labelledby="import-heading" className={sectionClass}>
           <Container>
-            <ServiceHeading id="import-heading" number="01" title={importSec.title} intro={tr(page.importIntro, locale)} />
+            <ServiceHeading id="import-heading" number="01" title={importSec.title} tagline={tr(page.importTagline, locale)} intro={tr(page.importIntro, locale)} />
             {/* The brands we import, as logos */}
             <Reveal>
               <LogoWall locale={locale} className="mt-12 sm:mt-16" />
@@ -169,7 +175,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         {/* ── We Distribute: the map of stores and the details, then photos from the stores ── */}
         <section id="distribution" aria-labelledby="distribution-heading" className={sectionClass}>
           <Container>
-            <ServiceHeading id="distribution-heading" number="02" title={distributionSec.title} intro={distributionIntro} />
+            <ServiceHeading id="distribution-heading" number="02" title={distributionSec.title} tagline={tr(page.distributionTagline, locale)} intro={distributionIntro} />
           </Container>
           <DistributionSection
             locale={locale}
@@ -185,6 +191,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
               network: t("networkHeading"),
               headOffice: t("headOffice"),
               kinds: { warehouse: t("kindWarehouse"), depot: t("kindDepot"), partner: t("kindPartner") },
+              gallery: { previous: t("galleryPrevious"), next: t("galleryNext"), close: t("galleryClose"), open: t("galleryOpen") },
             }}
           />
         </section>
@@ -236,6 +243,29 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         intro={tr(page.routeIntro, locale)}
         className="pt-0 sm:pt-0"
       />
+
+      {/* ── Our value proposition: a closing band with the brand-owner CTA ── */}
+      {page.valueHeading && (
+        <section aria-labelledby="value-heading" className="pb-16 sm:pb-24">
+          <Container>
+            <Reveal>
+              <div className="on-dark steel-gradient-deep grid gap-8 rounded-[1.75rem] px-6 py-12 text-paper sm:rounded-[2rem] sm:px-12 sm:py-16 lg:grid-cols-12 lg:items-end lg:px-16">
+                <div className="lg:col-span-8">
+                  <SectionHeading id="value-heading" eyebrow={t("valueEyebrow")} onDark>
+                    {tr(page.valueHeading, locale)}
+                  </SectionHeading>
+                  {page.valueBody && <p className="mt-6 max-w-2xl text-paper/80 sm:text-lg">{tr(page.valueBody, locale)}</p>}
+                </div>
+                <div className="lg:col-span-4 lg:flex lg:justify-end">
+                  <ButtonLink href="/contact?type=brand" variant="white">
+                    {common("contactUs")}
+                  </ButtonLink>
+                </div>
+              </div>
+            </Reveal>
+          </Container>
+        </section>
+      )}
     </div>
   );
 }

@@ -14,6 +14,7 @@ export const servicesPage = defineType({
     { name: "produce", title: "We Produce" },
     { name: "export", title: "We Export" },
     { name: "route", title: "Our route (end of page)" },
+    { name: "value", title: "Value proposition (closing)" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
@@ -35,6 +36,7 @@ export const servicesPage = defineType({
     defineField({ name: "marketSource", title: "Sources line", type: "localeString", group: "market", description: "Shown in small print under the figures." }),
 
     defineField({ name: "importHeading", type: "localeString", group: "import" }),
+    defineField({ name: "importTagline", title: "Tagline", type: "localeString", group: "import", description: "A short statement under the heading." }),
     defineField({ name: "importIntro", type: "localeText", group: "import" }),
     defineField({ name: "nonFoodIntro", title: "Non-food category description", type: "localeText", group: "import" }),
     defineField({ name: "foodIntro", title: "Food category description", type: "localeText", group: "import" }),
@@ -42,6 +44,7 @@ export const servicesPage = defineType({
 
     // We Distribute — empty fields fall back to the Distribution step (Home page → From port to shelf).
     defineField({ name: "distributionHeading", type: "localeString", group: "distribution", description: 'Leave empty for "We Distribute".' }),
+    defineField({ name: "distributionTagline", title: "Tagline", type: "localeString", group: "distribution", description: "A short statement under the heading." }),
     defineField({ name: "distributionIntro", type: "localeText", group: "distribution", description: "Leave empty to use the Distribution step's short line (Home page → From port to shelf)." }),
     defineField({ name: "distributionBody", title: "Details", type: "localeText", group: "distribution", description: "Under the map. Leave empty to use the Distribution step's details." }),
     defineField({
@@ -168,6 +171,8 @@ export const servicesPage = defineType({
 
     defineField({ name: "routeHeading", title: "Heading", type: "localeString", group: "route", description: "The steps themselves are edited on the Home page (From port to shelf)." }),
     defineField({ name: "routeIntro", title: "Intro", type: "localeText", group: "route" }),
+    defineField({ name: "valueHeading", title: "Heading", type: "localeString", group: "value", description: "The closing band at the end of the page, with a Contact button. Leave empty to hide it." }),
+    defineField({ name: "valueBody", title: "Text", type: "localeText", group: "value" }),
     defineField({ name: "seo", type: "seo", group: "seo" }),
   ],
   preview: { prepare: () => ({ title: "Our Services page" }) },

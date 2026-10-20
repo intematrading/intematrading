@@ -89,10 +89,12 @@ export type ServicesPage = {
   marketStats?: Stat[];
   marketSource?: LocaleString;
   importHeading?: LocaleString;
+  importTagline?: LocaleString;
   importIntro?: LocaleString;
   nonFoodIntro?: LocaleString;
   foodIntro?: LocaleString;
   distributionHeading?: LocaleString;
+  distributionTagline?: LocaleString;
   distributionIntro?: LocaleString;
   distributionBody?: LocaleString;
   distributionStores?: MapStore[];
@@ -112,6 +114,8 @@ export type ServicesPage = {
   exportMarkets?: TitledText[];
   routeHeading?: LocaleString;
   routeIntro?: LocaleString;
+  valueHeading?: LocaleString;
+  valueBody?: LocaleString;
   seo?: Seo;
 };
 

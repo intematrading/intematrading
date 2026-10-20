@@ -1,16 +1,18 @@
-import { Ellipsis, ImageIcon, MapPin, Network, ShoppingCart, Store, type LucideIcon } from "lucide-react";
+import { Ellipsis, ImageIcon, Network, ShoppingCart, Store, type LucideIcon } from "lucide-react";
 import type { DistributionPoint, GalleryImage, MapStore, ServicesPage } from "@/content/types";
 import type { Locale } from "@/i18n/routing";
 import { tr } from "@/lib/content";
+import { urlFor } from "@/sanity/image";
 import { CmsImage } from "./CmsImage";
 import { Container } from "./Container";
 import { EthiopiaMap } from "./EthiopiaMap";
 import { IconBox } from "./IconBox";
 import { Reveal } from "./Reveal";
+import { ShelfCarousel } from "./ShelfCarousel";
 import { statIcon } from "./stat-icons";
 
-// Blank tiles shown until photos are added in the Studio (fills the mosaic once).
-const PLACEHOLDER_TILES = 5;
+// Blank tiles shown until photos are added in the Studio (fills the row on desktop).
+const PLACEHOLDER_TILES = 3;
 
 // The map's six pins, in order (the first five where the Figma design places
 // them, the sixth, "and more", top right): the top centre of each
@@ -176,22 +178,14 @@ function SubHeading({ icon, children }: { icon: LucideIcon; children: React.Reac
   );
 }
 
-/**
- * Mosaic tile placement, in groups of five: one large tile (2x2) and four
- * small ones, the large tile switching sides each group from lg.
- */
-function tileClass(i: number) {
-  if (i % 10 === 0) return "col-span-2 row-span-2";
-  if (i % 10 === 5) return "col-span-2 row-span-2 lg:col-start-3";
-  return "";
-}
 
 /**
  * Services → We Distribute, under its heading: the map of the stores we
  * supply, with the details under it; the distribution figures (only those
  * with a value) and the distribution network on a map of Ethiopia (once any
- * points are added); then "On the shelves", a mosaic of photos from those
- * stores, captioned with the store, or blank tiles until photos are added.
+ * points are added); then "On the shelves", photos from those stores in a
+ * carousel that opens each one full screen, or blank tiles until photos are
+ * added.
  */
 export function DistributionSection({
   locale,
@@ -217,6 +211,7 @@ export function DistributionSection({
     network: string;
     headOffice: string;
     kinds: Record<DistributionPoint["kind"], string>;
+    gallery: { previous: string; next: string; close: string; open: string };
   };
 }) {
   const photos = gallery?.filter((image) => image.asset) ?? [];
@@ -292,45 +287,34 @@ export function DistributionSection({
           <SubHeading icon={ShoppingCart}>{labels.onTheShelves}</SubHeading>
           {galleryIntro && <p className="max-w-md text-muted sm:text-lg lg:text-right">{galleryIntro}</p>}
         </Reveal>
-        <Reveal>
-          <ul
-            aria-hidden={photos.length ? undefined : true}
-            className="mt-10 grid auto-rows-[9.5rem] grid-cols-2 gap-3 sm:auto-rows-[13rem] sm:gap-4 lg:grid-flow-dense lg:auto-rows-[14rem] lg:grid-cols-4"
-          >
-            {photos.length
-              ? photos.map((photo, i) => {
-                  const caption = tr(photo.caption, locale);
-                  const large = i % 5 === 0;
-                  return (
-                    <li key={photo._key} className={`group relative overflow-hidden rounded-2xl bg-steel-100 ring-1 ring-black/5 ${tileClass(i)}`}>
-                      <CmsImage
-                        image={photo}
-                        locale={locale}
-                        width={large ? 1200 : 600}
-                        height={large ? 900 : 600}
-                        sizes={large ? "(min-width: 1024px) 40rem, 100vw" : "(min-width: 1024px) 20rem, 50vw"}
-                        fallbackAlt={caption}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04] motion-reduce:transition-none"
-                      />
-                      {caption && (
-                        <p className="absolute inset-x-0 bottom-0 flex items-center gap-1.5 bg-linear-to-t from-black/70 to-transparent px-4 pt-10 pb-3.5 text-xs font-semibold text-paper sm:text-sm">
-                          <MapPin aria-hidden="true" className="size-3.5 shrink-0" />
-                          {caption}
-                        </p>
-                      )}
-                    </li>
-                  );
-                })
-              : Array.from({ length: PLACEHOLDER_TILES }, (_, i) => (
-                  // Blank photo tile: a faint dot grid with an image icon
-                  <li
-                    key={i}
-                    className={`flex items-center justify-center rounded-2xl bg-steel-50 bg-[radial-gradient(var(--color-steel-200)_1px,transparent_1px)] bg-size-[14px_14px] text-steel-300 ring-1 ring-black/5 ${tileClass(i)}`}
-                  >
-                    <ImageIcon className={i === 0 ? "size-12" : "size-8"} strokeWidth={1.25} />
-                  </li>
-                ))}
-          </ul>
+        <Reveal className="mt-10">
+          {photos.length ? (
+            <ShelfCarousel
+              photos={photos.map((photo) => {
+                const caption = tr(photo.caption, locale);
+                return {
+                  key: photo._key,
+                  thumb: urlFor(photo).width(900).height(675).fit("crop").url(),
+                  full: urlFor(photo).width(2000).fit("max").url(),
+                  alt: tr(photo.alt, locale) || caption,
+                  caption: caption || undefined,
+                };
+              })}
+              labels={labels.gallery}
+            />
+          ) : (
+            // Blank photo tiles until photos are added in the Studio
+            <ul aria-hidden="true" className="flex gap-4 overflow-hidden">
+              {Array.from({ length: PLACEHOLDER_TILES }, (_, i) => (
+                <li
+                  key={i}
+                  className="flex aspect-[4/3] w-[82%] shrink-0 items-center justify-center rounded-2xl bg-steel-50 bg-[radial-gradient(var(--color-steel-200)_1px,transparent_1px)] bg-size-[14px_14px] text-steel-300 ring-1 ring-black/5 sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)]"
+                >
+                  <ImageIcon className="size-10" strokeWidth={1.25} />
+                </li>
+              ))}
+            </ul>
+          )}
         </Reveal>
       </Container>
     </>
