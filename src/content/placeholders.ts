@@ -47,10 +47,3 @@ export const heroPlaceholders = {
   team: { src: "/placeholders/hero-team.jpg" },
 } satisfies Record<string, Placeholder>;
 
-// Avatars for the labelled sample testimonials only (keyed by sample id).
-// Stand-in avatars for testimonials without a photo, used in rotation.
-export const testimonialPlaceholders: Placeholder[] = [
-  { src: "/placeholders/testimonial-1.jpg" },
-  { src: "/placeholders/testimonial-2.jpg" },
-  { src: "/placeholders/testimonial-3.jpg" },
-];

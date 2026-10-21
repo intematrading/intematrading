@@ -134,12 +134,13 @@ export function RouteStops({ steps, locale, className = "" }: { steps?: RouteSte
           <li
             key={step._key}
             style={{ "--w": width(i) } as React.CSSProperties}
-            className={`relative flex w-1/2 flex-col items-center px-2 text-center sm:w-1/3 lg:w-(--w) ${i === half ? "lg:ml-[calc(100%/7)]" : ""}`}
+            className={`group relative flex w-1/2 flex-col items-center px-2 text-center sm:w-1/3 lg:w-(--w) ${i === half ? "lg:ml-[calc(100%/7)]" : ""}`}
           >
-            <span className="steel-gradient flex size-16 items-center justify-center rounded-full text-paper shadow-md ring-4 ring-paper">
+            {/* On hover the stop lifts, grows a little and turns red */}
+            <span className="steel-gradient group-hover:red-gradient flex size-16 items-center justify-center rounded-full text-paper shadow-md ring-4 ring-paper transition-[translate,scale,box-shadow] duration-300 ease-out group-hover:-translate-y-1 group-hover:scale-110 group-hover:shadow-xl motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-hover:scale-100">
               <Icon aria-hidden="true" className="size-6" />
             </span>
-            <span className="mt-4 text-sm font-semibold text-ink sm:text-base">{tr(step.title, locale)}</span>
+            <span className="mt-3 text-xs font-semibold text-ink sm:text-sm">{tr(step.title, locale)}</span>
           </li>
         );
       })}

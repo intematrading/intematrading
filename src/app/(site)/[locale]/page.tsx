@@ -1,10 +1,16 @@
 import {
   ArrowRight,
+  Award,
   BadgeCheck,
+  Boxes,
   Eye,
+  FileSignature,
   Flame,
+  Globe2,
   Handshake,
+  Package,
   Plane,
+  RefreshCw,
   ShieldCheck,
   Ship,
   ShoppingBasket,
@@ -24,7 +30,9 @@ import { Container } from "@/components/Container";
 import { CursorSway } from "@/components/CursorSway";
 import { Eyebrow } from "@/components/Eyebrow";
 import { IconBox } from "@/components/IconBox";
+import { Logo } from "@/components/Logo";
 import { LogoWall } from "@/components/Partners";
+import { BrandGrid } from "@/components/ProductGrid";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -32,7 +40,6 @@ import { statIcon } from "@/components/stat-icons";
 import { Reveal } from "@/components/Reveal";
 import { RouteStops } from "@/components/RouteSteps";
 import { TeamCard } from "@/components/TeamCard";
-import { Testimonials } from "@/components/Testimonials";
 import { placeholders } from "@/content/placeholders";
 import type { ServiceSection } from "@/content/types";
 import { Link } from "@/i18n/navigation";
@@ -46,7 +53,6 @@ import {
   getSiteSettings,
   getTeamMembers,
   getTeamPage,
-  getTestimonials,
   tr,
   withValues,
 } from "@/lib/content";
@@ -58,11 +64,13 @@ const cardIcons: Record<ServiceSection, LucideIcon> = {
   export: Plane,
 };
 const pointIcons = [ShieldCheck, BadgeCheck, Handshake];
+// Importing points in order (exclusive agency, supplier network, compliance, planning, trusted brands, categories), repeating.
+const importIcons = [FileSignature, Globe2, ShieldCheck, RefreshCw, Award, Boxes];
 // Brands INTEMA is the main importer of (logos in public/).
 const mainImporterLogos = [
-  // Heights balanced by eye: L'Oréal's thin, wide wordmark vs Heinz's compact badge.
-  { name: "L'Oréal", src: "/loreal-logo.svg", width: 800, height: 145, size: "h-9 sm:h-11" },
-  { name: "Heinz", src: "/heinz-logo.svg", width: 1024, height: 459, size: "h-11 sm:h-14" },
+  // Heights balanced by eye: L'Oréal's wide wordmark (thickened, in loreal-logo-bold.svg) vs Heinz's compact badge.
+  { name: "L'Oréal", src: "/loreal-logo-bold.svg", width: 808, height: 153, size: "h-12 sm:h-16" },
+  { name: "Heinz", src: "/heinz-logo.svg", width: 1024, height: 459, size: "h-16 sm:h-24" },
 ];
 
 
@@ -77,13 +85,13 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [home, about, services, teamPage, teamMembers, testimonials, brands, producedItems, exportItems, t, common, svc] = await Promise.all([
+  const [home, about, services, teamPage, teamMembers, settings, brands, producedItems, exportItems, t, common, svc] = await Promise.all([
     getHomePage(),
     getAboutPage(),
     getServicesPage(),
     getTeamPage(),
     getTeamMembers(),
-    getTestimonials(),
+    getSiteSettings(),
     getBrands(),
     getProducedItems(),
     getExportItems(),
@@ -96,6 +104,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   // small line above the headline; both stay inside the one <h1>.
   const [brandLine, ...rest] = tr(home.heroHeadline, locale).split(/\s+—\s+/);
   const headline = rest.join(" — ");
+  const companyName = tr(settings.companyName, locale);
   const cards = home.entryCards ?? [];
 
   const stats = withValues(home.stats);
@@ -134,16 +143,17 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 priority
               />
             </div>
-            {/* Heavier overall shade, a dark vignette at the edges and a darker
-                centre behind the text, so the photo stays in the background */}
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/55" />
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgb(0_0_0/0.75)_100%)]" />
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgb(0_0_0/0.3)_0%,transparent_60%)]" />
+            {/* A light overall shade, a soft vignette at the edges and a darker
+                centre behind the text, so the photo stays bright but the text reads */}
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/30" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgb(0_0_0/0.45)_100%)]" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgb(0_0_0/0.4)_0%,transparent_60%)]" />
             <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-44 bg-linear-to-b from-black/50 to-black/0" />
 
             <Container className="flex flex-1 flex-col pt-6 pb-8 sm:pt-7 sm:pb-12">
               {/* Centred content */}
               <div className="flex flex-1 flex-col items-center justify-center py-10 text-center">
+                <Logo alt={companyName} tone="white" priority className="mb-6 h-14 w-auto sm:mb-8 sm:h-20" />
                 <h1 className="max-w-4xl">
                   {headline ? (
                     <>
@@ -187,32 +197,32 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
       {/* ── About INTEMA: sized to its content. The heading and intro under
           a container hanging on a crane line from the section's top edge;
-          beside them the stats, which fade in one after another once in
-          view. ───────────────────────────────────────────────────────── */}
+          beside them (from md) the stats, which fade in one after another
+          once in view: one column below xl, a 2x2 grid from xl. ────────── */}
       {stats.length ? (
           <section aria-labelledby="snapshot-heading" className="relative overflow-hidden py-16 text-ink sm:py-20 lg:py-24">
-            <Container className="grid w-full gap-12 xl:grid-cols-12 xl:items-center xl:gap-10">
-              <div className="xl:col-span-5">
+            <Container className="grid w-full gap-12 md:grid-cols-12 md:items-center md:gap-x-16 lg:gap-x-24">
+              <div className="md:col-span-5">
                 <div aria-hidden="true" className="pointer-events-none -mt-[9.5rem] mb-[-2rem] hidden w-[min(26rem,100%)] xl:block">
                   <CursorSway>
                     <Image src="/img1.png" alt="" width={2000} height={2000} sizes="(min-width: 1024px) 26rem, 0px" className="w-full" />
                   </CursorSway>
                 </div>
-                <SectionHeading id="snapshot-heading" eyebrow={brandLine}>
-                  {t("snapshotHeading")}
+                <SectionHeading id="snapshot-heading" eyebrow={t("snapshotHeading")}>
+                  {t("biggestImporter")}
                 </SectionHeading>
                 <p className="mt-5 max-w-md text-muted sm:text-lg">{t("snapshotIntro")}</p>
                 <ButtonLink href="/about" variant="red" className="mt-8">
                   {common("learnMore")}
                 </ButtonLink>
               </div>
-              {/* 2x2 grid, cells split by a faded cross */}
-              <ul className="relative grid gap-y-10 sm:grid-cols-2 sm:gap-y-0 xl:col-span-7 xl:col-start-6 sm:before:absolute sm:before:inset-y-0 sm:before:left-1/2 sm:before:w-px sm:before:bg-linear-to-b sm:before:from-transparent sm:before:via-steel-300 sm:before:to-transparent sm:after:absolute sm:after:inset-x-0 sm:after:top-1/2 sm:after:h-px sm:after:bg-linear-to-r sm:after:from-transparent sm:after:via-steel-300 sm:after:to-transparent">
+              {/* One column split by thin rules; from xl a 2x2 grid, cells split by a faded cross */}
+              <ul className="relative grid divide-y divide-steel-200 md:col-span-7 md:col-start-6 xl:grid-cols-2 xl:divide-y-0 xl:before:absolute xl:before:inset-y-0 xl:before:left-1/2 xl:before:w-px xl:before:bg-linear-to-b xl:before:from-transparent xl:before:via-steel-300 xl:before:to-transparent xl:after:absolute xl:after:inset-x-0 xl:after:top-1/2 xl:after:h-px xl:after:bg-linear-to-r xl:after:from-transparent xl:after:via-steel-300 xl:after:to-transparent">
                 {stats.map((stat, i) => {
                   const Icon = statIcon(stat._key);
                   return (
                     <li key={stat._key}>
-                      <Reveal delay={i * 200} className="flex items-start gap-5 py-2 sm:px-6 sm:py-10 lg:px-8 lg:py-14">
+                      <Reveal delay={i * 200} className="flex items-start gap-5 py-6 xl:px-8 xl:py-14">
                       <IconBox icon={Icon} size="lg" className="mt-1" />
                       {/* Number, then its label and description underneath */}
                       <div className="flex flex-col-reverse">
@@ -220,7 +230,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                           <span className="block text-lg font-semibold text-ink">{tr(stat.label, locale)}</span>
                           {stat.note && <span className="mt-1.5 block max-w-xs text-muted">{tr(stat.note, locale)}</span>}
                         </p>
-                        <p className="font-display-heading text-steel-gradient text-5xl leading-none sm:text-[clamp(2.5rem,7svh,3.75rem)]" lang="en">
+                        <p className="font-display-heading text-steel-gradient text-5xl leading-none xl:text-[clamp(2.5rem,7svh,3.75rem)]" lang="en">
                           {stat.value}
                         </p>
                       </div>
@@ -232,6 +242,46 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </Container>
           </section>
       ) : null}
+
+      {/* ── Importing: what INTEMA brings to brand owners, as cards, with a
+          link to the import section of Services ─────────────────────── */}
+      {home.importHeading && (
+        <section aria-labelledby="importing-heading" className="bg-steel-50 py-16 sm:py-24">
+          <Container>
+            <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-8">
+                <SectionHeading id="importing-heading" eyebrow={t("importingEyebrow")}>
+                  {tr(home.importHeading, locale)}
+                </SectionHeading>
+                {home.importIntro && <p className="mt-6 max-w-3xl text-muted sm:text-lg">{tr(home.importIntro, locale)}</p>}
+              </div>
+              <div className="lg:col-span-4 lg:flex lg:justify-end">
+                <ButtonLink href="/services#import" variant="red">
+                  {t("importingCta")}
+                </ButtonLink>
+              </div>
+            </Reveal>
+            {home.importPoints?.length ? (
+              <ul className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+                {home.importPoints.map((point, i) => {
+                  const Icon = importIcons[i % importIcons.length];
+                  return (
+                    <li key={point._key}>
+                      <Reveal delay={(i % 3) * 120} className="h-full">
+                        <div className="flex h-full flex-col rounded-3xl bg-paper p-6 shadow-sm ring-1 ring-black/5 sm:p-7">
+                          <IconBox icon={Icon} />
+                          <h3 className="font-title-heading mt-6 text-lg text-ink">{tr(point.title, locale)}</h3>
+                          {point.body && <p className="mt-2 leading-relaxed text-muted">{tr(point.body, locale)}</p>}
+                        </div>
+                      </Reveal>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+          </Container>
+        </section>
+      )}
 
       {/* ── Commitment band: full width and at least a screen tall. The
           headline and paragraph on the left; on the right, glass cards for
@@ -391,9 +441,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               </div>
               {/* "Main importers of": a fading rule, then the L'Oréal and Heinz logos side by side */}
               <div className="lg:col-span-5 lg:col-start-8 lg:self-center lg:text-right">
-                <p className="label-caps text-red-ink">{t("mainImporter")}</p>
+                <p className="font-title-heading text-lg text-red-ink sm:text-xl">{t("mainImporter")}</p>
                 <span aria-hidden="true" className="mt-4 block h-px bg-linear-to-r from-steel-400 to-transparent lg:bg-linear-to-l" />
-                <ul className="mt-6 flex items-center gap-8 sm:gap-10 lg:justify-end">
+                <ul className="mt-6 flex items-center gap-10 sm:gap-14 lg:justify-end">
                   {mainImporterLogos.map((logo) => (
                     <li key={logo.name}>
                       <Image src={logo.src} alt={logo.name} width={logo.width} height={logo.height} unoptimized className={`w-auto object-contain ${logo.size}`} />
@@ -441,6 +491,10 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               })}
             </div>
           </Container>
+          {/* Product items: the imported brands' products, scrolling */}
+          <div className="mt-20 sm:mt-24">
+            <BrandGrid brands={brands} icon={Package} label={t("featuredProducts")} locale={locale} />
+          </div>
           <div className="mt-14 flex justify-center">
             <ButtonLink href="/services#import" variant="red">
               {t("allProducts")}
@@ -483,7 +537,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </section>
       ) : null}
 
-      <Testimonials items={testimonials} locale={locale} />
     </div>
   );
 }

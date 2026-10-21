@@ -25,6 +25,10 @@
   },
   "Home": {
     "snapshotHeading": "About INTEMA",
+    "biggestImporter": "One of the biggest branded goods importers in Ethiopia",
+    "importingEyebrow": "Importing",
+    "importingCta": "How we import",
+    "featuredProducts": "Some of the products we import",
     "snapshotIntro": "Since 2014 we have imported and distributed trusted international brands in Ethiopia, alongside manufacturing our own products and exporting Ethiopian coffee.",
     "importedBrands": "Brands we import",
     "moreItems": "+{count} more",
@@ -149,9 +153,5 @@
     "leadershipEyebrow": "Who leads us",
     "organisedEyebrow": "Departments",
     "headsEyebrow": "Who runs the day to day"
-  },
-  "Testimonials": {
-    "eyebrow": "Testimonials",
-    "heading": "What our *partners* say"
   }
 }

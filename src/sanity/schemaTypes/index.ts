@@ -12,7 +12,6 @@ import { servicesPage } from "./servicesPage";
 import { siteSettings } from "./siteSettings";
 import { teamMember } from "./teamMember";
 import { teamPage } from "./teamPage";
-import { testimonial } from "./testimonial";
 
 export const schemaTypes = [
   localeString,
@@ -29,7 +28,6 @@ export const schemaTypes = [
   producedItem,
   exportItem,
   teamMember,
-  testimonial,
   inquiry,
 ];
 

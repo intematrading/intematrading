@@ -26,7 +26,6 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("producedItem").title("Produced products"),
       S.documentTypeListItem("exportItem").title("Export brands"),
       S.documentTypeListItem("teamMember").title("Team members"),
-      S.documentTypeListItem("testimonial").title("Testimonials"),
       S.divider(),
       singleton(S, "siteSettings", "Site settings & contact details"),
       S.documentTypeListItem("inquiry").title("Inquiries (from contact form)"),

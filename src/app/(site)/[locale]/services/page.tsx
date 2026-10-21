@@ -1,4 +1,4 @@
-import { Coffee, Flame, ShoppingBasket, Sparkles } from "lucide-react";
+import { Building2, Coffee, Flame, Globe2, Plane, Ship, ShoppingBasket, Sparkles, TrendingUp, Users } from "lucide-react";
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -32,6 +32,9 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/services
     fallbackTitle: tr(page.title, locale),
   });
 }
+
+// Why Ethiopia? reasons in order (consumers, cities, growth, trade corridor, hub, region), repeating.
+const marketIcons = [Users, Building2, TrendingUp, Ship, Plane, Globe2];
 
 // Sections are linked to by #id (e.g. from the home page's service cards).
 const sectionClass = "scroll-mt-4 py-16 sm:py-24";
@@ -152,6 +155,25 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
               })}
             </ul>
             {page.marketSource && <p className="mt-6 text-center text-xs text-muted italic">{tr(page.marketSource, locale)}</p>}
+            {/* Reasons to enter Ethiopia, under the figures */}
+            {page.marketPoints?.length ? (
+              <ul className="mt-14 grid gap-x-10 gap-y-8 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
+                {page.marketPoints.map((point, i) => {
+                  const Icon = marketIcons[i % marketIcons.length];
+                  return (
+                    <li key={point._key}>
+                      <Reveal className="flex gap-4">
+                        <IconBox icon={Icon} />
+                        <div>
+                          <h3 className="font-title-heading text-base text-ink">{tr(point.title, locale)}</h3>
+                          {point.body && <p className="mt-1.5 text-sm leading-relaxed text-muted sm:text-base">{tr(point.body, locale)}</p>}
+                        </div>
+                      </Reveal>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
           </Container>
         </section>
       ) : null}

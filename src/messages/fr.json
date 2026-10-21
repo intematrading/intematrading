@@ -25,6 +25,10 @@
   },
   "Home": {
     "snapshotHeading": "À propos d’INTEMA",
+    "biggestImporter": "L’un des plus grands importateurs de produits de marque en Éthiopie",
+    "importingEyebrow": "Importation",
+    "importingCta": "Notre approche de l’importation",
+    "featuredProducts": "Quelques-uns des produits que nous importons",
     "snapshotIntro": "Depuis 2014, nous importons et distribuons des marques internationales de confiance en Éthiopie, tout en fabriquant nos propres produits et en exportant du café éthiopien.",
     "importedBrands": "Marques que nous importons",
     "moreItems": "+{count} de plus",
@@ -149,9 +153,5 @@
     "leadershipEyebrow": "Notre direction",
     "organisedEyebrow": "Services",
     "headsEyebrow": "Au quotidien"
-  },
-  "Testimonials": {
-    "eyebrow": "Témoignages",
-    "heading": "Ce que disent nos *partenaires*"
   }
 }

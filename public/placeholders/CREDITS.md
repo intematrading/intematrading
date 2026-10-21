@@ -17,9 +17,6 @@ with INTEMA's own photography via Sanity.
 | about-training.jpg | René Porter | https://unsplash.com/photos/5j6YBI45TI4 |
 | hero-about.jpg | Gift Habeshaw | https://unsplash.com/photos/SpLQSi6CajQ |
 | hero-team.jpg | Cytonn Photography | https://unsplash.com/photos/n95VMLxqM2I |
-| testimonial-1.jpg | alex starnes | https://unsplash.com/photos/PK_t0Lrh7MM |
-| testimonial-2.jpg | Nigel Msipa | https://unsplash.com/photos/vZbWlXzZtAY |
-| testimonial-3.jpg | Christina @ wocintechchat.com | https://unsplash.com/photos/3ok_-Wvny2Q |
 | contact-handshake.jpg | Vitaly Gariev | https://unsplash.com/photos/lZXX-QVdyXY |
 | products/reckitt.jpg | Mockup Free | https://unsplash.com/photos/m3rBOi881fo |
 | products/queen-elisabeth.jpg | pmv chamara | https://unsplash.com/photos/NpOYRn-p9OM |

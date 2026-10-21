@@ -15,7 +15,6 @@ import type {
   SiteSettings,
   TeamMember,
   TeamPage,
-  Testimonial,
 } from "@/content/types";
 import type { Locale } from "@/i18n/routing";
 import { client } from "@/sanity/client";
@@ -66,9 +65,6 @@ const exportItemsQuery = defineQuery(
   `*[_type == "exportItem"] | order(coalesce(order, 999) asc, name asc){ _id, name, description, image }`,
 );
 const aboutPageQuery = defineQuery(`*[_id == "aboutPage"][0]`);
-const testimonialsQuery = defineQuery(
-  `*[_type == "testimonial"] | order(coalesce(order, 999) asc, _createdAt desc){ _id, quote, name, role, company, photo }`,
-);
 
 // The header eyebrow falls back to the default copy while the CMS field is empty.
 const withEyebrow = <T extends { eyebrow?: LocaleString }>(page: T, defaults: T): T => ({ ...page, eyebrow: page.eyebrow ?? defaults.eyebrow });
@@ -85,20 +81,6 @@ export const getExportItems = cache(() => fetchOr<ExportItem[]>(exportItemsQuery
 export const getContactPage = cache(() => fetchOr<ContactPage>(contactPageQuery, fallback.contactPage));
 export const getAboutPage = cache(async () => withEyebrow(await fetchOr<AboutPage>(aboutPageQuery, fallback.aboutPage), fallback.aboutPage));
 
-/**
- * Real testimonials from Sanity. The labelled samples are shown only while
- * Sanity isn't connected, so they can never reach a site that has real content.
- */
-export const getTestimonials = cache(async (): Promise<Testimonial[]> => {
-  if (!isSanityConfigured) return fallback.testimonials;
-  try {
-    return await client.fetch<Testimonial[]>(testimonialsQuery, {}, { next: { revalidate: REVALIDATE, tags: [SANITY_TAG] } });
-  } catch (error) {
-    // Never the samples here: just no testimonials section this time.
-    console.error("[content] Sanity fetch failed; hiding testimonials.", error);
-    return [];
-  }
-});
 
 /** The stats that have a figure: one left empty in the Studio is hidden until it's filled in. */
 export const withValues = <T extends { value?: string }>(stats?: T[] | null): T[] => stats?.filter((stat) => stat.value?.trim()) ?? [];

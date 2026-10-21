@@ -5,7 +5,7 @@ import { Award, BarChart3, Building2, CalendarDays, Globe, Map as MapIcon, MapPi
 const byKey: Record<string, LucideIcon> = {
   founded: CalendarDays,
   market: Globe,
-  countries: Globe,
+  countries: MapIcon,
   reps: Users,
   team: Users,
   accounts: Store,

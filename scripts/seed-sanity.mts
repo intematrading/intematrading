@@ -6,8 +6,6 @@
 // Safe to re-run: documents that already exist are left untouched, so edits
 // made in the Studio are never overwritten. Images are not uploaded — empty
 // image fields keep showing the stock placeholders until a real photo is added.
-// Sample testimonials are created as unpublished drafts: templates in the
-// Studio that never appear on the site until someone fills them in and publishes.
 
 import { createClient } from "@sanity/client";
 import * as fallback from "../src/content/fallback.ts";
@@ -77,14 +75,6 @@ const docs = [
   ...fallback.producedItems.map((p, i) => ({ ...p, _type: "producedItem", order: i + 1 })),
   ...fallback.exportItems.map((e, i) => ({ ...e, _type: "exportItem", order: i + 1 })),
   ...fallback.partners.map((p, i) => ({ ...p, _type: "partner", order: i + 1 })),
-  // `sample` and `_id` are dropped: samples become numbered Studio drafts.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ...fallback.testimonials.map(({ sample: _sample, _id, ...t }, i) => ({
-    ...t,
-    _id: `drafts.testimonial-sample-${i + 1}`,
-    _type: "testimonial",
-    order: i + 1,
-  })),
 ].map((d) => prepare(d) as { _id: string; _type: string });
 
 const existing = new Set<string>(await client.fetch(`*[_id in $ids]._id`, { ids: docs.map((d) => d._id) }));

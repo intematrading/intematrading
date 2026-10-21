@@ -33,6 +33,7 @@ export const servicesPage = defineType({
     defineField({ name: "marketHeading", title: "Heading", type: "localeString", group: "market" }),
     defineField({ name: "marketIntro", title: "Intro", type: "localeText", group: "market" }),
     statList("marketStats", "Market figures", "market"),
+    titledTextList("marketPoints", "Reasons to enter Ethiopia", "market"),
     defineField({ name: "marketSource", title: "Sources line", type: "localeString", group: "market", description: "Shown in small print under the figures." }),
 
     defineField({ name: "importHeading", type: "localeString", group: "import" }),

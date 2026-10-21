@@ -37,18 +37,29 @@ export async function Partners({ locale, className = "" }: { locale: Locale; cla
 }
 
 /**
- * Every brand logo at once, in a grid (Partner companies in Sanity): the
- * portfolio shown by its brands rather than counted.
+ * Every brand logo (Partner companies in Sanity): the portfolio shown by its
+ * brands rather than counted. On desktop, all at once in a grid; on phones
+ * and tablets, a looping strip running edge to edge.
  */
 export async function LogoWall({ locale, className = "" }: { locale: Locale; className?: string }) {
   const [partners, t] = await Promise.all([getPartners(), getTranslations("About")]);
   if (!partners.length) return null;
   return (
-    <ul aria-label={t("partnersLabel")} className={`grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 ${className}`}>
-      {partners.map((partner) => (
-        <PartnerLogo key={partner._id} partner={partner} locale={locale} className="w-full" />
-      ))}
-    </ul>
+    <div className={className}>
+      {/* Phones and tablets: bleeds past the page padding (as Container's) */}
+      <div className="-mx-4 sm:-mx-6 lg:hidden">
+        <Marquee label={t("partnersLabel")} seconds={partners.length * 3.5} feather={12}>
+          {partners.map((partner) => (
+            <PartnerLogo key={partner._id} partner={partner} locale={locale} />
+          ))}
+        </Marquee>
+      </div>
+      <ul aria-label={t("partnersLabel")} className="hidden grid-cols-5 gap-4 lg:grid">
+        {partners.map((partner) => (
+          <PartnerLogo key={partner._id} partner={partner} locale={locale} className="w-full" />
+        ))}
+      </ul>
+    </div>
   );
 }
 

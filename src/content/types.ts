@@ -52,6 +52,9 @@ export type HomePage = {
     image?: SanityImage;
   }[];
   whatWeDoIntro?: LocaleString;
+  importHeading?: LocaleString;
+  importIntro?: LocaleString;
+  importPoints?: TitledText[];
   foodInfo?: LocaleString;
   nonFoodInfo?: LocaleString;
   foodCategories?: LocaleString[];
@@ -88,6 +91,7 @@ export type ServicesPage = {
   marketIntro?: LocaleString;
   marketStats?: Stat[];
   marketSource?: LocaleString;
+  marketPoints?: TitledText[];
   importHeading?: LocaleString;
   importTagline?: LocaleString;
   importIntro?: LocaleString;
@@ -179,17 +183,6 @@ export type AboutPage = {
   partnersHeading?: LocaleString;
   partnersIntro?: LocaleString;
   seo?: Seo;
-};
-
-export type Testimonial = {
-  _id: string;
-  quote: LocaleString;
-  name: string;
-  role?: LocaleString;
-  company?: string;
-  photo?: SanityImage;
-  /** Layout samples shown only before Sanity is connected; never real quotes. */
-  sample?: boolean;
 };
 
 export type TeamGroupKey = "leadership" | "sales" | "admin" | "operations";

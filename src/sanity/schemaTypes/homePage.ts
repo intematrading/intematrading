@@ -1,6 +1,6 @@
 import { HomeIcon } from "@sanity/icons/Home";
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { imageWithAlt } from "./shared";
+import { imageWithAlt, titledTextList } from "./shared";
 
 export const homePage = defineType({
   name: "homePage",
@@ -10,6 +10,7 @@ export const homePage = defineType({
   groups: [
     { name: "hero", title: "Hero", default: true },
     { name: "stats", title: "Snapshot strip" },
+    { name: "importing", title: "Importing" },
     { name: "cards", title: "What we do" },
     { name: "brands", title: "Brands we import" },
     { name: "route", title: "From port to shelf" },
@@ -92,6 +93,9 @@ export const homePage = defineType({
         }),
       ],
     }),
+    defineField({ name: "importHeading", title: "Heading", type: "localeString", group: "importing", description: "The importing section after About INTEMA. Leave empty to hide it." }),
+    defineField({ name: "importIntro", title: "Intro", type: "localeText", group: "importing" }),
+    titledTextList("importPoints", "What we bring to brand owners", "importing"),
     defineField({
       name: "whatWeDoIntro",
       title: "What we do intro",

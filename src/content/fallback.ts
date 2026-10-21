@@ -17,7 +17,6 @@ import type {
   SiteSettings,
   TeamMember,
   TeamPage,
-  Testimonial,
 } from "./types";
 
 export const siteSettings: SiteSettings = {
@@ -94,10 +93,13 @@ export const homePage: HomePage = {
       },
     },
     {
-      _key: "team",
-      value: "26",
-      label: { en: "Team members", fr: "Collaborateurs" },
-      note: { en: "Across sales, operations, administration and finance.", fr: "Entre ventes, opérations, administration et finances." },
+      _key: "experience",
+      value: "10+",
+      label: { en: "Years in distribution & sales management", fr: "Années en distribution et direction commerciale" },
+      note: {
+        en: "Leadership experience with Beiersdorf, L’Oréal Professionnel and L’Oréal Consumer Products.",
+        fr: "Une direction formée chez Beiersdorf, L’Oréal Professionnel et L’Oréal Produits Grand Public.",
+      },
     },
   ],
   foodInfo: {
@@ -579,21 +581,6 @@ export const aboutPage: AboutPage = {
     },
   },
 };
-
-// Layout samples only: shown until Sanity is connected, then replaced by real
-// testimonials from the Studio. Deliberately not written as quotes from real
-// people — the text itself says it is a placeholder.
-export const testimonials: Testimonial[] = [1, 2, 3].map((n) => ({
-  _id: `sample-${n}`,
-  sample: true,
-  quote: {
-    en: "A quote from a retail partner, buyer or brand principal will appear here once real testimonials are added in the Sanity Studio.",
-    am: "በሳኒቲ ስቱዲዮ እውነተኛ ምስክርነቶች ሲጨመሩ ከችርቻሮ አጋር፣ ከገዢ ወይም ከብራንድ ባለቤት የተሰጠ አስተያየት እዚህ ይታያል።",
-  },
-  name: `Sample testimonial ${n}`,
-  role: { en: "Partner role", am: "የአጋር ሚና" },
-  company: "Company name",
-}));
 
 export const producedItems: ProducedItem[] = [
   {

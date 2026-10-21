@@ -6,8 +6,7 @@ import { urlFor } from "@/sanity/image";
 import { DecorativeAwareLink } from "./DecorativeCopy";
 
 /**
- * One partner tile for the logo strip: greyscale by default, full colour on
- * hover/focus, linking to the partner's website when it has one. Without an
+ * One partner tile for the logo strip, in full colour, linking to the partner's website when it has one. Without an
  * uploaded logo it shows a shared placeholder mark plus the partner's name.
  */
 export function PartnerLogo({
@@ -24,7 +23,7 @@ export function PartnerLogo({
   "aria-hidden"?: boolean;
 }) {
   const tile =
-    "group flex h-32 flex-col items-center justify-center gap-3 rounded-2xl bg-paper px-5 text-center shadow-sm ring-1 ring-black/5 grayscale transition-[filter,box-shadow,opacity] duration-300 hover:shadow-lg hover:grayscale-0 focus-visible:grayscale-0 [&:not(:hover)]:opacity-75";
+    "group flex h-32 flex-col items-center justify-center gap-3 rounded-2xl bg-paper px-5 text-center shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg";
   const content = partner.logo?.asset ? (
     <Image
       src={urlFor(partner.logo).width(320).height(160).fit("max").url()}
