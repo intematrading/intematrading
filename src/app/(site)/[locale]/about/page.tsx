@@ -54,6 +54,10 @@ export default async function AboutPage({
   const [page, t] = await Promise.all([getAboutPage(), getTranslations("About")]);
   const steps = page.processSteps ?? [];
 
+  // Who we are: from lg the first half (rounded up) on the left, the rest under the snapshot.
+  const story = page.whoWeAre ?? [];
+  const storySplit = Math.ceil(story.length / 2);
+
   return (
     <div className="flex flex-col bg-paper">
       <PageHero
@@ -65,7 +69,9 @@ export default async function AboutPage({
         locale={locale}
       />
 
-      {/* ── Who we are, with the company snapshot beside it ─────────── */}
+      {/* ── Who we are, with the company snapshot beside it. From lg the
+          story runs in two columns: its first half on the left, the rest
+          under the snapshot; below lg it stays in one piece. ─────────── */}
       <section aria-labelledby="who-heading" className="py-16 sm:py-24">
         <Container className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-6">
@@ -73,16 +79,19 @@ export default async function AboutPage({
               {tr(page.whoWeAreHeading, locale)}
             </SectionHeading>
             <div className="mt-8 space-y-5 text-base leading-relaxed text-muted sm:text-lg">
-              {page.whoWeAre?.map((para) => (
-                <p key={para.en}>{tr(para, locale)}</p>
+              {story.map((para, i) => (
+                <p key={para.en} className={i >= storySplit ? "lg:hidden" : ""}>
+                  {tr(para, locale)}
+                </p>
               ))}
             </div>
             <ButtonLink href="/team" variant="steel" className="mt-8">
               {t("teamCta")}
             </ButtonLink>
           </Reveal>
-          {withValues(page.stats).length ? (
+          {withValues(page.stats).length || story.length > storySplit ? (
             <Reveal className="lg:col-span-5 lg:col-start-8">
+              {withValues(page.stats).length ? (
               <aside
                 aria-labelledby="snapshot-heading"
                 className="rounded-[1.75rem] bg-paper p-7 shadow-sm ring-1 ring-black/5 sm:rounded-[2rem] sm:p-9"
@@ -122,6 +131,15 @@ export default async function AboutPage({
                   })}
                 </ul>
               </aside>
+              ) : null}
+              {/* The story's second half (from lg; above, it's in the left column) */}
+              {story.length > storySplit && (
+                <div className="mt-10 hidden space-y-5 text-base leading-relaxed text-muted sm:text-lg lg:block">
+                  {story.slice(storySplit).map((para) => (
+                    <p key={para.en}>{tr(para, locale)}</p>
+                  ))}
+                </div>
+              )}
             </Reveal>
           ) : null}
         </Container>

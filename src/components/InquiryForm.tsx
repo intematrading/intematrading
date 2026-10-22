@@ -83,7 +83,8 @@ export function InquiryForm() {
   );
 
   return (
-    <form onSubmit={onSubmit} noValidate className="grid gap-4 sm:grid-cols-2">
+    // The message row grows to fill any spare height (the card is stretched beside the contact details)
+    <form onSubmit={onSubmit} noValidate className="grid flex-1 grid-rows-[auto_auto_auto_1fr_auto] gap-4 sm:grid-cols-2 sm:grid-rows-[auto_auto_1fr_auto]">
       <div>
         {label("name", t("name"))}
         <input {...field("name")} type="text" autoComplete="name" required maxLength={120} />
@@ -104,9 +105,9 @@ export function InquiryForm() {
           ))}
         </select>
       </div>
-      <div className="sm:col-span-2">
+      <div className="flex flex-col sm:col-span-2">
         {label("message", t("message"))}
-        <textarea {...field("message")} rows={3} required minLength={10} maxLength={5000} />
+        <textarea {...field("message")} rows={6} required minLength={10} maxLength={5000} className={`${inputClass} min-h-40 flex-1 resize-y`} />
         {errorText("message")}
       </div>
 

@@ -14,7 +14,7 @@ export const homePage = defineType({
     { name: "cards", title: "What we do" },
     { name: "brands", title: "Brands we import" },
     { name: "route", title: "From port to shelf" },
-    { name: "commitment", title: "Commitment band" },
+    { name: "commitment", title: "Our mission" },
     { name: "team", title: "Meet our team" },
     { name: "seo", title: "SEO" },
   ],

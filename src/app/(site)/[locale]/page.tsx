@@ -68,9 +68,9 @@ const pointIcons = [ShieldCheck, BadgeCheck, Handshake];
 const importIcons = [FileSignature, Globe2, ShieldCheck, RefreshCw, Award, Boxes];
 // Brands INTEMA is the main importer of (logos in public/).
 const mainImporterLogos = [
-  // Heights balanced by eye: L'Oréal's wide wordmark (thickened, in loreal-logo-bold.svg) vs Heinz's compact badge.
-  { name: "L'Oréal", src: "/loreal-logo-bold.svg", width: 808, height: 153, size: "h-12 sm:h-16" },
-  { name: "Heinz", src: "/heinz-logo.svg", width: 1024, height: 459, size: "h-16 sm:h-24" },
+  // Stacked, so sized by width and balanced by eye: L'Oréal's wide wordmark (thickened, in loreal-logo-bold.svg) vs Heinz's compact badge.
+  { name: "Heinz", src: "/heinz-logo.svg", width: 1024, height: 459, size: "w-48 sm:w-64 xl:w-72" },
+  { name: "L'Oréal", src: "/loreal-logo-bold.svg", width: 808, height: 153, size: "w-72 sm:w-96 xl:w-[28rem]" },
 ];
 
 
@@ -143,11 +143,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 priority
               />
             </div>
-            {/* A light overall shade, a soft vignette at the edges and a darker
-                centre behind the text, so the photo stays bright but the text reads */}
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/30" />
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgb(0_0_0/0.45)_100%)]" />
-            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgb(0_0_0/0.4)_0%,transparent_60%)]" />
+            {/* A medium overall shade, a vignette at the edges and a darker
+                centre behind the text, so the text reads clearly over the photo */}
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/55" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgb(0_0_0/0.6)_100%)]" />
+            <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgb(0_0_0/0.55)_0%,transparent_70%)]" />
             <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-44 bg-linear-to-b from-black/50 to-black/0" />
 
             <Container className="flex flex-1 flex-col pt-6 pb-8 sm:pt-7 sm:pb-12">
@@ -171,7 +171,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                     </span>
                   )}
                 </h1>
-                {home.heroSubheadline && <p className="mt-6 max-w-xl text-base text-paper/90 sm:text-lg">{tr(home.heroSubheadline, locale)}</p>}
+                {home.heroSubheadline && <p className="mt-6 max-w-xl text-base text-paper [text-shadow:0_1px_12px_rgb(0_0_0/0.7)] sm:text-lg">{tr(home.heroSubheadline, locale)}</p>}
                 <div className="mt-8 flex flex-wrap justify-center gap-3">
                   <ButtonLink href="/services" variant="redOnDark">
                     {common("exploreServices")}
@@ -262,13 +262,14 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               </div>
             </Reveal>
             {home.importPoints?.length ? (
-              <ul className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+              /* No cards: the cells split by thin grid lines (the list's colour showing through 1px gaps) */
+              <ul className="mt-12 grid gap-px bg-steel-200 sm:grid-cols-2 lg:grid-cols-3">
                 {home.importPoints.map((point, i) => {
                   const Icon = importIcons[i % importIcons.length];
                   return (
-                    <li key={point._key}>
+                    <li key={point._key} className="bg-steel-50">
                       <Reveal delay={(i % 3) * 120} className="h-full">
-                        <div className="flex h-full flex-col rounded-3xl bg-paper p-6 shadow-sm ring-1 ring-black/5 sm:p-7">
+                        <div className="flex h-full flex-col py-8 sm:p-8 lg:p-10">
                           <IconBox icon={Icon} />
                           <h3 className="font-title-heading mt-6 text-lg text-ink">{tr(point.title, locale)}</h3>
                           {point.body && <p className="mt-2 leading-relaxed text-muted">{tr(point.body, locale)}</p>}
@@ -439,29 +440,29 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 </SectionHeading>
                 <p className="mt-6 max-w-xl text-muted sm:text-lg">{t("brandsIntro")}</p>
               </div>
-              {/* "Main importers of": a fading rule, then the L'Oréal and Heinz logos side by side */}
+              {/* "Main importers of": a fading rule, then the Heinz and L'Oréal logos, one above the other */}
               <div className="lg:col-span-5 lg:col-start-8 lg:self-center lg:text-right">
                 <p className="font-title-heading text-lg text-red-ink sm:text-xl">{t("mainImporter")}</p>
                 <span aria-hidden="true" className="mt-4 block h-px bg-linear-to-r from-steel-400 to-transparent lg:bg-linear-to-l" />
-                <ul className="mt-6 flex items-center gap-10 sm:gap-14 lg:justify-end">
+                <ul className="mt-8 flex flex-col items-start gap-8 sm:gap-10 lg:items-end">
                   {mainImporterLogos.map((logo) => (
                     <li key={logo.name}>
-                      <Image src={logo.src} alt={logo.name} width={logo.width} height={logo.height} unoptimized className={`w-auto object-contain ${logo.size}`} />
+                      <Image src={logo.src} alt={logo.name} width={logo.width} height={logo.height} unoptimized className={`h-auto max-w-full object-contain ${logo.size}`} />
                     </li>
                   ))}
                 </ul>
               </div>
             </Reveal>
           </Container>
-          {/* The portfolio as its brand logos */}
-          <Container className="mt-12 sm:mt-14">
+          {/* The portfolio as its brand logos, with room above and below */}
+          <Container className="mt-16 sm:mt-24">
             <Reveal>
               <LogoWall locale={locale} />
             </Reveal>
           </Container>
           {/* Food | Non-food: what each covers and its categories, side by
               side; one CTA to the Services page */}
-          <Container className="mt-16 sm:mt-20">
+          <Container className="mt-20 sm:mt-28">
             <div className="grid gap-12 md:grid-cols-2 md:gap-0 md:divide-x md:divide-steel-200">
               {[
                 { key: "food", icon: ShoppingBasket, label: svc("food"), text: home.foodInfo, categories: home.foodCategories },

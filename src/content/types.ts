@@ -120,6 +120,7 @@ export type ServicesPage = {
   routeIntro?: LocaleString;
   valueHeading?: LocaleString;
   valueBody?: LocaleString;
+  valueImage?: SanityImage;
   seo?: Seo;
 };
 

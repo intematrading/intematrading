@@ -174,6 +174,7 @@ export const servicesPage = defineType({
     defineField({ name: "routeIntro", title: "Intro", type: "localeText", group: "route" }),
     defineField({ name: "valueHeading", title: "Heading", type: "localeString", group: "value", description: "The closing band at the end of the page, with a Contact button. Leave empty to hide it." }),
     defineField({ name: "valueBody", title: "Text", type: "localeText", group: "value" }),
+    imageWithAlt("valueImage", "Background photo", "value"),
     defineField({ name: "seo", type: "seo", group: "seo" }),
   ],
   preview: { prepare: () => ({ title: "Our Services page" }) },

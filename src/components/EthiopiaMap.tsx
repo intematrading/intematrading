@@ -1,4 +1,3 @@
-import { MapPin } from "lucide-react";
 import { useId } from "react";
 
 // Ethiopia's outline (Natural Earth 1:50m, public domain), projected to a
@@ -14,14 +13,38 @@ export function project(lat: number, lng: number): [number, number] {
   return [(lng - 32.99) * 66.67, 396.9 + (9.03 - lat) * 66.3];
 }
 
-/** A smaller marker on the map (e.g. a warehouse or depot), red or grey. */
-export type MapPoint = { key: string; lat: number; lng: number; tone?: "red" | "grey" };
+/**
+ * A smaller marker on the map (e.g. a warehouse or depot), red or grey, with
+ * an optional name callout above, below or to the right of it.
+ */
+export type MapPoint = { key: string; lat: number; lng: number; tone?: "red" | "grey"; label?: string; labelAt?: "above" | "below" | "right" };
+
+/** A point's callout: a smaller version of the Addis Ababa bubble, its tail pointing at the marker. */
+function PointLabel({ x, y, label, at }: { x: number; y: number; label: string; at: "above" | "below" | "right" }) {
+  const box = {
+    above: { x: x - 180, y: y - 54, align: "items-start justify-center", tail: "left-1/2 -bottom-1 -translate-x-1/2" },
+    below: { x: x - 180, y: y + 14, align: "items-end justify-center", tail: "left-1/2 -top-1 -translate-x-1/2" },
+    right: { x: x + 16, y: y - 20, align: "items-center justify-start", tail: "top-1/2 -left-1 -translate-y-1/2" },
+  }[at];
+  return (
+    <foreignObject x={box.x} y={box.y} width="360" height="40">
+      <div className={`flex h-full ${box.align}`}>
+        <div className="relative rounded-full bg-paper px-3 py-1.5 text-[14px] leading-none font-bold tracking-wide whitespace-nowrap text-steel-500 uppercase shadow-[0_6px_18px_-6px_rgb(0_0_0/0.3)] ring-1 ring-black/5">
+          {label}
+          {/* Tail pointing at the marker */}
+          <span className={`absolute size-2.5 rotate-45 bg-paper ${box.tail}`} />
+        </div>
+      </div>
+    </foreignObject>
+  );
+}
 
 /**
  * Decorative vector map of Ethiopia: a dot-pattern fill inside a soft
  * outline that a red segment traces continuously, with a pulsing red marker
- * on Addis Ababa under a pin callout bubble. Purely visual
- * (aria-hidden); size and place it with className.
+ * on Addis Ababa under a pin callout bubble, and any extra points (e.g. the
+ * warehouses) with their own callouts. Purely visual (aria-hidden); size and
+ * place it with className.
  */
 export function EthiopiaMap({
   className = "",
@@ -62,6 +85,7 @@ export function EthiopiaMap({
           <g key={point.key}>
             <circle cx={x} cy={y} r="11" className={point.tone === "grey" ? "fill-steel-500" : "fill-red"} />
             <circle cx={x} cy={y} r="4" className="fill-paper" />
+            {point.label && <PointLabel x={x} y={y} label={point.label} at={point.labelAt ?? "above"} />}
           </g>
         );
       })}
@@ -69,15 +93,14 @@ export function EthiopiaMap({
         <circle cx="384.5" cy="396.9" r="12" className="animate-dot-pulse fill-red [transform-box:fill-box] [transform-origin:center] motion-reduce:hidden" />
         <circle cx="384.5" cy="396.9" r="12" className="fill-red" />
         <circle cx="384.5" cy="396.9" r="4.5" className="fill-paper" />
-        {/* Callout bubble above the marker: pin icon and the city name */}
+        {/* Callout bubble above the marker: the city name */}
         {label && (
-          <foreignObject x="164.5" y="306.9" width="440" height="72">
+          <foreignObject x="164.5" y="320.9" width="440" height="58">
             <div className="flex h-full items-start justify-center">
-              <div className="relative flex items-center gap-2.5 rounded-full bg-paper px-6 py-3 text-[26px] leading-none font-bold tracking-wide whitespace-nowrap text-ink uppercase shadow-[0_8px_24px_-8px_rgb(0_0_0/0.3)] ring-1 ring-black/5">
-                <MapPin className="size-7 text-red" strokeWidth={2.5} />
+              <div className="relative rounded-full bg-paper px-4 py-2 text-[16px] leading-none font-bold tracking-wide whitespace-nowrap text-steel-500 uppercase shadow-[0_8px_24px_-8px_rgb(0_0_0/0.3)] ring-1 ring-black/5">
                 {label}
                 {/* Tail pointing down at the marker */}
-                <span className="absolute -bottom-2 left-1/2 size-4 -translate-x-1/2 rotate-45 bg-paper" />
+                <span className="absolute -bottom-1.5 left-1/2 size-3 -translate-x-1/2 rotate-45 bg-paper" />
               </div>
             </div>
           </foreignObject>

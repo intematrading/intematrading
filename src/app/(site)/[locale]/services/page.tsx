@@ -2,7 +2,6 @@ import { Building2, Coffee, Flame, Globe2, Plane, Ship, ShoppingBasket, Sparkles
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ButtonLink } from "@/components/ButtonLink";
 import { Container } from "@/components/Container";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { RegionTree } from "@/components/RegionTree";
@@ -32,6 +31,15 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/services
     fallbackTitle: tr(page.title, locale),
   });
 }
+
+// INTEMA's warehouses besides Addis Ababa (the head office, the map's main
+// marker), as in the company profile; labels placed clear of each other and
+// of Addis Ababa's, inside the map at every width.
+const warehouses = [
+  { key: "adama", label: "Adama", lat: 8.54, lng: 39.27, labelAt: "right" },
+  { key: "dire-dawa", label: "Dire Dawa", lat: 9.6, lng: 41.85, labelAt: "above" },
+  { key: "hawassa", label: "Hawassa", lat: 7.06, lng: 38.48, labelAt: "above" },
+] as const;
 
 // Why Ethiopia? reasons in order (consumers, cities, growth, trade corridor, hub, region), repeating.
 const marketIcons = [Users, Building2, TrendingUp, Ship, Plane, Globe2];
@@ -70,7 +78,8 @@ function ServiceHeading({
             {title}
           </SectionHeading>
           {tagline && <p className={`font-title-heading mt-4 text-lg sm:text-xl ${onDark ? "text-paper" : "text-ink"}`}>{tagline}</p>}
-          {intro && <p className={`mt-4 sm:text-lg ${onDark ? "text-paper/80" : "text-muted"}`}>{intro}</p>}
+          {/* Blank lines in the Studio text start new paragraphs */}
+          {intro && <p className={`mt-4 whitespace-pre-line sm:text-lg ${onDark ? "text-paper/80" : "text-muted"}`}>{intro}</p>}
         </div>
       </header>
     </Reveal>
@@ -81,14 +90,13 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
   const locale = (await params).locale as Locale;
   setRequestLocale(locale);
 
-  const [page, home, brands, producedItems, exportItems, t, common] = await Promise.all([
+  const [page, home, brands, producedItems, exportItems, t] = await Promise.all([
     getServicesPage(),
     getHomePage(),
     getBrands(),
     getProducedItems(),
     getExportItems(),
     getTranslations("Services"),
-    getTranslations("Common"),
   ]);
 
   const nonFood = brands.filter((b) => b.category === "nonFood");
@@ -124,8 +132,9 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
               section's top edge (under the hero), its lower part covered by
               the stat cards. On phones it sits under the intro instead. */}
           <EthiopiaMap
-            label={t("addisAbaba")}
-            className="absolute -z-10 hidden opacity-30 sm:top-40 sm:-right-24 sm:block sm:w-[44rem] lg:-top-28 lg:right-[max(-14rem,calc((100vw-80rem)/2-13rem))] lg:w-[52rem] lg:opacity-50 xl:w-[58rem]"
+            label={t("addisAbabaHq")}
+            points={[...warehouses]}
+            className="absolute -z-10 hidden opacity-30 sm:top-40 sm:-right-24 sm:block sm:w-[44rem] lg:-top-28 lg:right-[max(-14rem,calc((100vw-80rem)/2-13rem))] lg:w-[52rem] lg:opacity-100 xl:-top-40 xl:w-[58rem]"
           />
           <Container>
             <Reveal className="max-w-3xl lg:max-w-[46%]">
@@ -133,7 +142,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
                 {tr(page.marketHeading, locale)}
               </SectionHeading>
               {page.marketIntro && <p className="mt-6 text-muted sm:text-lg">{tr(page.marketIntro, locale)}</p>}
-              <EthiopiaMap label={t("addisAbaba")} className="mx-auto mt-10 w-full max-w-sm sm:hidden" />
+              <EthiopiaMap label={t("addisAbabaHq")} points={[...warehouses]} className="mx-auto mt-10 w-full max-w-sm sm:hidden" />
             </Reveal>
             <ul className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
               {page.marketStats.map((stat) => {
@@ -155,14 +164,15 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
               })}
             </ul>
             {page.marketSource && <p className="mt-6 text-center text-xs text-muted italic">{tr(page.marketSource, locale)}</p>}
-            {/* Reasons to enter Ethiopia, under the figures */}
+            {/* Reasons to enter Ethiopia, under the figures, split by thin grid
+                lines (the list's colour showing through 1px gaps) */}
             {page.marketPoints?.length ? (
-              <ul className="mt-14 grid gap-x-10 gap-y-8 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
+              <ul className="mt-14 grid gap-px bg-steel-200 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
                 {page.marketPoints.map((point, i) => {
                   const Icon = marketIcons[i % marketIcons.length];
                   return (
-                    <li key={point._key}>
-                      <Reveal className="flex gap-4">
+                    <li key={point._key} className="bg-paper">
+                      <Reveal className="flex h-full gap-4 py-7 sm:p-8">
                         <IconBox icon={Icon} />
                         <div>
                           <h3 className="font-title-heading text-base text-ink">{tr(point.title, locale)}</h3>
@@ -266,22 +276,18 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
         className="pt-0 sm:pt-0"
       />
 
-      {/* ── Our value proposition: a closing band with the brand-owner CTA ── */}
+      {/* ── Our value proposition: a closing band, centred over a shaded photo ── */}
       {page.valueHeading && (
         <section aria-labelledby="value-heading" className="pb-16 sm:pb-24">
           <Container>
             <Reveal>
-              <div className="on-dark steel-gradient-deep grid gap-8 rounded-[1.75rem] px-6 py-12 text-paper sm:rounded-[2rem] sm:px-12 sm:py-16 lg:grid-cols-12 lg:items-end lg:px-16">
-                <div className="lg:col-span-8">
+              <div className="on-dark relative isolate overflow-hidden rounded-[1.75rem] px-6 py-16 text-center text-paper sm:rounded-[2rem] sm:px-12 sm:py-24 lg:px-16">
+                <PhotoBackdrop image={page.valueImage} placeholder={placeholders.valueBand} locale={locale} icon={ShoppingBasket} overlay="bg-black/65" vignette />
+                <div className="mx-auto max-w-3xl">
                   <SectionHeading id="value-heading" eyebrow={t("valueEyebrow")} onDark>
                     {tr(page.valueHeading, locale)}
                   </SectionHeading>
-                  {page.valueBody && <p className="mt-6 max-w-2xl text-paper/80 sm:text-lg">{tr(page.valueBody, locale)}</p>}
-                </div>
-                <div className="lg:col-span-4 lg:flex lg:justify-end">
-                  <ButtonLink href="/contact?type=brand" variant="white">
-                    {common("contactUs")}
-                  </ButtonLink>
+                  {page.valueBody && <p className="mx-auto mt-6 max-w-2xl text-paper/85 sm:text-lg">{tr(page.valueBody, locale)}</p>}
                 </div>
               </div>
             </Reveal>

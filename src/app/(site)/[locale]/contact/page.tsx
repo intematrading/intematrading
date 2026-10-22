@@ -101,13 +101,14 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
             </address>
           </Reveal>
 
-          <Reveal className="lg:col-span-7">
-            <div id="inquiry" className="scroll-mt-24 rounded-[1.75rem] bg-paper p-6 shadow-sm ring-1 ring-black/5 sm:rounded-[2rem] sm:p-10">
+          {/* Stretches to the details column's height; the message box takes up the extra space */}
+          <Reveal className="flex flex-col lg:col-span-7">
+            <div id="inquiry" className="flex flex-1 scroll-mt-24 flex-col rounded-[1.75rem] bg-paper p-6 shadow-sm ring-1 ring-black/5 sm:rounded-[2rem] sm:p-10">
               <SectionHeading eyebrow={t("formEyebrow")} size="band">
                 {tr(page.formHeading, locale)}
               </SectionHeading>
               {page.formIntro && <p className="mt-4 max-w-2xl text-muted">{tr(page.formIntro, locale)}</p>}
-              <div className="mt-8">
+              <div className="mt-8 flex flex-1 flex-col">
                 <InquiryForm />
               </div>
             </div>

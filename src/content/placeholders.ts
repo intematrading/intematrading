@@ -15,6 +15,8 @@ export const placeholders = {
   vision: { src: "/placeholders/about-warehouse.jpg" },
   keys: { src: "/placeholders/about-retail.jpg" },
   produceBand: { src: "/placeholders/produce-factory.jpg" },
+  // Services: closing value proposition band
+  valueBand: { src: "/placeholders/about-retail.jpg" },
   ambassador: { src: "/placeholders/abay-candles.jpg", position: "25% 100%" },
   // Home: Meet our team
   teamBand: { src: "/placeholders/about-training.jpg" },
