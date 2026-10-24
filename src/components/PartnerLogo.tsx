@@ -13,17 +13,25 @@ export function PartnerLogo({
   partner,
   locale,
   className = "w-56 shrink-0",
+  size = "md",
+  plain = false,
   ...liProps
 }: {
   partner: Partner;
   locale: Locale;
+  /** "sm": a shorter tile with a smaller logo (the hero's logo column). */
+  size?: "md" | "sm";
+  /** No tile at all, just the logo centred in its cell (the hero's white logo panel). */
+  plain?: boolean;
   /** The <li>'s sizing: fixed width in the marquee, the grid cell in a logo wall. */
   className?: string;
   /** Forwarded to the <li>: set on marquee repeats. */
   "aria-hidden"?: boolean;
 }) {
   const tile =
-    "group flex h-32 flex-col items-center justify-center gap-3 rounded-2xl bg-paper px-5 text-center shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg";
+    `group flex flex-col items-center justify-center gap-3 text-center ${
+      plain ? "" : "rounded-2xl bg-paper shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg"
+    } ${size === "sm" ? "h-40 px-4" : "h-32 px-5"}`;
   const content = partner.logo?.asset ? (
     <Image
       src={urlFor(partner.logo).width(320).height(160).fit("max").url()}
@@ -31,7 +39,7 @@ export function PartnerLogo({
       width={160}
       height={80}
       sizes="160px"
-      className="h-16 w-auto object-contain"
+      className={`w-auto max-w-full object-contain ${size === "sm" ? "h-12" : "h-16"}`}
     />
   ) : (
     <>

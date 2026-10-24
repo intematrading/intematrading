@@ -1,5 +1,15 @@
 import { Eyebrow } from "./Eyebrow";
 
+// "Ethiopia" and its forms in English and French (Ethiopian, Éthiopie, éthiopien…).
+const ETHIOPIA = /(Ethiopian?|[ÉéE]thiopi(?:e|ens?|ennes?))/gi;
+
+/** Heading text with every mention of Ethiopia in red (the rest keeps the heading's own colour). */
+export function highlightEthiopia(text: string): React.ReactNode {
+  const parts = text.split(ETHIOPIA);
+  if (parts.length === 1) return text;
+  return parts.map((part, i) => (i % 2 ? <span key={i} className="text-red">{part}</span> : part));
+}
+
 const sizes = {
   /** Top-level section heading. */
   section: "text-4xl sm:text-6xl",
@@ -10,8 +20,8 @@ const sizes = {
 /**
  * The one section-heading pattern, styled after the logo: optional eyebrow,
  * then the heading in the logo's steel gradient (plain white on dark bands).
- * Section headings carry no red accent: *stars* in the copy (a CMS
- * convention for accenting words elsewhere) are dropped here.
+ * The only red accent is "Ethiopia" wherever it appears; *stars* in the copy
+ * (a CMS convention for accenting words elsewhere) are dropped here.
  */
 export function SectionHeading({
   id,
@@ -32,7 +42,7 @@ export function SectionHeading({
     <>
       {eyebrow && <Eyebrow onDark={onDark}>{eyebrow}</Eyebrow>}
       <h2 id={id} className={`font-display-heading ${sizes[size]} ${onDark ? "text-paper" : "text-steel-700"} ${eyebrow ? "mt-4" : ""}`}>
-        {onDark ? text : <span className="text-steel-gradient">{text}</span>}
+        {onDark ? highlightEthiopia(text) : <span className="text-steel-gradient">{highlightEthiopia(text)}</span>}
       </h2>
     </>
   );

@@ -13,7 +13,7 @@ import { BrandGrid, ExportTiles, ProducedGrid } from "@/components/ProductGrid";
 import { RouteSteps } from "@/components/RouteSteps";
 import { DistributionSection } from "@/components/DistributionSection";
 import { LogoWall } from "@/components/Partners";
-import { SectionHeading } from "@/components/SectionHeading";
+import { highlightEthiopia, SectionHeading } from "@/components/SectionHeading";
 import { statIcon } from "@/components/stat-icons";
 import { heroPlaceholders, placeholders } from "@/content/placeholders";
 import type { ServiceSection } from "@/content/types";
@@ -77,7 +77,7 @@ function ServiceHeading({
           <SectionHeading id={id} onDark={onDark}>
             {title}
           </SectionHeading>
-          {tagline && <p className={`font-title-heading mt-4 text-lg sm:text-xl ${onDark ? "text-paper" : "text-ink"}`}>{tagline}</p>}
+          {tagline && <p className={`font-title-heading mt-4 text-lg sm:text-xl ${onDark ? "text-paper" : "text-ink"}`}>{highlightEthiopia(tagline)}</p>}
           {/* Blank lines in the Studio text start new paragraphs */}
           {intro && <p className={`mt-4 whitespace-pre-line sm:text-lg ${onDark ? "text-paper/80" : "text-muted"}`}>{intro}</p>}
         </div>

@@ -93,6 +93,12 @@
     50% { transform: translateY(150px); }
   }
 
+  /* The home hero's logo column scrolling upward (see LogoColumn); duration set inline */
+  --animate-scroll-up: scroll-up 45s linear infinite;
+  @keyframes scroll-up {
+    to { transform: translateY(-50%); }
+  }
+
   /* Store name bubbles bobbing over the distribution map (see DistributionSection) */
   --animate-bob: bob 3.6s ease-in-out infinite;
   @keyframes bob {
