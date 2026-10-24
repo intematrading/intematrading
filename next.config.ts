@@ -4,6 +4,9 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  experimental: {
+    agentUpgrade: "security",
+  },
   // This folder is the project root (a stray package-lock.json higher up
   // would otherwise make Turbopack guess).
   turbopack: { root: __dirname },
