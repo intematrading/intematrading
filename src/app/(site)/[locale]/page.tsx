@@ -31,7 +31,7 @@ import { CursorSway } from "@/components/CursorSway";
 import { Eyebrow } from "@/components/Eyebrow";
 import { IconBox } from "@/components/IconBox";
 import { Logo } from "@/components/Logo";
-import { LogoWall } from "@/components/Partners";
+import { LogoColumn, LogoWall } from "@/components/Partners";
 import { BrandGrid } from "@/components/ProductGrid";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
@@ -128,9 +128,13 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
   return (
     <div className="flex flex-col bg-paper">
-      {/* ── Hero: full screen from the start, content centred. The top
-          bar slides in once the page is scrolled. ───────────────────── */}
-      <section className="on-dark relative isolate flex h-svh min-h-[36rem] flex-col overflow-hidden text-paper">
+      {/* ── Hero: full screen from the start. From lg it's split in two:
+          the partner logos on a white panel (10%, at least 7rem so they
+          stay legible), then the photo with the content centred (the rest). The top bar slides in once the page
+          is scrolled. ─────────────────────────────────────────────────── */}
+      <section className="relative flex h-svh min-h-[36rem] overflow-hidden">
+          <LogoColumn locale={locale} className="w-[10%] min-w-28" />
+          <div className="on-dark relative isolate flex flex-1 flex-col text-paper">
             <div className="absolute inset-0 -z-20">
               <PhotoFrame
                 image={home.heroImage}
@@ -138,7 +142,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 locale={locale}
                 width={1920}
                 height={1080}
-                sizes="100vw"
+                sizes="(min-width: 1024px) 90vw, 100vw"
                 icon={Ship}
                 priority
               />
@@ -193,6 +197,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 {t("scrollDown")}
               </span>
             </div>
+          </div>
       </section>
 
       {/* ── About INTEMA: sized to its content. The heading and intro under

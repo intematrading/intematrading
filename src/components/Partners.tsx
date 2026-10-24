@@ -3,6 +3,7 @@ import type { Locale } from "@/i18n/routing";
 import { getAboutPage, getPartners, tr } from "@/lib/content";
 import { ButtonLink } from "./ButtonLink";
 import { Container } from "./Container";
+import { DecorativeCopy } from "./DecorativeCopy";
 import { Marquee } from "./Marquee";
 import { PartnerLogo } from "./PartnerLogo";
 import { Reveal } from "./Reveal";
@@ -60,6 +61,48 @@ export async function LogoWall({ locale, className = "" }: { locale: Locale; cla
         ))}
       </ul>
     </div>
+  );
+}
+
+/**
+ * The home hero's left panel (from lg): white, with the partner logos
+ * scrolling endlessly upward, no tiles, split by faint lines that fade out at
+ * both ends. Two
+ * copies loop seamlessly (each logo carries its own bottom line); the top and
+ * bottom fade into the white, hovering pauses it, and it stays still under
+ * prefers-reduced-motion. Size it with className (e.g. its share of the hero).
+ */
+export async function LogoColumn({ locale, className = "" }: { locale: Locale; className?: string }) {
+  const [partners, t] = await Promise.all([getPartners(), getTranslations("About")]);
+  if (!partners.length) return null;
+  const tiles = partners.map((partner) => (
+    <PartnerLogo
+      key={partner._id}
+      partner={partner}
+      locale={locale}
+      size="sm"
+      plain
+      // A faint line under each logo, fading out to white at both ends
+      className="relative w-full after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-linear-to-r after:from-transparent after:via-steel-200/70 after:to-transparent"
+    />
+  ));
+  return (
+    <aside className={`group relative hidden shrink-0 overflow-hidden bg-paper lg:block ${className}`}>
+      <div
+        style={{ animationDuration: `${partners.length * 3}s` }}
+        className="animate-scroll-up absolute inset-x-0 top-0 flex flex-col group-hover:[animation-play-state:paused] motion-reduce:animate-none"
+      >
+        <ul aria-label={t("partnersLabel")} className="flex flex-col">
+          {tiles}
+        </ul>
+        <ul aria-hidden="true" className="flex flex-col">
+          <DecorativeCopy>{tiles}</DecorativeCopy>
+        </ul>
+      </div>
+      {/* The logos fade into the white at the top and bottom */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-paper to-transparent" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-paper to-transparent" />
+    </aside>
   );
 }
 

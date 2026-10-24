@@ -5,6 +5,7 @@ import type { Locale } from "@/i18n/routing";
 import { Container } from "./Container";
 import { Eyebrow } from "./Eyebrow";
 import { PhotoFrame } from "./PhotoFrame";
+import { highlightEthiopia } from "./SectionHeading";
 
 /**
  * Header at the top of each inner page (About, Services, Team): a shaded photo across the top with
@@ -51,7 +52,7 @@ export function PageHero({
               <span className="sr-only">. </span>
             </Eyebrow>
           )}
-          <span className={`font-display-heading block text-[clamp(2.75rem,6vw,5rem)] leading-[0.95] ${eyebrow ? "mt-4" : ""}`}>{title}</span>
+          <span className={`font-display-heading block text-[clamp(2.75rem,6vw,5rem)] leading-[0.95] ${eyebrow ? "mt-4" : ""}`}>{highlightEthiopia(title)}</span>
         </h1>
         {intro && <p className="mt-5 max-w-2xl text-base text-paper/90 sm:text-lg">{intro}</p>}
       </Container>
