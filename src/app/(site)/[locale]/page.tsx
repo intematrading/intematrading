@@ -26,6 +26,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Accent } from "@/components/Accent";
 import { BranchConnector } from "@/components/RegionTree";
 import { ButtonLink } from "@/components/ButtonLink";
+import { EthiopiaMap } from "@/components/EthiopiaMap";
 import { Container } from "@/components/Container";
 import { CursorSway } from "@/components/CursorSway";
 import { Eyebrow } from "@/components/Eyebrow";
@@ -57,6 +58,12 @@ import {
   withValues,
 } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
+
+const warehouses = [
+  { key: "adama", label: "Adama", lat: 8.54, lng: 39.27, labelAt: "right" },
+  { key: "dire-dawa", label: "Dire Dawa", lat: 9.6, lng: 41.85, labelAt: "above" },
+  { key: "hawassa", label: "Hawassa", lat: 7.06, lng: 38.48, labelAt: "above" },
+] as const;
 
 const cardIcons: Record<ServiceSection, LucideIcon> = {
   import: Ship,
@@ -207,7 +214,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           beside them (from md) the stats, which fade in one after another
           once in view: one column below xl, a 2x2 grid from xl. ────────── */}
       {stats.length ? (
-          <section aria-labelledby="snapshot-heading" className="relative overflow-hidden py-16 text-ink sm:py-20 lg:py-24">
+          <section aria-labelledby="snapshot-heading" className="relative overflow-hidden bg-steel-50 py-16 text-ink sm:py-20 lg:py-24">
             <Container className="grid w-full gap-12 md:grid-cols-12 md:items-center md:gap-x-16 lg:gap-x-24">
               <div className="md:col-span-5">
                 <div aria-hidden="true" className="pointer-events-none -mt-[9.5rem] mb-[-2rem] hidden w-[min(26rem,100%)] xl:block">
@@ -248,6 +255,55 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               </ul>
             </Container>
           </section>
+      ) : null}
+
+      {/* ── Why Ethiopia: a preview of the market figures from Services,
+          with the Ethiopia map to the right and a link to the full section */}
+      {services.marketStats?.length ? (
+        <section aria-labelledby="why-ethiopia-heading" className="relative isolate overflow-hidden bg-paper py-16 sm:py-24">
+          {/* Decorative map: large, faint, clipped on the right on desktop */}
+          <EthiopiaMap
+            label={svc("addisAbabaHq")}
+            points={[...warehouses]}
+            className="absolute -z-10 hidden opacity-20 sm:top-1/2 sm:-right-28 sm:block sm:w-[40rem] sm:-translate-y-1/2 lg:right-[max(-12rem,calc((100vw-80rem)/2-12rem))] lg:w-[50rem] lg:opacity-100"
+          />
+          <Container>
+            <Reveal className="max-w-3xl lg:max-w-[50%]">
+              <SectionHeading id="why-ethiopia-heading" eyebrow={t("whyEthiopiaEyebrow")}>
+                {tr(services.marketHeading, locale) || t("whyEthiopiaHeading")}
+              </SectionHeading>
+              <p className="mt-6 max-w-xl text-muted sm:text-lg">
+                {services.marketIntro ? tr(services.marketIntro, locale) : t("whyEthiopiaIntro")}
+              </p>
+              {/* Mobile-only inline map */}
+              <EthiopiaMap label={svc("addisAbabaHq")} points={[...warehouses]} className="mx-auto mt-10 w-full max-w-sm sm:hidden" />
+            </Reveal>
+            <ul className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+              {services.marketStats.slice(0, 4).map((stat, i) => {
+                const Icon = statIcon(stat._key);
+                return (
+                  <li key={stat._key}>
+                    <Reveal delay={i * 120} className="h-full">
+                      <div className="flex h-full flex-col rounded-3xl bg-paper p-6 shadow-sm ring-1 ring-black/5 sm:p-7">
+                        <IconBox icon={Icon} />
+                        <p className="font-display-heading text-steel-gradient mt-6 text-5xl leading-none" lang="en">
+                          {stat.value}
+                        </p>
+                        <p className="mt-3 font-semibold text-ink">{tr(stat.label, locale)}</p>
+                        {stat.note && <p className="mt-1 text-sm text-muted">{tr(stat.note, locale)}</p>}
+                      </div>
+                    </Reveal>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="mt-10 flex justify-center">
+              <ButtonLink href="/services#market" variant="red">
+                {t("whyEthiopiaCta")}
+              </ButtonLink>
+            </div>
+          </Container>
+        </section>
       ) : null}
 
       {/* ── Importing: what INTEMA brings to brand owners, as cards, with a

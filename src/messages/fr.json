@@ -48,7 +48,11 @@
     "mainImporter": "Principal importateur de",
     "mission": "Mission",
     "vision": "Vision",
-    "allProducts": "Voir tous les produits"
+    "allProducts": "Voir tous les produits",
+    "whyEthiopiaEyebrow": "Pourquoi l'Éthiopie",
+    "whyEthiopiaHeading": "Un marché de *130 millions* de personnes",
+    "whyEthiopiaIntro": "L'Éthiopie est l'un des marchés de grande consommation les plus vastes et les plus dynamiques d'Afrique. Son ampleur, sa population jeune et ses villes en expansion en font une opportunité incontournable pour les marques internationales.",
+    "whyEthiopiaCta": "Découvrir l'opportunité de marché"
   },
   "Services": {
     "import": "Nous importons",

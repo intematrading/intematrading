@@ -127,7 +127,7 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
 
       {/* ── Why Ethiopia? Market figures, with sources ─────────────── */}
       {page.marketStats?.length ? (
-        <section aria-labelledby="market-heading" className="relative isolate overflow-hidden py-16 sm:py-24">
+        <section id="market" aria-labelledby="market-heading" className="scroll-mt-4 relative isolate overflow-hidden py-16 sm:py-24">
           {/* Big map of Ethiopia to the right of the intro: cropped by the
               section's top edge (under the hero), its lower part covered by
               the stat cards. On phones it sits under the intro instead. */}
