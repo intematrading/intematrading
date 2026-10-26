@@ -107,6 +107,9 @@ export type ServicesPage = {
   distributionPoints?: DistributionPoint[];
   distributionGalleryIntro?: LocaleString;
   distributionGallery?: GalleryImage[];
+  warehousingGalleryHeading?: LocaleString;
+  warehousingGalleryIntro?: LocaleString;
+  warehousingGallery?: GalleryImage[];
   produceHeading?: LocaleString;
   produceIntro?: LocaleString;
   produceImage?: SanityImage;

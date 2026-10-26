@@ -11,6 +11,7 @@ export const servicesPage = defineType({
     { name: "market", title: "Why Ethiopia?", default: true },
     { name: "import", title: "We Import" },
     { name: "distribution", title: "We Distribute" },
+    { name: "warehousing", title: "Warehousing" },
     { name: "produce", title: "We Produce" },
     { name: "export", title: "We Export" },
     { name: "route", title: "Our route (end of page)" },
@@ -139,6 +140,28 @@ export const servicesPage = defineType({
           options: { hotspot: true },
           fields: [
             defineField({ name: "caption", type: "localeString", description: 'The store or place, e.g. "Shoa Supermarket, Bole".' }),
+            defineField({ name: "alt", title: "Alt text", type: "localeString" }),
+          ],
+        }),
+      ],
+    }),
+
+    // Warehousing gallery
+    defineField({ name: "warehousingGalleryHeading", title: "Gallery heading", type: "localeString", group: "warehousing", description: 'Shown above the photo row, e.g. "Inside our warehouse".' }),
+    defineField({ name: "warehousingGalleryIntro", title: "Gallery intro", type: "localeText", group: "warehousing" }),
+    defineField({
+      name: "warehousingGallery",
+      title: "Warehouse photos",
+      type: "array",
+      group: "warehousing",
+      description: "Inside the warehouse: racking, loading, operations. The first photo is shown largest; 5 fill the layout neatly.",
+      options: { layout: "grid" },
+      of: [
+        defineArrayMember({
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: "caption", type: "localeString", description: 'The location or what is shown, e.g. "Kaliti Warehouse, Addis Ababa".' }),
             defineField({ name: "alt", title: "Alt text", type: "localeString" }),
           ],
         }),

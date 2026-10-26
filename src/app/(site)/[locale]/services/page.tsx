@@ -1,4 +1,4 @@
-import { Building2, Coffee, Flame, Globe2, Plane, Ship, ShoppingBasket, Sparkles, TrendingUp, Users } from "lucide-react";
+import { Building2, Coffee, Flame, Globe2, Plane, Ship, ShoppingBasket, Sparkles, TrendingUp, Users, Warehouse } from "lucide-react";
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -12,12 +12,14 @@ import { PageHero } from "@/components/PageHero";
 import { BrandGrid, ExportTiles, ProducedGrid } from "@/components/ProductGrid";
 import { RouteSteps } from "@/components/RouteSteps";
 import { DistributionSection } from "@/components/DistributionSection";
+import { ShelfCarousel } from "@/components/ShelfCarousel";
 import { LogoWall } from "@/components/Partners";
 import { highlightEthiopia, SectionHeading } from "@/components/SectionHeading";
 import { statIcon } from "@/components/stat-icons";
 import { heroPlaceholders, placeholders } from "@/content/placeholders";
 import type { ServiceSection } from "@/content/types";
 import { getBrands, getExportItems, getHomePage, getProducedItems, getServicesPage, getSiteSettings, tr } from "@/lib/content";
+import { urlFor } from "@/sanity/image";
 import { buildMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/services">): Promise<Metadata> {
@@ -226,6 +228,39 @@ export default async function ServicesPage({ params }: PageProps<"/[locale]/serv
               gallery: { previous: t("galleryPrevious"), next: t("galleryNext"), close: t("galleryClose"), open: t("galleryOpen") },
             }}
           />
+          {/* Warehouse photos, under On the shelves */}
+          {page.warehousingGallery?.some((img) => img.asset) ? (
+            <Container className="mt-20 sm:mt-28">
+              <Reveal className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+                <h3 className="flex items-center gap-4">
+                  <IconBox icon={Warehouse} />
+                  <span className="font-display-heading text-steel-gradient text-3xl sm:text-4xl">
+                    {tr(page.warehousingGalleryHeading, locale) || t("warehousingGalleryHeading")}
+                  </span>
+                </h3>
+                {page.warehousingGalleryIntro && (
+                  <p className="max-w-md text-muted sm:text-lg lg:text-right">{tr(page.warehousingGalleryIntro, locale)}</p>
+                )}
+              </Reveal>
+              <Reveal className="mt-10">
+                <ShelfCarousel
+                  photos={page.warehousingGallery
+                    .filter((img) => img.asset)
+                    .map((photo) => {
+                      const caption = tr(photo.caption, locale);
+                      return {
+                        key: photo._key,
+                        thumb: urlFor(photo).width(900).height(675).fit("crop").url(),
+                        full: urlFor(photo).width(2000).fit("max").url(),
+                        alt: tr(photo.alt, locale) || caption,
+                        caption: caption || undefined,
+                      };
+                    })}
+                  labels={{ previous: t("galleryPrevious"), next: t("galleryNext"), close: t("galleryClose"), open: t("galleryOpen") }}
+                />
+              </Reveal>
+            </Container>
+          ) : null}
         </section>
 
         {/* ── We Produce ────────────────────────────────────────────── */}
