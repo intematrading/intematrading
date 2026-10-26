@@ -9,14 +9,14 @@ import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SocialLinks } from "@/components/SocialLinks";
-import { placeholders } from "@/content/placeholders";
+import { heroPlaceholders } from "@/content/placeholders";
 import { getContactPage, getSiteSettings, tr } from "@/lib/content";
 import { buildMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/contact">): Promise<Metadata> {
   const locale = (await params).locale as Locale;
-  const [settings, t] = await Promise.all([getSiteSettings(), getTranslations({ locale, namespace: "Contact" })]);
-  return buildMetadata({ locale, path: "/contact", siteName: tr(settings.companyName, locale), fallbackTitle: t("title") });
+  const [page, settings, t] = await Promise.all([getContactPage(), getSiteSettings(), getTranslations({ locale, namespace: "Contact" })]);
+  return buildMetadata({ locale, path: "/contact", seo: page.seo, siteName: tr(settings.companyName, locale), fallbackTitle: tr(page.title, locale) || t("title") });
 }
 
 export default async function ContactPage({ params }: PageProps<"/[locale]/contact">) {
@@ -26,16 +26,19 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
   const [page, settings, t] = await Promise.all([getContactPage(), getSiteSettings(), getTranslations("Contact")]);
   const cardClass = "flex gap-5 rounded-2xl bg-paper p-6 shadow-sm ring-1 ring-black/5";
   const labelClass = "label-caps text-red-ink";
-  // Map: the office address (English, for Google), no API key needed.
-  const mapQuery = encodeURIComponent([settings.address?.en, "Ethiopia"].filter(Boolean).join(", ") || "Addis Ababa, Ethiopia");
+  // Map: use the Sanity-controlled location if set, else build from the site address.
+  const mapQuery = encodeURIComponent(
+    page.mapLocation ?? ([settings.address?.en, "Ethiopia"].filter(Boolean).join(", ") || "Addis Ababa, Ethiopia")
+  );
 
   return (
     <div className="flex flex-col bg-paper">
       <PageHero
-        eyebrow={t("eyebrow")}
-        title={t("title")}
+        eyebrow={tr(page.eyebrow, locale) || t("eyebrow")}
+        title={tr(page.title, locale) || t("title")}
         intro={tr(page.intro, locale)}
-        placeholder={placeholders.contactBand}
+        image={page.heroImage}
+        placeholder={heroPlaceholders.contact}
         locale={locale}
       />
 
@@ -121,9 +124,11 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
         <Container>
           <Reveal className="mx-auto max-w-2xl text-center">
             <SectionHeading id="map-heading" size="band">
-              {t("mapHeading")}
+              {tr(page.mapHeading, locale) || t("mapHeading")}
             </SectionHeading>
-            <p className="mt-4 text-muted sm:text-lg">{t("mapIntro")}</p>
+            {(page.mapIntro || t("mapIntro")) && (
+              <p className="mt-4 text-muted sm:text-lg">{tr(page.mapIntro, locale) || t("mapIntro")}</p>
+            )}
           </Reveal>
         </Container>
         {/* Full width, square corners */}

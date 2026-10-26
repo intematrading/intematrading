@@ -221,7 +221,14 @@ export type TeamPage = {
 };
 
 export type ContactPage = {
+  title?: LocaleString;
+  eyebrow?: LocaleString;
   intro?: LocaleString;
+  heroImage?: SanityImage;
   formHeading?: LocaleString;
   formIntro?: LocaleString;
+  mapHeading?: LocaleString;
+  mapIntro?: LocaleString;
+  mapLocation?: string;
+  seo?: Seo;
 };

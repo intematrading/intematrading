@@ -47,5 +47,6 @@ export const heroPlaceholders = {
   about: { src: "/placeholders/hero-about.jpg", position: "60% 50%" },
   services: { src: "/placeholders/import-ship.jpg" },
   team: { src: "/placeholders/hero-team.jpg" },
+  contact: { src: "/placeholders/contact-handshake.jpg", position: "60% 45%" },
 } satisfies Record<string, Placeholder>;
 

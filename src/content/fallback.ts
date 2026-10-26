@@ -459,14 +459,23 @@ export const teamMembers: TeamMember[] = [
 ];
 
 export const contactPage: ContactPage = {
+  title: { en: "Contact us", fr: "Contactez-nous" },
+  eyebrow: { en: "Talk to our sales team", fr: "Parlez à notre équipe commerciale" },
   intro: {
     en: "Retail partners, buyers and brand principals can reach our sales team directly.",
+    fr: "Les partenaires détaillants, acheteurs et propriétaires de marques peuvent contacter directement notre équipe commerciale.",
     am: "የችርቻሮ አጋሮች፣ ገዢዎችና የብራንድ ባለቤቶች የሽያጭ ቡድናችንን በቀጥታ ማግኘት ይችላሉ።",
   },
-  formHeading: { en: "Send an inquiry", am: "ጥያቄ ይላኩ" },
+  formHeading: { en: "Send an inquiry", fr: "Envoyer une demande", am: "ጥያቄ ይላኩ" },
   formIntro: {
     en: "Tell us who you are and what you're looking for, and our sales team will get back to you.",
+    fr: "Dites-nous qui vous êtes et ce que vous recherchez, et notre équipe commerciale vous répondra.",
     am: "ማን እንደሆኑና ምን እንደሚፈልጉ ይንገሩን — የሽያጭ ቡድናችን ምላሽ ይሰጥዎታል።",
+  },
+  mapHeading: { en: "Find us", fr: "Nous trouver" },
+  mapIntro: {
+    en: "Our office is in Bole Sub City, near the Atlas Hotel in Addis Ababa. You're welcome to stop by during business hours, or get in touch first and we'll be ready for you.",
+    fr: "Nos bureaux se trouvent dans le district de Bole, près de l'hôtel Atlas, à Addis-Abeba. Passez nous voir aux heures d'ouverture, ou contactez-nous d'abord et nous serons prêts à vous recevoir.",
   },
 };
 
