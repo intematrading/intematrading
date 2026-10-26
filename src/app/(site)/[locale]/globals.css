@@ -99,6 +99,12 @@
     to { transform: translateY(-50%); }
   }
 
+  /* The hero's logo band sliding sideways on phones and tablets (see LogoRow); duration set inline */
+  --animate-scroll-x: scroll-x 45s linear infinite;
+  @keyframes scroll-x {
+    to { transform: translateX(-50%); }
+  }
+
   /* Store name bubbles bobbing over the distribution map (see DistributionSection) */
   --animate-bob: bob 3.6s ease-in-out infinite;
   @keyframes bob {

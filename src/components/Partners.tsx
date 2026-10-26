@@ -106,6 +106,46 @@ export async function LogoColumn({ locale, className = "" }: { locale: Locale; c
   );
 }
 
+/**
+ * The hero's logo band on phones and tablets (below lg): a white strip with
+ * the partner logos sliding sideways, split by faint vertical lines that fade
+ * out at both ends. Two copies loop seamlessly; hovering pauses it, and it
+ * stays still under prefers-reduced-motion. Hidden from lg, where LogoColumn
+ * takes over.
+ */
+export async function LogoRow({ locale, className = "" }: { locale: Locale; className?: string }) {
+  const [partners, t] = await Promise.all([getPartners(), getTranslations("About")]);
+  if (!partners.length) return null;
+  const tiles = partners.map((partner) => (
+    <PartnerLogo
+      key={partner._id}
+      partner={partner}
+      locale={locale}
+      size="row"
+      plain
+      className="relative h-full w-40 shrink-0 after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-linear-to-b after:from-transparent after:via-steel-200/70 after:to-transparent"
+    />
+  ));
+  return (
+    <aside className={`group relative h-28 shrink-0 overflow-hidden bg-paper lg:hidden ${className}`}>
+      <div
+        style={{ animationDuration: `${partners.length * 3}s` }}
+        className="animate-scroll-x absolute inset-y-0 left-0 flex w-max group-hover:[animation-play-state:paused] motion-reduce:animate-none"
+      >
+        <ul aria-label={t("partnersLabel")} className="flex h-full">
+          {tiles}
+        </ul>
+        <ul aria-hidden="true" className="flex h-full">
+          <DecorativeCopy>{tiles}</DecorativeCopy>
+        </ul>
+      </div>
+      {/* The logos fade into the white at both ends */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-linear-to-r from-paper to-transparent" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-linear-to-l from-paper to-transparent" />
+    </aside>
+  );
+}
+
 /** Just the looping strip of partner company logos (Partner companies in Sanity). */
 export async function PartnerStrip({ locale, className = "" }: { locale: Locale; className?: string }) {
   const [partners, t] = await Promise.all([getPartners(), getTranslations("About")]);

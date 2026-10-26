@@ -31,7 +31,7 @@ import { CursorSway } from "@/components/CursorSway";
 import { Eyebrow } from "@/components/Eyebrow";
 import { IconBox } from "@/components/IconBox";
 import { Logo } from "@/components/Logo";
-import { LogoColumn, LogoWall } from "@/components/Partners";
+import { LogoColumn, LogoRow, LogoWall } from "@/components/Partners";
 import { BrandGrid } from "@/components/ProductGrid";
 import { PhotoBackdrop } from "@/components/PhotoBackdrop";
 import { PhotoFrame } from "@/components/PhotoFrame";
@@ -132,7 +132,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           the partner logos on a white panel (10%, at least 7rem so they
           stay legible), then the photo with the content centred (the rest). The top bar slides in once the page
           is scrolled. ─────────────────────────────────────────────────── */}
-      <section className="relative flex h-svh min-h-[36rem] overflow-hidden">
+      <section className="relative flex h-svh min-h-[36rem] flex-col overflow-hidden lg:flex-row">
           <LogoColumn locale={locale} className="w-[10%] min-w-28" />
           <div className="on-dark relative isolate flex flex-1 flex-col text-paper">
             <div className="absolute inset-0 -z-20">
@@ -198,6 +198,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               </span>
             </div>
           </div>
+          {/* Below lg: the partner logos as a band along the bottom, sliding sideways */}
+          <LogoRow locale={locale} />
       </section>
 
       {/* ── About INTEMA: sized to its content. The heading and intro under
